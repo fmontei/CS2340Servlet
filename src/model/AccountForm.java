@@ -13,7 +13,7 @@ public class AccountForm {
         this.request = request;
     }
 
-    public boolean createNewAccount() {
+    public boolean createNewAccountSucceeds() {
         gatherNewAccountInfo();
         if (areAccountCredentialsValid()) {
             userAccounts.put(newAccount.getUsername(), newAccount);
@@ -33,6 +33,7 @@ public class AccountForm {
     public boolean areAccountCredentialsValid() {
         if (newAccount.allFieldsHaveValue()) {
             if (usernameExists(newAccount.getUsername())) {
+                request.setAttribute("error", "Username already taken. Please try again.");
                 return false;
             }
             else {
@@ -40,6 +41,7 @@ public class AccountForm {
             }
         }
         else {
+            request.setAttribute("error", "All fields must be populated. Please try again.");
             return false;
         }
     }

@@ -3,7 +3,6 @@ package model;
 import javax.servlet.http.HttpServletRequest;
 
 public class LoginForm {
-    private static final String CURRENT_USER = "currentUser";
     private HttpServletRequest request;
     private String username;
     private String password;
@@ -11,7 +10,7 @@ public class LoginForm {
     public LoginForm() {
     }
 
-    public boolean authenticateLogin(HttpServletRequest request) {
+    public boolean isAuthenticationSuccessful(HttpServletRequest request) {
         this.request = request;
         password = (String) request.getParameter("password");
         username = (String) request.getParameter("username");
@@ -44,7 +43,7 @@ public class LoginForm {
     private void createWelcomeName() {
         UserAccount currentAccount = AccountForm.getUserAccounts().get(username);
         String welcomeName = currentAccount.getName();
-        request.setAttribute(CURRENT_USER, welcomeName);
+        Attributes.putAttribute(Attributes.CURRENT_USER, welcomeName);
     }
 
     private void generateNullError() {
