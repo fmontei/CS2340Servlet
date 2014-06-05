@@ -21,14 +21,18 @@ public class TripPlannerServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
-        response.sendRedirect("html/login.jsp");
+        redirectToLoginPage(response);
+    }
+
+    private void redirectToLoginPage(HttpServletResponse response)
+        throws IOException {
+        response.sendRedirect(REDIRECT_TO_LOGIN);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
-        if (loginForm.authenticateLogin(request) == true && request.getParameter("loginButton") != null) {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/html/app.jsp");
-            dispatcher.forward(request, response);
+        if (loginForm.authenticateLogin(request) == true) {
+            forwardRequest(request, response, "/html/app.jsp");
         }
 
         else if (request.getParameter("createAccountButton") != null) {
@@ -36,10 +40,8 @@ public class TripPlannerServlet extends HttpServlet {
         }
 
         else if (request.getParameter("submitButton") != null) {
-            UserAccount newAccount = gatherNewAccountInfo(request, response);
-            AccountForm accountForm = new AccountForm();
-            if (accountForm.verifyCredentials(newAccount)) {
-                accountForm.createNewUserAccount(newAccount);
+            AccountForm accountForm = new AccountForm(request);
+            if (accountForm.createNewAccount() == true) {
                 response.sendRedirect(REDIRECT_TO_LOGIN);
             } else {
                 response.sendRedirect("html/new_account.jsp");
@@ -47,19 +49,14 @@ public class TripPlannerServlet extends HttpServlet {
         }
 
         else {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/html/login.jsp");
-            dispatcher.forward(request, response);
+            forwardRequest(request, response, "/html/login.jsp");
         }
     }
 
-    private UserAccount gatherNewAccountInfo(HttpServletRequest request, HttpServletResponse response) {
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String username = request.getParameter("newUsername");
-        String password = request.getParameter("newPassword");
-        UserAccount newAccount = new UserAccount(firstName, lastName, username, password);
-        return newAccount;
+    private void forwardRequest(HttpServletRequest request, HttpServletResponse response, String target)
+        throws IOException, ServletException
+    {
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(target);
+        dispatcher.forward(request, response);
     }
-
-    private void createNewUserAccount(HttpServletRequest request, HttpServletResponse response) {}
 }

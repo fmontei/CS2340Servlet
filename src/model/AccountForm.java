@@ -1,18 +1,37 @@
 package model;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
 public class AccountForm {
     private static Map<String, UserAccount> userAccounts = new HashMap<String, UserAccount>();
-    public static final int NUM_FIELDS = 4;
+    private HttpServletRequest request;
+    private UserAccount newAccount;
 
-    public void createNewUserAccount(UserAccount newAccount) {
-        userAccounts.put(newAccount.getUsername(), newAccount);
+    public AccountForm(HttpServletRequest request) {
+        this.request = request;
     }
 
-    public boolean verifyCredentials(UserAccount newAccount) {
-        if (newAccount.everythingHasValue()) {
+    public boolean createNewAccount() {
+        gatherNewAccountInfo();
+        if (areAccountCredentialsValid()) {
+            userAccounts.put(newAccount.getUsername(), newAccount);
+            return true;
+        }
+        return false;
+    }
+
+    private void gatherNewAccountInfo() {
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String username = request.getParameter("newUsername");
+        String password = request.getParameter("newPassword");
+        newAccount = new UserAccount(firstName, lastName, username, password);
+    }
+
+    public boolean areAccountCredentialsValid() {
+        if (newAccount.allFieldsHaveValue()) {
             if (usernameExists(newAccount.getUsername())) {
                 return false;
             }
@@ -32,6 +51,7 @@ public class AccountForm {
     protected static boolean usernameExists(String username) {
         return userAccounts.containsKey(username);
     }
+
 
     protected static boolean passwordMatches(String username, String password) {
         UserAccount currentAccount = userAccounts.get(username);

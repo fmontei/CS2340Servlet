@@ -15,11 +15,11 @@ public class LoginForm {
         this.request = request;
         password = (String) request.getParameter("password");
         username = (String) request.getParameter("username");
-
-        if (loginParametersNotNull()) {
+        if (wasLoginButtonClicked() == false)
+            return false;
+        if (areloginParametersNotNull()) {
             if (AccountForm.loginSuccessful(username, password)) {
-                String welcomeName = AccountForm.getUserAccounts().get(username).getName();
-                request.setAttribute(CURRENT_USER, welcomeName);
+                createWelcomeName();
                 return true;
             }
             else {
@@ -33,15 +33,22 @@ public class LoginForm {
         }
     }
 
-    private boolean loginParametersNotNull() {
+    private boolean wasLoginButtonClicked() {
+        return request.getParameter("loginButton") != null;
+    }
+
+    private boolean areloginParametersNotNull() {
         return passwordNotNull() && usernameNotNull();
     }
 
+    private void createWelcomeName() {
+        UserAccount currentAccount = AccountForm.getUserAccounts().get(username);
+        String welcomeName = currentAccount.getName();
+        request.setAttribute(CURRENT_USER, welcomeName);
+    }
+
     private void generateNullError() {
-        if (usernameNotNull() == false && passwordNotNull() == false) {
-            resetErrorMessage();
-        }
-        else if (usernameNotNull() == false) {
+        if (usernameNotNull() == false) {
             request.setAttribute("error", "Unknown user. Please try again.");
         }
         else if (passwordNotNull() == false) {
