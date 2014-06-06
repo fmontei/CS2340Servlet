@@ -13,18 +13,15 @@ import java.io.IOException;
 public class MenuServlet extends HttpServlet {
 
     @Override
-    public void service(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
-        doGet(request, response);
-    }
-
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void service(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
         response.sendRedirect("jsp/menu.jsp");
     }
 
-    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws IOException, ServletException {
+    }
+
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
     }

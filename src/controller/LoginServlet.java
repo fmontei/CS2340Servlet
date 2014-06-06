@@ -3,7 +3,6 @@ package controller;
 import static model.ServletUtilities.*;
 import model.LoginForm;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,7 +29,7 @@ public class LoginServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
         if (loginForm.isAuthenticationSuccessful(request)) {
-            response.sendRedirect("menu");
+            forwardRequest(this, request, response, "/menu");
         } else if (isCreateAccountButtonClicked(request)) {
             response.sendRedirect("createAccount");
         } else {
