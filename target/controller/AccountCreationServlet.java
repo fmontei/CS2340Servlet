@@ -17,7 +17,7 @@ public class AccountCreationServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        response.sendRedirect("jsp/new_account.jsp");
+        response.sendRedirect("jsp/create_account.jsp");
     }
 
     @Override
@@ -28,7 +28,7 @@ public class AccountCreationServlet extends HttpServlet {
             if (accountForm.createNewAccountSucceeds()) {
                 response.sendRedirect("jsp/login.jsp");
             } else {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/new_account.jsp");
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/create_account.jsp");
                 dispatcher.forward(request, response);
             }
         }

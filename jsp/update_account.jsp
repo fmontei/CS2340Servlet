@@ -5,6 +5,6 @@
     </head>
     <body>
         <h1>Account Settings</h1>
-        <a href="/CS2340Servlet/menu">Back to Menu</a>
+        <a href="/CS2340Servlet/index">Back to Index</a>
     </body>
 </html>

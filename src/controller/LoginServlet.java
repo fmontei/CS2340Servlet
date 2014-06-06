@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
         if (loginForm.isAuthenticationSuccessful(request)) {
-            forwardRequest(this, request, response, "/menu");
+            forwardRequest(this, request, response, "/index");
         } else if (isCreateAccountButtonClicked(request)) {
             response.sendRedirect("createAccount");
         } else {

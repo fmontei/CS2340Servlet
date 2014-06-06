@@ -48,21 +48,21 @@ metadata-complete="true">
     </servlet-mapping>
 
     <servlet>
-    <servlet-name>MenuServlet</servlet-name>
-    <servlet-class>controller.MenuServlet</servlet-class>
+    <servlet-name>IndexServlet</servlet-name>
+    <servlet-class>controller.IndexServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-    <servlet-name>MenuServlet</servlet-name>
-    <url-pattern>/menu</url-pattern>
+    <servlet-name>IndexServlet</servlet-name>
+    <url-pattern>/index</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>SettingsServlet</servlet-name>
-        <servlet-class>controller.SettingsServlet</servlet-class>
+        <servlet-name>UpdateAccountServlet</servlet-name>
+        <servlet-class>controller.UpdateAccountServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>SettingsServlet</servlet-name>
-        <url-pattern>/settings</url-pattern>
+        <servlet-name>UpdateAccountServlet</servlet-name>
+        <url-pattern>/updateAccount</url-pattern>
     </servlet-mapping>
 
 </web-app>

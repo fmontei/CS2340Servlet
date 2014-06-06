@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "MenuServlet", urlPatterns = {"/menu"})
-public class MenuServlet extends HttpServlet {
+@WebServlet(name = "IndexServlet", urlPatterns = {"/index"})
+public class IndexServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
-        response.sendRedirect("jsp/menu.jsp");
+        response.sendRedirect("jsp/index.jsp");
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)

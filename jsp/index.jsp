@@ -9,6 +9,6 @@
     <body>
         <h1 class="header">Greetings, <span><%=Attributes.getAttribute(Attributes.CURRENT_USER)%></span>!</h1>
 		<a href="/CS2340Servlet/login">Back</a> <br />
-		<a href="/CS2340Servlet/settings">Account Settings</a>
+		<a href="/CS2340Servlet/updateAccount">Account Settings</a>
     </body>
 </html>

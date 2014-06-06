@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "SettingsServlet", urlPatterns = {"/settings"})
-public class SettingsServlet extends HttpServlet {
+@WebServlet(name = "UpdateAccountServlet", urlPatterns = {"/updateAccount"})
+public class UpdateAccountServlet extends HttpServlet {
 
     @Override
     public void service(HttpServletRequest request, HttpServletResponse response)
@@ -19,6 +19,6 @@ public class SettingsServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        response.sendRedirect("jsp/settings.jsp");
+        response.sendRedirect("jsp/update_account.jsp");
     }
 }
