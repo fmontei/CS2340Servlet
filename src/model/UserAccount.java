@@ -21,7 +21,15 @@ public class UserAccount {
         return field != null && !field.isEmpty();
     }
 
-    public String getUsername() { return username; }
-    public String getPassword() { return password; }
-    public String getName() { return firstName + " " + lastName; }
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getName() {
+        return firstName + " " + lastName;
+    }
 }

@@ -13,36 +13,56 @@ public class AccountForm {
         this.request = request;
     }
 
-    public boolean createNewAccountSucceeds() {
-        gatherNewAccountInfo();
-        if (areAccountCredentialsValid()) {
-            userAccounts.put(newAccount.getUsername(), newAccount);
-            return true;
-        }
-        return false;
+    public boolean isAccountCreationSuccessful() {
+        tryToGetAccountInfo();
+        return tryToValidateCredentials() && tryToGetAccountInfo();
     }
 
-    private void gatherNewAccountInfo() {
+    private boolean tryToGetAccountInfo() {
+        try {
+            gatherNewAccountInfo();
+            return true;
+        } catch(PasswordMismatchException ex) {
+            request.setAttribute("error", "Passwords do not match. Please try again.");
+            return false;
+        }
+    }
+
+    private boolean tryToValidateCredentials() {
+        try {
+            validateAccountCredentials();
+            userAccounts.put(newAccount.getUsername(), newAccount);
+            return true;
+        } catch(UserAlreadyExistsException ex) {
+            request.setAttribute("error", "Username already taken. Please try again.");
+            return false;
+        } catch (EmptyFieldException ex) {
+            request.setAttribute("error", "All fields must be populated. Please try again.");
+            return false;
+        }
+    }
+
+    private void gatherNewAccountInfo() throws PasswordMismatchException {
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String username = request.getParameter("newUsername");
         String password = request.getParameter("newPassword");
+        String confirmPassword = request.getParameter("confirmPassword");
         newAccount = new UserAccount(firstName, lastName, username, password);
+        if (password.equals(confirmPassword) == false) {
+            throw new PasswordMismatchException();
+        }
     }
 
-    public boolean areAccountCredentialsValid() {
+    public boolean validateAccountCredentials() throws UserAlreadyExistsException, EmptyFieldException {
         if (newAccount.allFieldsHaveValue()) {
             if (usernameExists(newAccount.getUsername())) {
-                request.setAttribute("error", "Username already taken. Please try again.");
-                return false;
-            }
-            else {
+                throw new UserAlreadyExistsException();
+            } else {
                 return true;
             }
-        }
-        else {
-            request.setAttribute("error", "All fields must be populated. Please try again.");
-            return false;
+        } else {
+            throw new EmptyFieldException();
         }
     }
 
@@ -53,7 +73,6 @@ public class AccountForm {
     protected static boolean usernameExists(String username) {
         return userAccounts.containsKey(username);
     }
-
 
     protected static boolean passwordMatches(String username, String password) {
         UserAccount currentAccount = userAccounts.get(username);

@@ -1,15 +1,14 @@
 package controller;
 
+import static model.ServletUtilities.*;
 import model.AccountForm;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(name = "AccountCreationServlet", urlPatterns = {"/createAccount"})
 public class AccountCreationServlet extends HttpServlet {
@@ -23,14 +22,27 @@ public class AccountCreationServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        if (request.getParameter("submitButton") != null) {
+        if (isSubmitButtonClicked(request)) {
             AccountForm accountForm = new AccountForm(request);
-            if (accountForm.createNewAccountSucceeds()) {
-                response.sendRedirect("jsp/login.jsp");
+            if (accountForm.isAccountCreationSuccessful()) {
+                returnToLoginScreen(response);
             } else {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/create_account.jsp");
-                dispatcher.forward(request, response);
+                reloadBecauseAccountCreateFailed(request, response);
             }
         }
     }
+
+    private boolean isSubmitButtonClicked(HttpServletRequest request) {
+        return request.getParameter("submitButton") != null;
+    }
+
+    private void returnToLoginScreen(HttpServletResponse response)
+        throws IOException {
+        response.sendRedirect("jsp/login.jsp");
+    }
+    private void reloadBecauseAccountCreateFailed(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        forwardRequest(this, request, response, "/jsp/create_account.jsp");
+    }
+
 }

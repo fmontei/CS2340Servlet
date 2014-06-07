@@ -19,6 +19,8 @@
 				<input type="text" name="newUsername" />
 			<dd>Password:
 				<input type="password" name="newPassword" />
+			<dd>Confirm Password:
+                <input type="password" name="confirmPassword" />
 		</dl>
 		<p>
 			${error}

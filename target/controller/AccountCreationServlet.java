@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(name = "AccountCreationServlet", urlPatterns = {"/createAccount"})
 public class AccountCreationServlet extends HttpServlet {
@@ -25,7 +24,7 @@ public class AccountCreationServlet extends HttpServlet {
             throws IOException, ServletException {
         if (request.getParameter("submitButton") != null) {
             AccountForm accountForm = new AccountForm(request);
-            if (accountForm.createNewAccountSucceeds()) {
+            if (accountForm.isAccountCreationSuccessful()) {
                 response.sendRedirect("jsp/login.jsp");
             } else {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/create_account.jsp");

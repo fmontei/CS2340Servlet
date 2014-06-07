@@ -12,8 +12,8 @@ public class LoginForm {
 
     public boolean isAuthenticationSuccessful(HttpServletRequest request) {
         this.request = request;
-        password = (String) request.getParameter("password");
-        username = (String) request.getParameter("username");
+        password = request.getParameter("password");
+        username = request.getParameter("username");
         if (wasLoginButtonClicked() == false)
             return false;
         if (areloginParametersNotNull()) {
