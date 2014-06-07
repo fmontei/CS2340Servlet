@@ -5,6 +5,9 @@
         <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
     </head>
     <body>
+    <script>
+        alert('Hello, World!')
+    </script>
 	<h1>Account Creation</h1>
     <form action="/CS2340Servlet/createAccount" method="POST">
 		<dl>
