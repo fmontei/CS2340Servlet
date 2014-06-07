@@ -3,7 +3,7 @@ CS2340Servlet
 
 This project works with Tomcat.
 
-To deploy and run this project,
+To deploy and run this project,<br />
   1) Clone this project to a folder.<br />
   2a) Assuming you have apache ant installed, go to that folder and type <em>ant deploy</em>.<br />
   2b) Otherwise manually move all files into the Tomcat webapps directory, and place the<br />
