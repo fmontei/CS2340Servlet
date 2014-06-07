@@ -37,12 +37,12 @@ public class AccountCreationServlet extends HttpServlet {
     }
 
     private void returnToLoginScreen(HttpServletResponse response)
-        throws IOException {
+            throws IOException {
         response.sendRedirect("jsp/login.jsp");
     }
+
     private void reloadBecauseAccountCreateFailed(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         forwardRequest(this, request, response, "/jsp/create_account.jsp");
     }
-
 }

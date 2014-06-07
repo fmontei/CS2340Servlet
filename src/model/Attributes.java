@@ -15,4 +15,8 @@ public class Attributes {
     public static void storeAttribute(String attribute, String value) {
         map.put(attribute, value);
     }
+
+    public static void removeAttribute(String attribute) {
+        map.remove(attribute);
+    }
 }

@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<%@ page import="model.Attributes" %>
+<% String prevFirstName = Attributes.getAttribute("prevFirstName"); %>
+<% String prevLastName = Attributes.getAttribute("prevLastName"); %>
+<% String prevUsername = Attributes.getAttribute("prevUsername"); %>
+
 <html>
     <head>
         <title>Login Page</title>
@@ -10,13 +14,12 @@
 		<dl>
 			<dt><b>Enter your Personal Information:</b>
 			<dd>First name:
-				<input type="text" name="firstName" />
+				<input type="text" name="firstName" value=<%=prevFirstName == null ? "" : prevFirstName %>  >
 			<dd>Last name:
-				<input type="text" name="lastName" />
-
-			<dt><b>Enter new Acount Information:</b>
+				<input type="text" name="lastName" value=<%=prevLastName == null ? "" : prevLastName %> >
+			<dt><b>Enter new Account Information:</b>
 			<dd>Username:
-				<input type="text" name="newUsername" />
+				<input type="text" name="newUsername" value=<%=prevUsername == null ? "" : prevUsername %> >
 			<dd>Password:
 				<input type="password" name="newPassword" />
 			<dd>Confirm Password:

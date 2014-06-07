@@ -1,5 +1,7 @@
 package model;
 
+import static model.Attributes.*;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,8 +16,12 @@ public class AccountForm {
     }
 
     public boolean isAccountCreationSuccessful() {
-        tryToGetAccountInfo();
-        return tryToValidateCredentials() && tryToGetAccountInfo();
+        if (tryToGetAccountInfo() == false)
+            return false;
+        if (tryToValidateCredentials() == false)
+            return false;
+        elseClearSavedAttributes();
+        return true;
     }
 
     private boolean tryToGetAccountInfo() {
@@ -23,7 +29,7 @@ public class AccountForm {
             gatherNewAccountInfo();
             return true;
         } catch(PasswordMismatchException ex) {
-            request.setAttribute("error", "Passwords do not match. Please try again.");
+            request.setAttribute("error", ex.getMessage());
             return false;
         }
     }
@@ -34,10 +40,10 @@ public class AccountForm {
             userAccounts.put(newAccount.getUsername(), newAccount);
             return true;
         } catch(UserAlreadyExistsException ex) {
-            request.setAttribute("error", "Username already taken. Please try again.");
+            request.setAttribute("error", ex.getMessage());
             return false;
         } catch (EmptyFieldException ex) {
-            request.setAttribute("error", "All fields must be populated. Please try again.");
+            request.setAttribute("error", ex.getMessage());
             return false;
         }
     }
@@ -48,22 +54,31 @@ public class AccountForm {
         String username = request.getParameter("newUsername");
         String password = request.getParameter("newPassword");
         String confirmPassword = request.getParameter("confirmPassword");
+        storeAttribute("prevFirstName", firstName);
+        storeAttribute("prevLastName", lastName);
+        storeAttribute("prevUsername", username);
         newAccount = new UserAccount(firstName, lastName, username, password);
         if (password.equals(confirmPassword) == false) {
-            throw new PasswordMismatchException();
+            throw new PasswordMismatchException("Passwords do not match. Please try again.");
         }
     }
 
     public boolean validateAccountCredentials() throws UserAlreadyExistsException, EmptyFieldException {
         if (newAccount.allFieldsHaveValue()) {
             if (usernameExists(newAccount.getUsername())) {
-                throw new UserAlreadyExistsException();
+                throw new UserAlreadyExistsException("Username already taken. Please try again.");
             } else {
                 return true;
             }
         } else {
-            throw new EmptyFieldException();
+            throw new EmptyFieldException("All fields must be populated. Please try again.");
         }
+    }
+
+    private void elseClearSavedAttributes() {
+        removeAttribute("prevFirstName");
+        removeAttribute("prevLastName");
+        removeAttribute("prevUsername");
     }
 
     protected static boolean isLoginSuccessful(String username, String password) {
