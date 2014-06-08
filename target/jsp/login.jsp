@@ -1,4 +1,5 @@
 <%@ page import="model.AccountForm" %>
+<%@ page import="model.Attributes" %>
 
 <!DOCTYPE html>
 <html>
@@ -7,7 +8,7 @@
         <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
     </head>
     <body>
-	<h1>Login!!!!!!!!</h1>
+	<h1>Login</h1>
         <form action="/CS2340Servlet/login" method="POST">
 			<table>
 				<thead>

@@ -1,11 +1,50 @@
+* {
+    font-family: Georgia;
+}
+
+h1 {
+    text-align: center;
+}
+
 .header {
 	font-family: Georgia, Impact;
 	color: red;
 	font-size: 24px;
 }
 
-span {
-	font-family: Garamond, Tahoma;
-	color: blue;
-	font-size: 20px;
+#create_account_form {
+    text-align: center;
+}
+
+#create_account_form input {
+    background-color: rgb(247, 247, 247);
+    width: 20%;
+    clear: both;
+}
+
+#create_account_form #submit {
+    background-color: rgb(247, 247, 247);
+    width: 10%;
+    clear: both;
+}
+
+#create_account_form span {
+    background-color: rgb(247, 247, 247);
+    font-size: 12px;
+    color: blue;
+}
+
+#error {
+    color: red;
+    margin-left: 5%;
+}
+
+#fbLogoutButton {
+    background-color: rgb(86, 117, 204);
+    font-weight: bold;
+    color: #ffffff;
+    border-radius: 5px;
+    border: 1px solid #57D6C7;
+    cursor: pointer;
+    height: 20px;
 }
