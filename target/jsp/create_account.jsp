@@ -9,7 +9,7 @@
         <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
     </head>
     <body>
-	<h1>Account Creation</h1>
+	<h1 id="accountHeader">Account Creation</h1>
 
 	<script type="text/javascript">
         function checkPass()

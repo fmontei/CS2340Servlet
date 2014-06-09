@@ -2,14 +2,16 @@
     font-family: Georgia;
 }
 
-h1 {
-    text-align: center;
+.indexHeader {
+	position: fixed;
+	top: 5px;
+	right: 10px;
+	font-style: bold;
+	font-size: 12px;
 }
 
-.header {
-	font-family: Georgia, Impact;
-	color: red;
-	font-size: 24px;
+#accountHeader {
+    text-align: center;
 }
 
 #create_account_form {
@@ -32,6 +34,26 @@ h1 {
     background-color: rgb(247, 247, 247);
     font-size: 12px;
     color: blue;
+}
+
+#nav {
+    position: fixed;
+    top: 30px;
+    right: 300px;
+    cursor: pointer;
+}
+
+#fbLoginButton {
+    position: fixed;
+    top: 30px;
+    right: 480px;
+}
+
+#status {
+    font-size: 12px;
+    position: fixed;
+    top: 30px;
+    right: 10px;
 }
 
 #error {
