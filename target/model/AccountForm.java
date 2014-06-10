@@ -16,31 +16,25 @@ public class AccountForm {
     }
 
     public boolean isAccountCreationSuccessful() {
-        if (tryToGetAccountInfoAndValidateCredentials() == false)
+        if (isAccountInfoAndCredentialsValid() == false)
             return false;
         elseClearSavedAttributes();
         return true;
     }
 
-    private boolean tryToGetAccountInfoAndValidateCredentials() {
+    private boolean isAccountInfoAndCredentialsValid() {
         try {
             gatherNewAccountInfo();
             validateAccountCredentials();
             userAccounts.put(newAccount.getUsername(), newAccount);
             return true;
-        } catch(PasswordMismatchException ex) {
-            request.setAttribute("error", ex.getMessage());
-            return false;
-        } catch(UserAlreadyExistsException ex) {
-            request.setAttribute("error", ex.getMessage());
-            return false;
-        } catch (EmptyFieldException ex) {
+        } catch(AccountFormException ex) {
             request.setAttribute("error", ex.getMessage());
             return false;
         }
     }
 
-    private void gatherNewAccountInfo() throws PasswordMismatchException {
+    private void gatherNewAccountInfo() throws AccountFormException {
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String username = request.getParameter("newUsername");
@@ -51,19 +45,22 @@ public class AccountForm {
         storeAttribute("prevUsername", username);
         newAccount = new UserAccount(firstName, lastName, username, password);
         if (password.equals(confirmPassword) == false) {
-            throw new PasswordMismatchException("Passwords do not match. Please try again.");
+            throw new AccountFormException("Passwords do not match. " +
+                    "Please try again.");
         }
     }
 
-    public boolean validateAccountCredentials() throws UserAlreadyExistsException, EmptyFieldException {
+    public boolean validateAccountCredentials() throws AccountFormException {
         if (newAccount.allFieldsHaveValue()) {
             if (usernameExists(newAccount.getUsername())) {
-                throw new UserAlreadyExistsException("Username already taken. Please try again.");
+                throw new AccountFormException("Username already taken. " +
+                    "Please try again.");
             } else {
                 return true;
             }
         } else {
-            throw new EmptyFieldException("All fields must be populated. Please try again.");
+            throw new AccountFormException("All fields must be populated. " +
+                "Please try again.");
         }
     }
 

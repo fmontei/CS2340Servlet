@@ -10,6 +10,34 @@
     </head>
     <body>
 	<h1 id="accountHeader">Account Creation</h1>
+    <form id="create_account_form" action="/CS2340Servlet/createAccount" method="POST">
+		<dl>
+			<dt><b>Enter your Personal Information:</b>
+			<dd><span id="label">First name:</span><br />
+				<input type="text" name="firstName" value="<%=prevFirstName == null ? "" : prevFirstName %>" required="required"  />
+			<dd><span id="label">Last name:</span><br />
+				<input type="text" name="lastName" value="<%=prevLastName == null ? "" : prevLastName %>" required="required" />
+				<br /><br />
+			<dt><b>Enter new Account Information:</b>
+			<dd><span id="label">Username:</span><br />
+				<input type="text" name="newUsername" value="<%=prevUsername == null ? "" : prevUsername %>" required="required" />
+            <dd>
+                <div class="fieldWrapper">
+                    <label for="newPassword"><span id="label">Password:</span></label><br />
+                    <input name="newPassword" id="newPassword" type="password" required="required">
+                </div>
+            <dd>
+                <div class="fieldWrapper">
+                    <label for="confirmPassword"><span id="label">Confirm Password:</span></label><br />
+                    <input name="confirmPassword" id="confirmPassword" onkeyup="checkPass(); return false;" type="password" required="required"><br />
+                    <span id="confirmMessage" class="confirmMessage"></span>
+                </div>
+		</dl>
+        <p id="error">${error}</p>
+        <center>
+            <input id="submit" type="submit" name="submitButton" text="Submit" />
+        </center>
+	</form>
 
 	<script type="text/javascript">
         function checkPass()
@@ -29,35 +57,6 @@
                 message.innerHTML = "Passwords Do Not Match!"
             }
         }
-	</script>
-
-    <form id="create_account_form" action="/CS2340Servlet/createAccount" method="POST">
-		<dl>
-			<dt><b>Enter your Personal Information:</b>
-			<dd><span id="label">First name:</span><br />
-				<input type="text" name="firstName" value="<%=prevFirstName == null ? "" : prevFirstName %>"  />
-			<dd><span id="label">Last name:</span><br />
-				<input type="text" name="lastName" value="<%=prevLastName == null ? "" : prevLastName %>" />
-				<br /><br />
-			<dt><b>Enter new Account Information:</b>
-			<dd><span id="label">Username:</span><br />
-				<input type="text" name="newUsername" value=<%=prevUsername == null ? "" : prevUsername %> >
-            <dd>
-                <div class="fieldWrapper">
-                    <label for="newPassword"><span id="label">Password:</span></label><br />
-                    <input name="newPassword" id="newPassword" type="password">
-                </div>
-            <dd>
-                <div class="fieldWrapper">
-                    <label for="confirmPassword"><span id="label">Confirm Password:</span></label><br />
-                    <input name="confirmPassword" id="confirmPassword" onkeyup="checkPass(); return false;" type="password"><br />
-                    <span id="confirmMessage" class="confirmMessage"></span>
-                </div>
-		</dl>
-        <p id="error">${error}</p>
-        <center>
-            <input id="submit" type="submit" name="submitButton" text="Submit" />
-        </center>
-	</form>
+    </script>
     </body>
 </html>

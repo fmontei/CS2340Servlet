@@ -14,30 +14,28 @@ public class LoginForm {
         this.request = request;
         password = request.getParameter("password");
         username = request.getParameter("username");
-        if (wasLoginButtonClicked() == false)
+        if (isLoginButtonClicked() == false)
             return false;
-        if (areloginParametersNotNull()) {
+        if (isLoginParametersNotNull()) {
             if (AccountForm.isLoginSuccessful(username, password)) {
                 createWelcomeName();
                 return true;
-            }
-            else {
+            } else {
                 generateAuthenticationError();
                 return false;
             }
-        }
-        else {
+        } else {
             generateNullError();
             return false;
         }
     }
 
-    private boolean wasLoginButtonClicked() {
+    private boolean isLoginButtonClicked() {
         return request.getParameter("loginButton") != null;
     }
 
-    private boolean areloginParametersNotNull() {
-        return passwordNotNull() && usernameNotNull();
+    private boolean isLoginParametersNotNull() {
+        return isPasswordNotNull() && isUsernameNotNull();
     }
 
     private void createWelcomeName() {
@@ -47,29 +45,24 @@ public class LoginForm {
     }
 
     private void generateNullError() {
-        if (usernameNotNull() == false) {
+        if (isUsernameNotNull() == false) {
             request.setAttribute("error", "Unknown user. Please try again.");
-        }
-        else if (passwordNotNull() == false) {
+        } else if (isPasswordNotNull() == false) {
             request.setAttribute("error", "Password is incorrect. Please try again.");
         }
     }
 
     private void generateAuthenticationError() {
-        if (usernameNotNull() && passwordNotNull()) {
+        if (isUsernameNotNull() && isPasswordNotNull()) {
             request.setAttribute("error", "Authentication failed. Please try again.");
         }
     }
 
-    private boolean passwordNotNull() {
+    private boolean isPasswordNotNull() {
         return password != null && !password.isEmpty();
     }
 
-    private boolean usernameNotNull() {
+    private boolean isUsernameNotNull() {
         return username != null && !username.isEmpty();
-    }
-
-    private void resetErrorMessage() {
-        request.setAttribute("error", "");
     }
 }
