@@ -4,18 +4,22 @@
 <html>
     <head>
        <meta charset="utf-8" />
-       <title><%=Attributes.getAttribute(Attributes.CURRENT_USER)%>&#39;s Trip Planner</title>
+       <title><%=Attributes.getAttribute(Attributes.WELCOME_NAME)%>&#39;s Trip Planner</title>
        <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
     </head>
     <body>
         <nav>
             <span id="overviewMessage">
-                <%=Attributes.getAttribute(Attributes.CURRENT_USER)%>&#39;s Trip Planner
+                <%=Attributes.getAttribute(Attributes.WELCOME_NAME)%>&#39;s Trip Planner
             </span>
-            <fb:login-button id="fbLoginButton" scope="public_profile,email" onLogin="checkLoginState();">
+            <fb:login-button id="fbLoginButton"
+                    scope="public_profile,email"
+                    onlogin="checkLoginState();">
             </fb:login-button>
-            <select id="nav" onChange="doDropdownAction(this); checkLoginState();" onFocus="checkLoginState();">
-                <option value="" disabled selected style="display: none;">Navigation</option>
+            <select id="nav"
+                    onChange="doDropdownAction(this); checkLoginState();"
+                    onFocus="checkLoginState();">
+                <option value="" disabled selected>Navigation</option>
                 <option value="/CS2340Servlet/updateAccount">Account Settings</option>
                 <option value="/CS2340Servlet/login">Logout</option>
             </select>

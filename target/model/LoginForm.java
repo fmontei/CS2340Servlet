@@ -7,21 +7,20 @@ public class LoginForm {
     private String username;
     private String password;
 
-    public LoginForm() {
-    }
-
     public boolean isAuthenticationSuccessful(HttpServletRequest request) {
         this.request = request;
         password = request.getParameter("password");
         username = request.getParameter("username");
-        if (isLoginButtonClicked() == false)
+        if (!isLoginButtonClicked()) {
             return false;
+        }
         try {
             checkIfParametersNotNull();
-            AccountValidation.validateLoginCredentials(username, password);
+            Validation validation = new LoginValidation(username, password);
+            validation.validateCredentials();
             storeLoginAttributes();
             return true;
-        } catch(Exception ex) {
+        } catch (ValidationException ex) {
             request.setAttribute("error", ex.getMessage());
             return false;
         }
@@ -31,12 +30,13 @@ public class LoginForm {
         return request.getParameter("loginButton") != null;
     }
 
-    private void checkIfParametersNotNull() throws Exception {
+    private void checkIfParametersNotNull() throws ValidationException {
         if (isPasswordNull()) {
-            throw new Exception("Invalid password. Please try again.");
-        }
-        else if (isUsernameNull()) {
-            throw new Exception("Invalid username. Please try again.");
+            throw new ValidationException("Invalid password."
+                + "Please try again.");
+        } else if (isUsernameNull()) {
+            throw new ValidationException("Invalid username."
+                + "Please try again.");
         }
     }
 
@@ -45,7 +45,8 @@ public class LoginForm {
         String welcomeName = currentAccount.getName();
         String firstName = currentAccount.getFirstName();
         String lastName = currentAccount.getLastName();
-        Attributes.storeAttribute(Attributes.CURRENT_USER, welcomeName);
+        Attributes.storeAttribute(Attributes.WELCOME_NAME, welcomeName);
+        Attributes.storeAttribute(Attributes.CURRENT_USER, username);
         Attributes.storeAttribute("firstName", firstName);
         Attributes.storeAttribute("lastName", lastName);
         Attributes.storeAttribute("username", username);

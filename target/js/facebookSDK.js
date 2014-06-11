@@ -100,3 +100,8 @@ function hideFBLogoutOption() {
         }
     }
 }
+
+function resetSelection() {
+    var nav = document.getElementById("nav");
+    nav.selectedIndex = 0;
+}

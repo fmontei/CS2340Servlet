@@ -2,35 +2,33 @@ package model;
 
 import static model.AccountForm.getUserAccounts;
 
-public class AccountValidation {
+public class AccountValidation implements  Validation {
+    private UserAccount account;
+    private String password;
+    private String confirmPassword;
 
-    public static boolean validateAccountCredentials(UserAccount newAccount) throws AccountFormException {
-        if (newAccount.areAllFieldsNotNull()) {
-            if (usernameExists(newAccount.getUsername())) {
-                throw new AccountFormException("Username already taken. " +
-                        "Please try again.");
-            } else {
-                return true;
-            }
-        } else {
-            throw new AccountFormException("All fields must be populated. " +
-                    "Please try again.");
-        }
+    public AccountValidation(UserAccount account,
+                             String password,
+                             String confirmPassword) {
+        this.account = account;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
     }
 
-    protected static void validateLoginCredentials(String username, String password) throws Exception {
-        if (passwordMatches(username, password) == false) {
-            throw new Exception("Authentication failed. Please try again.");
+    @Override
+    public boolean validateCredentials()
+            throws ValidationException {
+        if (usernameExists(account.getUsername())) {
+            throw new ValidationException("Username already taken. "
+                + "Please try again.");
+        } else if (!password.equals(confirmPassword)) {
+            throw new ValidationException("Passwords do not match. "
+                + "Please try again.");
         }
+        return true;
     }
 
-    protected static boolean usernameExists(String username) {
+    private boolean usernameExists(String username) {
         return getUserAccounts().containsKey(username);
-    }
-
-    protected static boolean passwordMatches(String username, String password) {
-        UserAccount currentAccount = getUserAccounts().get(username);
-        String realPassword = currentAccount.getPassword();
-        return realPassword.equals(password);
     }
 }

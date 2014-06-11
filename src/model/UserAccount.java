@@ -13,14 +13,6 @@ public class UserAccount {
         this.password = password;
     }
 
-    public boolean areAllFieldsNotNull() {
-        return hasValue(firstName) && hasValue(lastName) && hasValue(username) && hasValue(password);
-    }
-
-    private boolean hasValue(String field) {
-        return field != null && !field.isEmpty();
-    }
-
     public String getUsername() {
         return username;
     }

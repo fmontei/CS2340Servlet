@@ -20,9 +20,7 @@
                 <dd><span id="label">Last name:</span><br />
                     <input type="text" name="updateLastName" value="<%=lastName == null ? "" : lastName %>" required="required" />
                     <br /><br />
-                <dt><b>Edit new Account Information:</b>
-                <dd><span id="label">Username:</span><br />
-                    <input type="text" name="updateUsername" value="<%=username == null ? "" : username %>" required="required" />
+                <dt><b>Change Password:</b>
                 <dd>
                     <div class="fieldWrapper">
                         <label for="oldPassword"><span id="label">Password:</span></label><br />
