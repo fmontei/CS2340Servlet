@@ -17,7 +17,7 @@ public class LoginForm {
         if (isLoginButtonClicked() == false)
             return false;
         if (isLoginParametersNotNull()) {
-            if (AccountForm.isLoginSuccessful(username, password)) {
+            if (AccountValidation.isLoginSuccessful(username, password)) {
                 createWelcomeName();
                 return true;
             } else {
@@ -41,7 +41,12 @@ public class LoginForm {
     private void createWelcomeName() {
         UserAccount currentAccount = AccountForm.getUserAccounts().get(username);
         String welcomeName = currentAccount.getName();
+        String firstName = currentAccount.getFirstName();
+        String lastName = currentAccount.getLastName();
         Attributes.storeAttribute(Attributes.CURRENT_USER, welcomeName);
+        Attributes.storeAttribute("firstName", firstName);
+        Attributes.storeAttribute("lastName", lastName);
+        Attributes.storeAttribute("username", username);
     }
 
     private void generateNullError() {

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "UpdateAccountServlet", urlPatterns = {"/updateAccount"})
-public class UpdateAccountServlet extends HttpServlet {
+public class AccountUpdateServlet extends HttpServlet {
 
     @Override
     public void service(HttpServletRequest request, HttpServletResponse response)

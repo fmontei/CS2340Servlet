@@ -9,23 +9,16 @@ import java.util.Map;
 public class AccountForm {
     private static Map<String, UserAccount> userAccounts = new HashMap<String, UserAccount>();
     private HttpServletRequest request;
-    private UserAccount newAccount;
 
     public AccountForm(HttpServletRequest request) {
         this.request = request;
     }
 
     public boolean isAccountCreationSuccessful() {
-        if (isAccountInfoAndCredentialsValid() == false)
-            return false;
-        elseClearSavedAttributes();
-        return true;
-    }
-
-    private boolean isAccountInfoAndCredentialsValid() {
         try {
-            gatherNewAccountInfo();
-            validateAccountCredentials();
+            UserAccount newAccount = gatherNewAccountInfo();
+            AccountValidation.validateAccountCredentials(newAccount);
+            clearSavedAttributes();
             userAccounts.put(newAccount.getUsername(), newAccount);
             return true;
         } catch(AccountFormException ex) {
@@ -34,7 +27,7 @@ public class AccountForm {
         }
     }
 
-    private void gatherNewAccountInfo() throws AccountFormException {
+    private UserAccount gatherNewAccountInfo() throws AccountFormException {
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String username = request.getParameter("newUsername");
@@ -43,45 +36,18 @@ public class AccountForm {
         storeAttribute("prevFirstName", firstName);
         storeAttribute("prevLastName", lastName);
         storeAttribute("prevUsername", username);
-        newAccount = new UserAccount(firstName, lastName, username, password);
+        UserAccount newAccount = new UserAccount(firstName, lastName, username, password);
         if (password.equals(confirmPassword) == false) {
             throw new AccountFormException("Passwords do not match. " +
                     "Please try again.");
         }
+        return newAccount;
     }
 
-    public boolean validateAccountCredentials() throws AccountFormException {
-        if (newAccount.allFieldsHaveValue()) {
-            if (usernameExists(newAccount.getUsername())) {
-                throw new AccountFormException("Username already taken. " +
-                    "Please try again.");
-            } else {
-                return true;
-            }
-        } else {
-            throw new AccountFormException("All fields must be populated. " +
-                "Please try again.");
-        }
-    }
-
-    private void elseClearSavedAttributes() {
+    private void clearSavedAttributes() {
         removeAttribute("prevFirstName");
         removeAttribute("prevLastName");
         removeAttribute("prevUsername");
-    }
-
-    protected static boolean isLoginSuccessful(String username, String password) {
-        return usernameExists(username) && passwordMatches(username, password);
-    }
-
-    protected static boolean usernameExists(String username) {
-        return userAccounts.containsKey(username);
-    }
-
-    protected static boolean passwordMatches(String username, String password) {
-        UserAccount currentAccount = userAccounts.get(username);
-        String realPassword = currentAccount.getPassword();
-        return realPassword.equals(password);
     }
 
     public static Map<String, UserAccount> getUserAccounts() {

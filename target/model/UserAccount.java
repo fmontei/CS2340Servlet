@@ -32,4 +32,12 @@ public class UserAccount {
     public String getName() {
         return firstName + " " + lastName;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
 }
