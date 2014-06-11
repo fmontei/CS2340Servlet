@@ -1,6 +1,8 @@
 package model;
 
-public class UserAccount {
+import java.io.Serializable;
+
+public class UserAccount implements Serializable{
     private String firstName;
     private String lastName;
     private String username;

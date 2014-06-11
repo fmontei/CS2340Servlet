@@ -7,6 +7,7 @@ public class AccountUpdateForm {
     private UserAccount currentAccount;
     private String password;
     private String confirmPassword;
+    private UserAccountsSerializable accountsSave = new UserAccountsSerializable();
     public AccountUpdateForm(HttpServletRequest request) {
         this.request = request;
     }
@@ -48,6 +49,6 @@ public class AccountUpdateForm {
         Attributes.storeAttribute("firstName", firstName);
         Attributes.storeAttribute("lastName", lastName);
         Attributes.storeAttribute("username", username);
-        AccountForm.getUserAccounts().put(currentAccount.getUsername(), currentAccount);
+        AccountForm.changeAccountSettings(currentAccount);
     }
 }
