@@ -14,7 +14,7 @@ public class IndexServlet extends HttpServlet {
     protected void service(HttpServletRequest request,
                            HttpServletResponse response)
         throws IOException, ServletException {
-        response.sendRedirect("jsp/index.jsp");
+        response.sendRedirect("jsp/createLoginSession.jsp");
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
