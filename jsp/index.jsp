@@ -12,10 +12,16 @@
             <span id="overviewMessage">
                 <%=Attributes.getAttribute(Attributes.CURRENT_USER)%>&#39;s Trip Planner
             </span>
-            <fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();">
+            <fb:login-button id="fbLoginButton"
+                    scope="public_profile,email"
+                    onlogin="checkLoginState();">
             </fb:login-button>
-            <select id="nav" onChange="doDropdownAction(this); checkLoginState();" onFocus="checkLoginState();">
-                <option value="">Navigation</option>
+            <select id="nav"
+                    onChange="doDropdownAction(this); checkLoginState();"
+                    onFocus="checkLoginState();">
+                <option value=""
+                    disabled selected
+                    style="display:none;">Navigation</option>
                 <option value="/CS2340Servlet/updateAccount">Account Settings</option>
                 <option value="/CS2340Servlet/login">Logout</option>
             </select>

@@ -80,6 +80,9 @@ function fbLogout() {
             hideFBLogoutOption();
         });
     }
+    else {
+        resetSelection();
+    }
 }
 
 function hideFBLogoutOption() {
@@ -91,4 +94,9 @@ function hideFBLogoutOption() {
             break;
         }
     }
+}
+
+function resetSelection() {
+    var nav = document.getElementById("nav");
+    nav.selectedIndex = 0;
 }
