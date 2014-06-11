@@ -12,3 +12,8 @@ To deploy and run this project,<br />
   4) Open up a web browser and navigate to the following web address:<br />
       localhost:8080/CS2340Servlet/login
       
+To compile this project from the command line, type:<br />
+  1) using Windows, <em>javac -cp .;lib/servlet-api.jar -d ./out/production src/model/[asterik].java src/controller/[asterik].java</em><br />
+  2) otherwise, <em>javac -cp .:lib/servlet-api.jar -d ./out/production src/model/[asterik].java src/controller/[asterik].java</em><br /><br />
+
+  where [asterik] = *
