@@ -1,4 +1,4 @@
-package controller;
+package controller; 
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,10 +10,19 @@ import java.io.IOException;
 @WebServlet(name = "IndexServlet", urlPatterns = { "/index" })
 public class IndexServlet extends HttpServlet {
 
-    @Override
+//     @Override
+// <<<<<<< HEAD
+//     protected void service(HttpServletRequest request,
+//                            HttpServletResponse response)
+//         throws IOException, ServletException {
+//         response.sendRedirect("jsp/createLoginSession.jsp");
+//     }
+
+// =======
+// >>>>>>> upstream/master
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
-        response.sendRedirect("jsp/index.jsp");
+        response.sendRedirect("jsp/createLoginSession.jsp");
     }
 
     @Override

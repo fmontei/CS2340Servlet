@@ -54,11 +54,11 @@ header {
     cursor: pointer;
 }
 
-#fbLoginButton {
+/*#fbLoginButton {
     position: fixed;
     top: 30px;
     right: 480px;
-}
+}*/
 
 #status {
     font-size: 12px;
@@ -67,9 +67,9 @@ header {
     right: 10px;
 }
 
-#error {
+.error {
     color: red;
-    margin-left: 5%;
+    /*margin-left: 5%;*/
 }
 
 #fbLogoutButton {

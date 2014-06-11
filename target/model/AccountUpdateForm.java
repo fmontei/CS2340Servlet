@@ -5,8 +5,11 @@ import javax.servlet.http.HttpServletRequest;
 public class AccountUpdateForm {
     private HttpServletRequest request;
     private UserAccount currentAccount;
+    private String username;
     private String password;
     private String confirmPassword;
+    private String firstName, lastName;
+    private UserAccountsSerializable accountsSave = new UserAccountsSerializable();
     public AccountUpdateForm(HttpServletRequest request) {
         this.request = request;
     }
@@ -24,15 +27,20 @@ public class AccountUpdateForm {
     }
 
     private void gatherNewAccountInfo() throws ValidationException {
-        final String username = Attributes.getAttribute(Attributes.CURRENT_USER);
-        String firstName = request.getParameter("updateFirstName");
-        String lastName = request.getParameter("updateLastName");
+        username = Attributes.getAttribute(Attributes.CURRENT_USER);
+        firstName = request.getParameter("updateFirstName");
+        lastName = request.getParameter("updateLastName");
         password = request.getParameter("oldPassword");
         confirmPassword = request.getParameter("confirmOldPassword");
-        currentAccount = new UserAccount(firstName, lastName, username, password);
     }
 
     public void validateCredentials() throws ValidationException {
+       if (password == "" && confirmPassword == "") {
+           UserAccount accountBeforeChange = AccountForm.getUserAccounts().get(username);
+           password = accountBeforeChange.getPassword();
+           return;
+       }
+
        if (!password.equals(confirmPassword)) {
             throw new ValidationException("Passwords do not match. "
                     + "Please try again.");
@@ -40,6 +48,7 @@ public class AccountUpdateForm {
     }
 
     private void storeLoginAttributes() {
+        currentAccount = new UserAccount(firstName, lastName, username, password);
         String username = currentAccount.getUsername();
         String welcomeName = currentAccount.getName();
         String firstName = currentAccount.getFirstName();
@@ -48,6 +57,6 @@ public class AccountUpdateForm {
         Attributes.storeAttribute("firstName", firstName);
         Attributes.storeAttribute("lastName", lastName);
         Attributes.storeAttribute("username", username);
-        AccountForm.getUserAccounts().put(currentAccount.getUsername(), currentAccount);
+        AccountForm.changeAccountSettings(currentAccount);
     }
 }

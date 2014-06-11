@@ -40,7 +40,7 @@ public class AccountCreationServlet extends HttpServlet {
 
     private void returnToLoginScreen(HttpServletResponse response)
             throws IOException {
-        response.sendRedirect("jsp/login.jsp");
+        response.sendRedirect("jsp/index.jsp");
     }
 
     private void reloadBecauseAccountCreateFailed(HttpServletRequest request,
