@@ -2,9 +2,6 @@ package model;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static model.Attributes.removeAttribute;
-import static model.Attributes.storeAttribute;
-
 public class AccountUpdateForm {
     private HttpServletRequest request;
     private UserAccount currentAccount;
