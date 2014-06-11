@@ -1,22 +1,24 @@
 <%@ page import="model.Attributes" %>
 <%@ page import="model.AccountForm" %>
+<% String prevFirstName = Attributes.getAttribute("prevFirstName"); %>
+<% String prevLastName = Attributes.getAttribute("prevLastName"); %>
+<% String prevUsername = Attributes.getAttribute("prevUsername"); %>
 
 <!DOCTYPE html>
 <html>
     <head>
-       <meta charset="utf-8" />
-       <title>Trip Planner</title>
+      <meta charset="utf-8" />
+      <title>Trip Planner</title>
 
-       <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
-       <link href="/CS2340Servlet/css/bootstrap.min.css" rel="stylesheet">
-       <link href="/CS2340Servlet/css/dashboard.css" rel="stylesheet">
+      <!-- Stylesheets -->
+      <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
+      <link href="/CS2340Servlet/css/bootstrap.min.css" rel="stylesheet">
+      <link href="/CS2340Servlet/css/dashboard.css" rel="stylesheet">
 
     </head>
     <body>
 
-    <%
-      if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
-    %>
+    <%if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {%>
 
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container-fluid">
@@ -49,7 +51,62 @@
                 </div>
               </li>
               <li>
-                <a href="/CS2340Servlet/jsp/create_account.jsp">Sign Up</a>
+                <!-- <a href="/CS2340Servlet/jsp/create_account.jsp">Sign Up</a> -->
+                <a href="#" data-toggle="modal" data-target="#myModal">Sign Up</a>
+                <!-- Button trigger modal -->
+                <!-- <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                  Launch demo modal
+                </button>
+ -->
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Sign Up</h4>
+                      </div>
+                      <div class="modal-body">
+
+                        <form id="create_account_form" action="/CS2340Servlet/createAccount" method="POST">
+
+                            <!-- <dt><b>Enter your Personal Information:</b> -->
+                            <!-- <dd><span id="label">First name:</span><br /> -->
+                              <input type="text" name="firstName" style="margin-bottom: 15px;" size="30" required="required" placeholder="First Name"/>
+                              <br/>
+                            <!-- <dd><span id="label">Last name:</span><br /> -->
+                              <input type="text" name="lastName" style="margin-bottom: 15px;" size="30" required="required" placeholder="Last Name"/>
+                              <br/>
+                              <!-- <br /><br /> -->
+                            <!-- <dt><b>Enter new Account Information:</b> -->
+                            <!-- <dd><span id="label">Username:</span><br /> -->
+                              <input type="text" name="newUsername" style="margin-bottom: 15px;" size="30" required="required" placeholder="Username"/>
+                              <br/>
+                                  <!-- <dd> -->
+                                      <!-- <div class="fieldWrapper"> -->
+                                          <!-- <label for="newPassword"><span id="label">Password:</span></label><br /> -->
+                                          <input name="newPassword" style="margin-bottom: 15px;" size="30" id="newPassword" type="password" required="required" placeholder="Password"><br/>
+                                      <!-- </div> -->
+                                  <!-- <dd> -->
+                                      <!-- <div class="fieldWrapper"> -->
+                                          <!-- <label for="confirmPassword"><span id="label">Confirm Password:</span></label><br /> -->
+                                          <input name="confirmPassword" style="margin-bottom: 15px;" size="30" id="confirmPassword" onkeyup="checkPass(); return false;" type="password" required="required" placeholder="Confirm Password"><br />
+                                          <span id="confirmMessage" class="confirmMessage"></span>
+                                      <!-- </div> -->
+                          <!-- </dl> -->
+                              <p id="error">${error}</p>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input id="submit" type="submit" name="submitButton" text="Sign Up" class="btn btn-primary"/>
+                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                      </div>
+
+                        </form>
+                    </div>
+                  </div>
+                </div>
               </li>
             </ul>
           </div>
@@ -93,9 +150,9 @@
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-              <!-- <li>
+              <li>
                 <fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
-              </li> -->
+              </li>
               <li><a href="#">Dashboard</a></li>
               <li><a href="/CS2340Servlet/updateAccount">Settings</a></li>
               <li><a href="deleteLoginSession.jsp">Logout</a></li>
@@ -122,9 +179,10 @@
         </div>
       </div>
 
-    <%
-        }
-    %>
+    <%}%>
+
+        <!-- Old stuff -->
+
         <!-- <nav>
             <span id="overviewMessage">
                 <%=Attributes.getAttribute(Attributes.CURRENT_USER)%>&#39;s Trip Planner
@@ -143,30 +201,23 @@
             Trip Planner Overview
         </header> -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <!-- Facebook SDK Javascript -->
         <script type="text/javascript" src="/CS2340Servlet/js/facebookSDK.js">
         </script>
+
+        <!-- Old, check for facebook logout -->
+<!-- 
         <script type="text/javascript">
             function doDropdownAction(nav) {
                return nav.options[nav.selectedIndex].value && (window.location = nav.options[nav.selectedIndex].value);
             }
         </script>
+ -->
+
         <div id="fb-root"></div>
+
         <script type="text/javascript">
+            // Facebook login
             (function(d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0];
                 if (d.getElementById(id)) return;
@@ -175,6 +226,7 @@
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
 
+            // Dropdown Login Form
             $(function() {
               // Setup drop down menu
               $('.dropdown-toggle').dropdown();
@@ -186,11 +238,10 @@
             });
         </script>
 
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
+        <!-- Bootstrap core JavaScript -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="/CS2340Servlet/js/bootstrap.min.js"></script>
         <script src="/CS2340Servlet/js/docs.min.js"></script>
+
     </body>
 </html>

@@ -92,9 +92,9 @@
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-              <!-- <li>
+              <li>
                 <fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
-              </li> -->
+              </li>
               <li><a href="#">Dashboard</a></li>
               <li><a href="/CS2340Servlet/updateAccount">Settings</a></li>
               <li><a href="deleteLoginSession.jsp">Logout</a></li>
