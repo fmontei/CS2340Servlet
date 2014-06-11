@@ -4,9 +4,6 @@ import java.io.*;
 import java.util.Map;
 import java.util.HashMap;
 
-/**
- * Created by Jonathan on 6/9/2014.
- */
 public class UserAccountsSerializable implements Serializable {
     private static Map<String, UserAccount> userAccounts;
     private static File file;

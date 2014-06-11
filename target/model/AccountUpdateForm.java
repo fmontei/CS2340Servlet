@@ -34,6 +34,8 @@ public class AccountUpdateForm {
     }
 
     public void validateCredentials() throws ValidationException {
+       if (password == "" && confirmPassword == "")
+           return;
        if (!password.equals(confirmPassword)) {
             throw new ValidationException("Passwords do not match. "
                     + "Please try again.");

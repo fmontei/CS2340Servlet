@@ -88,7 +88,7 @@
               <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#">
-              <%=session.getAttribute("userid")%>&#39;s Trip Planner
+              <%=Attributes.getAttribute(Attributes.WELCOME_NAME)%>&#39;s Trip Planner
             </a>
           </div>
           <div class="navbar-collapse collapse">
@@ -110,7 +110,7 @@
           </div>
           <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h1 class="page-header">
-              Welcome <%=session.getAttribute("userid")%>!
+              Welcome <%=Attributes.getAttribute(Attributes.WELCOME_NAME)%>!
             </h1>
             <fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
           </div>
