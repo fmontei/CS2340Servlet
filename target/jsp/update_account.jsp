@@ -1,7 +1,15 @@
+<<<<<<< HEAD
+<%
+    if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
+        response.sendRedirect("/CS2340Servlet/jsp/index.jsp");
+    }
+%>
+=======
 <%@ page import="model.Attributes" %>
 <% String firstName = Attributes.getAttribute("firstName"); %>
 <% String lastName = Attributes.getAttribute("lastName"); %>
 <% String username = Attributes.getAttribute("username"); %>
+>>>>>>> upstream/master
 
 <!DOCTYPE html>
 <html>

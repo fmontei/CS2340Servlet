@@ -11,6 +11,15 @@ import java.io.IOException;
 public class IndexServlet extends HttpServlet {
 
     @Override
+<<<<<<< HEAD
+    protected void service(HttpServletRequest request,
+                           HttpServletResponse response)
+        throws IOException, ServletException {
+        response.sendRedirect("jsp/createLoginSession.jsp");
+    }
+
+=======
+>>>>>>> upstream/master
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
         response.sendRedirect("jsp/index.jsp");
