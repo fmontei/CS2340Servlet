@@ -12,8 +12,10 @@ public class AccountForm {
     private HttpServletRequest request;
     private String password;
     private String confirmPassword;
+    private static UserAccountsSerializable accountsSave = new UserAccountsSerializable();
 
     public AccountForm(HttpServletRequest request) {
+        userAccounts = accountsSave.loadData();
         this.request = request;
     }
 
@@ -27,6 +29,7 @@ public class AccountForm {
                 clearSavedAttributes();
             }
             userAccounts.put(newAccount.getUsername(), newAccount);
+            accountsSave.saveData(userAccounts);
             return true;
         } catch (ValidationException ex) {
             request.setAttribute("error", ex.getMessage());
@@ -61,6 +64,15 @@ public class AccountForm {
     }
 
     public static Map<String, UserAccount> getUserAccounts() {
+        accountsSave = new UserAccountsSerializable();
+        userAccounts = accountsSave.loadData();
         return userAccounts;
+    }
+
+    public static void changeAccountSettings(UserAccount updatedAccount) {
+        String username = updatedAccount.getUsername();
+        userAccounts.remove(username);
+        userAccounts.put(username, updatedAccount);
+        accountsSave.saveData(userAccounts);
     }
 }
