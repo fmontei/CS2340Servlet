@@ -1,13 +1,10 @@
 <%@ page import="model.Attributes" %>
 <%@ page import="model.AccountForm" %>
-<% String prevFirstName = Attributes.getAttribute("prevFirstName"); %>
-<% String prevLastName = Attributes.getAttribute("prevLastName"); %>
-<% String prevUsername = Attributes.getAttribute("prevUsername"); %>
 
 <!DOCTYPE html>
 <html>
     <head>
-<<<<<<< HEAD
+
       <meta charset="utf-8" />
       <title>Trip Planner</title>
 
@@ -16,11 +13,6 @@
       <link href="/CS2340Servlet/css/bootstrap.min.css" rel="stylesheet">
       <link href="/CS2340Servlet/css/dashboard.css" rel="stylesheet">
 
-=======
-       <meta charset="utf-8" />
-       <title><%=Attributes.getAttribute(Attributes.WELCOME_NAME)%>&#39;s Trip Planner</title>
-       <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
->>>>>>> upstream/master
     </head>
     <body>
 
@@ -57,62 +49,7 @@
                 </div>
               </li>
               <li>
-                <!-- <a href="/CS2340Servlet/jsp/create_account.jsp">Sign Up</a> -->
-                <a href="#" data-toggle="modal" data-target="#myModal">Sign Up</a>
-                <!-- Button trigger modal -->
-                <!-- <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-                  Launch demo modal
-                </button>
- -->
-                <!-- Modal -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Sign Up</h4>
-                      </div>
-                      <div class="modal-body">
-
-                        <form id="create_account_form" action="/CS2340Servlet/createAccount" method="POST">
-
-                            <!-- <dt><b>Enter your Personal Information:</b> -->
-                            <!-- <dd><span id="label">First name:</span><br /> -->
-                              <input type="text" name="firstName" style="margin-bottom: 15px;" size="30" required="required" placeholder="First Name"/>
-                              <br/>
-                            <!-- <dd><span id="label">Last name:</span><br /> -->
-                              <input type="text" name="lastName" style="margin-bottom: 15px;" size="30" required="required" placeholder="Last Name"/>
-                              <br/>
-                              <!-- <br /><br /> -->
-                            <!-- <dt><b>Enter new Account Information:</b> -->
-                            <!-- <dd><span id="label">Username:</span><br /> -->
-                              <input type="text" name="newUsername" style="margin-bottom: 15px;" size="30" required="required" placeholder="Username"/>
-                              <br/>
-                                  <!-- <dd> -->
-                                      <!-- <div class="fieldWrapper"> -->
-                                          <!-- <label for="newPassword"><span id="label">Password:</span></label><br /> -->
-                                          <input name="newPassword" style="margin-bottom: 15px;" size="30" id="newPassword" type="password" required="required" placeholder="Password"><br/>
-                                      <!-- </div> -->
-                                  <!-- <dd> -->
-                                      <!-- <div class="fieldWrapper"> -->
-                                          <!-- <label for="confirmPassword"><span id="label">Confirm Password:</span></label><br /> -->
-                                          <input name="confirmPassword" style="margin-bottom: 15px;" size="30" id="confirmPassword" onkeyup="checkPass(); return false;" type="password" required="required" placeholder="Confirm Password"><br />
-                                          <span id="confirmMessage" class="confirmMessage"></span>
-                                      <!-- </div> -->
-                          <!-- </dl> -->
-                              <p id="error">${error}</p>
-
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input id="submit" type="submit" name="submitButton" text="Sign Up" class="btn btn-primary"/>
-                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-                      </div>
-
-                        </form>
-                    </div>
-                  </div>
-                </div>
+                <a href="/CS2340Servlet/jsp/create_account.jsp">Sign Up</a>
               </li>
             </ul>
           </div>
@@ -156,9 +93,6 @@
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li>
-                <fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
-              </li>
               <li><a href="#">Dashboard</a></li>
               <li><a href="/CS2340Servlet/updateAccount">Settings</a></li>
               <li><a href="deleteLoginSession.jsp">Logout</a></li>
@@ -172,15 +106,13 @@
           <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
               <li class="active"><a href="#">Overview</a></li>
-              <li><a href="#">Reports</a></li>
-              <li><a href="#">Analytics</a></li>
-              <li><a href="#">Export</a></li>
             </ul>
           </div>
           <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h1 class="page-header">
               Welcome <%=session.getAttribute("userid")%>!
             </h1>
+            <fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
           </div>
         </div>
       </div>

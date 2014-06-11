@@ -93,9 +93,6 @@
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li>
-                <fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
-              </li>
               <li><a href="#">Dashboard</a></li>
               <li><a href="/CS2340Servlet/updateAccount">Settings</a></li>
               <li><a href="deleteLoginSession.jsp">Logout</a></li>
@@ -109,15 +106,13 @@
           <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
               <li class="active"><a href="#">Overview</a></li>
-              <li><a href="#">Reports</a></li>
-              <li><a href="#">Analytics</a></li>
-              <li><a href="#">Export</a></li>
             </ul>
           </div>
           <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h1 class="page-header">
               Welcome <%=session.getAttribute("userid")%>!
             </h1>
+            <fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
           </div>
         </div>
       </div>
