@@ -19,9 +19,7 @@
             <select id="nav"
                     onChange="doDropdownAction(this); checkLoginState();"
                     onFocus="checkLoginState();">
-                <option value=""
-                    disabled selected
-                    style="display:none;">Navigation</option>
+                <option value="" disabled selected>Navigation</option>
                 <option value="/CS2340Servlet/updateAccount">Account Settings</option>
                 <option value="/CS2340Servlet/login">Logout</option>
             </select>
@@ -36,7 +34,7 @@
         </script>
         <script type="text/javascript">
             function doDropdownAction(nav) {
-               return nav.options[nav.selectedIndex].value && (window.location = nav.options[nav.selectedIndex].value);
+                return nav.options[nav.selectedIndex].value && (window.location = nav.options[nav.selectedIndex].value);
             }
         </script>
         <div id="fb-root"></div>

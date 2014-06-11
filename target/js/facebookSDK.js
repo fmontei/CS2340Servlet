@@ -81,9 +81,13 @@ function fbLogout() {
         });
     }
     else {
-        var nav = document.getElementById("nav");
-        nav.selectedIndex = 0;
+        resetSelection();
     }
+}
+
+function resetSelection() {
+    var nav = document.getElementById("nav");
+    nav.selectedIndex = 0;
 }
 
 function hideFBLogoutOption() {
@@ -95,4 +99,9 @@ function hideFBLogoutOption() {
             break;
         }
     }
+}
+
+function resetSelection() {
+    var nav = document.getElementById("nav");
+    nav.selectedIndex = 0;
 }

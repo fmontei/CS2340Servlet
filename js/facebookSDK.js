@@ -85,6 +85,11 @@ function fbLogout() {
     }
 }
 
+function resetSelection() {
+    var nav = document.getElementById("nav");
+    nav.selectedIndex = 0;
+}
+
 function hideFBLogoutOption() {
     var nav = document.getElementById('nav');
     for (var i = 0; i < nav.length; i++) {

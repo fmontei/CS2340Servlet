@@ -13,14 +13,6 @@ public class UserAccount {
         this.password = password;
     }
 
-    public boolean allFieldsHaveValue() {
-        return hasValue(firstName) && hasValue(lastName) && hasValue(username) && hasValue(password);
-    }
-
-    private boolean hasValue(String field) {
-        return field != null && !field.isEmpty();
-    }
-
     public String getUsername() {
         return username;
     }
@@ -31,5 +23,13 @@ public class UserAccount {
 
     public String getName() {
         return firstName + " " + lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 }
