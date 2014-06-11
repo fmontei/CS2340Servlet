@@ -12,10 +12,10 @@
             <span id="overviewMessage">
                 <%=Attributes.getAttribute(Attributes.CURRENT_USER)%>&#39;s Trip Planner
             </span>
-            <fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();">
+            <fb:login-button id="fbLoginButton" scope="public_profile,email" onLogin="checkLoginState();">
             </fb:login-button>
             <select id="nav" onChange="doDropdownAction(this); checkLoginState();" onFocus="checkLoginState();">
-                <option value="">Navigation</option>
+                <option value="" disabled selected style="display: none;">Navigation</option>
                 <option value="/CS2340Servlet/updateAccount">Account Settings</option>
                 <option value="/CS2340Servlet/login">Logout</option>
             </select>
@@ -30,7 +30,7 @@
         </script>
         <script type="text/javascript">
             function doDropdownAction(nav) {
-               return nav.options[nav.selectedIndex].value && (window.location = nav.options[nav.selectedIndex].value);
+                return nav.options[nav.selectedIndex].value && (window.location = nav.options[nav.selectedIndex].value);
             }
         </script>
         <div id="fb-root"></div>

@@ -16,16 +16,13 @@ public class LoginForm {
         username = request.getParameter("username");
         if (isLoginButtonClicked() == false)
             return false;
-        if (isLoginParametersNotNull()) {
-            if (AccountValidation.isLoginSuccessful(username, password)) {
-                createWelcomeName();
-                return true;
-            } else {
-                generateAuthenticationError();
-                return false;
-            }
-        } else {
-            generateNullError();
+        try {
+            checkIfParametersNotNull();
+            AccountValidation.validateLoginCredentials(username, password);
+            storeLoginAttributes();
+            return true;
+        } catch(Exception ex) {
+            request.setAttribute("error", ex.getMessage());
             return false;
         }
     }
@@ -34,11 +31,16 @@ public class LoginForm {
         return request.getParameter("loginButton") != null;
     }
 
-    private boolean isLoginParametersNotNull() {
-        return isPasswordNotNull() && isUsernameNotNull();
+    private void checkIfParametersNotNull() throws Exception {
+        if (isPasswordNull()) {
+            throw new Exception("Invalid password. Please try again.");
+        }
+        else if (isUsernameNull()) {
+            throw new Exception("Invalid username. Please try again.");
+        }
     }
 
-    private void createWelcomeName() {
+    private void storeLoginAttributes() {
         UserAccount currentAccount = AccountForm.getUserAccounts().get(username);
         String welcomeName = currentAccount.getName();
         String firstName = currentAccount.getFirstName();
@@ -49,25 +51,11 @@ public class LoginForm {
         Attributes.storeAttribute("username", username);
     }
 
-    private void generateNullError() {
-        if (isUsernameNotNull() == false) {
-            request.setAttribute("error", "Unknown user. Please try again.");
-        } else if (isPasswordNotNull() == false) {
-            request.setAttribute("error", "Password is incorrect. Please try again.");
-        }
+    private boolean isPasswordNull() {
+        return password == null || password.isEmpty();
     }
 
-    private void generateAuthenticationError() {
-        if (isUsernameNotNull() && isPasswordNotNull()) {
-            request.setAttribute("error", "Authentication failed. Please try again.");
-        }
-    }
-
-    private boolean isPasswordNotNull() {
-        return password != null && !password.isEmpty();
-    }
-
-    private boolean isUsernameNotNull() {
-        return username != null && !username.isEmpty();
+    private boolean isUsernameNull() {
+        return username == null || username.isEmpty();
     }
 }

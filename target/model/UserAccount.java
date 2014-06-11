@@ -13,7 +13,7 @@ public class UserAccount {
         this.password = password;
     }
 
-    public boolean allFieldsHaveValue() {
+    public boolean areAllFieldsNotNull() {
         return hasValue(firstName) && hasValue(lastName) && hasValue(username) && hasValue(password);
     }
 
