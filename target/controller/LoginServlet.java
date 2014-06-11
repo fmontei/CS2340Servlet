@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
         if (loginForm.isAuthenticationSuccessful(request)) {
-            forwardRequest(this, request, response, "/index");
+            response.sendRedirect("index");
         } else if (isCreateAccountButtonClicked(request)) {
             response.sendRedirect("createAccount");
         } else {
@@ -41,7 +41,8 @@ public class LoginServlet extends HttpServlet {
         return request.getParameter("createAccountButton") != null;
     }
 
-    private void reloadBecauseAuthenticateFailed(HttpServletRequest request, HttpServletResponse response)
+    private void reloadBecauseAuthenticateFailed(HttpServletRequest request,
+                                                 HttpServletResponse response)
         throws IOException, ServletException {
         forwardRequest(this, request, response, "/jsp/login.jsp");
     }

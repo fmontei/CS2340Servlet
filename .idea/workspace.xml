@@ -2,70 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="df503c01-4674-4f10-b011-59923504d505" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/WEB-INF/classes/controller/AccountUpdateServlet.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/WEB-INF/classes/model/AccountValidation.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/controller/AccountUpdateServlet.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/AccountValidation.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/model/AccountValidation.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/LoginValidation.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/Validation.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/ValidationException.java" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\out\production\CS2340Servlet\controller\AccountCreationServlet.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\out\production\CS2340Servlet\controller\IndexServlet.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\out\production\CS2340Servlet\controller\LoginServlet.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\out\production\CS2340Servlet\controller\UpdateAccountServlet.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\out\production\CS2340Servlet\model\AccountForm.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\out\production\CS2340Servlet\model\Attributes.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\out\production\CS2340Servlet\model\EmptyFieldException.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\out\production\CS2340Servlet\model\LoginForm.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\out\production\CS2340Servlet\model\PasswordMismatchException.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\out\production\CS2340Servlet\model\ServletUtilities.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\out\production\CS2340Servlet\model\UserAccount.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\out\production\CS2340Servlet\model\UserAlreadyExistsException.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\src\model\AccountFormException.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\WEB-INF\classes\controller\MenuServlet.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\WEB-INF\classes\controller\SettingsServlet.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\WEB-INF\classes\controller\UpdateAccountServlet.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\WEB-INF\classes\model\AccountFormException.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\WEB-INF\classes\model\EmptyFieldException.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\WEB-INF\classes\model\PasswordMismatchException.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\WEB-INF\classes\model\UserAlreadyExistsException.class" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\controller\MenuServlet.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\controller\SettingsServlet.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\controller\UpdateAccountServlet.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\js\facebook.js" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\js\facebookLogout.js" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\js\test.js" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\jsp\menu.jsp" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\jsp\new_account.jsp" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\jsp\settings.jsp" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\model\AccountFormException.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\model\EmptyFieldException.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\model\PasswordMismatchException.java" afterPath="" />
-      <change type="DELETED" beforePath="E:\CPSC\CS2340Servlet\target\model\UserAlreadyExistsException.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/WEB-INF/classes/model/AccountForm.class" afterPath="$PROJECT_DIR$/target/WEB-INF/classes/model/AccountForm.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/WEB-INF/classes/model/LoginForm.class" afterPath="$PROJECT_DIR$/target/WEB-INF/classes/model/LoginForm.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/WEB-INF/classes/model/UserAccount.class" afterPath="$PROJECT_DIR$/target/WEB-INF/classes/model/UserAccount.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/AccountForm.java" afterPath="$PROJECT_DIR$/src/model/AccountForm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/model/AccountForm.java" afterPath="$PROJECT_DIR$/target/model/AccountForm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CS2340Servlet.iml" afterPath="$PROJECT_DIR$/CS2340Servlet.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/LoginForm.java" afterPath="$PROJECT_DIR$/src/model/LoginForm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/model/LoginForm.java" afterPath="$PROJECT_DIR$/target/model/LoginForm.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/WEB-INF/classes/controller/IndexServlet.class" afterPath="$PROJECT_DIR$/target/WEB-INF/classes/controller/IndexServlet.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/IndexServlet.java" afterPath="$PROJECT_DIR$/src/controller/IndexServlet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/controller/IndexServlet.java" afterPath="$PROJECT_DIR$/target/controller/IndexServlet.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/LoginServlet.java" afterPath="$PROJECT_DIR$/src/controller/LoginServlet.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/controller/LoginServlet.java" afterPath="$PROJECT_DIR$/target/controller/LoginServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/UserAccount.java" afterPath="$PROJECT_DIR$/src/model/UserAccount.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/model/UserAccount.java" afterPath="$PROJECT_DIR$/target/model/UserAccount.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/facebookSDK.js" afterPath="$PROJECT_DIR$/js/facebookSDK.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/js/facebookSDK.js" afterPath="$PROJECT_DIR$/target/js/facebookSDK.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jsp/index.jsp" afterPath="$PROJECT_DIR$/jsp/index.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/jsp/index.jsp" afterPath="$PROJECT_DIR$/target/jsp/index.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jsp/update_account.jsp" afterPath="$PROJECT_DIR$/jsp/update_account.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/jsp/update_account.jsp" afterPath="$PROJECT_DIR$/target/jsp/update_account.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web.xml" afterPath="$PROJECT_DIR$/web.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/target/WEB-INF/web.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="E:\CPSC\CS2340Servlet\src\controller\UpdateAccountServlet.java" afterPath="$PROJECT_DIR$/src/controller/AccountUpdateServlet.java" />
     </list>
     <ignored path="CS2340Servlet.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -91,7 +32,7 @@
       <file leaf-file-name="AccountCreationServlet.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/controller/AccountCreationServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="833">
+            <state vertical-scroll-proportion="0.0" vertical-offset="65" max-vertical-offset="833">
               <caret line="30" column="20" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
               <folding />
             </state>
@@ -130,21 +71,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginValidation.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="LoginValidation.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/model/LoginValidation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7810811" vertical-offset="0" max-vertical-offset="740">
-              <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="697">
+              <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginServlet.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="LoginServlet.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/controller/LoginServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="782">
-              <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+            <state vertical-scroll-proportion="0.5453278" vertical-offset="0" max-vertical-offset="799">
+              <caret line="31" column="40" selection-start-line="31" selection-start-column="40" selection-end-line="31" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IndexServlet.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/controller/IndexServlet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
+              <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -180,9 +131,10 @@
         <option value="$PROJECT_DIR$/src/model/Validation.java" />
         <option value="$PROJECT_DIR$/src/model/AccountForm.java" />
         <option value="$PROJECT_DIR$/src/model/UserAccount.java" />
-        <option value="$PROJECT_DIR$/src/controller/LoginServlet.java" />
         <option value="$PROJECT_DIR$/src/model/AccountValidation.java" />
         <option value="$PROJECT_DIR$/src/model/LoginValidation.java" />
+        <option value="$PROJECT_DIR$/src/controller/IndexServlet.java" />
+        <option value="$PROJECT_DIR$/src/controller/LoginServlet.java" />
       </list>
     </option>
   </component>
@@ -564,14 +516,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/AccountUpdateServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816">
-          <caret line="23" column="50" selection-start-line="23" selection-start-column="50" selection-end-line="23" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/Validation.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.06891892" vertical-offset="0" max-vertical-offset="740">
@@ -580,26 +524,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/AccountCreationServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="833">
-          <caret line="30" column="20" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/UserAccount.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
           <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/LoginServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="782">
-          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
           <folding />
         </state>
       </provider>
@@ -632,8 +560,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model/LoginValidation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7810811" vertical-offset="0" max-vertical-offset="740">
-          <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="697">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/AccountUpdateServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816">
+          <caret line="23" column="50" selection-start-line="23" selection-start-column="50" selection-end-line="23" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/IndexServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
+          <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/AccountCreationServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="833">
+          <caret line="30" column="20" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/LoginServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5453278" vertical-offset="0" max-vertical-offset="799">
+          <caret line="31" column="40" selection-start-line="31" selection-start-column="40" selection-end-line="31" selection-end-column="40" />
           <folding />
         </state>
       </provider>
