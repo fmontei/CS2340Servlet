@@ -22,7 +22,7 @@ public class LoginServlet extends HttpServlet {
 
     private void redirectToLoginPage(HttpServletResponse response)
         throws IOException {
-        response.sendRedirect("jsp/login.jsp");
+        response.sendRedirect("jsp/index.jsp");
     }
 
     @Override
@@ -44,6 +44,6 @@ public class LoginServlet extends HttpServlet {
     private void reloadBecauseAuthenticateFailed(HttpServletRequest request,
                                                  HttpServletResponse response)
         throws IOException, ServletException {
-        forwardRequest(this, request, response, "/jsp/login.jsp");
+        forwardRequest(this, request, response, "/jsp/index.jsp");
     }
 }
