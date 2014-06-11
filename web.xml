@@ -58,7 +58,7 @@ metadata-complete="true">
 
     <servlet>
         <servlet-name>UpdateAccountServlet</servlet-name>
-        <servlet-class>controller.UpdateAccountServlet</servlet-class>
+        <servlet-class>controller.AccountUpdateServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UpdateAccountServlet</servlet-name>

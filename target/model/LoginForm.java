@@ -7,25 +7,21 @@ public class LoginForm {
     private String username;
     private String password;
 
-    public LoginForm() {
-    }
-
     public boolean isAuthenticationSuccessful(HttpServletRequest request) {
         this.request = request;
         password = request.getParameter("password");
         username = request.getParameter("username");
-        if (isLoginButtonClicked() == false)
+        if (!isLoginButtonClicked()) {
             return false;
-        if (isLoginParametersNotNull()) {
-            if (AccountForm.isLoginSuccessful(username, password)) {
-                createWelcomeName();
-                return true;
-            } else {
-                generateAuthenticationError();
-                return false;
-            }
-        } else {
-            generateNullError();
+        }
+        try {
+            checkIfParametersNotNull();
+            Validation validation = new LoginValidation(username, password);
+            validation.validateCredentials();
+            storeLoginAttributes();
+            return true;
+        } catch (ValidationException ex) {
+            request.setAttribute("error", ex.getMessage());
             return false;
         }
     }
@@ -34,35 +30,33 @@ public class LoginForm {
         return request.getParameter("loginButton") != null;
     }
 
-    private boolean isLoginParametersNotNull() {
-        return isPasswordNotNull() && isUsernameNotNull();
+    private void checkIfParametersNotNull() throws ValidationException {
+        if (isPasswordNull()) {
+            throw new ValidationException("Invalid password."
+                + "Please try again.");
+        } else if (isUsernameNull()) {
+            throw new ValidationException("Invalid username."
+                + "Please try again.");
+        }
     }
 
-    private void createWelcomeName() {
+    private void storeLoginAttributes() {
         UserAccount currentAccount = AccountForm.getUserAccounts().get(username);
         String welcomeName = currentAccount.getName();
-        Attributes.storeAttribute(Attributes.CURRENT_USER, welcomeName);
+        String firstName = currentAccount.getFirstName();
+        String lastName = currentAccount.getLastName();
+        Attributes.storeAttribute(Attributes.WELCOME_NAME, welcomeName);
+        Attributes.storeAttribute(Attributes.CURRENT_USER, username);
+        Attributes.storeAttribute("firstName", firstName);
+        Attributes.storeAttribute("lastName", lastName);
+        Attributes.storeAttribute("username", username);
     }
 
-    private void generateNullError() {
-        if (isUsernameNotNull() == false) {
-            request.setAttribute("error", "Unknown user. Please try again.");
-        } else if (isPasswordNotNull() == false) {
-            request.setAttribute("error", "Password is incorrect. Please try again.");
-        }
+    private boolean isPasswordNull() {
+        return password == null || password.isEmpty();
     }
 
-    private void generateAuthenticationError() {
-        if (isUsernameNotNull() && isPasswordNotNull()) {
-            request.setAttribute("error", "Authentication failed. Please try again.");
-        }
-    }
-
-    private boolean isPasswordNotNull() {
-        return password != null && !password.isEmpty();
-    }
-
-    private boolean isUsernameNotNull() {
-        return username != null && !username.isEmpty();
+    private boolean isUsernameNull() {
+        return username == null || username.isEmpty();
     }
 }

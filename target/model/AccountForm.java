@@ -7,81 +7,57 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AccountForm {
-    private static Map<String, UserAccount> userAccounts = new HashMap<String, UserAccount>();
+    private static Map<String, UserAccount> userAccounts
+        = new HashMap<String, UserAccount>();
     private HttpServletRequest request;
-    private UserAccount newAccount;
+    private String password;
+    private String confirmPassword;
 
     public AccountForm(HttpServletRequest request) {
         this.request = request;
     }
 
     public boolean isAccountCreationSuccessful() {
-        if (isAccountInfoAndCredentialsValid() == false)
-            return false;
-        elseClearSavedAttributes();
-        return true;
-    }
-
-    private boolean isAccountInfoAndCredentialsValid() {
         try {
-            gatherNewAccountInfo();
-            validateAccountCredentials();
+            UserAccount newAccount = gatherNewAccountInfo();
+            Validation validation = new AccountValidation(newAccount,
+                password, confirmPassword);
+            boolean isValid = validation.validateCredentials();
+            if (isValid) {
+                clearSavedAttributes();
+            }
             userAccounts.put(newAccount.getUsername(), newAccount);
             return true;
-        } catch(AccountFormException ex) {
+        } catch (ValidationException ex) {
             request.setAttribute("error", ex.getMessage());
             return false;
         }
     }
 
-    private void gatherNewAccountInfo() throws AccountFormException {
+    private UserAccount gatherNewAccountInfo() throws ValidationException {
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String username = request.getParameter("newUsername");
-        String password = request.getParameter("newPassword");
-        String confirmPassword = request.getParameter("confirmPassword");
-        storeAttribute("prevFirstName", firstName);
-        storeAttribute("prevLastName", lastName);
-        storeAttribute("prevUsername", username);
-        newAccount = new UserAccount(firstName, lastName, username, password);
-        if (password.equals(confirmPassword) == false) {
-            throw new AccountFormException("Passwords do not match. " +
-                    "Please try again.");
-        }
+        password = request.getParameter("newPassword");
+        confirmPassword = request.getParameter("confirmPassword");
+        saveAttributesForNextAttempt(firstName, lastName, username);
+        UserAccount newAccount = new UserAccount(firstName, lastName,
+            username, password);
+        return newAccount;
     }
 
-    public boolean validateAccountCredentials() throws AccountFormException {
-        if (newAccount.allFieldsHaveValue()) {
-            if (usernameExists(newAccount.getUsername())) {
-                throw new AccountFormException("Username already taken. " +
-                    "Please try again.");
-            } else {
-                return true;
-            }
-        } else {
-            throw new AccountFormException("All fields must be populated. " +
-                "Please try again.");
-        }
+    private void saveAttributesForNextAttempt(String first,
+                                              String last,
+                                              String user) {
+        storeAttribute("prevFirstName", first);
+        storeAttribute("prevLastName", last);
+        storeAttribute("prevUsername", user);
     }
 
-    private void elseClearSavedAttributes() {
+    private void clearSavedAttributes() {
         removeAttribute("prevFirstName");
         removeAttribute("prevLastName");
         removeAttribute("prevUsername");
-    }
-
-    protected static boolean isLoginSuccessful(String username, String password) {
-        return usernameExists(username) && passwordMatches(username, password);
-    }
-
-    protected static boolean usernameExists(String username) {
-        return userAccounts.containsKey(username);
-    }
-
-    protected static boolean passwordMatches(String username, String password) {
-        UserAccount currentAccount = userAccounts.get(username);
-        String realPassword = currentAccount.getPassword();
-        return realPassword.equals(password);
     }
 
     public static Map<String, UserAccount> getUserAccounts() {

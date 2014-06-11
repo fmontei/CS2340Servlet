@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+<<<<<<< HEAD
       <meta charset="utf-8" />
       <title>Trip Planner</title>
 
@@ -15,6 +16,11 @@
       <link href="/CS2340Servlet/css/bootstrap.min.css" rel="stylesheet">
       <link href="/CS2340Servlet/css/dashboard.css" rel="stylesheet">
 
+=======
+       <meta charset="utf-8" />
+       <title><%=Attributes.getAttribute(Attributes.WELCOME_NAME)%>&#39;s Trip Planner</title>
+       <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
+>>>>>>> upstream/master
     </head>
     <body>
 
@@ -185,12 +191,16 @@
 
         <!-- <nav>
             <span id="overviewMessage">
-                <%=Attributes.getAttribute(Attributes.CURRENT_USER)%>&#39;s Trip Planner
+                <%=Attributes.getAttribute(Attributes.WELCOME_NAME)%>&#39;s Trip Planner
             </span>
-            <fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();">
+            <fb:login-button id="fbLoginButton"
+                    scope="public_profile,email"
+                    onlogin="checkLoginState();">
             </fb:login-button>
-            <select id="nav" onChange="doDropdownAction(this); checkLoginState();" onFocus="checkLoginState();">
-                <option value="">Navigation</option>
+            <select id="nav"
+                    onChange="doDropdownAction(this); checkLoginState();"
+                    onFocus="checkLoginState();">
+                <option value="" disabled selected>Navigation</option>
                 <option value="/CS2340Servlet/updateAccount">Account Settings</option>
                 <option value="/CS2340Servlet/login">Logout</option>
             </select>
@@ -209,7 +219,7 @@
 <!-- 
         <script type="text/javascript">
             function doDropdownAction(nav) {
-               return nav.options[nav.selectedIndex].value && (window.location = nav.options[nav.selectedIndex].value);
+                return nav.options[nav.selectedIndex].value && (window.location = nav.options[nav.selectedIndex].value);
             }
         </script>
  -->
