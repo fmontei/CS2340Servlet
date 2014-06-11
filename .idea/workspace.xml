@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-<<<<<<< HEAD
     <list default="true" id="d389af24-ed91-4b37-9299-eaafddfad9af" name="Default" comment="">
       <change type="DELETED" beforePath="E:\CPSC\2340\CS2340Servlet\lib\future_lib_files.txt" afterPath="" />
-=======
     <list default="true" id="df503c01-4674-4f10-b011-59923504d505" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/WEB-INF/classes/controller/IndexServlet.class" afterPath="$PROJECT_DIR$/target/WEB-INF/classes/controller/IndexServlet.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/IndexServlet.java" afterPath="$PROJECT_DIR$/src/controller/IndexServlet.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/controller/IndexServlet.java" afterPath="$PROJECT_DIR$/target/controller/IndexServlet.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/LoginServlet.java" afterPath="$PROJECT_DIR$/src/controller/LoginServlet.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/controller/LoginServlet.java" afterPath="$PROJECT_DIR$/target/controller/LoginServlet.java" />
->>>>>>> bafc59335f7ed1933b0019a87bdf30c1def2784d
     </list>
     <ignored path="CS2340Servlet.iws" />
     <ignored path=".idea/workspace.xml" />
