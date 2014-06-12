@@ -35,16 +35,24 @@ public class AccountUpdateForm {
     }
 
     public void validateCredentials() throws ValidationException {
-       if (password == "" && confirmPassword == "") {
-           UserAccount accountBeforeChange = AccountForm.getUserAccounts().get(username);
-           password = accountBeforeChange.getPassword();
+        /* Assumption: User does not want to change password.
+         * Why force him to re-enter it? */
+       if (isPasswordEmpty()) {
+           revertToOldPassword();
            return;
-       }
-
-       if (!password.equals(confirmPassword)) {
+       } else if (!password.equals(confirmPassword)) {
             throw new ValidationException("Passwords do not match. "
-                    + "Please try again.");
+                + "Please try again.");
         }
+    }
+
+    private boolean isPasswordEmpty() {
+        return password == "" && confirmPassword == "";
+    }
+
+    private void revertToOldPassword() {
+        UserAccount accountBeforeChange = AccountForm.findByUserName(username);
+        password = accountBeforeChange.getPassword();
     }
 
     private void storeLoginAttributes() {

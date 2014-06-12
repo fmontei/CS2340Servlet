@@ -25,7 +25,10 @@
                     <input type="text" name="updateFirstName" value="<%=firstName%>" required="required"  />
                 <dd><span id="label">Last name:</span><br />
                     <input type="text" name="updateLastName" value="<%=lastName == null ? "" : lastName %>" required="required" />
-                    <br /><br />
+                    <br />
+                <p><em>If you wish to change your password, please enter your new password below.<br />
+                       However, if you do not want to change your password, you do not have to re-enter it.</em><br />
+                </p>
                 <dt><b>Change Password:</b>
                 <dd>
                     <div class="fieldWrapper">
@@ -35,7 +38,12 @@
                 <dd>
                     <div class="fieldWrapper">
                         <label for="confirmOldPassword"><span id="label">Confirm Password:</span></label><br />
-                        <input name="confirmOldPassword" id="confirmOldPassword" type="password"><br />
+                        <input name="confirmOldPassword" id="confirmOldPassword"
+                         onkeyup="checkPass(document.getElementById('oldPassword'),
+                                           document.getElementById('confirmOldPassword'),
+                                           document.getElementById('confirmMessage'));
+                                           return false;"
+                         type="password"><br />
                         <span id="confirmMessage" class="confirmMessage"></span>
                     </div>
             </dl>
@@ -44,5 +52,7 @@
                 <input id="submit" type="submit" name="submitButton" text="Submit" />
             </center>
         </form>
+        <script src="/CS2340Servlet/js/password_check.js">
+        </script>
     </body>
 </html>

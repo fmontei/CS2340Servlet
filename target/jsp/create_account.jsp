@@ -29,7 +29,13 @@
             <dd>
                 <div class="fieldWrapper">
                     <label for="confirmPassword"><span id="label">Confirm Password:</span></label><br />
-                    <input name="confirmPassword" id="confirmPassword" onkeyup="checkPass(); return false;" type="password" required="required"><br />
+                    <input name="confirmPassword" id="confirmPassword"
+                        onkeyup="checkPass(document.getElementById('newPassword'),
+                                          document.getElementById('confirmPassword'),
+                                          document.getElementById('confirmMessage'));
+                                          return false;"
+                        type="password"
+                        required="required"><br />
                     <span id="confirmMessage" class="confirmMessage"></span>
                 </div>
 		</dl>
@@ -39,24 +45,7 @@
         </center>
 	</form>
 
-	<script type="text/javascript">
-        function checkPass()
-        {
-            var pass1 = document.getElementById('newPassword');
-            var pass2 = document.getElementById('confirmPassword');
-            var message = document.getElementById('confirmMessage');
-            var goodColor = "#66cc66";
-            var badColor = "#ff6666";
-            if (pass1.value == pass2.value) {
-                pass2.style.backgroundColor = goodColor;
-                message.style.color = goodColor;
-                message.innerHTML = "Passwords Match!"
-            } else {
-                pass2.style.backgroundColor = badColor;
-                message.style.color = badColor;
-                message.innerHTML = "Passwords Do Not Match!"
-            }
-        }
+	<script src="/CS2340Servlet/js/password_check.js">
     </script>
     </body>
 </html>

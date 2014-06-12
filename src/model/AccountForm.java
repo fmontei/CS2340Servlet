@@ -71,4 +71,8 @@ public class AccountForm {
         userAccounts = accountDataStore.loadData();
         return userAccounts;
     }
+
+    public static UserAccount findByUserName(String username) {
+        return userAccounts.get(username);
+    }
 }
