@@ -37,7 +37,7 @@
                 <a class="dropdown-toggle" href="#" data-toggle="dropdown">Login <strong class="caret"></strong></a>
                 <div class="dropdown-menu" style="padding: 15px;">
                   <!--Login form-->
-                  <form action="/CS2340Servlet/login" method="POST" accept-charset="UTF-8">
+                  <form action="/CS2340Servlet" method="POST" accept-charset="UTF-8">
 
                     <input id="user_username" style="margin-bottom: 15px;" type="text" name="username" size="30" placeholder="Username" required="required"/>
 
@@ -134,7 +134,7 @@
                     onFocus="checkLoginState();">
                 <option value="" disabled selected>Navigation</option>
                 <option value="/CS2340Servlet/updateAccount">Account Settings</option>
-                <option value="/CS2340Servlet/login">Logout</option>
+                <option value="/CS2340Servlet">Logout</option>
             </select>
             <div id="status">
             </div>

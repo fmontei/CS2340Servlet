@@ -30,30 +30,30 @@ metadata-complete="true">
     </description>
 
     <servlet>
-    <servlet-name>LoginServlet</servlet-name>
-    <servlet-class>controller.LoginServlet</servlet-class>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>controller.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-    <servlet-name>LoginServlet</servlet-name>
-    <url-pattern>/login</url-pattern>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern></url-pattern>
     </servlet-mapping>
 
     <servlet>
-    <servlet-name>AccountCreationServlet</servlet-name>
-    <servlet-class>controller.AccountCreationServlet</servlet-class>
+        <servlet-name>AccountCreationServlet</servlet-name>
+        <servlet-class>controller.AccountCreationServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-    <servlet-name>AccountCreationServlet</servlet-name>
-    <url-pattern>/createAccount</url-pattern>
+        <servlet-name>AccountCreationServlet</servlet-name>
+        <url-pattern>/createAccount</url-pattern>
     </servlet-mapping>
 
     <servlet>
-    <servlet-name>IndexServlet</servlet-name>
-    <servlet-class>controller.IndexServlet</servlet-class>
+        <servlet-name>IndexServlet</servlet-name>
+        <servlet-class>controller.IndexServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-    <servlet-name>IndexServlet</servlet-name>
-    <url-pattern>/index</url-pattern>
+        <servlet-name>IndexServlet</servlet-name>
+        <url-pattern>/index</url-pattern>
     </servlet-mapping>
 
     <servlet>
