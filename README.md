@@ -13,7 +13,7 @@ To deploy and run this project,<br />
       <code>localhost:8080/CS2340Servlet/</code>
       
 To compile this project from the command line, type:<br />
-  1) using Windows, <code>javac -cp .;lib/servlet-api.jar -d ./out/production src/model/[asterik].java src/controlle/[asterik].java</code><br />
+  1) using Windows, <code>javac -cp .;lib/servlet-api.jar -d ./out/production src/model/[asterik].java src/controll/[asterik].java</code><br />
   2) otherwise, <code>javac -cp .:lib/servlet-api.jar -d ./out/production src/model/[asterik].java src/controller/[asterik].java</code><br />
   
   where [asterik] = *
