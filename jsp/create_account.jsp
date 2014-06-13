@@ -2,7 +2,6 @@
 <% String prevFirstName = Attributes.getAttribute("prevFirstName"); %>
 <% String prevLastName = Attributes.getAttribute("prevLastName"); %>
 <% String prevUsername = Attributes.getAttribute("prevUsername"); %>
-<% String success = Attributes.getAttribute("accountCreateSuccess"); %>
 
 <html>
   <head>
@@ -122,14 +121,13 @@
 
     <!-- Asks user if wants to automatically log into application following successful account creation -->
     <script>
-      var success = "<%= success %>";
+      var success = "${accountCreateSuccess}";
       if (success === "success") {
         var response = window.confirm("Account successfully created. Automatically logging you in.");
         if (response) {
           window.location.replace("/CS2340Servlet/jsp/createLoginSession.jsp");
         } else {
           window.location.replace("/CS2340Servlet/jsp/index.jsp");
-          <% Attributes.removeAttribute("accountCreateSuccess"); %>
         }
       }
     </script>

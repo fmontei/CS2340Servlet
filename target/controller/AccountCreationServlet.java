@@ -28,7 +28,7 @@ public class AccountCreationServlet extends HttpServlet {
         if (isSubmitButtonClicked(request)) {
             AccountForm accountForm = new AccountForm(request);
             if (accountForm.isAccountCreationSuccessful()) {
-                automaticallyLogin(response);
+                automaticallyLogin(request, response);
             } else {
                 reloadBecauseAccountCreateFailed(request, response);
             }
@@ -39,10 +39,10 @@ public class AccountCreationServlet extends HttpServlet {
         return request.getParameter("submitButton") != null;
     }
 
-    private void automaticallyLogin(HttpServletResponse response)
-            throws IOException {
-        Attributes.storeAttribute("accountCreateSuccess", "success");
-        response.sendRedirect("jsp/create_account.jsp");
+    private void automaticallyLogin(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        request.setAttribute("accountCreateSuccess", "success");
+        forwardRequest(this, request, response, "/jsp/create_account.jsp");
     }
 
     private void reloadBecauseAccountCreateFailed(HttpServletRequest request,
