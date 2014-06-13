@@ -3,20 +3,14 @@ package model;
 import static model.Attributes.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.Map;
 
 public class AccountForm {
-    private static Map<String, UserAccount> userAccounts
-        = new HashMap<String, UserAccount>();
     private HttpServletRequest request;
     private String firstName, lastName, username;
     private String password, confirmPassword;
-    private static UserAccountsSerializable accountDataStore
-            = new UserAccountsSerializable();
 
     public AccountForm(HttpServletRequest request) {
-        userAccounts = accountDataStore.loadData();
         this.request = request;
     }
 
@@ -55,14 +49,14 @@ public class AccountForm {
         storeAttribute("prevUsername", user);
     }
 
-    public static void changeAccountSettings(UserAccount updatedAccount) {
+    private void changeAccountSettings(UserAccount updatedAccount) {
+        DataStore dataStore = new DataStore();
         String username = updatedAccount.getUsername();
-        userAccounts.put(username, updatedAccount);
-        accountDataStore.saveData(userAccounts);
+        dataStore.saveAccount(username, updatedAccount);
     }
 
     private void storeLoginAttributes() {
-        UserAccount currentAccount = AccountForm.getUserAccounts().get(username);
+        UserAccount currentAccount = DataStore.findByUserName(username);
         String welcomeName = currentAccount.getName();
         String firstName = currentAccount.getFirstName();
         String lastName = currentAccount.getLastName();
@@ -77,15 +71,5 @@ public class AccountForm {
         removeAttribute("prevFirstName");
         removeAttribute("prevLastName");
         removeAttribute("prevUsername");
-    }
-
-    public static Map<String, UserAccount> getUserAccounts() {
-        accountDataStore = new UserAccountsSerializable();
-        userAccounts = accountDataStore.loadData();
-        return userAccounts;
-    }
-
-    public static UserAccount findByUserName(String username) {
-        return userAccounts.get(username);
     }
 }

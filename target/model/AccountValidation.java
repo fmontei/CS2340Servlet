@@ -1,6 +1,6 @@
 package model;
 
-import static model.AccountForm.getUserAccounts;
+import static model.DataStore.findByUserName;
 
 public class AccountValidation implements  Validation {
     private UserAccount account;
@@ -29,6 +29,7 @@ public class AccountValidation implements  Validation {
     }
 
     private boolean usernameExists(String username) {
-        return getUserAccounts().containsKey(username);
+        UserAccount temp = findByUserName(username);
+        return temp != null;
     }
 }

@@ -41,7 +41,8 @@ public class LoginForm {
     }
 
     private void storeLoginAttributes() {
-        UserAccount currentAccount = AccountForm.getUserAccounts().get(username);
+        DataStore dataStore = new DataStore();
+        UserAccount currentAccount = dataStore.findByUserName(username);
         String welcomeName = currentAccount.getName();
         String firstName = currentAccount.getFirstName();
         String lastName = currentAccount.getLastName();
