@@ -28,6 +28,7 @@ public class AccountForm {
             validation.validateCredentials();
             changeAccountSettings(newAccount);
             storeLoginAttributes();
+           // accountDataStore.saveData(userAccounts);
             clearTemporaryAttributes();
             return true;
         } catch (ValidationException ex) {
