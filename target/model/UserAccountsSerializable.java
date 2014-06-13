@@ -15,10 +15,7 @@ public class UserAccountsSerializable implements Serializable {
     public void saveData(Map<String, UserAccount> userAccounts) {
         this.userAccounts = userAccounts;
         if (file == null) {
-            file = new File(System.getProperty("user.dir"));
-            file = new File(file.getParent());
-            String filePath = file.getPath() + "\\webapps\\CS2340Servlet\\UserAccounts.ser";
-            file = new File(filePath);
+            setFile();
         }
         try
         {
@@ -34,11 +31,7 @@ public class UserAccountsSerializable implements Serializable {
 
     public Map<String, UserAccount> loadData() {
         if (file == null) {
-            file = new File(System.getProperty("user.dir"));
-            file = new File(file.getParent());
-            String filePath = file.getPath() + "\\webapps\\CS2340Servlet\\UserAccounts.ser";
-            file = new File(filePath);
-            System.out.println(file.getPath());
+            setFile();
         }
         try {
             FileInputStream fileIn = new FileInputStream(file);
@@ -52,5 +45,10 @@ public class UserAccountsSerializable implements Serializable {
             c.printStackTrace();
         }
         return userAccounts;
+    }
+
+    private void setFile() {
+        String filePath = System.getenv("CATALINA_HOME") + "\\webapps\\CS2340Servlet\\UserAccounts.ser";
+        file = new File(filePath);
     }
 }
