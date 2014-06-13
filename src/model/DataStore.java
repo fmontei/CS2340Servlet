@@ -5,7 +5,8 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class DataStore {
-    private static Map<String, UserAccount> accountData = new HashMap<String, UserAccount>();
+    private static Map<String, UserAccount> accountData
+        = new HashMap<String, UserAccount>();
     private static File file;
 
     public void saveAccount(String username, UserAccount account) {
@@ -24,9 +25,9 @@ public class DataStore {
             accountData = (Map<String, UserAccount>) in.readObject();
             in.close();
             fileIn.close();
-        } catch(IOException i) {
+        } catch (IOException i) {
             accountData = new HashMap<String, UserAccount>();
-        } catch(ClassNotFoundException c) {
+        } catch (ClassNotFoundException c) {
             c.printStackTrace();
         }
     }
@@ -41,7 +42,7 @@ public class DataStore {
             out.writeObject(accountData);
             out.close();
             fileOut.close();
-        } catch(IOException i) {
+        } catch (IOException i) {
             i.printStackTrace();
         }
     }
@@ -52,8 +53,8 @@ public class DataStore {
     }
 
     private static void setFile() {
-        final String filePath = System.getenv("CATALINA_HOME") +
-                "\\webapps\\CS2340Servlet\\UserAccounts.ser";
+        final String filePath = System.getenv("CATALINA_HOME")
+            + "\\webapps\\CS2340Servlet\\UserAccounts.ser";
         file = new File(filePath);
     }
 }
