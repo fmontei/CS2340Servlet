@@ -12,7 +12,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Account Settings</title>
+    <title>Update Account Settings</title>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
@@ -32,7 +32,7 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#">
-            Account Settings
+            Update Account Settings
           </a>
         </div>
         <div class="navbar-collapse collapse">
@@ -74,13 +74,13 @@
               <dd><span id="label">Confirm Password:</span><br />
                 <input name="confirmOldPassword" id="confirmOldPassword"
                  onkeyup="checkPass(document.getElementById('oldPassword'),
-                                   document.getElementById('confirmOldPassword'),
-                                   document.getElementById('confirmMessage'));
-                                   return false;"
+                   document.getElementById('confirmOldPassword'),
+                   document.getElementById('confirmMessage'));
+                   return false;"
                  type="password"><br />
                 <span id="confirmMessage" class="confirmMessage"></span>
             </dl>
-            <span class="error">${error}</span>
+            <span class="text-danger">${error}</span>
             <center>
               <input id="submit" type="submit" name="submitButton" text="Submit" />
             </center>

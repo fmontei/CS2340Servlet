@@ -49,33 +49,64 @@
             Account Settings
           </h1>
 
-          <form id="create_account_form" action="/CS2340Servlet/createAccount" method="POST">
-            <dl>
-              <dt><b>Enter your Personal Information:</b>
-              <dd><span id="label">First name:</span><br />
-                <input type="text" name="firstName" value="<%=prevFirstName == null ? "" : prevFirstName %>" required="required"  />
-              <dd><span id="label">Last name:</span><br />
-                <input type="text" name="lastName" value="<%=prevLastName == null ? "" : prevLastName %>" required="required" />
-                <br /><br />
+          <form id="create_account_form" action="/CS2340Servlet/createAccount" method="POST" class="form-inline" role="form">
+            <b>Enter your Personal Information:</b><br />
+            <div class="form-group">
+              <label class="sr-only" for="name">Name</label>
+              <input type="text" class="form-control" id="name" name="firstName"
+                value="<%=prevFirstName == null ? "" : prevFirstName %>"
+                required="required"
+                placeholder = "Enter First Name" />
+            </div>
+            <br />
 
-              <dt><b>Enter new Account Information:</b>
-              <dd><span id="label">Username:</span><br />
-                <input type="text" name="newUsername" value="<%=prevUsername == null ? "" : prevUsername %>" required="required" />
-              <dd><span id="label">Password:</span><br />
-                <input name="newPassword" id="newPassword" type="password">
-              <dd><span id="label">Confirm Password:</span><br />
-                <input name="confirmPassword" id="confirmPassword"
-                 onkeyup="checkPass(document.getElementById('newPassword'),
-                          document.getElementById('confirmPassword'),
-                          document.getElementById('confirmMessage'));
-                          return false;"
-                 type="password"><br />
-                <span id="confirmMessage" class="confirmMessage"></span>
-              </dl>
-              <span class="error">${error}</span>
-              <center>
-                  <input id="submit" type="submit" name="submitButton" text="Submit" />
-              </center>
+            <div class="form-group">
+              <label class="sr-only" for="name">Name</label>
+              <input type="text" class="form-control" id="name" name="lastName"
+                value="<%=prevLastName == null ? "" : prevLastName %>"
+                required="required"
+                placeholder = "Enter Last Name" />
+            </div>
+            <br /><br />
+
+            <b>Enter new Account Information:</b><br />
+            <div class="form-group">
+              <label class="sr-only" for="name">Name</label>
+              <input type="text" class="form-control" id="name"
+                name="newUsername"
+                value="<%=prevUsername == null ? "" : prevUsername %>"
+                required="required"
+                placeholder = "Enter Username" />
+            </div>
+            <br />
+
+            <div class="form-group">
+            <label class="sr-only" for="name">Password</label>
+            <input type="password" class="form-control" id="newPassword"
+              name="newPassword"
+              required="required"
+              placeholder = "Enter Password" />
+            </div>
+            <br />
+
+            <div class="form-group">
+            <label class="sr-only" for="name">Password</label>
+            <input type="password" class="form-control" id="confirmPassword"
+              name="confirmPassword"
+              onkeyup="checkPass(document.getElementById('newPassword'),
+                document.getElementById('confirmPassword'),
+                document.getElementById('confirmMessage'));
+                return false;"
+              required="required"
+              placeholder = "Re-enter Password" />
+            </div>
+            <br />
+
+            <span id="confirmMessage" class="confirmMessage"></span>
+            <span class="text-danger">${error}</span>
+            <center>
+              <input id="submit" type="submit" name="submitButton" text="Submit" />
+            </center>
           </form>
 
         </div>
