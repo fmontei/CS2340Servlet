@@ -120,7 +120,7 @@
       </div>
     </div>
 
-    <!-- Asks user to log into application following successful account creation -->
+    <!-- Asks user if wants to automatically log into application following successful account creation -->
     <script>
       var success = "<%= success %>";
       if (success === "success") {
