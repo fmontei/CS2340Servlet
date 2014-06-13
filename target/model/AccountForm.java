@@ -10,12 +10,13 @@ public class AccountForm {
     private static Map<String, UserAccount> userAccounts
         = new HashMap<String, UserAccount>();
     private HttpServletRequest request;
-    private String password;
-    private String confirmPassword;
-    private static UserAccountsSerializable accountsSave = new UserAccountsSerializable();
+    private String firstName, lastName, username;
+    private String password, confirmPassword;
+    private static UserAccountsSerializable accountDataStore
+            = new UserAccountsSerializable();
 
     public AccountForm(HttpServletRequest request) {
-        userAccounts = accountsSave.loadData();
+        userAccounts = accountDataStore.loadData();
         this.request = request;
     }
 
@@ -24,55 +25,67 @@ public class AccountForm {
             UserAccount newAccount = gatherNewAccountInfo();
             Validation validation = new AccountValidation(newAccount,
                 password, confirmPassword);
-            boolean isValid = validation.validateCredentials();
-            if (isValid) {
-                clearSavedAttributes();
-            }
-            userAccounts.put(newAccount.getUsername(), newAccount);
-            accountsSave.saveData(userAccounts);
+            validation.validateCredentials();
+            changeAccountSettings(newAccount);
+            storeLoginAttributes();
+            clearTemporaryAttributes();
             return true;
         } catch (ValidationException ex) {
+            saveAttributesForNextAttempt(firstName, lastName, username);
             request.setAttribute("error", ex.getMessage());
             return false;
         }
     }
 
     private UserAccount gatherNewAccountInfo() throws ValidationException {
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String username = request.getParameter("newUsername");
+        firstName = request.getParameter("firstName");
+        lastName = request.getParameter("lastName");
+        username = request.getParameter("newUsername");
         password = request.getParameter("newPassword");
         confirmPassword = request.getParameter("confirmPassword");
-        saveAttributesForNextAttempt(firstName, lastName, username);
         UserAccount newAccount = new UserAccount(firstName, lastName,
             username, password);
         return newAccount;
     }
 
     private void saveAttributesForNextAttempt(String first,
-                                              String last,
-                                              String user) {
+        String last, String user) {
         storeAttribute("prevFirstName", first);
         storeAttribute("prevLastName", last);
         storeAttribute("prevUsername", user);
     }
 
-    private void clearSavedAttributes() {
+    public static void changeAccountSettings(UserAccount updatedAccount) {
+        String username = updatedAccount.getUsername();
+        userAccounts.put(username, updatedAccount);
+        accountDataStore.saveData(userAccounts);
+    }
+
+    private void storeLoginAttributes() {
+        UserAccount currentAccount = AccountForm.getUserAccounts().get(username);
+        String welcomeName = currentAccount.getName();
+        String firstName = currentAccount.getFirstName();
+        String lastName = currentAccount.getLastName();
+        Attributes.storeAttribute(Attributes.WELCOME_NAME, welcomeName);
+        Attributes.storeAttribute(Attributes.CURRENT_USER, username);
+        Attributes.storeAttribute("firstName", firstName);
+        Attributes.storeAttribute("lastName", lastName);
+        Attributes.storeAttribute("username", username);
+    }
+
+    private void clearTemporaryAttributes() {
         removeAttribute("prevFirstName");
         removeAttribute("prevLastName");
         removeAttribute("prevUsername");
     }
 
     public static Map<String, UserAccount> getUserAccounts() {
-        accountsSave = new UserAccountsSerializable();
-        userAccounts = accountsSave.loadData();
+        accountDataStore = new UserAccountsSerializable();
+        userAccounts = accountDataStore.loadData();
         return userAccounts;
     }
 
-    public static void changeAccountSettings(UserAccount updatedAccount) {
-        String username = updatedAccount.getUsername();
-        userAccounts.remove(username);
-        userAccounts.put(username, updatedAccount);
-        accountsSave.saveData(userAccounts);
+    public static UserAccount findByUserName(String username) {
+        return userAccounts.get(username);
     }
 }

@@ -16,7 +16,7 @@ checkLoginState = function() {
     FB.getLoginStatus(function(response) {
         statusChangeCallback(response);
     });
-}
+};
 
 statusChangeCallback = function(response) {
     console.log(response);
@@ -38,7 +38,7 @@ statusChangeCallback = function(response) {
         console.log("Logging out of Facebook");
         fbLogout();
     }
-}
+};
 
 function displayFBLogoutOption() {
     var nav = document.getElementById('nav');

@@ -37,11 +37,17 @@
                 <a class="dropdown-toggle" href="#" data-toggle="dropdown">Login <strong class="caret"></strong></a>
                 <div class="dropdown-menu" style="padding: 15px;">
                   <!--Login form-->
-                  <form action="/CS2340Servlet/login" method="POST" accept-charset="UTF-8">
+                  <form action="/CS2340Servlet" method="POST" accept-charset="UTF-8">
 
                     <input id="user_username" style="margin-bottom: 15px;" type="text" name="username" size="30" placeholder="Username" required="required"/>
 
                     <input id="user_password" style="margin-bottom: 15px;" type="password" name="password" size="30" placeholder="Password" required="required"/>
+
+                    <div class="checkbox">
+                      <label>
+                         <input type="checkbox"> Remember me
+                      </label>
+                    </div>
                    
                     <input class="btn btn-primary" style="clear: left; width: 100%; height: 32px; font-size: 13px;" type="submit" name="loginButton" value="Login" />
 
@@ -134,7 +140,7 @@
                     onFocus="checkLoginState();">
                 <option value="" disabled selected>Navigation</option>
                 <option value="/CS2340Servlet/updateAccount">Account Settings</option>
-                <option value="/CS2340Servlet/login">Logout</option>
+                <option value="/CS2340Servlet">Logout</option>
             </select>
             <div id="status">
             </div>
@@ -142,10 +148,6 @@
         <header>
             Trip Planner Overview
         </header> -->
-
-        <!-- Facebook SDK Javascript -->
-        <script type="text/javascript" src="/CS2340Servlet/js/facebookSDK.js">
-        </script>
 
         <!-- Old, check for facebook logout -->
 <!-- 
@@ -156,9 +158,12 @@
         </script>
  -->
 
+        <!-- Facebook SDK Javascript -->
         <div id="fb-root"></div>
+        <script type="text/javascript" src="/CS2340Servlet/js/facebookSDK.js">
+        </script>
 
-        <script type="text/javascript">
+        <script>
             // Facebook login
             (function(d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0];

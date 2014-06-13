@@ -26,25 +26,7 @@ header {
 }
 
 #create_account_form {
-    text-align: center;
-}
 
-#create_account_form input {
-    background-color: rgb(247, 247, 247);
-    width: 20%;
-    clear: both;
-}
-
-#create_account_form #submit {
-    background-color: rgb(247, 247, 247);
-    width: 10%;
-    clear: both;
-}
-
-#create_account_form span {
-    background-color: rgb(247, 247, 247);
-    font-size: 12px;
-    color: blue;
 }
 
 #nav {
@@ -53,12 +35,6 @@ header {
     right: 300px;
     cursor: pointer;
 }
-
-/*#fbLoginButton {
-    position: fixed;
-    top: 30px;
-    right: 480px;
-}*/
 
 #status {
     font-size: 12px;
@@ -69,7 +45,6 @@ header {
 
 .error {
     color: red;
-    /*margin-left: 5%;*/
 }
 
 #fbLogoutButton {
