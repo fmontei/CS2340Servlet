@@ -14,8 +14,8 @@ public class LoginValidation implements Validation {
     @Override
     public boolean validateCredentials() throws ValidationException {
         if (!usernameExists(username)) {
-            throw new ValidationException("Authentication failed. "
-                + "Please try again. " + getUserAccounts().get(username).getUsername());
+            throw new ValidationException("Username " + "\"" + username + "\""
+            + " does not exist. Please try again.");
         } else if (!passwordMatches(username, password)) {
             throw new ValidationException("Authentication failed. "
                 + "Please try again.");
