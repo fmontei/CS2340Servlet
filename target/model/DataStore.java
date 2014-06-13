@@ -16,11 +16,7 @@ public class DataStore {
 
     public static void loadData() {
         if (file == null) {
-            file = new File(System.getProperty("user.dir"));
-            file = new File(file.getParent());
-            String filePath = file.getPath() + "\\webapps\\CS2340Servlet\\UserAccounts.ser";
-            file = new File(filePath);
-            System.out.println(file.getPath());
+            setFile();
         }
         try {
             FileInputStream fileIn = new FileInputStream(file);
@@ -37,10 +33,7 @@ public class DataStore {
 
     public static void saveData() {
         if (file == null) {
-            file = new File(System.getProperty("user.dir"));
-            file = new File(file.getParent());
-            String filePath = file.getPath() + "\\webapps\\CS2340Servlet\\UserAccounts.ser";
-            file = new File(filePath);
+            setFile();
         }
         try {
             FileOutputStream fileOut = new FileOutputStream(file);
@@ -56,5 +49,11 @@ public class DataStore {
     public static UserAccount findByUserName(String username) {
         loadData();
         return accountData.get(username);
+    }
+
+    private static void setFile() {
+        final String filePath = System.getenv("CATALINA_HOME") +
+                "\\webapps\\CS2340Servlet\\UserAccounts.ser";
+        file = new File(filePath);
     }
 }
