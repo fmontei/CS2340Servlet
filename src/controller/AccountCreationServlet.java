@@ -27,7 +27,7 @@ public class AccountCreationServlet extends HttpServlet {
         if (isSubmitButtonClicked(request)) {
             AccountForm accountForm = new AccountForm(request);
             if (accountForm.isAccountCreationSuccessful()) {
-                returnToLoginScreen(response);
+                automaticallyLogin(response);
             } else {
                 reloadBecauseAccountCreateFailed(request, response);
             }
@@ -38,9 +38,9 @@ public class AccountCreationServlet extends HttpServlet {
         return request.getParameter("submitButton") != null;
     }
 
-    private void returnToLoginScreen(HttpServletResponse response)
+    private void automaticallyLogin(HttpServletResponse response)
             throws IOException {
-        response.sendRedirect("jsp/index.jsp");
+        response.sendRedirect("index");
     }
 
     private void reloadBecauseAccountCreateFailed(HttpServletRequest request,

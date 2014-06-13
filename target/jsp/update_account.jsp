@@ -79,8 +79,9 @@
             </div>
             <br />
 
-            <span class="help-block" style="padding-top:10px">If you wish to change your password, please enter your new password below.<br />
-                 However, if you do not want to change your password, you do not have to re-enter it.<br />
+            <span class="help-block" style="padding-top:10px">
+                  If you wish to change your password, please enter your new password below.<br />
+                  However, if you do not want to change your password, you do not have to re-enter it.<br />
             </span>
 
             <b>Update Account Information:</b><br />
