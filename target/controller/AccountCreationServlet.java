@@ -2,6 +2,7 @@ package controller;
 
 import static model.ServletUtilities.*;
 import model.AccountForm;
+import model.Attributes;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,14 +17,14 @@ public class AccountCreationServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
-            throws IOException, ServletException {
+        throws IOException, ServletException {
         response.sendRedirect("jsp/create_account.jsp");
     }
 
     @Override
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response)
-            throws IOException, ServletException {
+        throws IOException, ServletException {
         if (isSubmitButtonClicked(request)) {
             AccountForm accountForm = new AccountForm(request);
             if (accountForm.isAccountCreationSuccessful()) {
@@ -40,7 +41,8 @@ public class AccountCreationServlet extends HttpServlet {
 
     private void automaticallyLogin(HttpServletResponse response)
             throws IOException {
-        response.sendRedirect("index");
+        Attributes.storeAttribute("accountCreateSuccess", "success");
+        response.sendRedirect("jsp/create_account.jsp");
     }
 
     private void reloadBecauseAccountCreateFailed(HttpServletRequest request,

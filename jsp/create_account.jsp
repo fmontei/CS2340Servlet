@@ -2,6 +2,7 @@
 <% String prevFirstName = Attributes.getAttribute("prevFirstName"); %>
 <% String prevLastName = Attributes.getAttribute("prevLastName"); %>
 <% String prevUsername = Attributes.getAttribute("prevUsername"); %>
+<% String success = Attributes.getAttribute("accountCreateSuccess"); %>
 
 <html>
   <head>
@@ -119,7 +120,21 @@
       </div>
     </div>
 
-    <!-- Password confirmation Javascript -->
+    <!-- Asks user to log into application following successful account creation -->
+    <script>
+      var success = "<%= success %>";
+      if (success === "success") {
+        var response = window.confirm("Account successfully created. Automatically logging you in.");
+        if (response) {
+          window.location.replace("/CS2340Servlet/jsp/createLoginSession.jsp");
+        } else {
+          window.location.replace("/CS2340Servlet/jsp/index.jsp");
+          <% Attributes.removeAttribute("accountCreateSuccess"); %>
+        }
+      }
+    </script>
+
+    <!-- Password color change confirmation Javascript -->
     <script src="/CS2340Servlet/js/password_check.js">
     </script>
 
