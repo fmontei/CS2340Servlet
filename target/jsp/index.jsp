@@ -143,10 +143,6 @@
             Trip Planner Overview
         </header> -->
 
-        <!-- Facebook SDK Javascript -->
-        <script type="text/javascript" src="/CS2340Servlet/js/facebookSDK.js">
-        </script>
-
         <!-- Old, check for facebook logout -->
 <!-- 
         <script type="text/javascript">
@@ -156,9 +152,12 @@
         </script>
  -->
 
+        <!-- Facebook SDK Javascript -->
         <div id="fb-root"></div>
+        <script type="text/javascript" src="/CS2340Servlet/js/facebookSDK.js">
+        </script>
 
-        <script type="text/javascript">
+        <script>
             // Facebook login
             (function(d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0];
