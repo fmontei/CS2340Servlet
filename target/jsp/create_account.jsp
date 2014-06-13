@@ -50,7 +50,7 @@
           </h1>
 
           <form id="create_account_form" action="/CS2340Servlet/createAccount" method="POST" class="form-inline" role="form">
-            <b>Enter your Personal Information:</b><br />
+            <b>Enter Your Personal Information:</b><br />
             <div class="form-group">
               <label class="sr-only" for="name">Name</label>
               <input type="text" class="form-control" id="name" name="firstName"
@@ -84,6 +84,10 @@
             <label class="sr-only" for="name">Password</label>
             <input type="password" class="form-control" id="newPassword"
               name="newPassword"
+              onkeyup="checkPass(document.getElementById('newPassword'),
+                document.getElementById('confirmPassword'),
+                document.getElementById('confirmMessage'));
+                return false;"
               required="required"
               placeholder = "Enter Password" />
             </div>
@@ -102,11 +106,13 @@
             </div>
             <br />
 
-            <span id="confirmMessage" class="confirmMessage"></span>
-            <span class="text-danger">${error}</span>
-            <center>
-              <input id="submit" type="submit" name="submitButton" text="Submit" />
-            </center>
+            <span id="confirmMessage" class="confirmMessage"></span><br /><br />
+            <span class="text-danger">${error}</span><br />
+
+            <div class="form-group">
+              <button type="submit" name="submitButton"
+                class="btn btn-default">Submit</button>
+            </div>
           </form>
 
         </div>
