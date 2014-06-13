@@ -12,7 +12,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Account Settings</title>
+    <title>Update Account Settings</title>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
@@ -32,7 +32,7 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#">
-            Account Settings
+            Update Account Settings
           </a>
         </div>
         <div class="navbar-collapse collapse">
@@ -57,33 +57,65 @@
             Account Settings
           </h1>
 
-          <form id="update_account_form" action="/CS2340Servlet/updateAccount" method="POST">
-            <dl>
-              <dt><b>Edit your Personal Information:</b>
-              <dd><span id="label">First name:</span><br />
-                  <input type="text" name="updateFirstName" value="<%=firstName%>" required="required"  />
-              <dd><span id="label">Last name:</span><br />
-                  <input type="text" name="updateLastName" value="<%=lastName == null ? "" : lastName %>" required="required" />
-                  <br /><br />
-              <p><em>If you wish to change your password, please enter your new password below.<br />
-                   However, if you do not want to change your password, you do not have to re-enter it.</em><br />
-              </p>
-              <dt>Edit Security Settings:
-              <dd><span id="label">Password:</span><br />
-                  <input name="oldPassword" id="oldPassword" type="password">
-              <dd><span id="label">Confirm Password:</span><br />
-                <input name="confirmOldPassword" id="confirmOldPassword"
-                 onkeyup="checkPass(document.getElementById('oldPassword'),
-                                   document.getElementById('confirmOldPassword'),
-                                   document.getElementById('confirmMessage'));
-                                   return false;"
-                 type="password"><br />
-                <span id="confirmMessage" class="confirmMessage"></span>
-            </dl>
-            <span class="error">${error}</span>
-            <center>
-              <input id="submit" type="submit" name="submitButton" text="Submit" />
-            </center>
+          <form id="update_account_form" action="/CS2340Servlet/updateAccount" method="POST" class="form-inline" role="form">
+            <b>Update Your Personal Information:</b><br />
+            <div class="form-group">
+              <label class="sr-only" for="name">Name</label>
+              <input type="text" class="form-control" id="name"
+                name="updateFirstName"
+                value="<%=firstName == null ? "" : firstName %>"
+                required="required"
+                placeholder = "Enter First Name" />
+            </div>
+            <br />
+
+            <div class="form-group">
+              <label class="sr-only" for="name">Name</label>
+              <input type="text" class="form-control" id="name"
+                name="updateLastName"
+                value="<%=lastName == null ? "" : lastName %>"
+                required="required"
+                placeholder = "Enter Last Name" />
+            </div>
+            <br />
+
+            <span class="help-block" style="padding-top:10px">
+                  If you wish to change your password, please enter your new password below.<br />
+                  However, if you do not want to change your password, you do not have to re-enter it.<br />
+            </span>
+
+            <b>Update Account Information:</b><br />
+            <div class="form-group">
+            <label class="sr-only" for="password">Password</label>
+            <input type="password" class="form-control" id="oldPassword"
+              name="oldPassword"
+              onkeyup="checkPass(document.getElementById('oldPassword'),
+                document.getElementById('confirmOldPassword'),
+                document.getElementById('confirmMessage'));
+                return false;"
+              placeholder = "Enter Password" />
+            </div>
+            <br />
+
+            <div class="form-group">
+            <label class="sr-only" for="password">Password</label>
+            <input type="password" class="form-control" id="confirmOldPassword"
+              name="confirmOldPassword"
+              onkeyup="checkPass(document.getElementById('oldPassword'),
+                document.getElementById('confirmOldPassword'),
+                document.getElementById('confirmMessage'));
+                return false;"
+              placeholder = "Re-enter Password" />
+            </div>
+            <br />
+
+            <span id="confirmMessage" class="confirmMessage"></span><br /><br />
+            <span class="text-danger">${error}</span><br />
+
+            <div class="form-group">
+              <button type="submit" name="submitButton"
+                class="btn btn-default">Submit</button>
+            </div>
           </form>
 
         </div>

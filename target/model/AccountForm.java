@@ -27,6 +27,7 @@ public class AccountForm {
                 password, confirmPassword);
             validation.validateCredentials();
             changeAccountSettings(newAccount);
+            storeLoginAttributes();
             clearTemporaryAttributes();
             return true;
         } catch (ValidationException ex) {
@@ -54,16 +55,28 @@ public class AccountForm {
         storeAttribute("prevUsername", user);
     }
 
-    private void clearTemporaryAttributes() {
-        removeAttribute("prevFirstName");
-        removeAttribute("prevLastName");
-        removeAttribute("prevUsername");
-    }
-
     public static void changeAccountSettings(UserAccount updatedAccount) {
         String username = updatedAccount.getUsername();
         userAccounts.put(username, updatedAccount);
         accountDataStore.saveData(userAccounts);
+    }
+
+    private void storeLoginAttributes() {
+        UserAccount currentAccount = AccountForm.getUserAccounts().get(username);
+        String welcomeName = currentAccount.getName();
+        String firstName = currentAccount.getFirstName();
+        String lastName = currentAccount.getLastName();
+        Attributes.storeAttribute(Attributes.WELCOME_NAME, welcomeName);
+        Attributes.storeAttribute(Attributes.CURRENT_USER, username);
+        Attributes.storeAttribute("firstName", firstName);
+        Attributes.storeAttribute("lastName", lastName);
+        Attributes.storeAttribute("username", username);
+    }
+
+    private void clearTemporaryAttributes() {
+        removeAttribute("prevFirstName");
+        removeAttribute("prevLastName");
+        removeAttribute("prevUsername");
     }
 
     public static Map<String, UserAccount> getUserAccounts() {
