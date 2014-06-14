@@ -1,5 +1,6 @@
 package model;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 public class AccountUpdateForm {
@@ -9,7 +10,6 @@ public class AccountUpdateForm {
     private String password;
     private String confirmPassword;
     private String firstName, lastName;
-    private DataStore accountsSave = new DataStore();
     public AccountUpdateForm(HttpServletRequest request) {
         this.request = request;
     }
@@ -27,7 +27,9 @@ public class AccountUpdateForm {
     }
 
     private void gatherNewAccountInfo() throws ValidationException {
-        username = Attributes.getAttribute(Attributes.CURRENT_USER);
+        ServletContext appContext = request.getServletContext();
+        UserAccount currentUser = (UserAccount) appContext.getAttribute("currentUser");
+        username = currentUser.getUsername();
         firstName = request.getParameter("updateFirstName");
         lastName = request.getParameter("updateLastName");
         password = request.getParameter("oldPassword");
@@ -57,18 +59,18 @@ public class AccountUpdateForm {
 
     private void storeLoginAttributes() {
         currentAccount = new UserAccount(firstName, lastName, username, password);
-        String username = currentAccount.getUsername();
         String welcomeName = currentAccount.getName();
         String firstName = currentAccount.getFirstName();
         String lastName = currentAccount.getLastName();
-        Attributes.storeAttribute(Attributes.WELCOME_NAME, welcomeName);
-        Attributes.storeAttribute("firstName", firstName);
-        Attributes.storeAttribute("lastName", lastName);
-        Attributes.storeAttribute("username", username);
-        changeAccountSettings(currentAccount);
+        ServletContext appContext = request.getServletContext();
+        appContext.setAttribute("welcomeName", welcomeName);
+        appContext.setAttribute("currentUser", currentAccount);
+        appContext.setAttribute("firstName", firstName);
+        appContext.setAttribute("lastName", lastName);
+        updateAccountSettings(currentAccount);
     }
 
-    private void changeAccountSettings(UserAccount updatedAccount) {
+    private void updateAccountSettings(UserAccount updatedAccount) {
         DataStore dataStore = new DataStore();
         String username = updatedAccount.getUsername();
         dataStore.saveAccount(username, updatedAccount);

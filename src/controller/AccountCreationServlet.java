@@ -1,8 +1,8 @@
 package controller;
 
 import static model.ServletUtilities.*;
-import model.AccountForm;
-import model.Attributes;
+
+import model.AccountCreateForm;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +26,7 @@ public class AccountCreationServlet extends HttpServlet {
                        HttpServletResponse response)
         throws IOException, ServletException {
         if (isSubmitButtonClicked(request)) {
-            AccountForm accountForm = new AccountForm(request);
+            AccountCreateForm accountForm = new AccountCreateForm(request);
             if (accountForm.isAccountCreationSuccessful()) {
                 automaticallyLogin(request, response);
             } else {

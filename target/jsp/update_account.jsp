@@ -2,11 +2,12 @@
     if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
         response.sendRedirect("/CS2340Servlet/jsp/index.jsp");
     }
+
+   ServletContext appContext = request.getServletContext();
+   String firstName = appContext.getAttribute("firstName").toString();
+   String lastName = appContext.getAttribute("lastName").toString();
+   String username = appContext.getAttribute("username").toString();
 %>
-<%@ page import="model.Attributes" %>
-<% String firstName = Attributes.getAttribute("firstName"); %>
-<% String lastName = Attributes.getAttribute("lastName"); %>
-<% String username = Attributes.getAttribute("username"); %>
 
 <!DOCTYPE html>
 <html>

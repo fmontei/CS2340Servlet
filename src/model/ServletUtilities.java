@@ -13,7 +13,7 @@ public class ServletUtilities {
                                       HttpServletResponse response,
                                       String target)
             throws IOException, ServletException {
-        RequestDispatcher dispatcher = servlet.getServletContext().getRequestDispatcher(target);
-        dispatcher.forward(request, response);
+        RequestDispatcher view = request.getRequestDispatcher(target);
+        view.forward(request, response);
     }
 }

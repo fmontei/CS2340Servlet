@@ -76,7 +76,8 @@
     </target>
 
 
-    <target name="deploy" depends="copy-other-files">
+    <target name="deploy" depends="copy-other-files"
+            description="deploy files to tomcat server">
         <mkdir dir="${catalina.home}/webapps/${app.name}"/>
 
         <copy  todir="${catalina.home}/webapps/${app.name}">

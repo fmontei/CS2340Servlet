@@ -1,8 +1,3 @@
-<%@ page import="model.Attributes" %>
-<% String prevFirstName = Attributes.getAttribute("prevFirstName"); %>
-<% String prevLastName = Attributes.getAttribute("prevLastName"); %>
-<% String prevUsername = Attributes.getAttribute("prevUsername"); %>
-
 <html>
   <head>
     <title>Account Creation</title>
@@ -49,12 +44,21 @@
             Account Settings
           </h1>
 
+          <%
+            Object prevFirstName = request.getAttribute("prevFirstName");
+            prevFirstName = (prevFirstName != null) ? prevFirstName.toString() : "";
+            Object prevLastName = request.getAttribute("prevLastName");
+            prevLastName = (prevLastName != null) ? prevLastName.toString() : "";
+            Object prevUsername = request.getAttribute("prevUsername");
+            prevUsername = (prevUsername != null) ? prevUsername.toString() : "";
+          %>
+
           <form id="create_account_form" action="/CS2340Servlet/createAccount" method="POST" class="form-inline" role="form">
             <b>Enter your Personal Information:</b><br />
             <div class="form-group">
               <label class="sr-only" for="name">Name</label>
               <input type="text" class="form-control" id="name" name="firstName"
-                value="<%=prevFirstName == null ? "" : prevFirstName %>"
+                value="<%=prevFirstName%>"
                 required="required"
                 placeholder = "Enter First Name" />
             </div>
@@ -63,7 +67,7 @@
             <div class="form-group">
               <label class="sr-only" for="name">Name</label>
               <input type="text" class="form-control" id="name" name="lastName"
-                value="<%=prevLastName == null ? "" : prevLastName %>"
+                value="<%=prevLastName%>"
                 required="required"
                 placeholder = "Enter Last Name" />
             </div>
@@ -74,7 +78,7 @@
               <label class="sr-only" for="name">Name</label>
               <input type="text" class="form-control" id="name"
                 name="newUsername"
-                value="<%=prevUsername == null ? "" : prevUsername %>"
+                value="<%=prevUsername%>"
                 required="required"
                 placeholder = "Enter Username" />
             </div>

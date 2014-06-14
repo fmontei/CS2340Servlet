@@ -1,5 +1,7 @@
-<%@ page import="model.Attributes" %>
+<%@ page import="model.UserAccount" %>
 <%
-	session.setAttribute("userid", Attributes.getAttribute(Attributes.CURRENT_USER));
-	response.sendRedirect("index.jsp");
+  ServletContext appContext = request.getServletContext();
+  UserAccount currentUser = (UserAccount) appContext.getAttribute("currentUser");
+  session.setAttribute("userid", currentUser);
+  response.sendRedirect("index.jsp");
 %>

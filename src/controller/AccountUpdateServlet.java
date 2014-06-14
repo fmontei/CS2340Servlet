@@ -1,6 +1,5 @@
 package controller;
 
-import model.AccountForm;
 import model.AccountUpdateForm;
 
 import javax.servlet.ServletException;
