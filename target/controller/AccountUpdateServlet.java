@@ -36,8 +36,6 @@ public class AccountUpdateServlet extends HttpServlet {
             AccountUpdateForm accountForm = new AccountUpdateForm(request);
             if (accountForm.hasAccountBeenDeleted()) {
                 goToHomePage(response);
-            } else {
-                reloadBecauseAccountCreateFailed(request, response);
             }
         } else {
             response.sendRedirect("jsp/update_account.jsp");
