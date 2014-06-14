@@ -9,7 +9,7 @@ public class AccountUpdateForm {
     private String password;
     private String confirmPassword;
     private String firstName, lastName;
-    private UserAccountsSerializable accountsSave = new UserAccountsSerializable();
+    private DataStore accountsSave = new DataStore();
     public AccountUpdateForm(HttpServletRequest request) {
         this.request = request;
     }
@@ -51,7 +51,7 @@ public class AccountUpdateForm {
     }
 
     private void revertToOldPassword() {
-        UserAccount accountBeforeChange = AccountForm.findByUserName(username);
+        UserAccount accountBeforeChange = DataStore.findByUserName(username);
         password = accountBeforeChange.getPassword();
     }
 
@@ -65,6 +65,12 @@ public class AccountUpdateForm {
         Attributes.storeAttribute("firstName", firstName);
         Attributes.storeAttribute("lastName", lastName);
         Attributes.storeAttribute("username", username);
-        AccountForm.changeAccountSettings(currentAccount);
+        changeAccountSettings(currentAccount);
+    }
+
+    private void changeAccountSettings(UserAccount updatedAccount) {
+        DataStore dataStore = new DataStore();
+        String username = updatedAccount.getUsername();
+        dataStore.saveAccount(username, updatedAccount);
     }
 }

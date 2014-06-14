@@ -3,18 +3,18 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
+  <head>
 
-      <meta charset="utf-8" />
-      <title>Trip Planner</title>
+    <meta charset="utf-8" />
+    <title>Trip Planner</title>
 
-      <!-- Stylesheets -->
-      <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
-      <link href="/CS2340Servlet/css/bootstrap.min.css" rel="stylesheet">
-      <link href="/CS2340Servlet/css/dashboard.css" rel="stylesheet">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
+    <link href="/CS2340Servlet/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/CS2340Servlet/css/dashboard.css" rel="stylesheet">
 
-    </head>
-    <body>
+  </head>
+  <body>
 
     <%if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {%>
 
@@ -42,12 +42,6 @@
                     <input id="user_username" style="margin-bottom: 15px;" type="text" name="username" size="30" placeholder="Username" required="required"/>
 
                     <input id="user_password" style="margin-bottom: 15px;" type="password" name="password" size="30" placeholder="Password" required="required"/>
-
-                    <div class="checkbox">
-                      <label>
-                         <input type="checkbox"> Remember me
-                      </label>
-                    </div>
                    
                     <input class="btn btn-primary" style="clear: left; width: 100%; height: 32px; font-size: 13px;" type="submit" name="loginButton" value="Login" />
 
@@ -125,70 +119,37 @@
 
     <%}%>
 
-        <!-- Old stuff -->
+    <!-- Facebook SDK Javascript -->
+    <div id="fb-root"></div>
+    <script type="text/javascript" src="/CS2340Servlet/js/facebookSDK.js">
+    </script>
 
-        <!-- <nav>
-            <span id="overviewMessage">
-                <%=Attributes.getAttribute(Attributes.WELCOME_NAME)%>&#39;s Trip Planner
-            </span>
-            <fb:login-button id="fbLoginButton"
-                    scope="public_profile,email"
-                    onlogin="checkLoginState();">
-            </fb:login-button>
-            <select id="nav"
-                    onChange="doDropdownAction(this); checkLoginState();"
-                    onFocus="checkLoginState();">
-                <option value="" disabled selected>Navigation</option>
-                <option value="/CS2340Servlet/updateAccount">Account Settings</option>
-                <option value="/CS2340Servlet">Logout</option>
-            </select>
-            <div id="status">
-            </div>
-        </nav>
-        <header>
-            Trip Planner Overview
-        </header> -->
+    <script>
+      // Facebook login
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
 
-        <!-- Old, check for facebook logout -->
-<!-- 
-        <script type="text/javascript">
-            function doDropdownAction(nav) {
-                return nav.options[nav.selectedIndex].value && (window.location = nav.options[nav.selectedIndex].value);
-            }
-        </script>
- -->
+      // Dropdown Login Form
+      $(function() {
+        // Setup drop down menu
+        $('.dropdown-toggle').dropdown();
 
-        <!-- Facebook SDK Javascript -->
-        <div id="fb-root"></div>
-        <script type="text/javascript" src="/CS2340Servlet/js/facebookSDK.js">
-        </script>
+        // Fix input element click problem
+        $('.dropdown input, .dropdown label').click(function(e) {
+          e.stopPropagation();
+        });
+      });
+    </script>
 
-        <script>
-            // Facebook login
-            (function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = d.createElement(s); js.id = id;
-                js.src = "//connect.facebook.net/en_US/sdk.js";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="/CS2340Servlet/js/bootstrap.min.js"></script>
+    <script src="/CS2340Servlet/js/docs.min.js"></script>
 
-            // Dropdown Login Form
-            $(function() {
-              // Setup drop down menu
-              $('.dropdown-toggle').dropdown();
-             
-              // Fix input element click problem
-              $('.dropdown input, .dropdown label').click(function(e) {
-                e.stopPropagation();
-              });
-            });
-        </script>
-
-        <!-- Bootstrap core JavaScript -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script src="/CS2340Servlet/js/bootstrap.min.js"></script>
-        <script src="/CS2340Servlet/js/docs.min.js"></script>
-
-    </body>
+  </body>
 </html>

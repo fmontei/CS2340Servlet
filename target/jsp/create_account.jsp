@@ -50,7 +50,7 @@
           </h1>
 
           <form id="create_account_form" action="/CS2340Servlet/createAccount" method="POST" class="form-inline" role="form">
-            <b>Enter Your Personal Information:</b><br />
+            <b>Enter your Personal Information:</b><br />
             <div class="form-group">
               <label class="sr-only" for="name">Name</label>
               <input type="text" class="form-control" id="name" name="firstName"

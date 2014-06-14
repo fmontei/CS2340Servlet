@@ -1,6 +1,8 @@
 package model;
 
-import static model.AccountForm.getUserAccounts;
+import org.apache.catalina.User;
+
+import static model.DataStore.findByUserName;
 
 public class LoginValidation implements Validation {
     private String username;
@@ -24,12 +26,13 @@ public class LoginValidation implements Validation {
     }
 
     private boolean passwordMatches(String username, String password) {
-        UserAccount currentAccount = getUserAccounts().get(username);
+        UserAccount currentAccount = findByUserName(username);
         String realPassword = currentAccount.getPassword();
         return realPassword.equals(password);
     }
 
     private boolean usernameExists(String username) {
-        return getUserAccounts().containsKey(username);
+        UserAccount temp = findByUserName(username);
+        return temp != null;
     }
 }
