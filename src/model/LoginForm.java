@@ -3,6 +3,7 @@ package model;
 import static model.DataStore.findByUserName;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class LoginForm {
     private HttpServletRequest request;
@@ -47,12 +48,12 @@ public class LoginForm {
         String welcomeName = currentAccount.getName();
         String firstName = currentAccount.getFirstName();
         String lastName = currentAccount.getLastName();
-        ServletContext appContext = request.getServletContext();
-        appContext.setAttribute("welcomeName", welcomeName);
-        appContext.setAttribute("currentUser", currentAccount);
-        appContext.setAttribute("firstName", firstName);
-        appContext.setAttribute("lastName", lastName);
-        appContext.setAttribute("username", username);
+        HttpSession session = request.getSession();
+        session.setAttribute("welcomeName", welcomeName);
+        session.setAttribute("currentUser", currentAccount);
+        session.setAttribute("firstName", firstName);
+        session.setAttribute("lastName", lastName);
+        session.setAttribute("username", username);
     }
 
     private boolean isPasswordNull() {

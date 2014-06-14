@@ -24,9 +24,9 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="index.jsp">Index</a></li>
+            <li><a href="jsp/index.jsp">Index</a></li>
             <li><a href="#">Settings</a></li>
-            <li><a href="deleteLoginSession.jsp">Logout</a></li>
+            <li><a href="jsp/deleteLoginSession.jsp">Logout</a></li>
           </ul>
         </div>
       </div>
@@ -45,12 +45,19 @@
           </h1>
 
           <%
-            Object prevFirstName = request.getAttribute("prevFirstName");
-            prevFirstName = (prevFirstName != null) ? prevFirstName.toString() : "";
-            Object prevLastName = request.getAttribute("prevLastName");
-            prevLastName = (prevLastName != null) ? prevLastName.toString() : "";
-            Object prevUsername = request.getAttribute("prevUsername");
-            prevUsername = (prevUsername != null) ? prevUsername.toString() : "";
+            Object prevFirstName, prevLastName, prevUsername;
+            if (request.getAttribute("accountCreateSuccess") == "success") {
+              prevFirstName = request.getSession().getAttribute("firstName").toString();
+              prevLastName = request.getSession().getAttribute("lastName").toString();
+              prevUsername = request.getSession().getAttribute("username").toString();
+            } else {
+              prevFirstName = request.getAttribute("prevFirstName");
+              prevFirstName = (prevFirstName != null) ? prevFirstName.toString() : "";
+              prevLastName = request.getAttribute("prevLastName");
+              prevLastName = (prevLastName != null) ? prevLastName.toString() : "";
+              prevUsername = request.getAttribute("prevUsername");
+              prevUsername = (prevUsername != null) ? prevUsername.toString() : "";
+            }
           %>
 
           <form id="create_account_form" action="/CS2340Servlet/createAccount" method="POST" class="form-inline" role="form">

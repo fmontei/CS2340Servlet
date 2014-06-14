@@ -3,10 +3,8 @@
         response.sendRedirect("/CS2340Servlet/jsp/index.jsp");
     }
 
-   ServletContext appContext = request.getServletContext();
-   String firstName = appContext.getAttribute("firstName").toString();
-   String lastName = appContext.getAttribute("lastName").toString();
-   String username = appContext.getAttribute("username").toString();
+   String firstName = request.getSession().getAttribute("firstName").toString();
+   String lastName = request.getSession().getAttribute("lastName").toString();
 %>
 
 <!DOCTYPE html>
@@ -38,9 +36,9 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="index.jsp">Index</a></li>
+            <li><a href="jsp/index.jsp">Index</a></li>
             <li><a href="#">Settings</a></li>
-            <li><a href="deleteLoginSession.jsp">Logout</a></li>
+            <li><a href="jsp/deleteLoginSession.jsp">Logout</a></li>
           </ul>
         </div>
       </div>
@@ -61,8 +59,8 @@
           <form id="update_account_form" action="/CS2340Servlet/updateAccount" method="POST" class="form-inline" role="form">
             <b>Update Your Personal Information:</b><br />
             <div class="form-group">
-              <label class="sr-only" for="name">Name</label>
-              <input type="text" class="form-control" id="name"
+              <label class="sr-only" for="firstName">Name</label>
+              <input type="text" class="form-control" id="firstName"
                 name="updateFirstName"
                 value="<%=firstName == null ? "" : firstName %>"
                 required="required"
@@ -87,7 +85,7 @@
 
             <b>Update Account Information:</b><br />
             <div class="form-group">
-            <label class="sr-only" for="password">Password</label>
+            <label class="sr-only" for="oldPassword">Password</label>
             <input type="password" class="form-control" id="oldPassword"
               name="oldPassword"
               onkeyup="checkPass(document.getElementById('oldPassword'),
@@ -99,7 +97,7 @@
             <br />
 
             <div class="form-group">
-            <label class="sr-only" for="password">Password</label>
+            <label class="sr-only" for="confirmOldpassword">Password</label>
             <input type="password" class="form-control" id="confirmOldPassword"
               name="confirmOldPassword"
               onkeyup="checkPass(document.getElementById('oldPassword'),
@@ -123,7 +121,7 @@
       </div>
     </div>
 
-    <!-- Password confirmation Javascript -->
+    <!-- Password color change confirmation Javascript -->
     <script src="/CS2340Servlet/js/password_check.js">
     </script>
 

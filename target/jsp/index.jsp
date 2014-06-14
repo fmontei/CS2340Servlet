@@ -86,7 +86,7 @@
               <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#">
-              <%=request.getServletContext().getAttribute("welcomeName")%>&#39;s Trip Planner
+              <%=request.getSession().getAttribute("welcomeName")%>&#39;s Trip Planner
             </a>
           </div>
           <div class="navbar-collapse collapse">
@@ -108,7 +108,7 @@
           </div>
           <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h1 class="page-header">
-              Welcome <%=request.getServletContext().getAttribute("welcomeName")%>!
+              Welcome <%=request.getSession().getAttribute("welcomeName")%>!
             </h1>
 
             <!-- Facebook Panel -->
@@ -129,10 +129,9 @@
                 Active Itinerary
               </div>
               <div class="panel panel-body">
-                <span>You currently have no Itineraries.</span>
 
                 <div class="btn-group" id="start-dropdown">
-                  <button type="button" class="btn btn-info">What would you like to do?</button>
+                  <button type="button" class="btn btn-primary">What would you like to do?</button>
                   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
@@ -154,38 +153,38 @@
                 </div><br /><br />
 
                 <div id="new-itinerary-info" style="visibility: hidden">
-                  <div class="input-group">
-                    <span class="input-group-addon">Name your Itinerary:</span>
-                    <input type="text" class="form-control" placeholder="Name">
-                  </div><br />
+                <div class="input-group">
+                  <span class="input-group-addon">Name your Itinerary:</span>
+                  <input type="text" class="form-control" placeholder="Name">
+                </div><br />
 
-                  <!-- Address Field -->
-                  <div class="input-group">
-                    <span class="input-group-addon">Street:</span>
-                    <input type="text" class="form-control" placeholder="Street Name">
-                    <span class="input-group-addon">City</span>
-                    <input type="text" class="form-control" placeholder="City">
-                    <span class="input-group-addon">State</span>
-                    <input type="text" class="form-control" placeholder="State">
-                    <span class="input-group-addon">Zip Code</span>
-                    <input type="text" class="form-control" placeholder="Code">
-                    <span class="input-group-addon">Country</span>
-                    <input type="text" class="form-control" placeholder="Country">
-                  </div><br />
+                <!-- Address Form -->
+                <div class="input-group">
+                  <span class="input-group-addon">Street:</span>
+                  <input type="text" class="form-control" placeholder="Street Name">
+                  <span class="input-group-addon">City:</span>
+                  <input type="text" class="form-control" placeholder="City">
+                  <span class="input-group-addon">State:</span>
+                  <input type="text" class="form-control" placeholder="State">
+                  <span class="input-group-addon">Zip Code:</span>
+                  <input type="text" class="form-control" placeholder="Zip Code">
+                  <span class="input-group-addon">Country:</span>
+                  <input type="text" class="form-control" placeholder="Country">
+                </div><br />
 
-                  <!-- Transportation Dropdown -->
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default">Transportation</button>
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                      <span class="caret"></span>
-                      <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">Car</a></li>
-                      <li><a href="#">Bike</a></li>
-                      <li><a href="#">Walking</a></li>
-                    </ul>
-                  </div>
+                <!-- Transportation Dropdown -->
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default">Transportation</button>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Car</a></li>
+                    <li><a href="#">Bike</a></li>
+                    <li><a href="#">Walking</a></li>
+                  </ul>
+                </div>
 
                 </div>
 

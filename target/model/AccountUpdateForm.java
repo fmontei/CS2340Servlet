@@ -2,22 +2,29 @@ package model;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.xml.crypto.Data;
 
 public class AccountUpdateForm {
     private HttpServletRequest request;
+    private HttpSession session;
     private UserAccount currentAccount;
     private String username;
     private String password;
     private String confirmPassword;
     private String firstName, lastName;
+
     public AccountUpdateForm(HttpServletRequest request) {
         this.request = request;
+        this.session = request.getSession();
+        this.username = session.getAttribute("username").toString();
     }
 
     public boolean isAccountCreationSuccessful() {
         try {
             gatherNewAccountInfo();
             validateCredentials();
+            updateAccountSettings();
             storeLoginAttributes();
             return true;
         } catch (ValidationException ex) {
@@ -27,13 +34,11 @@ public class AccountUpdateForm {
     }
 
     private void gatherNewAccountInfo() throws ValidationException {
-        ServletContext appContext = request.getServletContext();
-        UserAccount currentUser = (UserAccount) appContext.getAttribute("currentUser");
-        username = currentUser.getUsername();
         firstName = request.getParameter("updateFirstName");
         lastName = request.getParameter("updateLastName");
         password = request.getParameter("oldPassword");
         confirmPassword = request.getParameter("confirmOldPassword");
+        currentAccount = new UserAccount(firstName, lastName, username, password);
     }
 
     public void validateCredentials() throws ValidationException {
@@ -58,21 +63,16 @@ public class AccountUpdateForm {
     }
 
     private void storeLoginAttributes() {
-        currentAccount = new UserAccount(firstName, lastName, username, password);
         String welcomeName = currentAccount.getName();
-        String firstName = currentAccount.getFirstName();
-        String lastName = currentAccount.getLastName();
-        ServletContext appContext = request.getServletContext();
-        appContext.setAttribute("welcomeName", welcomeName);
-        appContext.setAttribute("currentUser", currentAccount);
-        appContext.setAttribute("firstName", firstName);
-        appContext.setAttribute("lastName", lastName);
-        updateAccountSettings(currentAccount);
+        synchronized(session) {
+            session.setAttribute("currentUser", currentAccount);
+            session.setAttribute("welcomeName", welcomeName);
+            session.setAttribute("firstName", firstName);
+            session.setAttribute("lastName", lastName);
+        }
     }
 
-    private void updateAccountSettings(UserAccount updatedAccount) {
-        DataStore dataStore = new DataStore();
-        String username = updatedAccount.getUsername();
-        dataStore.saveAccount(username, updatedAccount);
+    private void updateAccountSettings() {
+        DataStore.saveAccount(username, currentAccount);
     }
 }

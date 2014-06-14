@@ -9,8 +9,7 @@ public class DataStore {
         = new HashMap<String, UserAccount>();
     private static File file;
 
-    public void saveAccount(String username, UserAccount account) {
-        loadData();
+    public static void saveAccount(String username, UserAccount account) {
         accountData.put(username, account);
         saveData();
     }
