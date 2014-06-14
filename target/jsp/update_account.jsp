@@ -17,18 +17,18 @@ String pageName = "Account Settings";
 
                 <!-- Show link 1 active -->
                 <li id="showLink1Active1" class="active" style="display:block;"><a href="#">Personal Information</a></li>
-                <li id="showLink1Active2" style="display:block;"><a href="#changePassword" onclick="showLink2Active()">Change Password</a></li>
-                <li id="showLink1Active3" style="display:block;"><a href="#deleteAccount" onclick="showLink3Active()">Delete Your Account</a></li>
+                <li id="showLink1Active2" style="display:block;"><a href="#" onclick="showLink2Active()">Change Password</a></li>
+                <li id="showLink1Active3" style="display:block;"><a href="#" onclick="showLink3Active()">Delete Your Account</a></li>
 
                 <!-- Show link 2 active -->
                 <li id="showLink2Active1" style="display:none;"><a href="#" onclick="showLink1Active()">Personal Information</a></li>
-                <li id="showLink2Active2" class="active" style="display:none;"><a href="#changePassword">Change Password</a></li>
-                <li id="showLink2Active3" style="display:none;"><a href="#deleteAccount" onclick="showLink3Active()">Delete Your Account</a></li>
+                <li id="showLink2Active2" class="active" style="display:none;"><a href="#">Change Password</a></li>
+                <li id="showLink2Active3" style="display:none;"><a href="#" onclick="showLink3Active()">Delete Your Account</a></li>
 
                 <!-- Show link 3 active -->
                 <li id="showLink3Active1" style="display:none;"><a href="#" onclick="showLink1Active()">Personal Information</a></li>
-                <li id="showLink3Active2" style="display:none;"><a href="#changePassword" onclick="showLink2Active()">Change Password</a></li>
-                <li id="showLink3Active3" class="active" style="display:none;"><a href="#deleteAccount">Delete Your Account</a></li>
+                <li id="showLink3Active2" style="display:none;"><a href="#" onclick="showLink2Active()">Change Password</a></li>
+                <li id="showLink3Active3" class="active" style="display:none;"><a href="#">Delete Your Account</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -109,15 +109,13 @@ String pageName = "Account Settings";
                     </div>
                 </div>
 
-                <div id="deleteButton" style="display:none;">
+                <div id="deleteAccount" style="display:none;">
                     <div class="form-group">
-                        <button type="submit" name="deleteButton"
-                        class="btn btn-default">Delete Account</button>
+                        <button type="submit" name="deleteButton" class="btn btn-default" onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</button>
                     </div>
                 </div>
 
             </form>
-
         </div>
     </div>
 </div>
@@ -144,14 +142,14 @@ String pageName = "Account Settings";
     }
     function showLink1Active() {
         turnOnVisibility(['showLink1Active1','showLink1Active2','showLink1Active3','personalInformation','saveButton']);
-        turnOffVisibility(['showLink2Active1','showLink2Active2','showLink2Active3','showLink3Active1','showLink3Active2','showLink3Active3','changePassword','deleteButton']);
+        turnOffVisibility(['showLink2Active1','showLink2Active2','showLink2Active3','showLink3Active1','showLink3Active2','showLink3Active3','changePassword','deleteAccount']);
     }
     function showLink2Active() {
         turnOnVisibility(['showLink2Active1','showLink2Active2','showLink2Active3','changePassword','saveButton']);
-        turnOffVisibility(['showLink1Active1','showLink1Active2','showLink1Active3','showLink3Active1','showLink3Active2','showLink3Active3','personalInformation','deleteButton']);
+        turnOffVisibility(['showLink1Active1','showLink1Active2','showLink1Active3','showLink3Active1','showLink3Active2','showLink3Active3','personalInformation','deleteAccount']);
     }
     function showLink3Active() {
-        turnOnVisibility(['showLink3Active1','showLink3Active2','showLink3Active3','deleteButton']);
+        turnOnVisibility(['showLink3Active1','showLink3Active2','showLink3Active3','deleteAccount']);
         turnOffVisibility(['showLink1Active1','showLink1Active2','showLink1Active3','showLink2Active1','showLink2Active2','showLink2Active3','personalInformation','changePassword','saveButton']);
     }
 </script>

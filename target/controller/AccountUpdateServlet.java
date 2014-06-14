@@ -39,6 +39,8 @@ public class AccountUpdateServlet extends HttpServlet {
             } else {
                 reloadBecauseAccountCreateFailed(request, response);
             }
+        } else {
+            response.sendRedirect("jsp/update_account.jsp");
         }
     }
 
