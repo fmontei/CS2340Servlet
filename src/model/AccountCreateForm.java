@@ -20,10 +20,10 @@ public class AccountCreateForm {
                 password, confirmPassword);
             validation.validateCredentials();
             saveAccountSettings(newAccount);
-            storeLoginAttributes();
+            storeSessionAttributes();
             return true;
         } catch (ValidationException ex) {
-            saveAttributesForNextAttempt(request);
+            storeAttributesForNextAttempt(request);
             request.setAttribute("error", ex.getMessage());
             return false;
         }
@@ -44,11 +44,9 @@ public class AccountCreateForm {
         dataStore.saveAccount(username, updatedAccount);
     }
 
-    private void storeLoginAttributes() {
+    private void storeSessionAttributes() {
         String firstName = newAccount.getFirstName();
         String lastName = newAccount.getLastName();
-        request.setAttribute("prevFirstName", firstName);
-        request.setAttribute("prevLastName", lastName);
         String welcomeName = newAccount.getName();
         ServletContext appContext = request.getServletContext();
         appContext.setAttribute("currentUser", newAccount);
@@ -58,7 +56,10 @@ public class AccountCreateForm {
         appContext.setAttribute("lastName", lastName);
     }
 
-    private void saveAttributesForNextAttempt(HttpServletRequest request) {
+    /* These attributes repopulate previously filled-in fields for the user
+     * following a page reload due to an error being thrown
+     */
+    private void storeAttributesForNextAttempt(HttpServletRequest request) {
         request.setAttribute("prevFirstName", firstName);
         request.setAttribute("prevLastName", lastName);
         request.setAttribute("prevUsername", username);

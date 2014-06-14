@@ -8,7 +8,7 @@ window.fbAsyncInit = function() {
     });
 
     FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
+        statusChangeCallback(response);
     });
 };
 
@@ -51,7 +51,7 @@ function displayFBLogoutOption() {
 function isFBLogoutButtonNotDisplayed(nav) {
     var count = 0;
     for (var i = 0; i < nav.length; i++) {
-        if (nav.options[i].text != "Logout of Facebook") {
+        if (nav.options[i].text !== "Logout of Facebook") {
             count++;
         }
     }
@@ -101,7 +101,3 @@ function hideFBLogoutOption() {
     }
 }
 
-function resetSelection() {
-    var nav = document.getElementById("nav");
-    nav.selectedIndex = 0;
-}

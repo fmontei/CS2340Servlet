@@ -56,8 +56,8 @@
           <form id="create_account_form" action="/CS2340Servlet/createAccount" method="POST" class="form-inline" role="form">
             <b>Enter your Personal Information:</b><br />
             <div class="form-group">
-              <label class="sr-only" for="name">Name</label>
-              <input type="text" class="form-control" id="name" name="firstName"
+              <label class="sr-only" for="firstName">FirstName</label>
+              <input type="text" class="form-control" id="firstName" name="firstName"
                 value="<%=prevFirstName%>"
                 required="required"
                 placeholder = "Enter First Name" />
@@ -65,8 +65,8 @@
             <br />
 
             <div class="form-group">
-              <label class="sr-only" for="name">Name</label>
-              <input type="text" class="form-control" id="name" name="lastName"
+              <label class="sr-only" for="lastName">LastName</label>
+              <input type="text" class="form-control" id="lastName" name="lastName"
                 value="<%=prevLastName%>"
                 required="required"
                 placeholder = "Enter Last Name" />
@@ -75,8 +75,8 @@
 
             <b>Enter new Account Information:</b><br />
             <div class="form-group">
-              <label class="sr-only" for="name">Name</label>
-              <input type="text" class="form-control" id="name"
+              <label class="sr-only" for="userName">Username</label>
+              <input type="text" class="form-control"  id="userName"
                 name="newUsername"
                 value="<%=prevUsername%>"
                 required="required"
@@ -85,7 +85,7 @@
             <br />
 
             <div class="form-group">
-            <label class="sr-only" for="name">Password</label>
+            <label class="sr-only" for="newPassword">Password</label>
             <input type="password" class="form-control" id="newPassword"
               name="newPassword"
               onkeyup="checkPass(document.getElementById('newPassword'),
@@ -98,7 +98,7 @@
             <br />
 
             <div class="form-group">
-            <label class="sr-only" for="name">Password</label>
+            <label class="sr-only" for="confirmPassword">Password</label>
             <input type="password" class="form-control" id="confirmPassword"
               name="confirmPassword"
               onkeyup="checkPass(document.getElementById('newPassword'),

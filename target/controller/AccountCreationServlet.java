@@ -39,7 +39,8 @@ public class AccountCreationServlet extends HttpServlet {
         return request.getParameter("submitButton") != null;
     }
 
-    private void automaticallyLogin(HttpServletRequest request, HttpServletResponse response)
+    private void automaticallyLogin(HttpServletRequest request,
+                                    HttpServletResponse response)
             throws IOException, ServletException {
         request.setAttribute("accountCreateSuccess", "success");
         forwardRequest(this, request, response, "/jsp/create_account.jsp");
