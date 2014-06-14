@@ -111,6 +111,7 @@
               Welcome <%=request.getServletContext().getAttribute("welcomeName")%>!
             </h1>
 
+            <!-- Facebook Panel -->
             <div class="panel panel-primary">
               <div class="panel-heading">
                 Facebook Login
@@ -122,6 +123,7 @@
               </div>
             </div>
 
+            <!-- Itinerary Panel -->
             <div class="panel panel-primary">
               <div class="panel-heading">
                 Active Itinerary
@@ -142,7 +144,7 @@
                   </ul>
                 </div>
 
-                <div style="float: right; visibility: hidden;" >
+                <div style="float: right; visibility: hidden;">
                   <div class="btn-group" >
                     <button type="button" class="btn btn-success" id="create-itinerary">Create</button>
                   </div>
@@ -155,15 +157,36 @@
                   <div class="input-group">
                     <span class="input-group-addon">Name your Itinerary:</span>
                     <input type="text" class="form-control" placeholder="Name">
-                  </div>
+                  </div><br />
+
+                  <!-- Address Field -->
                   <div class="input-group">
-                    <span class="input-group-addon">Starting Location:</span>
-                    <input type="text" class="form-control" placeholder="Location">
+                    <span class="input-group-addon">Street:</span>
+                    <input type="text" class="form-control" placeholder="Street Name">
+                    <span class="input-group-addon">City</span>
+                    <input type="text" class="form-control" placeholder="City">
+                    <span class="input-group-addon">State</span>
+                    <input type="text" class="form-control" placeholder="State">
+                    <span class="input-group-addon">Zip Code</span>
+                    <input type="text" class="form-control" placeholder="Code">
+                    <span class="input-group-addon">Country</span>
+                    <input type="text" class="form-control" placeholder="Country">
+                  </div><br />
+
+                  <!-- Transportation Dropdown -->
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-default">Transportation</button>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      <span class="caret"></span>
+                      <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">Car</a></li>
+                      <li><a href="#">Bike</a></li>
+                      <li><a href="#">Walking</a></li>
+                    </ul>
                   </div>
-                  <div class="input-group">
-                    <span class="input-group-addon">Mode of Transportation:</span>
-                    <input type="text" class="form-control" placeholder="Transportation">
-                  </div>
+
                 </div>
 
               </div>
