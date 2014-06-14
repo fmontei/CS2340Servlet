@@ -32,6 +32,13 @@ public class AccountUpdateServlet extends HttpServlet {
             } else {
                 reloadBecauseAccountCreateFailed(request, response);
             }
+        } else if (isDeleteButtonClicked(request)) {
+            AccountUpdateForm accountForm = new AccountUpdateForm(request);
+            if (accountForm.hasAccountBeenDeleted()) {
+                goToHomePage(response);
+            } else {
+                reloadBecauseAccountCreateFailed(request, response);
+            }
         }
     }
 
@@ -39,9 +46,18 @@ public class AccountUpdateServlet extends HttpServlet {
         return request.getParameter("submitButton") != null;
     }
 
+    private boolean isDeleteButtonClicked(HttpServletRequest request) {
+        return request.getParameter("deleteButton") != null;
+    }
+
     private void goToPreviousScreen(HttpServletResponse response)
             throws IOException {
         response.sendRedirect("jsp/index.jsp");
+    }
+
+    private void goToHomePage(HttpServletResponse response)
+            throws IOException {
+        response.sendRedirect("jsp/deleteLoginSession.jsp");
     }
 
     private void reloadBecauseAccountCreateFailed(HttpServletRequest request,

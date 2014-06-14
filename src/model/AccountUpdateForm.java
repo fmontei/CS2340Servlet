@@ -73,4 +73,15 @@ public class AccountUpdateForm {
         String username = updatedAccount.getUsername();
         dataStore.saveAccount(username, updatedAccount);
     }
+
+    public boolean hasAccountBeenDeleted() {
+        username = Attributes.getAttribute(Attributes.CURRENT_USER);
+        deleteAccount(username);
+        return true;
+    }
+
+    private void deleteAccount(String username) {
+        DataStore dataStore = new DataStore();
+        dataStore.deleteAccount(username);
+    }
 }

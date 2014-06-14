@@ -14,10 +14,21 @@ String pageName = "Account Settings";
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
+
+                <!-- Show link 1 active -->
                 <li id="showLink1Active1" class="active" style="display:block;"><a href="#">Personal Information</a></li>
-                <li id="showLink1Active2" style="display:block;"><a href="#changePassword" onclick="toggle_visibility(['showLink1Active1','showLink1Active2','showLink2Active1','showLink2Active2','personalInformation','changePassword'])">Change Password</a></li>
-                <li id="showLink2Active1" style="display:none;"><a href="#" onclick="toggle_visibility(['showLink1Active1','showLink1Active2','showLink2Active1','showLink2Active2','personalInformation','changePassword'])">Personal Information</a></li>
+                <li id="showLink1Active2" style="display:block;"><a href="#changePassword" onclick="showLink2Active()">Change Password</a></li>
+                <li id="showLink1Active3" style="display:block;"><a href="#deleteAccount" onclick="showLink3Active()">Delete Your Account</a></li>
+
+                <!-- Show link 2 active -->
+                <li id="showLink2Active1" style="display:none;"><a href="#" onclick="showLink1Active()">Personal Information</a></li>
                 <li id="showLink2Active2" class="active" style="display:none;"><a href="#changePassword">Change Password</a></li>
+                <li id="showLink2Active3" style="display:none;"><a href="#deleteAccount" onclick="showLink3Active()">Delete Your Account</a></li>
+
+                <!-- Show link 3 active -->
+                <li id="showLink3Active1" style="display:none;"><a href="#" onclick="showLink1Active()">Personal Information</a></li>
+                <li id="showLink3Active2" style="display:none;"><a href="#changePassword" onclick="showLink2Active()">Change Password</a></li>
+                <li id="showLink3Active3" class="active" style="display:none;"><a href="#deleteAccount">Delete Your Account</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -89,11 +100,20 @@ String pageName = "Account Settings";
                     <br />
                 </div>
 
-                <span id="confirmMessage" class="confirmMessage"></span><br /><br />
-                <span class="text-danger">${error}</span><br />
-                <div class="form-group">
-                    <button type="submit" name="submitButton"
-                    class="btn btn-default">Save</button>
+                <div id="saveButton">
+                    <span id="confirmMessage" class="confirmMessage"></span><br /><br />
+                    <span class="text-danger">${error}</span><br />
+                    <div class="form-group">
+                        <button type="submit" name="submitButton"
+                        class="btn btn-default">Save</button>
+                    </div>
+                </div>
+
+                <div id="deleteButton" style="display:none;">
+                    <div class="form-group">
+                        <button type="submit" name="deleteButton"
+                        class="btn btn-default">Delete Account</button>
+                    </div>
                 </div>
 
             </form>
@@ -108,15 +128,31 @@ String pageName = "Account Settings";
 
 
 <script type="text/javascript">
-    function toggle_visibility(ids) {
+    function turnOnVisibility(ids) {
         var element;
         for (var i = 0; i < ids.length; i++) {
             element = document.getElementById(ids[i]);
-           if(element.style.display == 'block')
-              element.style.display = 'none';
-           else
-              element.style.display = 'block';
+            element.style.display = 'block';
         };
+    }
+    function turnOffVisibility(ids) {
+        var element;
+        for (var i = 0; i < ids.length; i++) {
+            element = document.getElementById(ids[i]);
+            element.style.display = 'none';
+        };
+    }
+    function showLink1Active() {
+        turnOnVisibility(['showLink1Active1','showLink1Active2','showLink1Active3','personalInformation','saveButton']);
+        turnOffVisibility(['showLink2Active1','showLink2Active2','showLink2Active3','showLink3Active1','showLink3Active2','showLink3Active3','changePassword','deleteButton']);
+    }
+    function showLink2Active() {
+        turnOnVisibility(['showLink2Active1','showLink2Active2','showLink2Active3','changePassword','saveButton']);
+        turnOffVisibility(['showLink1Active1','showLink1Active2','showLink1Active3','showLink3Active1','showLink3Active2','showLink3Active3','personalInformation','deleteButton']);
+    }
+    function showLink3Active() {
+        turnOnVisibility(['showLink3Active1','showLink3Active2','showLink3Active3','deleteButton']);
+        turnOffVisibility(['showLink1Active1','showLink1Active2','showLink1Active3','showLink2Active1','showLink2Active2','showLink2Active3','personalInformation','changePassword','saveButton']);
     }
 </script>
 
