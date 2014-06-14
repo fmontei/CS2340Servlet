@@ -1,15 +1,4 @@
-    
     </div>
-    <!-- <div id="footerTopBorder">    
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-3 col-md-2">
-                </div>
-                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="footerTopBorder">
-                </div>
-            </div>
-        </div>
-    </div> -->
     <div id="footer">
         <div class="container-fluid">
             <div class="row">
@@ -47,6 +36,7 @@
         });
     </script>
 
+    <script type="text/javascript" src="/CS2340Servlet/js/toggleVisibility.js"></script>
     <!-- Bootstrap core JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="/CS2340Servlet/js/bootstrap.min.js"></script>

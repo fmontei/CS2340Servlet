@@ -7,12 +7,14 @@ public class UserAccount implements Serializable{
     private String lastName;
     private String username;
     private String password;
+    private String preferredTravelMode;
 
     public UserAccount(String first, String last, String username, String password) {
         this.firstName = first;
         this.lastName = last;
         this.username = username;
         this.password = password;
+        preferredTravelMode = "driving";
     }
 
     public String getUsername() {
@@ -33,5 +35,13 @@ public class UserAccount implements Serializable{
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getPreferredTravelMode() {
+        return preferredTravelMode;
+    }
+
+    public void setPreferredTravelMode(String travelMode) {
+        preferredTravelMode = travelMode;
     }
 }

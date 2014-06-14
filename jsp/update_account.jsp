@@ -13,22 +13,29 @@ String pageName = "Account Settings";
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
+            <ul class="nav nav-sidebar visibilityOn" id="updateAccount_showPersonalInformationActive">
 
                 <!-- Show link 1 active -->
-                <li id="showLink1Active1" class="active" style="display:block;"><a href="#">Personal Information</a></li>
-                <li id="showLink1Active2" style="display:block;"><a href="#" onclick="showLink2Active()">Change Password</a></li>
-                <li id="showLink1Active3" style="display:block;"><a href="#" onclick="showLink3Active()">Delete Your Account</a></li>
+                <li class="active"><a href="#">Personal Information</a></li>
+                <li><a href="#" onclick="updateAccount_showChangePasswordActive()">Change Password</a></li>
+                <li><a href="#" onclick="updateAccount_showDeleteAccountActive()">Delete Your Account</a></li>
+
+            </ul>
+            <ul class="nav nav-sidebar visibilityOff" id="updateAccount_showChangePasswordActive">
 
                 <!-- Show link 2 active -->
-                <li id="showLink2Active1" style="display:none;"><a href="#" onclick="showLink1Active()">Personal Information</a></li>
-                <li id="showLink2Active2" class="active" style="display:none;"><a href="#">Change Password</a></li>
-                <li id="showLink2Active3" style="display:none;"><a href="#" onclick="showLink3Active()">Delete Your Account</a></li>
+                <li><a href="#" onclick="updateAccount_showPersonalInformationActive()">Personal Information</a></li>
+                <li class="active"><a href="#">Change Password</a></li>
+                <li><a href="#" onclick="updateAccount_showDeleteAccountActive()">Delete Your Account</a></li>
+
+            </ul>
+            <ul class="nav nav-sidebar visibilityOff" id="updateAccount_showDeleteAccountActive" style="display:none;">
 
                 <!-- Show link 3 active -->
-                <li id="showLink3Active1" style="display:none;"><a href="#" onclick="showLink1Active()">Personal Information</a></li>
-                <li id="showLink3Active2" style="display:none;"><a href="#" onclick="showLink2Active()">Change Password</a></li>
-                <li id="showLink3Active3" class="active" style="display:none;"><a href="#">Delete Your Account</a></li>
+                <li><a href="#" onclick="updateAccount_showPersonalInformationActive()">Personal Information</a></li>
+                <li><a href="#" onclick="updateAccount_showChangePasswordActive()">Change Password</a></li>
+                <li class="active"><a href="#">Delete Your Account</a></li>
+
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -38,7 +45,7 @@ String pageName = "Account Settings";
 
             <form id="update_account_form" action="/CS2340Servlet/updateAccount" method="POST" class="form-inline" role="form">
 
-                <div id="personalInformation" style="display:block;">
+                <div id="personalInformation" class="visibilityOn">
                     <b>Update Personal Information</b>
 
                     <br />
@@ -67,7 +74,7 @@ String pageName = "Account Settings";
                     <br />
                 </div>
 
-                <div id="changePassword" style="display:none;">
+                <div id="changePassword" class="visibilityOff">
                     <b>Change Password</b>
 
                     <br />
@@ -100,7 +107,7 @@ String pageName = "Account Settings";
                     <br />
                 </div>
 
-                <div id="saveButton">
+                <div id="saveButton" class="visibilityOn">
                     <span id="confirmMessage" class="confirmMessage"></span><br /><br />
                     <span class="text-danger">${error}</span><br />
                     <div class="form-group">
@@ -109,7 +116,7 @@ String pageName = "Account Settings";
                     </div>
                 </div>
 
-                <div id="deleteAccount" style="display:none;">
+                <div id="deleteAccount" class="visibilityOff">
                     <div class="form-group">
                         <button type="submit" name="deleteButton" class="btn btn-default" onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</button>
                     </div>
@@ -124,33 +131,19 @@ String pageName = "Account Settings";
 <script src="/CS2340Servlet/js/password_check.js">
 </script>
 
-
+<!-- Update Account Sidebar Javascript -->
 <script type="text/javascript">
-    function turnOnVisibility(ids) {
-        var element;
-        for (var i = 0; i < ids.length; i++) {
-            element = document.getElementById(ids[i]);
-            element.style.display = 'block';
-        };
+    function updateAccount_showPersonalInformationActive() {
+        turnOnVisibility(['updateAccount_showPersonalInformationActive','personalInformation','saveButton']);
+        turnOffVisibility(['updateAccount_showChangePasswordActive','updateAccount_showDeleteAccountActive','changePassword','deleteAccount']);
     }
-    function turnOffVisibility(ids) {
-        var element;
-        for (var i = 0; i < ids.length; i++) {
-            element = document.getElementById(ids[i]);
-            element.style.display = 'none';
-        };
+    function updateAccount_showChangePasswordActive() {
+        turnOnVisibility(['updateAccount_showChangePasswordActive','changePassword','saveButton']);
+        turnOffVisibility(['updateAccount_showPersonalInformationActive','updateAccount_showDeleteAccountActive','personalInformation','deleteAccount']);
     }
-    function showLink1Active() {
-        turnOnVisibility(['showLink1Active1','showLink1Active2','showLink1Active3','personalInformation','saveButton']);
-        turnOffVisibility(['showLink2Active1','showLink2Active2','showLink2Active3','showLink3Active1','showLink3Active2','showLink3Active3','changePassword','deleteAccount']);
-    }
-    function showLink2Active() {
-        turnOnVisibility(['showLink2Active1','showLink2Active2','showLink2Active3','changePassword','saveButton']);
-        turnOffVisibility(['showLink1Active1','showLink1Active2','showLink1Active3','showLink3Active1','showLink3Active2','showLink3Active3','personalInformation','deleteAccount']);
-    }
-    function showLink3Active() {
-        turnOnVisibility(['showLink3Active1','showLink3Active2','showLink3Active3','deleteAccount']);
-        turnOffVisibility(['showLink1Active1','showLink1Active2','showLink1Active3','showLink2Active1','showLink2Active2','showLink2Active3','personalInformation','changePassword','saveButton']);
+    function updateAccount_showDeleteAccountActive() {
+        turnOnVisibility(['updateAccount_showDeleteAccountActive','deleteAccount']);
+        turnOffVisibility(['updateAccount_showPersonalInformationActive','updateAccount_showChangePasswordActive','personalInformation','changePassword','saveButton']);
     }
 </script>
 
