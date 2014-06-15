@@ -1,6 +1,5 @@
 package model;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -48,7 +47,7 @@ public class AccountCreateForm {
 
     private void storeSessionAttributes() {
         String welcomeName = newAccount.getName();
-        synchronized (session) {
+        synchronized(session) {
             session.setAttribute("currentUser", newAccount);
             session.setAttribute("username", username);
             session.setAttribute("welcomeName", welcomeName);

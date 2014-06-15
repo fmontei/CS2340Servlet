@@ -1,6 +1,3 @@
-<%@ page import="model.Attributes" %>
-<%@ page import="model.AccountCreateForm" %>
-<%@ page import="model.DataStore" %>
 <%@ page import="model.UserAccount" %>
 
 <% String pageName = "Home"; %>

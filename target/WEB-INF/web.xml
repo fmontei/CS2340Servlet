@@ -24,11 +24,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 version="3.0"
 metadata-complete="true">
 
-    <display-name>Welcome to Tomcat</display-name>
-    <description>
-     Welcome to Tomcat
-    </description>
-
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>controller.LoginServlet</servlet-class>

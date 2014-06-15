@@ -20,7 +20,7 @@ public class DataStore {
         accountData.remove(username);
         saveData();
     }
-    
+
     public static void loadData() {
         if (file == null) {
             setFile();
@@ -63,5 +63,4 @@ public class DataStore {
             + "\\webapps\\CS2340Servlet\\UserAccounts.ser";
         file = new File(filePath);
     }
-
 }

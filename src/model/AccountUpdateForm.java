@@ -12,16 +12,17 @@ public class AccountUpdateForm {
     private String confirmPassword;
     private String firstName, lastName;
 
-
     public AccountUpdateForm(HttpServletRequest request) {
         this.request = request;
         this.session = request.getSession();
+        this.username = session.getAttribute("username").toString();
     }
 
     public boolean isAccountCreationSuccessful() {
         try {
             gatherNewAccountInfo();
             validateCredentials();
+            updateAccountSettings();
             storeLoginAttributes();
             return true;
         } catch (ValidationException ex) {
@@ -31,7 +32,6 @@ public class AccountUpdateForm {
     }
 
     private void gatherNewAccountInfo() throws ValidationException {
-        username = session.getAttribute("username").toString();
         firstName = request.getParameter("updateFirstName");
         lastName = request.getParameter("updateLastName");
         password = request.getParameter("oldPassword");
@@ -62,8 +62,8 @@ public class AccountUpdateForm {
 
     private void storeLoginAttributes() {
         String welcomeName = currentAccount.getName();
-        synchronized (session) {
-            session.setAttribute("username", username);
+        synchronized(session) {
+            session.setAttribute("currentUser", currentAccount);
             session.setAttribute("welcomeName", welcomeName);
             session.setAttribute("firstName", firstName);
             session.setAttribute("lastName", lastName);
@@ -86,5 +86,10 @@ public class AccountUpdateForm {
     private void deleteAccount(String username) {
         DataStore dataStore = new DataStore();
         dataStore.deleteAccount(username);
+    }
+
+    private void updateAccountSettings() {
+        DataStore dataStore = new DataStore();
+        dataStore.saveAccount(username, currentAccount);
     }
 }
