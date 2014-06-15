@@ -12,3 +12,11 @@ function checkPass(pass1, pass2, message)
         message.innerHTML = "Passwords Do Not Match!";
     }
 }
+function hidePasswordError() {
+    document.getElementById('confirmMessage').innerHTML = "";
+}
+function showPasswordError() {
+    checkPass(document.getElementById('oldPassword'),
+        document.getElementById('confirmOldPassword'),
+        document.getElementById('confirmMessage'));
+}
