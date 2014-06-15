@@ -1,4 +1,3 @@
-<%@ page import="model.Attributes" %>
 <%@ include file="session.jsp" %>
 <%@ include file="header.jsp" %>
 
@@ -18,6 +17,7 @@
                 <li class="active"><a href="#">Personal Information</a></li>
                 <li><a href="#" onclick="updateAccount_showChangePasswordActive()">Change Password</a></li>
                 <li><a href="#" onclick="updateAccount_showDeleteAccountActive()">Delete Your Account</a></li>
+                <li><a href="index.jsp" style="background-color: forestgreen; color: white">Apply All Changes</a></li>
 
             </ul>
             <ul class="nav nav-sidebar visibilityOff" id="updateAccount_showChangePasswordActive">
