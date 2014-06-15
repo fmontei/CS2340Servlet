@@ -18,12 +18,12 @@ public class AccountUpdateForm {
         this.username = session.getAttribute("username").toString();
     }
 
-    public boolean isAccountCreationSuccessful() {
+    public boolean isAccountUpdateSuccessful() {
         try {
             gatherNewAccountInfo();
             validateCredentials();
             updateAccountSettings();
-            storeLoginAttributes();
+            updateSessionAttributes();
             return true;
         } catch (ValidationException ex) {
             request.setAttribute("error", ex.getMessage());
@@ -60,7 +60,7 @@ public class AccountUpdateForm {
         password = accountBeforeChange.getPassword();
     }
 
-    private void storeLoginAttributes() {
+    private void updateSessionAttributes() {
         String welcomeName = currentAccount.getName();
         synchronized(session) {
             session.setAttribute("currentUser", currentAccount);

@@ -26,8 +26,8 @@ public class AccountUpdateServlet extends HttpServlet {
             throws IOException, ServletException {
         if (isSubmitButtonClicked(request)) {
             AccountUpdateForm accountForm = new AccountUpdateForm(request);
-            if (accountForm.isAccountCreationSuccessful()) {
-                goToPreviousScreen(response);
+            if (accountForm.isAccountUpdateSuccessful()) {
+                redirectToSameScreen(response);
             } else {
                 reloadBecauseAccountCreateFailed(request, response);
             }
@@ -49,9 +49,9 @@ public class AccountUpdateServlet extends HttpServlet {
         return request.getParameter("deleteButton") != null;
     }
 
-    private void goToPreviousScreen(HttpServletResponse response)
+    private void redirectToSameScreen(HttpServletResponse response)
             throws IOException {
-        response.sendRedirect("jsp/index.jsp");
+        response.sendRedirect("jsp/update_account.jsp");
     }
 
     private void goToHomePage(HttpServletResponse response)

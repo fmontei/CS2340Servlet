@@ -1,4 +1,3 @@
-<%@ page import="model.Attributes" %>
 <%@ include file="session.jsp" %>
 <%@ include file="header.jsp" %>
 
@@ -18,6 +17,7 @@
                 <li class="active"><a href="#">Personal Information</a></li>
                 <li><a href="#" onclick="updateAccount_showChangePasswordActive()">Change Password</a></li>
                 <li><a href="#" onclick="updateAccount_showDeleteAccountActive()">Delete Your Account</a></li>
+                <li><a href="index.jsp" style="background-color: forestgreen; color: white">Apply All Changes</a></li>
 
             </ul>
             <ul class="nav nav-sidebar visibilityOff" id="updateAccount_showChangePasswordActive">
@@ -134,15 +134,16 @@
 <script type="text/javascript">
     function updateAccount_showPersonalInformationActive() {
         turnOnVisibility(['updateAccount_showPersonalInformationActive','personalInformation','saveButton']);
-        turnOffVisibility(['updateAccount_showChangePasswordActive','updateAccount_showDeleteAccountActive','changePassword','deleteAccount']);
+        turnOffVisibility(['updateAccount_showChangePasswordActive','updateAccount_showDeleteAccountActive','changePassword','deleteAccount', 'confirmMessage']);
     }
     function updateAccount_showChangePasswordActive() {
-        turnOnVisibility(['updateAccount_showChangePasswordActive','changePassword','saveButton']);
+        turnOnVisibility(['updateAccount_showChangePasswordActive','changePassword','saveButton', 'confirmMessage']);
         turnOffVisibility(['updateAccount_showPersonalInformationActive','updateAccount_showDeleteAccountActive','personalInformation','deleteAccount']);
     }
     function updateAccount_showDeleteAccountActive() {
         turnOnVisibility(['updateAccount_showDeleteAccountActive','deleteAccount']);
-        turnOffVisibility(['updateAccount_showPersonalInformationActive','updateAccount_showChangePasswordActive','personalInformation','changePassword','saveButton']);
+        turnOffVisibility(['updateAccount_showPersonalInformationActive','updateAccount_showChangePasswordActive',
+            'personalInformation','changePassword','saveButton', 'confirmMessage']);
     }
 </script>
 

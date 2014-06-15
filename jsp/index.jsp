@@ -1,8 +1,7 @@
 <%@ page import="model.UserAccount" %>
 
 <% String pageName = "Home"; %>
-
-<% String preferredTravelMode=""; %>
+<% String preferredTravelMode = ""; %>
 
 <%@ include file="header.jsp" %>
 
@@ -31,8 +30,8 @@
 <%} else {%>
 
 <%
-UserAccount account = (UserAccount) session.getAttribute("currentUser");
-preferredTravelMode = account.getPreferredTravelMode();
+    UserAccount account = (UserAccount) session.getAttribute("currentUser");
+    preferredTravelMode = account.getPreferredTravelMode();
 %>
 
 <div class="container-fluid">
@@ -69,7 +68,6 @@ preferredTravelMode = account.getPreferredTravelMode();
                         Active Itinerary
                     </div>
                     <div class="panel panel-body">
-                        <span>You currently have no Itineraries.</span>
 
                         <div class="btn-group" id="start-dropdown">
                             <button type="button" class="btn btn-info">What would you like to do?</button>
@@ -97,11 +95,21 @@ preferredTravelMode = account.getPreferredTravelMode();
                             <div class="input-group">
                                 <span class="input-group-addon">Name your Itinerary:</span>
                                 <input type="text" class="form-control" placeholder="Name">
-                            </div>
+                            </div><br />
+
                             <div class="input-group">
-                                <span class="input-group-addon">Starting Location:</span>
-                                <input type="text" class="form-control" placeholder="Location">
-                            </div>
+                                <span class="input-group-addon">Address:</span>
+                                <input type="text" class="form-control" placeholder="Street">
+                                <span class="input-group-addon">City:</span>
+                                <input type="text" class="form-control" placeholder="City">
+                                <span class="input-group-addon">State:</span>
+                                <input type="text" class="form-control" placeholder="State">
+                                <span class="input-group-addon">Zip Code:</span>
+                                <input type="text" class="form-control" placeholder="Zip Code">
+                                <span class="input-group-addon">Country:</span>
+                                <input type="text" class="form-control" placeholder="Country">
+                            </div><br />
+
                             <div class="input-group">
                                 <span class="input-group-addon">Mode of Transportation:</span>
                                 <input type="text" class="form-control" placeholder="Transportation">
@@ -116,7 +124,7 @@ preferredTravelMode = account.getPreferredTravelMode();
                 </h1>
                 <form id="" action="/CS2340Servlet/index" method="POST" class="form-inline" role="form">
 
-                    <b>Select your prefered mode of transportation</b>
+                    <b>Select your preferred mode of transportation</b>
 
                     <br />
                     <br />
