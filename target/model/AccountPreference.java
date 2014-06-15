@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 public class AccountPreference {
     private HttpServletRequest request;
     private HttpSession session;
-    private UserAccount currentAccount;
+    private UserAccount account;
     private String username;
     private String preferredTravelMode;
     private DataStore accountsSave = new DataStore();
@@ -26,11 +26,10 @@ public class AccountPreference {
     }
 
     private void savePreferredTravelMode() {
-        username = session.getAttribute("username").toString();
-        UserAccount account = DataStore.findByUserName(username);
+        account = (UserAccount) session.getAttribute("currentUser");
         preferredTravelMode = request.getParameter("preferredTravelMode");
         account.setPreferredTravelMode(preferredTravelMode);
-        DataStore dataStore = new DataStore();
-        dataStore.saveAccount(username,account);
+        username = account.getUsername();
+        accountsSave.saveAccount(username,account);
     }
 }

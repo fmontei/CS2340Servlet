@@ -40,28 +40,17 @@ body,html {
     position:relative;
     height: 60px;
     margin-top: -60px;
-    /*background-color: #f5f5f5;*/
-    /*margin-left: -20px;
-    margin-right: -20px;
-    padding-left: 20px;
-    padding-right: 20px;*/
-    /*border-top-style: solid;
-    border-top-color: #f5f5f5;
-    border-top-width: 50%;*/
 }
 
-#footerTopBorder {
-    /*padding-bottom: 9px;*/
-    /*margin: 0 0 60px;*/
-    height: 1px;
+#footerTopBorder {    height: 1px;
     margin-bottom: 20px;
     border-top: 1px solid #eee;
 }
 
 .visibilityOn {
-    display: block;
+    visibility: visible;;
 }
 
 .visibilityOff {
-    display: none;
+    visibility: hidden;
 }

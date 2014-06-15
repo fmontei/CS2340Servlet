@@ -2,13 +2,13 @@ function turnOnVisibility(ids) {
     var element;
     for (var i = 0; i < ids.length; i++) {
         element = document.getElementById(ids[i]);
-        element.style.display = 'block';
+        element.style.visibility = 'visible';
     };
 }
 function turnOffVisibility(ids) {
     var element;
     for (var i = 0; i < ids.length; i++) {
         element = document.getElementById(ids[i]);
-        element.style.display = 'none';
+        element.style.visibility = 'hidden';
     };
 }

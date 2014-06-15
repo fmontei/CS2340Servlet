@@ -84,7 +84,7 @@ preferredTravelMode = account.getPreferredTravelMode();
                             </ul>
                         </div>
 
-                        <div style="float: right; visibility: hidden;" >
+                        <div style="float: right;" class="visibilityOff">
                             <div class="btn-group" >
                                 <button type="button" class="btn btn-success" id="create-itinerary">Create</button>
                             </div>
@@ -93,7 +93,7 @@ preferredTravelMode = account.getPreferredTravelMode();
                             </div>
                         </div><br /><br />
 
-                        <div id="new-itinerary-info" style="visibility: hidden">
+                        <div id="new-itinerary-info" class="visibilityOff">
                             <div class="input-group">
                                 <span class="input-group-addon">Name your Itinerary:</span>
                                 <input type="text" class="form-control" placeholder="Name">
@@ -211,15 +211,10 @@ preferredTravelMode = account.getPreferredTravelMode();
         turnOnVisibility(['index_showTravelModeActive','travelMode']);
         turnOffVisibility(['index_showOverviewActive','overview']);
 
-
         // Travel Mode Form Javascript
         var preferredTravelMode = "#<%= preferredTravelMode %>"
         $(preferredTravelMode).prop("checked", true);
     }
-</script>
-
-
-<script type="text/javascript">
 </script>
 
 <!-- Facebook SDK Javascript -->
