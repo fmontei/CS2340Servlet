@@ -1,8 +1,7 @@
 <%@ page import="model.UserAccount" %>
 
 <% String pageName = "Home"; %>
-
-<% String preferredTravelMode=""; %>
+<% String preferredTravelMode = ""; %>
 
 <%@ include file="header.jsp" %>
 
@@ -31,8 +30,8 @@
 <%} else {%>
 
 <%
-UserAccount account = (UserAccount) session.getAttribute("currentUser");
-preferredTravelMode = account.getPreferredTravelMode();
+    UserAccount account = (UserAccount) session.getAttribute("currentUser");
+    preferredTravelMode = account.getPreferredTravelMode();
 %>
 
 <div class="container-fluid">
@@ -69,7 +68,6 @@ preferredTravelMode = account.getPreferredTravelMode();
                         Active Itinerary
                     </div>
                     <div class="panel panel-body">
-                        <span>You currently have no Itineraries.</span>
 
                         <div class="btn-group" id="start-dropdown">
                             <button type="button" class="btn btn-info">What would you like to do?</button>
@@ -111,7 +109,7 @@ preferredTravelMode = account.getPreferredTravelMode();
                                 <span class="input-group-addon">Country:</span>
                                 <input type="text" class="form-control" placeholder="Country">
                             </div><br />
-                            
+
                             <div class="input-group">
                                 <span class="input-group-addon">Mode of Transportation:</span>
                                 <input type="text" class="form-control" placeholder="Transportation">
@@ -127,7 +125,7 @@ preferredTravelMode = account.getPreferredTravelMode();
                 </h1>
                 <form id="" action="/CS2340Servlet/index" method="POST" class="form-inline" role="form">
 
-                    <b>Select your prefered mode of transportation</b>
+                    <b>Select your preferred mode of transportation</b>
 
                     <br />
                     <br />
@@ -218,7 +216,6 @@ preferredTravelMode = account.getPreferredTravelMode();
     function index_showTravelModeActive() {
         turnOnVisibility(['index_showTravelModeActive','travelMode']);
         turnOffVisibility(['index_showOverviewActive','overview']);
-
 
         // Travel Mode Form Javascript
         var preferredTravelMode = "#<%= preferredTravelMode %>"

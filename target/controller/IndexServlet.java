@@ -26,8 +26,6 @@ public class IndexServlet extends HttpServlet {
             AccountPreference accountPreference = new AccountPreference(request);
             if (accountPreference.isPreferredTravelModeSaved()) {
                 goToPreviousScreen(response);
-            } else {
-                reloadBecauseAccountCreateFailed(request, response);
             }
         }
     }
@@ -39,11 +37,5 @@ public class IndexServlet extends HttpServlet {
     private void goToPreviousScreen(HttpServletResponse response)
             throws IOException {
         response.sendRedirect("jsp/index.jsp");
-    }
-
-    private void reloadBecauseAccountCreateFailed(HttpServletRequest request,
-                                                  HttpServletResponse response)
-            throws IOException, ServletException {
-        forwardRequest(this, request, response, "/jsp/index.jsp");
     }
 }
