@@ -97,11 +97,21 @@ preferredTravelMode = account.getPreferredTravelMode();
                             <div class="input-group">
                                 <span class="input-group-addon">Name your Itinerary:</span>
                                 <input type="text" class="form-control" placeholder="Name">
-                            </div>
+                            </div><br />
+
                             <div class="input-group">
-                                <span class="input-group-addon">Starting Location:</span>
-                                <input type="text" class="form-control" placeholder="Location">
-                            </div>
+                                <span class="input-group-addon">Address:</span>
+                                <input type="text" class="form-control" placeholder="Street">
+                                <span class="input-group-addon">City:</span>
+                                <input type="text" class="form-control" placeholder="City">
+                                <span class="input-group-addon">State:</span>
+                                <input type="text" class="form-control" placeholder="State">
+                                <span class="input-group-addon">Zip Code:</span>
+                                <input type="text" class="form-control" placeholder="Zip Code">
+                                <span class="input-group-addon">Country:</span>
+                                <input type="text" class="form-control" placeholder="Country">
+                            </div><br />
+                            
                             <div class="input-group">
                                 <span class="input-group-addon">Mode of Transportation:</span>
                                 <input type="text" class="form-control" placeholder="Transportation">
@@ -109,8 +119,6 @@ preferredTravelMode = account.getPreferredTravelMode();
                         </div>
                     </div>
                 </div>
-
-
 
             </div>
             <div id="travelMode" class="visibilityOff">
