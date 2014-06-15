@@ -134,18 +134,16 @@
 <script type="text/javascript">
     function updateAccount_showPersonalInformationActive() {
         turnOnVisibility(['updateAccount_showPersonalInformationActive','personalInformation','saveButton']);
-        turnOffVisibility(['updateAccount_showChangePasswordActive','updateAccount_showDeleteAccountActive','changePassword','deleteAccount']);
-        hidePasswordError();
+        turnOffVisibility(['updateAccount_showChangePasswordActive','updateAccount_showDeleteAccountActive','changePassword','deleteAccount', 'confirmMessage']);
     }
     function updateAccount_showChangePasswordActive() {
-        turnOnVisibility(['updateAccount_showChangePasswordActive','changePassword','saveButton']);
+        turnOnVisibility(['updateAccount_showChangePasswordActive','changePassword','saveButton', 'confirmMessage']);
         turnOffVisibility(['updateAccount_showPersonalInformationActive','updateAccount_showDeleteAccountActive','personalInformation','deleteAccount']);
-        showPasswordError();
     }
     function updateAccount_showDeleteAccountActive() {
         turnOnVisibility(['updateAccount_showDeleteAccountActive','deleteAccount']);
-        turnOffVisibility(['updateAccount_showPersonalInformationActive','updateAccount_showChangePasswordActive','personalInformation','changePassword','saveButton']);
-        hidePasswordError();
+        turnOffVisibility(['updateAccount_showPersonalInformationActive','updateAccount_showChangePasswordActive',
+            'personalInformation','changePassword','saveButton', 'confirmMessage']);
     }
 </script>
 
