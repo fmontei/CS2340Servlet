@@ -18,8 +18,9 @@ public class AccountCreateForm {
     public boolean isAccountCreationSuccessful() {
         try {
             gatherNewAccountInfo();
-            Validation validation = new AccountValidation(newAccount,
-                    password, confirmPassword);
+            AccountValidation validation = new AccountValidation
+                    (newAccount, confirmPassword);
+            validation.setOperation(new CreateAccountOperation());
             validation.validateCredentials();
             saveAccountSettings();
             storeSessionAttributes();

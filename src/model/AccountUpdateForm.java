@@ -21,7 +21,10 @@ public class AccountUpdateForm {
     public boolean isAccountUpdateSuccessful() {
         try {
             gatherNewAccountInfo();
-            validateCredentials();
+            AccountValidation validation = new AccountValidation
+                    (currentAccount, confirmPassword);
+            validation.setOperation(new UpdateAccountOperation());
+            validation.validateCredentials();
             updateAccountSettings();
             updateSessionAttributes();
             return true;
@@ -42,10 +45,10 @@ public class AccountUpdateForm {
     public void validateCredentials() throws ValidationException {
         /* Assumption: User does not want to change password.
          * Why force him to re-enter it? */
-       if (isPasswordEmpty()) {
+        if (isPasswordEmpty()) {
            revertToOldPassword();
            return;
-       } else if (!password.equals(confirmPassword)) {
+        } else if (!password.equals(confirmPassword)) {
             throw new ValidationException("Passwords do not match. "
                 + "Please try again.");
         }

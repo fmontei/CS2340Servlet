@@ -4,7 +4,7 @@ import org.apache.catalina.User;
 
 import static model.DataStore.findByUserName;
 
-public class LoginValidation implements Validation {
+public class LoginValidation {
     private String username;
     private String password;
 
@@ -13,26 +13,7 @@ public class LoginValidation implements Validation {
         this.password = password;
     }
 
-    @Override
-    public boolean validateCredentials() throws ValidationException {
-        if (!usernameExists(username)) {
-            throw new ValidationException("Username " + "\"" + username + "\""
-            + " does not exist. Please try again.");
-        } else if (!passwordMatches(username, password)) {
-            throw new ValidationException("Authentication failed. "
-                + "Please try again.");
-        }
-        return true;
-    }
-
-    private boolean passwordMatches(String username, String password) {
-        UserAccount currentAccount = findByUserName(username);
-        String realPassword = currentAccount.getPassword();
-        return realPassword.equals(password);
-    }
-
-    private boolean usernameExists(String username) {
-        UserAccount temp = findByUserName(username);
-        return temp != null;
+    public void validateCredentials() throws ValidationException {
+        
     }
 }

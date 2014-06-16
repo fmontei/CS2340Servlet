@@ -1,5 +1,6 @@
 package model;
 
 public interface Validation {
-    boolean validateCredentials() throws ValidationException;
+    void validateCredentials() throws ValidationException;
+    void init(UserAccount account, String username, String password);
 }

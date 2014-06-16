@@ -3,6 +3,7 @@ package model;
 import static model.DataStore.findByUserName;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.xml.crypto.Data;
 
 public class LoginForm {
     private HttpServletRequest request;
@@ -11,14 +12,16 @@ public class LoginForm {
 
     public boolean isAuthenticationSuccessful(HttpServletRequest request) {
         this.request = request;
-        password = request.getParameter("password");
         username = request.getParameter("username");
+        password = request.getParameter("password");
         if (!isLoginButtonClicked()) {
             return false;
         }
         try {
             checkIfParametersNotNull();
-            Validation validation = new LoginValidation(username, password);
+            AccountValidation validation = new AccountValidation
+                    (username, password);
+            validation.setOperation(new LoginAccountOperation());
             validation.validateCredentials();
             storeLoginAttributes();
             return true;
