@@ -25,7 +25,7 @@ public class AccountCreationServlet extends HttpServlet {
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response)
         throws IOException, ServletException {
-        if (isSubmitButtonClicked(request)) {
+        if (isSignUpButtonClicked(request)) {
             AccountCreateForm accountForm = new AccountCreateForm(request);
             if (accountForm.isAccountCreationSuccessful()) {
                 automaticallyLogin(request, response);
@@ -35,8 +35,8 @@ public class AccountCreationServlet extends HttpServlet {
         }
     }
 
-    private boolean isSubmitButtonClicked(HttpServletRequest request) {
-        return request.getParameter("submitButton") != null;
+    private boolean isSignUpButtonClicked(HttpServletRequest request) {
+        return request.getParameter("signUpButton") != null;
     }
 
     private void automaticallyLogin(HttpServletRequest request,

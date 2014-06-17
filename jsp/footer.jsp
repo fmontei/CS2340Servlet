@@ -37,12 +37,11 @@
     </script>
 
     <script type="text/javascript" src="/CS2340Servlet/js/toggleVisibility.js"></script>
+
     <!-- Bootstrap core JavaScript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="/CS2340Servlet/js/bootstrap.min.js"></script>
     <script src="/CS2340Servlet/js/docs.min.js"></script>
-    <script src="/CS2340Servlet/js/jquery-1.11.1.js"></script>
-    <script src="/CS2340Servlet/js/itinerary.js"></script>
+    <script src="/CS2340Servlet/js/itinerary.js"></script> 
 
 </body>
 </html>

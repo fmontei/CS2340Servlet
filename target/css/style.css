@@ -48,9 +48,9 @@ body,html {
 }
 
 .visibilityOn {
-    visibility: visible;;
+    display: block;
 }
 
 .visibilityOff {
-    visibility: hidden;
+    display: none;
 }

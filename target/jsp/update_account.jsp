@@ -11,29 +11,10 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar visibilityOn" id="updateAccount_showPersonalInformationActive">
-
-                <!-- Show link 1 active -->
-                <li class="active"><a href="#">Personal Information</a></li>
-                <li><a href="#" onclick="updateAccount_showChangePasswordActive()">Change Password</a></li>
-                <li><a href="#" onclick="updateAccount_showDeleteAccountActive()">Delete Your Account</a></li>
-                <li><a href="index.jsp" style="background-color: forestgreen; color: white">Apply All Changes</a></li>
-
-            </ul>
-            <ul class="nav nav-sidebar visibilityOff" id="updateAccount_showChangePasswordActive">
-
-                <!-- Show link 2 active -->
-                <li><a href="#" onclick="updateAccount_showPersonalInformationActive()">Personal Information</a></li>
-                <li class="active"><a href="#">Change Password</a></li>
-                <li><a href="#" onclick="updateAccount_showDeleteAccountActive()">Delete Your Account</a></li>
-
-            </ul>
-            <ul class="nav nav-sidebar visibilityOff" id="updateAccount_showDeleteAccountActive" style="display:none;">
-
-                <!-- Show link 3 active -->
-                <li><a href="#" onclick="updateAccount_showPersonalInformationActive()">Personal Information</a></li>
-                <li><a href="#" onclick="updateAccount_showChangePasswordActive()">Change Password</a></li>
-                <li class="active"><a href="#">Delete Your Account</a></li>
+            <ul class="nav nav-sidebar">
+                <li id="li-personalInformation" class="active"><a href="#personalInformation" id="a-personalInformation">Personal Information</a></li>
+                <li id="li-changePassword"><a href="#changePassword" id="a-changePassword">Change Password</a></li>
+                <li id="li-deleteAccount"><a href="#deleteAccount" id="a-deleteAccount">Delete Your Account</a></li>
 
             </ul>
         </div>
@@ -44,7 +25,7 @@
 
             <form id="update_account_form" action="/CS2340Servlet/updateAccount" method="POST" class="form-inline" role="form">
 
-                <div id="personalInformation" class="visibilityOn">
+                <div id="div-personalInformation">
                     <b>Update Personal Information</b>
 
                     <br />
@@ -73,7 +54,7 @@
                     <br />
                 </div>
 
-                <div id="changePassword" class="visibilityOff">
+                <div id="div-changePassword">
                     <b>Change Password</b>
 
                     <br />
@@ -106,7 +87,7 @@
                     <br />
                 </div>
 
-                <div id="saveButton" class="visibilityOn">
+                <div id="div-saveButton">
                     <span id="confirmMessage" class="confirmMessage"></span><br /><br />
                     <span class="text-danger">${error}</span><br />
                     <div class="form-group">
@@ -115,7 +96,7 @@
                     </div>
                 </div>
 
-                <div id="deleteAccount" class="visibilityOff">
+                <div id="div-deleteAccount">
                     <div class="form-group">
                         <button type="submit" name="deleteButton" class="btn btn-default" onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</button>
                     </div>
@@ -132,19 +113,39 @@
 
 <!-- Update Account Sidebar Javascript -->
 <script type="text/javascript">
-    function updateAccount_showPersonalInformationActive() {
-        turnOnVisibility(['updateAccount_showPersonalInformationActive','personalInformation','saveButton']);
-        turnOffVisibility(['updateAccount_showChangePasswordActive','updateAccount_showDeleteAccountActive','changePassword','deleteAccount', 'confirmMessage']);
-    }
-    function updateAccount_showChangePasswordActive() {
-        turnOnVisibility(['updateAccount_showChangePasswordActive','changePassword','saveButton', 'confirmMessage']);
-        turnOffVisibility(['updateAccount_showPersonalInformationActive','updateAccount_showDeleteAccountActive','personalInformation','deleteAccount']);
-    }
-    function updateAccount_showDeleteAccountActive() {
-        turnOnVisibility(['updateAccount_showDeleteAccountActive','deleteAccount']);
-        turnOffVisibility(['updateAccount_showPersonalInformationActive','updateAccount_showChangePasswordActive',
-            'personalInformation','changePassword','saveButton', 'confirmMessage']);
-    }
+    $(document).ready(function() {
+        $("#div-personalInformation").show();
+        $("#div-saveButton").show();
+        $("#div-changePassword").hide();
+        $("#div-deleteAccount").hide();
+        $("#a-personalInformation").click(function() {
+            $("#li-personalInformation").addClass("active");
+            $("#li-changePassword").removeClass("active");
+            $("#li-deleteAccount").removeClass("active");
+            $("#div-personalInformation").show();
+            $("#div-saveButton").show();
+            $("#div-changePassword").hide();
+            $("#div-deleteAccount").hide();
+        });
+        $("#a-changePassword").click(function() {
+            $("#li-personalInformation").removeClass("active");
+            $("#li-changePassword").addClass("active");
+            $("#li-deleteYourAccount").removeClass("active");
+            $("#div-personalInformation").hide();
+            $("#div-saveButton").show();
+            $("#div-changePassword").show();
+            $("#div-deleteAccount").hide();
+        });
+        $("#a-deleteAccount").click(function() {
+            $("#li-personalInformation").removeClass("active");
+            $("#li-changePassword").removeClass("active");
+            $("#li-deleteAccount").addClass("active");
+            $("#div-personalInformation").hide();
+            $("#div-saveButton").hide();
+            $("#div-changePassword").hide();
+            $("#div-deleteAccount").show();
+        });
+    });
 </script>
 
 <%@ include file="footer.jsp" %>

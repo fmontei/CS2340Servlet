@@ -20,9 +20,6 @@
             <p>
                 Please login to begin
             </p>
-            <span class="error">
-                ${error}
-            </span>
         </div>
     </div>
 </div>
@@ -37,17 +34,13 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar visibilityOn" id="index_showOverviewActive">
-                <li class="active"><a href="#">Overview</a></li>
-                <li><a href="#" onclick="index_showTravelModeActive()">Travel Mode</a></li>
-            </ul>
-            <ul class="nav nav-sidebar visibilityOff" id="index_showTravelModeActive">
-                <li><a href="#" onclick="index_showOverviewActive()">Overview</a></li>
-                <li class="active"><a href="#">Travel Mode</a></li>
+            <ul class="nav nav-sidebar">
+                <li id="li-overview" class="active"><a href="#Overview" id="a-overview">Overview</a></li>
+                <li id="li-travelMode"><a href="#TravelMode" id="a-travelMode">Travel Mode</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <div id="overview" class="visibilityOn">
+            <div id="div-overview">
                 <h1 class="page-header">
                     Welcome <%=request.getSession().getAttribute("welcomeName")%>!
                 </h1>
@@ -57,19 +50,25 @@
                         Facebook Login
                     </div>
                     <div class="panel-body">
-                        <fb:login-button id="fbLoginButton" scope="public_profile,email"
-                                         onlogin="checkLoginState();">
+                        <fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();">
                         </fb:login-button>
                     </div>
                 </div>
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        Active Itinerary
+                        Itineraries
                     </div>
-                    <div class="panel panel-body">
+                    <div class="panel-body">
+                        <p>Print itineraries here</p>
+                        <div class="btn-group" >
+                            <button id="button-createNewItinerary" type="button" class="btn btn-default">Create New Itinerary</button>
+                        </div>
 
-                        <div class="btn-group" id="start-dropdown">
+
+
+
+                        <!-- <div class="btn-group" id="start-dropdown">
                             <button type="button" class="btn btn-info">What would you like to do?</button>
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                 <span class="caret"></span>
@@ -82,7 +81,7 @@
                             </ul>
                         </div>
 
-                        <div style="float: right;" class="visibilityOff">
+                        <div style="float: right;">
                             <div class="btn-group" >
                                 <button type="button" class="btn btn-success" id="create-itinerary">Create</button>
                             </div>
@@ -91,7 +90,7 @@
                             </div>
                         </div><br /><br />
 
-                        <div id="new-itinerary-info" class="visibilityOff">
+                        <div id="new-itinerary-info">
                             <div class="input-group">
                                 <span class="input-group-addon">Name your Itinerary:</span>
                                 <input type="text" class="form-control" placeholder="Name">
@@ -114,12 +113,11 @@
                                 <span class="input-group-addon">Mode of Transportation:</span>
                                 <input type="text" class="form-control" placeholder="Transportation">
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
-
             </div>
-            <div id="travelMode" class="visibilityOff">
+            <div id="div-travelMode">
                 <h1 class="page-header">
                     Travel Mode
                 </h1>
@@ -207,20 +205,51 @@
 
 <%}%>
 
+<div class="modal fade" id="errorMessage" tabindex="-1" role="dialog" aria-labelledby="errorMessageTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="errorMessageTitle">Error</h4>
+            </div>
+            <div class="modal-body">
+                <span class="text-danger">
+                    ${error}
+                </span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Index Sidebar Javascript -->
 <script type="text/javascript">
-    function index_showOverviewActive() {
-        turnOnVisibility(['index_showOverviewActive','overview']);
-        turnOffVisibility(['index_showTravelModeActive','travelMode']);
-    }
-    function index_showTravelModeActive() {
-        turnOnVisibility(['index_showTravelModeActive','travelMode']);
-        turnOffVisibility(['index_showOverviewActive','overview']);
+    var error = '<%= request.getAttribute("error")%>';
+    $(document).ready(function() {
+        $("#div-overview").show();
+        $("#div-travelMode").hide();
+        $("#a-overview").click(function() {
+            $("#li-overview").addClass("active");
+            $("#li-travelMode").removeClass("active");
+            $("#div-overview").show();
+            $("#div-travelMode").hide();
+        });
+        $("#a-travelMode").click(function() {
+            $("#li-overview").removeClass("active");
+            $("#li-travelMode").addClass("active");
+            $("#div-overview").hide();
+            $("#div-travelMode").show();
+        });
+        $("button-createNewItinerary").click(function() {
 
-        // Travel Mode Form Javascript
-        var preferredTravelMode = "#<%= preferredTravelMode %>"
-        $(preferredTravelMode).prop("checked", true);
-    }
+        });
+        if (error != 'null') {
+            $("#errorMessage").modal("show");
+        }
+
+    });
 </script>
 
 <!-- Facebook SDK Javascript -->

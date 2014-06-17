@@ -8,6 +8,10 @@
     <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
     <link href="/CS2340Servlet/css/bootstrap.min.css" rel="stylesheet">
     <link href="/CS2340Servlet/css/dashboard.css" rel="stylesheet">
+
+    <!-- Jquery Javascript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
 </head>
 <body>
 
@@ -46,9 +50,98 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
                         </div>
                     </li>
                     <li>
-                        <a href="/CS2340Servlet/jsp/create_account.jsp">Sign Up</a>
+                        <a href="#" data-toggle="modal" data-target="#signUpForm">Sign Up</a>
+                        <!-- href="/CS2340Servlet/jsp/create_account.jsp"  -->
                     </li>
                 </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="signUpForm" tabindex="-1" role="dialog" aria-labelledby="signUpLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="signUpLabel">Sign Up</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="/CS2340Servlet/index" method="POST" class="form-inline" role="form">
+                        <b>Enter your Personal Information</b>
+
+                        <br />
+                        <br />
+
+                        <div class="form-group">
+                            <label class="sr-only" for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="firstName"
+                            required="required"
+                            placeholder = "Enter First Name" />
+                        </div>
+
+                        <br />
+                        <br />
+
+                        <div class="form-group">
+                            <label class="sr-only" for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="lastName"
+                            required="required"
+                            placeholder = "Enter Last Name" />
+                        </div>
+
+                        <br />
+                        <br />
+                        <br />
+
+                        <b>Enter new Account Information</b>
+
+                        <br />
+                        <br />
+
+                        <div class="form-group">
+                            <label class="sr-only" for="name">Name</label>
+                            <input type="text" class="form-control" id="name"
+                            name="newUsername"
+                            required="required"
+                            placeholder = "Enter Username" />
+                        </div>
+
+                        <br />
+                        <br />
+
+                        <div class="form-group">
+                            <label class="sr-only" for="name">Password</label>
+                            <input type="password" class="form-control" id="newPassword"
+                            name="newPassword"
+                            onkeyup="checkPass(document.getElementById('newPassword'),
+                            document.getElementById('confirmPassword'),
+                            document.getElementById('confirmMessage'));
+                            return false;"
+                            required="required"
+                            placeholder = "Enter Password" />
+                        </div>
+
+                        <br />
+                        <br />
+
+                        <div class="form-group">
+                            <label class="sr-only" for="name">Password</label>
+                            <input type="password" class="form-control" id="confirmPassword"
+                            name="confirmPassword"
+                            onkeyup="checkPass(document.getElementById('newPassword'),
+                            document.getElementById('confirmPassword'),
+                            document.getElementById('confirmMessage'));
+                            return false;"
+                            required="required"
+                            placeholder = "Re-enter Password" />
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" name="signUpButton" class="btn btn-primary">Sign Up</button>
+                </div> 
+                    </form>
             </div>
         </div>
     </div>
@@ -82,3 +175,19 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
 <% } %>
     
     <div id="wrapper">
+
+<!-- Asks user if wants to automatically log into application following successful account creation -->
+<script>
+    var success = "${accountCreateSuccess}";
+    if (success === "success") {
+        var response = window.confirm("Account successfully created. Automatically logging you in.");
+        if (response) {
+            window.location.replace("/CS2340Servlet/jsp/createLoginSession.jsp");
+        } else {
+            window.location.replace("/CS2340Servlet/jsp/index.jsp");
+        }
+    }
+</script>
+
+<!-- Password color change confirmation Javascript -->
+<script src="/CS2340Servlet/js/password_check.js"></script>
