@@ -40,10 +40,17 @@
             <ul class="nav nav-sidebar visibilityOn" id="index_showOverviewActive">
                 <li class="active"><a href="#">Overview</a></li>
                 <li><a href="#" onclick="index_showTravelModeActive()">Travel Mode</a></li>
+                <li><a href="#" onclick="index_showMapActive()">Map</a></li>
             </ul>
             <ul class="nav nav-sidebar visibilityOff" id="index_showTravelModeActive">
                 <li><a href="#" onclick="index_showOverviewActive()">Overview</a></li>
                 <li class="active"><a href="#">Travel Mode</a></li>
+                <li><a href="#" onclick="index_showMapActive()">Map</a></li>
+            </ul>
+            <ul class="nav nav-sidebar visibilityOff" id="index_showMapActive">
+                <li><a href="#" onclick="index_showOverviewActive()">Overview</a></li>
+                <li><a href="#" onclick="index_showTravelModeActive()">Travel Mode</a></li>
+                <li class="active"><a href="#">Map</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -60,22 +67,6 @@
                         <fb:login-button id="fbLoginButton" scope="public_profile,email"
                                          onlogin="checkLoginState();">
                         </fb:login-button>
-                    </div>
-                    <div class="panel-group" id="accordion">
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" id = "LeMap">
-                              Le Map!~ Hon Hon Hon
-                            </a>
-                          </h4>
-                        </div>
-                        <div id="collapseOne" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            <div id="map-canvas"/>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                 </div>
 
@@ -139,6 +130,7 @@
                 <h1 class="page-header">
                     Travel Mode
                 </h1>
+
                 <form id="" action="/CS2340Servlet/index" method="POST" class="form-inline" role="form">
 
                     <b>Select your preferred mode of transportation</b>
@@ -217,6 +209,26 @@
 
                 </form>
             </div>
+            <div id="map" class="visibilityOff">
+                <h1 class="page-header">
+                    Map Mode
+                </h1>
+                <div class="panel-group" id="accordion">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" id = "LeMap">
+                          Le Map!
+                        </a>
+                      </h4>
+                    </div>
+                  <div id="collapseOne" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      <div id="map-canvas"/>
+                    </div>
+                  </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -257,14 +269,21 @@
     function index_showOverviewActive() {
         turnOnVisibility(['index_showOverviewActive','overview']);
         turnOffVisibility(['index_showTravelModeActive','travelMode']);
+        turnOffVisibility(['index_showMapActive', 'map']);
     }
     function index_showTravelModeActive() {
         turnOnVisibility(['index_showTravelModeActive','travelMode']);
         turnOffVisibility(['index_showOverviewActive','overview']);
+        turnOffVisibility(['index_showMapActive', 'map']);
 
         // Travel Mode Form Javascript
         var preferredTravelMode = "#<%= preferredTravelMode %>"
         $(preferredTravelMode).prop("checked", true);
+    }
+    function index_showMapActive() {
+        turnOnVisibility(['index_showMapActive', 'map']);
+        turnOffVisibility(['index_showOverviewActive','overview']);
+        turnOffVisibility(['index_showTravelModeActive','travelMode']);
     }
 </script>
 

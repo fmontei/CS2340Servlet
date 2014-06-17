@@ -32,7 +32,6 @@ body,html {
     height: 20px;
 }
 #map-canvas {
-    margin-top: 20px;
     height: 400px;
 }
 #wrapper {
