@@ -4,6 +4,7 @@ import static model.ServletUtilities.*;
 
 import model.AccountCreateForm;
 
+import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,17 +27,23 @@ public class AccountCreationServlet extends HttpServlet {
                        HttpServletResponse response)
         throws IOException, ServletException {
         if (isSubmitButtonClicked(request)) {
-            AccountCreateForm accountForm = new AccountCreateForm(request);
-            if (accountForm.isAccountCreationSuccessful()) {
-                automaticallyLogin(request, response);
-            } else {
-                reloadBecauseAccountCreateFailed(request, response);
-            }
+            doCreateRequest(request, response);
+        } else {
+            reloadBecauseAccountCreateFailed(request, response);
         }
     }
 
     private boolean isSubmitButtonClicked(HttpServletRequest request) {
         return request.getParameter("submitButton") != null;
+    }
+
+    private void doCreateRequest(HttpServletRequest request,
+                                 HttpServletResponse response)
+        throws IOException, ServletException {
+        AccountCreateForm accountForm = new AccountCreateForm(request);
+        if (accountForm.isAccountCreationSuccessful()) {
+            automaticallyLogin(request, response);
+        }
     }
 
     private void automaticallyLogin(HttpServletRequest request,
