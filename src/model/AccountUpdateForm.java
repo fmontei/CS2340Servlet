@@ -1,24 +1,32 @@
 package model;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class AccountUpdateForm {
     private HttpServletRequest request;
+    private HttpSession session;
     private UserAccount currentAccount;
     private String username;
     private String password;
     private String confirmPassword;
     private String firstName, lastName;
-    private DataStore accountsSave = new DataStore();
+
     public AccountUpdateForm(HttpServletRequest request) {
         this.request = request;
+        this.session = request.getSession();
+        this.username = session.getAttribute("username").toString();
     }
 
-    public boolean isAccountCreationSuccessful() {
+    public boolean isAccountUpdateSuccessful() {
         try {
             gatherNewAccountInfo();
-            validateCredentials();
-            storeLoginAttributes();
+            AccountValidation validation = new AccountValidation
+                    (currentAccount, confirmPassword);
+            validation.setOperation(new UpdateAccountOperation());
+            validation.validateCredentials();
+            updateAccountSettings();
+            updateSessionAttributes();
             return true;
         } catch (ValidationException ex) {
             request.setAttribute("error", ex.getMessage());
@@ -27,20 +35,20 @@ public class AccountUpdateForm {
     }
 
     private void gatherNewAccountInfo() throws ValidationException {
-        username = Attributes.getAttribute(Attributes.CURRENT_USER);
         firstName = request.getParameter("updateFirstName");
         lastName = request.getParameter("updateLastName");
         password = request.getParameter("oldPassword");
         confirmPassword = request.getParameter("confirmOldPassword");
+        currentAccount = new UserAccount(firstName, lastName, username, password);
     }
 
     public void validateCredentials() throws ValidationException {
         /* Assumption: User does not want to change password.
          * Why force him to re-enter it? */
-       if (isPasswordEmpty()) {
+        if (isPasswordEmpty()) {
            revertToOldPassword();
            return;
-       } else if (!password.equals(confirmPassword)) {
+        } else if (!password.equals(confirmPassword)) {
             throw new ValidationException("Passwords do not match. "
                 + "Please try again.");
         }
@@ -55,16 +63,14 @@ public class AccountUpdateForm {
         password = accountBeforeChange.getPassword();
     }
 
-    private void storeLoginAttributes() {
-        currentAccount = new UserAccount(firstName, lastName, username, password);
-        String username = currentAccount.getUsername();
+    private void updateSessionAttributes() {
         String welcomeName = currentAccount.getName();
-        String firstName = currentAccount.getFirstName();
-        String lastName = currentAccount.getLastName();
-        Attributes.storeAttribute(Attributes.WELCOME_NAME, welcomeName);
-        Attributes.storeAttribute("firstName", firstName);
-        Attributes.storeAttribute("lastName", lastName);
-        Attributes.storeAttribute("username", username);
+        synchronized(session) {
+            session.setAttribute("currentUser", currentAccount);
+            session.setAttribute("welcomeName", welcomeName);
+            session.setAttribute("firstName", firstName);
+            session.setAttribute("lastName", lastName);
+        }
         changeAccountSettings(currentAccount);
     }
 
@@ -72,5 +78,21 @@ public class AccountUpdateForm {
         DataStore dataStore = new DataStore();
         String username = updatedAccount.getUsername();
         dataStore.saveAccount(username, updatedAccount);
+    }
+
+    public boolean hasAccountBeenDeleted() {
+        String username = session.getAttribute("username").toString();
+        deleteAccount(username);
+        return true;
+    }
+
+    private void deleteAccount(String username) {
+        DataStore dataStore = new DataStore();
+        dataStore.deleteAccount(username);
+    }
+
+    private void updateAccountSettings() {
+        DataStore dataStore = new DataStore();
+        dataStore.saveAccount(username, currentAccount);
     }
 }

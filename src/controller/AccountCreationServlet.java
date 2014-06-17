@@ -1,9 +1,10 @@
 package controller;
 
 import static model.ServletUtilities.*;
-import model.AccountForm;
-import model.Attributes;
 
+import model.AccountCreateForm;
+
+import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,12 +27,9 @@ public class AccountCreationServlet extends HttpServlet {
                        HttpServletResponse response)
         throws IOException, ServletException {
         if (isSubmitButtonClicked(request)) {
-            AccountForm accountForm = new AccountForm(request);
-            if (accountForm.isAccountCreationSuccessful()) {
-                automaticallyLogin(request, response);
-            } else {
-                reloadBecauseAccountCreateFailed(request, response);
-            }
+            doCreateRequest(request, response);
+        } else {
+            reloadBecauseAccountCreateFailed(request, response);
         }
     }
 
@@ -39,7 +37,17 @@ public class AccountCreationServlet extends HttpServlet {
         return request.getParameter("submitButton") != null;
     }
 
-    private void automaticallyLogin(HttpServletRequest request, HttpServletResponse response)
+    private void doCreateRequest(HttpServletRequest request,
+                                 HttpServletResponse response)
+        throws IOException, ServletException {
+        AccountCreateForm accountForm = new AccountCreateForm(request);
+        if (accountForm.isAccountCreationSuccessful()) {
+            automaticallyLogin(request, response);
+        }
+    }
+
+    private void automaticallyLogin(HttpServletRequest request,
+                                    HttpServletResponse response)
             throws IOException, ServletException {
         request.setAttribute("accountCreateSuccess", "success");
         forwardRequest(this, request, response, "/jsp/create_account.jsp");

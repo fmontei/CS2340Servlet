@@ -15,6 +15,12 @@ public class DataStore {
         saveData();
     }
 
+    public void deleteAccount(String username) {
+        loadData();
+        accountData.remove(username);
+        saveData();
+    }
+
     public static void loadData() {
         if (file == null) {
             setFile();
