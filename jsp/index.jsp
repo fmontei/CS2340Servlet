@@ -100,7 +100,6 @@
           </div>
         </div>
       </div>
-
       <div class="container-fluid">
         <div class="row">
           <div class="col-sm-3 col-md-2 sidebar">
@@ -113,11 +112,54 @@
               Welcome <%=Attributes.getAttribute(Attributes.WELCOME_NAME)%>!
             </h1>
             <fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+            <div class="panel-group" id="accordion">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" id = "LeMap">
+                      Le Map!~ Hon Hon Hon
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <div id="map-canvas"/>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
     <%}%>
+
+    <!-- Google Maps Javascript -->
+    <div id="map-canvas"></div>
+    <script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwnaM0fAa8jqx3O7ZdABTaWmbOW3Uft2Y">
+    </script>
+
+    <script type="text/javascript">
+      var map;
+      function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(33.755, -84.390),
+          zoom: 12
+        };
+        map = new google.maps.Map(document.getElementById("map-canvas"),
+            mapOptions);
+        google.maps.event.addListener(map, 'click', function(event) {
+            placeMarker(event.latLng);
+            });
+      }
+      function placeMarker(location) {
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map
+        });
+      }
+      google.maps.event.addDomListenerOnce(LeMap, 'click', initialize);
+    </script>
 
     <!-- Facebook SDK Javascript -->
     <div id="fb-root"></div>
