@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8" />
 
-
     <!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
     <link href="/CS2340Servlet/css/bootstrap.min.css" rel="stylesheet">
@@ -174,19 +173,11 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
 
 <% } %>
     
+    <!-- wrapper div -->
     <div id="wrapper">
 
-<!-- Asks user if wants to automatically log into application following successful account creation -->
+
 <script>
-    var success = "${accountCreateSuccess}";
-    if (success === "success") {
-        var response = window.confirm("Account successfully created. Automatically logging you in.");
-        if (response) {
-            window.location.replace("/CS2340Servlet/jsp/createLoginSession.jsp");
-        } else {
-            window.location.replace("/CS2340Servlet/jsp/index.jsp");
-        }
-    }
 </script>
 
 <!-- Password color change confirmation Javascript -->

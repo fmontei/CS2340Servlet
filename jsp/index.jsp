@@ -205,6 +205,7 @@
 
 <%}%>
 
+<!-- Error Message -->
 <div class="modal fade" id="errorMessage" tabindex="-1" role="dialog" aria-labelledby="errorMessageTitle" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -224,12 +225,15 @@
     </div>
 </div>
 
-<!-- Index Sidebar Javascript -->
+<!-- Index Javascript -->
 <script type="text/javascript">
     var error = '<%= request.getAttribute("error")%>';
     $(document).ready(function() {
+        // Initial view
         $("#div-overview").show();
         $("#div-travelMode").hide();
+
+        // Sidebar
         $("#a-overview").click(function() {
             $("#li-overview").addClass("active");
             $("#li-travelMode").removeClass("active");
@@ -242,9 +246,13 @@
             $("#div-overview").hide();
             $("#div-travelMode").show();
         });
+
+        // Stuff
         $("button-createNewItinerary").click(function() {
 
         });
+
+        // Error Message
         if (error != 'null') {
             $("#errorMessage").modal("show");
         }
@@ -252,9 +260,5 @@
     });
 </script>
 
-<!-- Facebook SDK Javascript -->
-<div id="fb-root"></div>
-<script type="text/javascript" src="/CS2340Servlet/js/facebookSDK.js">
-</script>
 
 <%@ include file="footer.jsp" %>

@@ -1,4 +1,4 @@
-    </div>
+    </div> <!-- wrapper /div -->
     <div id="footer">
         <div class="container-fluid">
             <div class="row">
@@ -14,34 +14,19 @@
         </div>
     </div>
 
-    <script>
-        // Facebook login
-        (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
+    <!-- Main Javascript  -->
+    <script type="text/javascript" src="/CS2340Servlet/js/main.js"></script>
 
-        // Dropdown Login Form
-        $(function() {
-            // Setup drop down menu
-            $('.dropdown-toggle').dropdown();
+    <!-- Facebook SDK Javascript -->
+    <div id="fb-root"></div>
+    <script type="text/javascript" src="/CS2340Servlet/js/facebookSDK.js"></script>
 
-            // Fix input element click problem
-            $('.dropdown input, .dropdown label').click(function(e) {
-                e.stopPropagation();
-            });
-        });
-    </script>
-
-    <script type="text/javascript" src="/CS2340Servlet/js/toggleVisibility.js"></script>
+    <!-- Itinerary Javascript -->
+    <script type="text/javascript" src="/CS2340Servlet/js/itinerary.js"></script> 
 
     <!-- Bootstrap core JavaScript -->
-    <script src="/CS2340Servlet/js/bootstrap.min.js"></script>
-    <script src="/CS2340Servlet/js/docs.min.js"></script>
-    <script src="/CS2340Servlet/js/itinerary.js"></script> 
+    <script type="text/javascript" src="/CS2340Servlet/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/CS2340Servlet/js/docs.min.js"></script>
 
 </body>
 </html>
