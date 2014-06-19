@@ -1,9 +1,14 @@
 package model;
 
+import database.DAL.DataManager;
+import database.DTO.User;
+
+import java.sql.SQLException;
+
 public class UpdateAccountOperation implements Validation {
     private String username, password, confirmPassword;
 
-    public void init(UserAccount account, String username, String password) {
+    public void init(User account, String username, String password) {
         this.username = username;
         this.password = account.getPassword();
         this.confirmPassword = password;
@@ -26,7 +31,9 @@ public class UpdateAccountOperation implements Validation {
     }
 
     private void revertToOldPassword() {
-        UserAccount accountBeforeChange = DataStore.findByUserName(username);
-        password = accountBeforeChange.getPassword();
+        try {
+            User accountBeforeChange = DataManager.getUserByUsername(username);
+            password = accountBeforeChange.getPassword();
+        } catch (SQLException ex) {}
     }
 }

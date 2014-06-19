@@ -85,7 +85,10 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="#">Create New Itinerary</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
+                                <li><a onclick="index_showMapActive()"
+                                       style="cursor:  pointer">
+                                    View Map</a>
+                                </li>
                             </ul>
                         </div>
 
@@ -209,26 +212,25 @@
 
                 </form>
             </div>
+
             <div id="map" class="visibilityOff">
                 <h1 class="page-header">
-                    Map Mode
+                    Itinerary Map
                 </h1>
-                <div class="panel-group" id="accordion">
+
+                <div class="panel-group">
                   <div class="panel panel-default">
                     <div class="panel-heading">
-                      <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" id = "LeMap">
-                          Le Map!
-                        </a>
-                      </h4>
+
                     </div>
-                  <div id="collapseOne" class="panel-collapse collapse">
                     <div class="panel-body">
-                      <div id="map-canvas"/>
+                      <div id="map-canvas"></div>
                     </div>
+
                   </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
@@ -242,25 +244,25 @@
     </script>
 
     <script type="text/javascript">
-      var map;
-      function initialize() {
-        var mapOptions = {
-          center: new google.maps.LatLng(33.755, -84.390),
-          zoom: 12
-        };
-        map = new google.maps.Map(document.getElementById("map-canvas"),
-            mapOptions);
-        google.maps.event.addListener(map, 'click', function(event) {
-            placeMarker(event.latLng);
+        var map;
+        function initialize() {
+            var mapOptions = {
+                center: new google.maps.LatLng(33.755, -84.390),
+                zoom: 12
+            };
+            map = new google.maps.Map(document.getElementById("map-canvas"),
+                mapOptions);
+            google.maps.event.addListener(map, 'click', function(event) {
+                placeMarker(event.latLng);
             });
-      }
-      function placeMarker(location) {
-        var marker = new google.maps.Marker({
-            position: location,
-            map: map
-        });
-      }
-      google.maps.event.addDomListenerOnce(LeMap, 'click', initialize);
+        }
+
+        function placeMarker(location) {
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+        }
     </script>
 
 
@@ -284,6 +286,7 @@
         turnOnVisibility(['index_showMapActive', 'map']);
         turnOffVisibility(['index_showOverviewActive','overview']);
         turnOffVisibility(['index_showTravelModeActive','travelMode']);
+        initialize();
     }
 </script>
 

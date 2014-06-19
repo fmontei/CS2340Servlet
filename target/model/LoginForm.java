@@ -3,7 +3,7 @@ package model;
 import static model.DataStore.findByUserName;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.xml.crypto.Data;
+import java.sql.SQLException;
 
 public class LoginForm {
     private HttpServletRequest request;
@@ -26,6 +26,9 @@ public class LoginForm {
             storeLoginAttributes();
             return true;
         } catch (ValidationException ex) {
+            request.setAttribute("error", ex.getMessage());
+            return false;
+        } catch (SQLException ex) {
             request.setAttribute("error", ex.getMessage());
             return false;
         }

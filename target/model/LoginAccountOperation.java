@@ -1,10 +1,12 @@
 package model;
 
-public class LoginAccountOperation implements Validation {
-    private UserAccount account;
-    private  String username, password;
+import database.DTO.User;
 
-    public void init(UserAccount account, String username, String password) {
+public class LoginAccountOperation implements Validation {
+    private User account;
+    private String username, password;
+
+    public void init(User account, String username, String password) {
         this.account = account;
         this.username = username;
         this.password = password;
