@@ -1,9 +1,11 @@
 package model;
 
-import static model.DataStore.findByUserName;
+import database.DAL.DataManager;
+import database.DTO.User;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.xml.crypto.Data;
+import java.sql.SQLException;
 
 public class LoginForm {
     private HttpServletRequest request;
@@ -28,6 +30,9 @@ public class LoginForm {
         } catch (ValidationException ex) {
             request.setAttribute("error", ex.getMessage());
             return false;
+        } catch (SQLException ex) {
+            request.setAttribute("error", ex.getMessage());
+            return false;
         }
     }
 
@@ -45,9 +50,9 @@ public class LoginForm {
         }
     }
 
-    private void storeLoginAttributes() {
-        UserAccount currentAccount = findByUserName(username);
-        String welcomeName = currentAccount.getName();
+    private void storeLoginAttributes() throws SQLException {
+        User currentAccount = DataManager.getUserByUsername(username);
+        String welcomeName = currentAccount.getWelcomeName();
         String firstName = currentAccount.getFirstName();
         String lastName = currentAccount.getLastName();
         HttpSession session = request.getSession();

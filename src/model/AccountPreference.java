@@ -1,7 +1,11 @@
 package model;
 
+import database.DAL.DataManager;
+import database.DTO.User;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 
 public class AccountPreference {
     private HttpServletRequest request;
@@ -21,12 +25,11 @@ public class AccountPreference {
         }
     }
 
-    private void savePreferredTravelMode() {
+    private void savePreferredTravelMode() throws SQLException {
         String username = session.getAttribute("username").toString();
-        UserAccount account = (UserAccount) session.getAttribute("currentUser");
+        User account = (User) session.getAttribute("currentUser");
         String preferredTravelMode = request.getParameter("preferredTravelMode");
-        account.setPreferredTravelMode(preferredTravelMode);
-        DataStore dataStore = new DataStore();
-        dataStore.saveAccount(username, account);
+        //account.setPreferredTravelMode(preferredTravelMode);
+        DataManager.createUser(account);
     }
 }

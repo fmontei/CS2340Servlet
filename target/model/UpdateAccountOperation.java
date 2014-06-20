@@ -1,20 +1,24 @@
 package model;
 
+import database.DAL.DataManager;
+import database.DTO.User;
+
+import java.sql.SQLException;
+
 public class UpdateAccountOperation implements Validation {
     private String username, password, confirmPassword;
+    private User account;
 
-    public void init(UserAccount account, String username, String password) {
+    public void init(User account, String username, String password) {
+        this.account = account;
         this.username = username;
         this.password = account.getPassword();
         this.confirmPassword = password;
     }
 
     public void validateCredentials() throws ValidationException {
-        /* Assumption: User does not want to change password.
-         * Why force him to re-enter it? */
         if (isPasswordEmpty()) {
-            revertToOldPassword();
-            return;
+            throw new ValidationException("Password is empty.");
         } else if (!password.equals(confirmPassword)) {
             throw new ValidationException("Passwords do not match. "
                     + "Please try again.");
@@ -22,11 +26,6 @@ public class UpdateAccountOperation implements Validation {
     }
 
     private boolean isPasswordEmpty() {
-        return password == "" && confirmPassword == "";
-    }
-
-    private void revertToOldPassword() {
-        UserAccount accountBeforeChange = DataStore.findByUserName(username);
-        password = accountBeforeChange.getPassword();
+        return password.isEmpty() && confirmPassword.isEmpty();
     }
 }

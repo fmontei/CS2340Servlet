@@ -1,18 +1,24 @@
 package model;
 
+import database.DAL.DataManager;
+import database.DTO.User;
+
+import java.sql.SQLException;
+
 public class AccountValidation {
-    private UserAccount account;
+    private User account;
     private String username, confirmPassword;
     private Validation operation;
 
-    public AccountValidation(UserAccount account, String confirmPassword) {
+    public AccountValidation(User account, String confirmPassword) {
         this.account = account;
         this.username = account.getUsername();
         this.confirmPassword = confirmPassword;
     }
 
-    public AccountValidation(String username, String confirmPassword) {
-        this.account = DataStore.findByUserName(username);
+    public AccountValidation(String username, String confirmPassword)
+            throws SQLException {
+        this.account = DataManager.getUserByUsername(username);
         this.username = username;
         this.confirmPassword = confirmPassword;
     }

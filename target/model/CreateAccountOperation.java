@@ -1,12 +1,14 @@
 package model;
 
-import static model.DataStore.findByUserName;
+import database.DAL.DataManager;
+import database.DTO.User;
 
 public class CreateAccountOperation implements Validation {
     private String username, password, confirmPassword;
-    private UserAccount account;
+    private User account;
 
-    public void init(UserAccount account, String username, String password) {
+    @Override
+    public void init(User account, String username, String password) {
         this.account = account;
         this.username = account.getUsername();
         this.password = account.getPassword();
@@ -26,7 +28,6 @@ public class CreateAccountOperation implements Validation {
     }
 
     private boolean usernameExists(String username) {
-        UserAccount temp = findByUserName(username);
-        return temp != null;
+        return DataManager.usernameExists(username);
     }
 }

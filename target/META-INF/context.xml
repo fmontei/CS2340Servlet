@@ -1,0 +1,11 @@
+<Context>
+    <Resource name="jdbc/trip_planner_db_v2"
+              auth="Container"
+              type="javax.sql.DataSource"
+              username="Joseph"
+              password="password"
+              driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://[yourserver]:3306/[yourapplication]"
+              maxActive="15"
+              maxIdle="3" />
+</Context>

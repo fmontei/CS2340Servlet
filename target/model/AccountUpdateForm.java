@@ -1,12 +1,16 @@
 package model;
 
+import database.DAL.DataManager;
+import database.DTO.User;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 
 public class AccountUpdateForm {
     private HttpServletRequest request;
     private HttpSession session;
-    private UserAccount currentAccount;
+    private User currentAccount;
     private String username;
     private String password;
     private String confirmPassword;
@@ -29,6 +33,13 @@ public class AccountUpdateForm {
             updateSessionAttributes();
             return true;
         } catch (ValidationException ex) {
+            if (ex.getMessage().equals("Password is empty.")) {
+                revertToOldPasswordAndUpdateAccount();
+                return true;
+            }
+            request.setAttribute("error", ex.getMessage());
+            return false;
+        } catch (SQLException ex) {
             request.setAttribute("error", ex.getMessage());
             return false;
         }
@@ -39,45 +50,31 @@ public class AccountUpdateForm {
         lastName = request.getParameter("updateLastName");
         password = request.getParameter("oldPassword");
         confirmPassword = request.getParameter("confirmOldPassword");
-        currentAccount = new UserAccount(firstName, lastName, username, password);
-    }
-
-    public void validateCredentials() throws ValidationException {
-        /* Assumption: User does not want to change password.
-         * Why force him to re-enter it? */
-        if (isPasswordEmpty()) {
-           revertToOldPassword();
-           return;
-        } else if (!password.equals(confirmPassword)) {
-            throw new ValidationException("Passwords do not match. "
-                + "Please try again.");
-        }
-    }
-
-    private boolean isPasswordEmpty() {
-        return password == "" && confirmPassword == "";
-    }
-
-    private void revertToOldPassword() {
-        UserAccount accountBeforeChange = DataStore.findByUserName(username);
-        password = accountBeforeChange.getPassword();
+        currentAccount = new User(firstName, lastName, username, password);
     }
 
     private void updateSessionAttributes() {
-        String welcomeName = currentAccount.getName();
+        String welcomeName = currentAccount.getWelcomeName();
         synchronized(session) {
             session.setAttribute("currentUser", currentAccount);
             session.setAttribute("welcomeName", welcomeName);
             session.setAttribute("firstName", firstName);
             session.setAttribute("lastName", lastName);
         }
-        changeAccountSettings(currentAccount);
     }
 
-    private void changeAccountSettings(UserAccount updatedAccount) {
-        DataStore dataStore = new DataStore();
-        String username = updatedAccount.getUsername();
-        dataStore.saveAccount(username, updatedAccount);
+    private void updateAccountSettings() throws SQLException {
+        DataManager.updateUser(currentAccount);
+    }
+
+    private void revertToOldPasswordAndUpdateAccount() {
+        try {
+            User accountBeforeChange = DataManager.getUserByUsername(username);
+            String passwordBeforeChange = accountBeforeChange.getPassword();
+            currentAccount.setPassword(passwordBeforeChange);
+            updateAccountSettings();
+        } catch (SQLException ex) {
+        }
     }
 
     public boolean hasAccountBeenDeleted() {
@@ -87,12 +84,7 @@ public class AccountUpdateForm {
     }
 
     private void deleteAccount(String username) {
-        DataStore dataStore = new DataStore();
-        dataStore.deleteAccount(username);
-    }
-
-    private void updateAccountSettings() {
-        DataStore dataStore = new DataStore();
-        dataStore.saveAccount(username, currentAccount);
+        //DataStore dataStore = new DataStore();
+        //dataStore.deleteAccount(username);
     }
 }
