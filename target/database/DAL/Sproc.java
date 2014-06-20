@@ -192,10 +192,9 @@ public class Sproc {
                         Integer.toString(ID);
         return query;
     }
-    public static String User_Delete(int ID){
+    public static String User_Delete(final String username){
         String query = "DELETE FROM user" +
-                        " WHERE user.ID = " +
-                        Integer.toString(ID);
+                        " WHERE user.userName = '" + username + "';";
         return query;
     }
 }

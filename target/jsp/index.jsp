@@ -85,15 +85,9 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="#">Create New Itinerary</a></li>
                                 <li class="divider"></li>
-<<<<<<< HEAD
-                                <li id="dropdown-map-toggle"><a onclick="index_showMapActive()"
-                                       style="cursor: pointer">
-                                    View Map for Itinerary</a>
-=======
                                 <li><a onclick="index_showMapActive()"
                                        style="cursor:  pointer">
-                                    View Map</a>
->>>>>>> 7deb0779e3025eb756a9c6c57a31f840e2ef5966
+                                    View Map for Itinerary</a>
                                 </li>
                             </ul>
                         </div>
@@ -241,61 +235,33 @@
 
 <%}%>
 
-<<<<<<< HEAD
 <!-- Google Maps Javascript -->
+<div id="map-canvas"></div>
 <script type="text/javascript"
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwnaM0fAa8jqx3O7ZdABTaWmbOW3Uft2Y">
 </script>
 
 <script type="text/javascript">
-  var map;
-  function initialize() {
-    var mapOptions = {
-      center: new google.maps.LatLng(33.755, -84.390),
-      zoom: 12
-    };
-    map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-    google.maps.event.addListener(map, 'click', function(event) {
-        placeMarker(event.latLng);
-    });
-  }
-  function placeMarker(location) {
-    var marker = new google.maps.Marker({
-        position: location,
-        map: map
-    });
-  }
+    var map;
+    function initialize() {
+        var mapOptions = {
+            center: new google.maps.LatLng(33.755, -84.390),
+            zoom: 12
+        };
+        map = new google.maps.Map(document.getElementById("map-canvas"),
+            mapOptions);
+        google.maps.event.addListener(map, 'click', function(event) {
+            placeMarker(event.latLng);
+        });
+    }
+
+    function placeMarker(location) {
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map
+        });
+    }
 </script>
-=======
-    <!-- Google Maps Javascript -->
-    <div id="map-canvas"></div>
-    <script type="text/javascript"
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwnaM0fAa8jqx3O7ZdABTaWmbOW3Uft2Y">
-    </script>
-
-    <script type="text/javascript">
-        var map;
-        function initialize() {
-            var mapOptions = {
-                center: new google.maps.LatLng(33.755, -84.390),
-                zoom: 12
-            };
-            map = new google.maps.Map(document.getElementById("map-canvas"),
-                mapOptions);
-            google.maps.event.addListener(map, 'click', function(event) {
-                placeMarker(event.latLng);
-            });
-        }
-
-        function placeMarker(location) {
-            var marker = new google.maps.Marker({
-                position: location,
-                map: map
-            });
-        }
-    </script>
->>>>>>> 7deb0779e3025eb756a9c6c57a31f840e2ef5966
-
 
 <!-- Index Sidebar Javascript -->
 <script type="text/javascript">
@@ -317,7 +283,6 @@
         turnOnVisibility(['index_showMapActive', 'map']);
         turnOffVisibility(['index_showOverviewActive','overview']);
         turnOffVisibility(['index_showTravelModeActive','travelMode']);
-        initialize();
     }
 </script>
 

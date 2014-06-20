@@ -28,8 +28,6 @@ public class AccountCreationServlet extends HttpServlet {
         throws IOException, ServletException {
         if (isSubmitButtonClicked(request)) {
             doCreateRequest(request, response);
-        } else {
-            reloadBecauseAccountCreateFailed(request, response);
         }
     }
 
@@ -43,6 +41,8 @@ public class AccountCreationServlet extends HttpServlet {
         AccountCreateForm accountForm = new AccountCreateForm(request);
         if (accountForm.isAccountCreationSuccessful()) {
             automaticallyLogin(request, response);
+        } else {
+            reloadBecauseAccountCreateFailed(request, response);
         }
     }
 

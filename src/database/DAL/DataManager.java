@@ -118,68 +118,29 @@ public class DataManager {
     }
 
     public static void createUser(User user) throws SQLException {
-        String query;
         if (usernameExists(user.getUsername())) {
             throw new SQLException("ERROR: Username '" + user.getUsername()
                     + "' already exists.");
         } else {
-            query = Sproc.User_Save(user);
-        }
-        try {
-            dbConnection = ConnectionManager.getConnection();
-            statement = dbConnection.createStatement();
-            statement.executeQuery(query);
-        } finally {
-            DbUtil.close(statement);
-            DbUtil.close(dbConnection);
+            final String query = Sproc.User_Save(user);
+            new SQLQueryUpdate(query);
         }
     }
 
     public static void updateUser(User user) throws SQLException {
-        String query;
         if (usernameExists(user.getUsername())) {
-            query = Sproc.User_Update(user);
+            final String query = Sproc.User_Update(user);
+            new SQLQueryUpdate(query);
         } else {
             throw new SQLException("ERROR: Update Failed since User " +
                     "does not exist.");
-        }
-        try {
-            dbConnection = ConnectionManager.getConnection();
-            statement = dbConnection.createStatement();
-            statement.executeUpdate(query);
-        } finally {
-            DbUtil.close(statement);
-            DbUtil.close(dbConnection);
         }
     }
 
     public static boolean usernameExists(String username) {
         String query = Sproc.User_ReadByUsername(username);
-        String fetchedUsername = null;
-        ResultSet results = null;
-        try {
-            dbConnection = ConnectionManager.getConnection();
-            statement = dbConnection.createStatement();
-            results = statement.executeQuery(query);
-            while (results.next()) {
-                fetchedUsername = results.getString("userName");
-                break;
-            }
-        } catch (SQLException e) { e.printStackTrace(); }
-        finally {
-            closeConnections(results);
-            if (fetchedUsername != null && username.equals(fetchedUsername)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
-
-    private static void closeConnections(ResultSet results) {
-        DbUtil.close(results);
-        DbUtil.close(statement);
-        DbUtil.close(dbConnection);
+        SQLUserSearch userSearch = new SQLUserSearch(query, username);
+        return userSearch.fetchedUsernameExists();
     }
 
     public static User getUserByUsername(final String username)
@@ -200,7 +161,9 @@ public class DataManager {
                 break;
             }
         } finally {
-            closeConnections(results);
+            DbUtil.close(results);
+            DbUtil.close(statement);
+            DbUtil.close(dbConnection);
             return user;
         }
     }
@@ -236,8 +199,9 @@ public class DataManager {
         return userDTO;
     }
 
-    public static void deleteUser(int ID)throws SQLException {
-        String query = Sproc.User_Delete(ID);
+    public static void deleteUser(String username) throws SQLException {
+        final String query = Sproc.User_Delete(username);
+        System.out.println(query);
         try {
             dbConnection = ConnectionManager.getConnection();
             statement = dbConnection.createStatement();

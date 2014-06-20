@@ -20,7 +20,6 @@ public class LoginForm {
             return false;
         }
         try {
-            checkIfParametersNotNull();
             AccountValidation validation = new AccountValidation
                     (username, password);
             validation.setOperation(new LoginAccountOperation());
@@ -40,16 +39,6 @@ public class LoginForm {
         return request.getParameter("loginButton") != null;
     }
 
-    private void checkIfParametersNotNull() throws ValidationException {
-        if (isPasswordNull()) {
-            throw new ValidationException("Invalid password."
-                + "Please try again.");
-        } else if (isUsernameNull()) {
-            throw new ValidationException("Invalid username."
-                + "Please try again.");
-        }
-    }
-
     private void storeLoginAttributes() throws SQLException {
         User currentAccount = DataManager.getUserByUsername(username);
         String welcomeName = currentAccount.getWelcomeName();
@@ -61,13 +50,5 @@ public class LoginForm {
         session.setAttribute("firstName", firstName);
         session.setAttribute("lastName", lastName);
         session.setAttribute("username", username);
-    }
-
-    private boolean isPasswordNull() {
-        return password == null || password.isEmpty();
-    }
-
-    private boolean isUsernameNull() {
-        return username == null || username.isEmpty();
     }
 }

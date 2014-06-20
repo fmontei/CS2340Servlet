@@ -1,9 +1,6 @@
 package model;
 
-import database.DAL.DataManager;
 import database.DTO.User;
-
-import java.sql.SQLException;
 
 public class UpdateAccountOperation implements Validation {
     private String username, password, confirmPassword;
@@ -17,15 +14,9 @@ public class UpdateAccountOperation implements Validation {
     }
 
     public void validateCredentials() throws ValidationException {
-        if (isPasswordEmpty()) {
-            throw new ValidationException("Password is empty.");
-        } else if (!password.equals(confirmPassword)) {
+        if (!password.equals(confirmPassword)) {
             throw new ValidationException("Passwords do not match. "
-                    + "Please try again.");
+                    + "Please try again. " + password + " " + confirmPassword);
         }
-    }
-
-    private boolean isPasswordEmpty() {
-        return password.isEmpty() && confirmPassword.isEmpty();
     }
 }

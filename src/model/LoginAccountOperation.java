@@ -1,5 +1,6 @@
 package model;
 
+import database.DAL.DataManager;
 import database.DTO.User;
 
 public class LoginAccountOperation implements Validation {
@@ -28,6 +29,6 @@ public class LoginAccountOperation implements Validation {
     }
 
     private boolean usernameExists() {
-        return account != null;
+        return DataManager.usernameExists(username);
     }
 }

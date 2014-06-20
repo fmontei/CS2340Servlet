@@ -33,10 +33,6 @@ public class AccountUpdateForm {
             updateSessionAttributes();
             return true;
         } catch (ValidationException ex) {
-            if (ex.getMessage().equals("Password is empty.")) {
-                revertToOldPasswordAndUpdateAccount();
-                return true;
-            }
             request.setAttribute("error", ex.getMessage());
             return false;
         } catch (SQLException ex) {
@@ -64,27 +60,34 @@ public class AccountUpdateForm {
     }
 
     private void updateAccountSettings() throws SQLException {
+        if (isPasswordEmpty()) {
+            revertToOldPasswordAndUpdateAccount();
+        }
         DataManager.updateUser(currentAccount);
     }
 
-    private void revertToOldPasswordAndUpdateAccount() {
-        try {
-            User accountBeforeChange = DataManager.getUserByUsername(username);
-            String passwordBeforeChange = accountBeforeChange.getPassword();
-            currentAccount.setPassword(passwordBeforeChange);
-            updateAccountSettings();
-        } catch (SQLException ex) {
-        }
+    private boolean isPasswordEmpty() {
+        return password.isEmpty() && confirmPassword.isEmpty();
+    }
+
+    private void revertToOldPasswordAndUpdateAccount() throws SQLException {
+        User accountBeforeChange = DataManager.getUserByUsername(username);
+        String passwordBeforeChange = accountBeforeChange.getPassword();
+        currentAccount.setPassword(passwordBeforeChange);
     }
 
     public boolean hasAccountBeenDeleted() {
-        String username = session.getAttribute("username").toString();
-        deleteAccount(username);
-        return true;
+        final String username = session.getAttribute("username").toString();
+        try {
+            deleteAccount(username);
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
-    private void deleteAccount(String username) {
-        //DataStore dataStore = new DataStore();
-        //dataStore.deleteAccount(username);
+    private void deleteAccount(String username) throws SQLException {
+        DataManager.deleteUser(username);
     }
 }

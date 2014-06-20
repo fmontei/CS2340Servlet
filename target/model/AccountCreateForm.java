@@ -50,8 +50,6 @@ public class AccountCreateForm {
     }
 
     private void saveAccountSettings() throws SQLException {
-        //DataStore dataStore = new DataStore();
-        //dataStore.saveAccount(username, newAccount);
         DataManager.createUser(newAccount);
     }
 

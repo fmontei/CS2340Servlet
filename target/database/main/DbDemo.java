@@ -7,10 +7,18 @@ import database.DTO.User;
 public class DbDemo {
     public static void main(String[] args) throws SQLException {
         System.out.println("HELLO WORLD!");
-        User user = new User("Felipe", "onTEIRO!!", "fmontei3", "1");
-        saveUser(user);
-        User temp = DataManager.getUserByUsername("fmontei3");
-        displayUser(temp);
+        User user = new User("Felipe", "onTEIRO!!", "fmontei", "1");
+        if (DataManager.usernameExists(user.getUsername())) {
+            System.out.println("User exists");
+        } else {
+            System.out.println("User does NOT exist!");
+        }
+        deleteUser(user.getUsername());
+        if (DataManager.usernameExists(user.getUsername())) {
+            System.out.println("User exists");
+        } else {
+            System.out.println("User does NOT exist!");
+        }
     }
 
     private static void getUser() throws SQLException {
@@ -40,9 +48,9 @@ public class DbDemo {
         }
     }
 
-    private static void deleteUser(int ID) throws SQLException {
+    private static void deleteUser(String username) throws SQLException {
         try {
-            DataManager.deleteUser(ID);
+            DataManager.deleteUser(username);
             System.out.println("User has been deleted!");
         } catch (SQLException e){
             e.printStackTrace();
