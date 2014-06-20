@@ -30,6 +30,6 @@ public class AccountPreference {
         User account = (User) session.getAttribute("currentUser");
         String preferredTravelMode = request.getParameter("preferredTravelMode");
         //account.setPreferredTravelMode(preferredTravelMode);
-        DataManager.createUser(account);
+        //DataManager.createUser(account);
     }
 }

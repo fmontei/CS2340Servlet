@@ -14,6 +14,7 @@ import static model.ServletUtilities.forwardRequest;
 @WebServlet(name = "IndexServlet", urlPatterns = { "/index" })
 public class IndexServlet extends HttpServlet {
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
         response.sendRedirect("jsp/createLoginSession.jsp");
