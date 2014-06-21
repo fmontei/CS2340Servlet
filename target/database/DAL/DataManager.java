@@ -117,55 +117,25 @@ public class DataManager {
         return trips;
     }
 
+    public static User fetchUser(String username) {
+        String query = Sproc.User_ReadByUsername(username);
+        SQLUserSearch userSearch = new SQLUserSearch(query);
+        return userSearch.getFetchedUser();
+    }
+
     public static void createUser(User user) throws SQLException {
-        if (usernameExists(user.getUsername())) {
-            throw new SQLException("ERROR: Username '" + user.getUsername()
-                    + "' already exists.");
-        } else {
-            final String query = Sproc.User_Save(user);
+        final String query = Sproc.User_Save(user);
+        try {
             new SQLQueryUpdate(query);
+        } catch (SQLException ex) {
+            throw new SQLException("Error: username '" + user.getUsername()
+                    + "' already exists. Please try again.");
         }
     }
 
     public static void updateUser(User user) throws SQLException {
-        if (usernameExists(user.getUsername())) {
-            final String query = Sproc.User_Update(user);
-            new SQLQueryUpdate(query);
-        } else {
-            throw new SQLException("ERROR: Update Failed since User " +
-                    "does not exist.");
-        }
-    }
-
-    public static boolean usernameExists(String username) {
-        String query = Sproc.User_ReadByUsername(username);
-        SQLUserSearch userSearch = new SQLUserSearch(query, username);
-        return userSearch.fetchedUsernameExists();
-    }
-
-    public static User getUserByUsername(final String username)
-            throws SQLException {
-        String query = Sproc.User_ReadByUsername(username);
-        ResultSet results = null;
-        User user = null;
-        try {
-            dbConnection = ConnectionManager.getConnection();
-            statement = dbConnection.createStatement();
-            results = statement.executeQuery(query);
-            while (results.next()) {
-                user = new User("", "", "", "");
-                user.setFirstName(results.getString("firstName"));
-                user.setLastName(results.getString("lastName"));
-                user.setUserName(results.getString("userName"));
-                user.setPassword(results.getString("password"));
-                break;
-            }
-        } finally {
-            DbUtil.close(results);
-            DbUtil.close(statement);
-            DbUtil.close(dbConnection);
-            return user;
-        }
+        final String query = Sproc.User_Update(user);
+        new SQLQueryUpdate(query);
     }
 
     public static User getUserByID(int ID) throws SQLException{
@@ -177,8 +147,7 @@ public class DataManager {
             statement = dbConnection.createStatement();
             results = statement.executeQuery(query);
             while (results.next()) {
-                User user = new User("", "", "", "");
-
+                User user = new User();
                 user.setID(results.getInt("ID"));
                 user.setFirstName(results.getString("firstName"));
                 user.setLastName(results.getString("lastName"));
@@ -186,7 +155,6 @@ public class DataManager {
                 user.setPassword(results.getString("password"));
                 //user.setPreference(getPreferenceByID(results.getInt("preferenceID")).get(0));
                 //user.setTrips();*/
-
                 //add each user to the list
                 users.add(user);
             }
@@ -201,14 +169,6 @@ public class DataManager {
 
     public static void deleteUser(String username) throws SQLException {
         final String query = Sproc.User_Delete(username);
-        System.out.println(query);
-        try {
-            dbConnection = ConnectionManager.getConnection();
-            statement = dbConnection.createStatement();
-            statement.executeUpdate(query);
-        } finally {
-            DbUtil.close(statement);
-            DbUtil.close(dbConnection);
-        }
+        new SQLQueryUpdate(query);
     }
 }

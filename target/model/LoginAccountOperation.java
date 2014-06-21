@@ -3,6 +3,8 @@ package model;
 import database.DAL.DataManager;
 import database.DTO.User;
 
+import java.sql.SQLException;
+
 public class LoginAccountOperation implements Validation {
     private User account;
     private String username, password;
@@ -13,12 +15,12 @@ public class LoginAccountOperation implements Validation {
         this.password = password;
     }
 
-    public void validateCredentials() throws ValidationException {
+    public void validateCredentials() throws SQLException {
         if (!usernameExists()) {
-            throw new ValidationException("Username " + "\"" + username + "\""
+            throw new SQLException("Username " + "\"" + username + "\""
                 + " does not exist. Please try again.");
         } else if (!passwordMatches()) {
-            throw new ValidationException("Authentication failed. "
+            throw new SQLException("Authentication failed. "
                 + "Please try again.");
         }
     }
@@ -29,6 +31,7 @@ public class LoginAccountOperation implements Validation {
     }
 
     private boolean usernameExists() {
-        return DataManager.usernameExists(username);
+        User user = DataManager.fetchUser(username);
+        return user.getUsername() != null;
     }
 }

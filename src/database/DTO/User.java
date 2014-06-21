@@ -13,8 +13,12 @@ public class User extends DTO {
     private Preference defaultPreference;
     private List<Trip> trips;
 
+    public User() {
+
+    }
+
     public User(String firstName, String lastName, String userName,
-                     String password) {
+                String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;

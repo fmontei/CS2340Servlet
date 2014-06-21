@@ -5,19 +5,18 @@ import database.DAL.*;
 import database.DTO.User;
 
 public class DbDemo {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         System.out.println("HELLO WORLD!");
-        User user = new User("Felipe", "onTEIRO!!", "fmontei", "1");
-        if (DataManager.usernameExists(user.getUsername())) {
-            System.out.println("User exists");
-        } else {
-            System.out.println("User does NOT exist!");
+        User user = new User("Felipe", "onTEIRO!!", "1", "1");
+        try {
+            deleteUser(user.getUsername());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-        deleteUser(user.getUsername());
-        if (DataManager.usernameExists(user.getUsername())) {
-            System.out.println("User exists");
-        } else {
-            System.out.println("User does NOT exist!");
+        try {
+            DataManager.updateUser(user);
+        } catch (SQLException ex){
+            ex.printStackTrace();
         }
     }
 
