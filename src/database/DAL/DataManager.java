@@ -13,35 +13,35 @@ public class DataManager {
 
     //Read
     /*
-    public static Address getAddressByID(){
+    public static Address getAddressByID(int ID) throws SQLException{
 
     }
 
-    public static Attraction getAttractionByID(){
+    public static Attraction getAttractionByID(int ID) throws SQLException{
 
     }
 
-    public static AttractionPreference getAttractionPreferenceByID(){
+    public static AttractionPreference getAttractionPreferenceByID(int ID) throws SQLException{
 
     }
 
-    public static AvailableTime getAvailableTimeByID() {
+    public static AvailableTime getAvailableTimeByID(int ID) throws SQLException{
 
     }
 
-    public static CustomerFeedback getCustomerFeedBackByID(){
+    public static CustomerFeedback getCustomerFeedBackByID(int ID) throws SQLException{
 
     }
 
-    public static Itinerary getItinerary(){
+    public static Itinerary getItinerary(int ID) throws SQLException{
 
     }
 
-    public static Lodging getLodgingByID(){
+    public static Lodging getLodgingByID(int ID) throws SQLException{
 
     }
 
-    public static Place getPlaceByID(){
+    public static Place getPlaceByID(int ID) throws SQLException{
 
     }*/
 
@@ -73,20 +73,19 @@ public class DataManager {
     }
 
     /*
-    public static Restaurant getRestaurantByID(){
+    public static Restaurant getRestaurantByID(int ID) throws SQLException{
 
     }
 
-    public static RestaurantPreference getRestaurantPreferenceByID(){
+    public static RestaurantPreference getRestaurantPreferenceByID(int ID) throws SQLException{
 
     }
 
-    public static TimeSlot getTimeSlotByID(){
+    public static TimeSlot getTimeSlotByID(int ID) throws SQLException{
 
     }
 
-    public static List<Trip> getTripByID(){
-
+    public static List<Trip> getTripByID(int ID) throws SQLException{
     }*/
 
     public static List<Trip> getTripsByUserID(int ID) throws SQLException{
@@ -117,55 +116,25 @@ public class DataManager {
         return trips;
     }
 
+    public static User fetchUser(String username) {
+        String query = Sproc.User_ReadByUsername(username);
+        SQLUserSearch userSearch = new SQLUserSearch(query);
+        return userSearch.getFetchedUser();
+    }
+
     public static void createUser(User user) throws SQLException {
-        if (usernameExists(user.getUsername())) {
-            throw new SQLException("ERROR: Username '" + user.getUsername()
-                    + "' already exists.");
-        } else {
-            final String query = Sproc.User_Save(user);
+        final String query = Sproc.User_Save(user);
+        try {
             new SQLQueryUpdate(query);
+        } catch (SQLException ex) {
+            throw new SQLException("Error: username '" + user.getUsername()
+                    + "' already exists. Please try again.");
         }
     }
 
     public static void updateUser(User user) throws SQLException {
-        if (usernameExists(user.getUsername())) {
-            final String query = Sproc.User_Update(user);
-            new SQLQueryUpdate(query);
-        } else {
-            throw new SQLException("ERROR: Update Failed since User " +
-                    "does not exist.");
-        }
-    }
-
-    public static boolean usernameExists(String username) {
-        String query = Sproc.User_ReadByUsername(username);
-        SQLUserSearch userSearch = new SQLUserSearch(query, username);
-        return userSearch.fetchedUsernameExists();
-    }
-
-    public static User getUserByUsername(final String username)
-            throws SQLException {
-        String query = Sproc.User_ReadByUsername(username);
-        ResultSet results = null;
-        User user = null;
-        try {
-            dbConnection = ConnectionManager.getConnection();
-            statement = dbConnection.createStatement();
-            results = statement.executeQuery(query);
-            while (results.next()) {
-                user = new User("", "", "", "");
-                user.setFirstName(results.getString("firstName"));
-                user.setLastName(results.getString("lastName"));
-                user.setUserName(results.getString("userName"));
-                user.setPassword(results.getString("password"));
-                break;
-            }
-        } finally {
-            DbUtil.close(results);
-            DbUtil.close(statement);
-            DbUtil.close(dbConnection);
-            return user;
-        }
+        final String query = Sproc.User_Update(user);
+        new SQLQueryUpdate(query);
     }
 
     public static User getUserByID(int ID) throws SQLException{
@@ -177,8 +146,7 @@ public class DataManager {
             statement = dbConnection.createStatement();
             results = statement.executeQuery(query);
             while (results.next()) {
-                User user = new User("", "", "", "");
-
+                User user = new User();
                 user.setID(results.getInt("ID"));
                 user.setFirstName(results.getString("firstName"));
                 user.setLastName(results.getString("lastName"));
@@ -186,7 +154,6 @@ public class DataManager {
                 user.setPassword(results.getString("password"));
                 //user.setPreference(getPreferenceByID(results.getInt("preferenceID")).get(0));
                 //user.setTrips();*/
-
                 //add each user to the list
                 users.add(user);
             }
@@ -201,6 +168,139 @@ public class DataManager {
 
     public static void deleteUser(String username) throws SQLException {
         final String query = Sproc.User_Delete(username);
+        new SQLQueryUpdate(query);
+    }
+/*
+        public static void deleteAddress(int ID) throws SQLException {
+
+        }
+
+        public static void deleteAttraction(int ID) throws SQLException {
+
+        }
+*/
+    public static void deleteAttractionPreference(int ID) throws SQLException {
+        final String query = Sproc.Attraction_Preference_DeleteByPreferenceID(ID);
+        System.out.println(query);
+        try {
+            dbConnection = ConnectionManager.getConnection();
+            statement = dbConnection.createStatement();
+            statement.executeUpdate(query);
+        } finally {
+            DbUtil.close(statement);
+            DbUtil.close(dbConnection);
+        }
+    }
+
+    public static void deleteAvailableTime(int ID) throws SQLException {
+        final String query = Sproc.Available_Time_Delete(ID);
+        System.out.println(query);
+        try {
+            dbConnection = ConnectionManager.getConnection();
+            statement = dbConnection.createStatement();
+            statement.executeUpdate(query);
+        } finally {
+            DbUtil.close(statement);
+            DbUtil.close(dbConnection);
+        }
+    }
+/*
+    public static void deleteCustomerFeedback(int ID) throws SQLException {
+
+    }
+
+    public static void deleteDTO(int ID) throws SQLException {
+
+    }
+
+    public static void deleteEnums(int ID) throws SQLException {
+
+    }
+*/
+    public static void deleteItinerary(int ID) throws SQLException {
+        final String query = Sproc.Itinerary_Delete(ID);
+        System.out.println(query);
+        try {
+            dbConnection = ConnectionManager.getConnection();
+            statement = dbConnection.createStatement();
+            statement.executeUpdate(query);
+        } finally {
+            DbUtil.close(statement);
+            DbUtil.close(dbConnection);
+        }
+    }
+
+    public static void deleteLodging(int ID) throws SQLException {
+        final String query = Sproc.Lodging_Delete(ID);
+        System.out.println(query);
+        try {
+            dbConnection = ConnectionManager.getConnection();
+            statement = dbConnection.createStatement();
+            statement.executeUpdate(query);
+        } finally {
+            DbUtil.close(statement);
+            DbUtil.close(dbConnection);
+        }
+    }
+
+    public static void deletePlace(int ID) throws SQLException {
+        final String query = Sproc.Place_Delete(ID);
+        System.out.println(query);
+        try {
+            dbConnection = ConnectionManager.getConnection();
+            statement = dbConnection.createStatement();
+            statement.executeUpdate(query);
+        } finally {
+            DbUtil.close(statement);
+            DbUtil.close(dbConnection);
+        }
+    }
+
+    public static void deletePreference(int ID) throws SQLException {
+        final String query = Sproc.Preference_Delete(ID);
+        System.out.println(query);
+        try {
+            dbConnection = ConnectionManager.getConnection();
+            statement = dbConnection.createStatement();
+            statement.executeUpdate(query);
+        } finally {
+            DbUtil.close(statement);
+            DbUtil.close(dbConnection);
+        }
+    }
+/*
+    public static void deleteRestaurant(int ID) throws SQLException {
+
+    }
+*/
+    public static void deleteRestaurantPreference(int ID) throws SQLException {
+        final String query = Sproc.Restaurant_Preference_DeleteByPreferenceID(ID);
+        System.out.println(query);
+        try {
+            dbConnection = ConnectionManager.getConnection();
+            statement = dbConnection.createStatement();
+            statement.executeUpdate(query);
+        } finally {
+            DbUtil.close(statement);
+            DbUtil.close(dbConnection);
+        }
+    }
+
+    public static void deleteTimeSlot(int ID) throws SQLException {
+        final String query = Sproc.Time_Slot_Delete(ID);
+        System.out.println(query);
+        try {
+            dbConnection = ConnectionManager.getConnection();
+            statement = dbConnection.createStatement();
+            statement.executeUpdate(query);
+        } finally {
+            DbUtil.close(statement);
+            DbUtil.close(dbConnection);
+        }
+    }
+
+    public static void deleteTrip(int ID) throws SQLException {
+        final String query = Sproc.Trip_Delete(ID);
         System.out.println(query);
         try {
             dbConnection = ConnectionManager.getConnection();

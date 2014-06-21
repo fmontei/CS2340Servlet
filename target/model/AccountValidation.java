@@ -18,7 +18,7 @@ public class AccountValidation {
 
     public AccountValidation(String username, String confirmPassword)
             throws SQLException {
-        this.account = DataManager.getUserByUsername(username);
+        this.account = DataManager.fetchUser(username);
         this.username = username;
         this.confirmPassword = confirmPassword;
     }
@@ -28,7 +28,7 @@ public class AccountValidation {
         operation.init(account, username, confirmPassword);
     }
 
-    public void validateCredentials() throws ValidationException {
+    public void validateCredentials() throws SQLException {
         operation.validateCredentials();
     }
 }
