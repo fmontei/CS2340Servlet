@@ -15,7 +15,7 @@ public class DbDemo {
         }
         try {
             DataManager.updateUser(user);
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
