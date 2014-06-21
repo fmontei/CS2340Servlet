@@ -1,6 +1,5 @@
 package controller;
 
-import model.AccountForm;
 import model.AccountUpdateForm;
 
 import javax.servlet.ServletException;
@@ -26,12 +25,11 @@ public class AccountUpdateServlet extends HttpServlet {
                        HttpServletResponse response)
             throws IOException, ServletException {
         if (isSubmitButtonClicked(request)) {
-            AccountUpdateForm accountForm = new AccountUpdateForm(request);
-            if (accountForm.isAccountCreationSuccessful()) {
-                goToPreviousScreen(response);
-            } else {
-                reloadBecauseAccountCreateFailed(request, response);
-            }
+            doUpdateRequest(request, response);
+        } else if (isDeleteButtonClicked(request)) {
+            doDeleteRequest(request, response);
+        } else {
+            doGet(request, response);
         }
     }
 
@@ -39,14 +37,43 @@ public class AccountUpdateServlet extends HttpServlet {
         return request.getParameter("submitButton") != null;
     }
 
-    private void goToPreviousScreen(HttpServletResponse response)
+    private void doUpdateRequest(HttpServletRequest request,
+                                 HttpServletResponse response)
+            throws IOException, ServletException {
+        AccountUpdateForm accountForm = new AccountUpdateForm(request);
+        if (accountForm.isAccountUpdateSuccessful()) {
+            redirectToSameScreen(response);
+        } else {
+            reloadBecauseAccountCreateFailed(request, response);
+        }
+    }
+
+    private void redirectToSameScreen(HttpServletResponse response)
             throws IOException {
-        response.sendRedirect("jsp/index.jsp");
+        response.sendRedirect("jsp/update_account.jsp");
     }
 
     private void reloadBecauseAccountCreateFailed(HttpServletRequest request,
                                                   HttpServletResponse response)
             throws IOException, ServletException {
         forwardRequest(this, request, response, "/jsp/update_account.jsp");
+    }
+
+    private boolean isDeleteButtonClicked(HttpServletRequest request) {
+        return request.getParameter("deleteButton") != null;
+    }
+
+    private void doDeleteRequest(HttpServletRequest request,
+                                 HttpServletResponse response)
+        throws IOException, ServletException {
+        AccountUpdateForm accountForm = new AccountUpdateForm(request);
+        if (accountForm.hasAccountBeenDeleted()) {
+            goToHomePage(response);
+        }
+    }
+
+    private void goToHomePage(HttpServletResponse response)
+            throws IOException {
+        response.sendRedirect("jsp/deleteLoginSession.jsp");
     }
 }

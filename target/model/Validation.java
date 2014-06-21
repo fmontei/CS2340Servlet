@@ -1,5 +1,8 @@
 package model;
 
+import database.DTO.User;
+
 public interface Validation {
-    boolean validateCredentials() throws ValidationException;
+    void validateCredentials() throws ValidationException;
+    void init(User account, String username, String password);
 }

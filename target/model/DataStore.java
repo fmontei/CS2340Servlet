@@ -5,13 +5,19 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class DataStore {
-    private static Map<String, UserAccount> accountData
+    /*private static Map<String, UserAccount> accountData
         = new HashMap<String, UserAccount>();
     private static File file;
 
     public void saveAccount(String username, UserAccount account) {
         loadData();
         accountData.put(username, account);
+        saveData();
+    }
+
+    public void deleteAccount(String username) {
+        loadData();
+        accountData.remove(username);
         saveData();
     }
 
@@ -56,5 +62,5 @@ public class DataStore {
         final String filePath = System.getenv("CATALINA_HOME")
             + "\\webapps\\CS2340Servlet\\UserAccounts.ser";
         file = new File(filePath);
-    }
+    }*/
 }

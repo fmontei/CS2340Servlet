@@ -1,35 +1,34 @@
 package model;
 
-import static model.DataStore.findByUserName;
+import database.DAL.DataManager;
+import database.DTO.User;
 
-public class AccountValidation implements  Validation {
-    private UserAccount account;
-    private String password;
-    private String confirmPassword;
+import java.sql.SQLException;
 
-    public AccountValidation(UserAccount account,
-                             String password,
-                             String confirmPassword) {
+public class AccountValidation {
+    private User account;
+    private String username, confirmPassword;
+    private Validation operation;
+
+    public AccountValidation(User account, String confirmPassword) {
         this.account = account;
-        this.password = password;
+        this.username = account.getUsername();
         this.confirmPassword = confirmPassword;
     }
 
-    @Override
-    public boolean validateCredentials()
-            throws ValidationException {
-        if (usernameExists(account.getUsername())) {
-            throw new ValidationException("Username already taken. "
-                + "Please try again.");
-        } else if (!password.equals(confirmPassword)) {
-            throw new ValidationException("Passwords do not match. "
-                + "Please try again.");
-        }
-        return true;
+    public AccountValidation(String username, String confirmPassword)
+            throws SQLException {
+        this.account = DataManager.getUserByUsername(username);
+        this.username = username;
+        this.confirmPassword = confirmPassword;
     }
 
-    private boolean usernameExists(String username) {
-        UserAccount temp = findByUserName(username);
-        return temp != null;
+    public void setOperation(Validation operation) {
+        this.operation = operation;
+        operation.init(account, username, confirmPassword);
+    }
+
+    public void validateCredentials() throws ValidationException {
+        operation.validateCredentials();
     }
 }

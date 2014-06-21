@@ -63,6 +63,9 @@
             description="Sends web.xml and .jsp and .css files to tomcat directory"
             depends="prepare">
         <copy file="${basedir}/web.xml" todir="${basedir}/target/WEB-INF" />
+        <copy file="${basedir}/context.xml" todir="${basedir}/target/META-INF" />
+        <copy file="${basedir}/lib/mysql-connector-java-5.0.8-bin.jar" todir="${catalina.home}/lib" />
+
         <copy todir="${basedir}/target/css">
                 <fileset dir="${basedir}/css"></fileset>
         </copy>
@@ -72,13 +75,11 @@
         <copy todir="${basedir}/target/js">
             <fileset dir="${basedir}/js"></fileset>
         </copy>
-
     </target>
 
-
-    <target name="deploy" depends="copy-other-files">
+    <target name="deploy" depends="copy-other-files"
+            description="deploy files to tomcat server">
         <mkdir dir="${catalina.home}/webapps/${app.name}"/>
-
         <copy  todir="${catalina.home}/webapps/${app.name}">
             <fileset dir="${build.home}"/>
         </copy>

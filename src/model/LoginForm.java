@@ -1,6 +1,11 @@
 package model;
 
+import database.DAL.DataManager;
+import database.DTO.User;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 
 public class LoginForm {
     private HttpServletRequest request;
@@ -9,18 +14,22 @@ public class LoginForm {
 
     public boolean isAuthenticationSuccessful(HttpServletRequest request) {
         this.request = request;
-        password = request.getParameter("password");
         username = request.getParameter("username");
+        password = request.getParameter("password");
         if (!isLoginButtonClicked()) {
             return false;
         }
         try {
-            checkIfParametersNotNull();
-            Validation validation = new LoginValidation(username, password);
+            AccountValidation validation = new AccountValidation
+                    (username, password);
+            validation.setOperation(new LoginAccountOperation());
             validation.validateCredentials();
             storeLoginAttributes();
             return true;
         } catch (ValidationException ex) {
+            request.setAttribute("error", ex.getMessage());
+            return false;
+        } catch (SQLException ex) {
             request.setAttribute("error", ex.getMessage());
             return false;
         }
@@ -30,34 +39,16 @@ public class LoginForm {
         return request.getParameter("loginButton") != null;
     }
 
-    private void checkIfParametersNotNull() throws ValidationException {
-        if (isPasswordNull()) {
-            throw new ValidationException("Invalid password."
-                + "Please try again.");
-        } else if (isUsernameNull()) {
-            throw new ValidationException("Invalid username."
-                + "Please try again.");
-        }
-    }
-
-    private void storeLoginAttributes() {
-        DataStore dataStore = new DataStore();
-        UserAccount currentAccount = dataStore.findByUserName(username);
-        String welcomeName = currentAccount.getName();
+    private void storeLoginAttributes() throws SQLException {
+        User currentAccount = DataManager.getUserByUsername(username);
+        String welcomeName = currentAccount.getWelcomeName();
         String firstName = currentAccount.getFirstName();
         String lastName = currentAccount.getLastName();
-        Attributes.storeAttribute(Attributes.WELCOME_NAME, welcomeName);
-        Attributes.storeAttribute(Attributes.CURRENT_USER, username);
-        Attributes.storeAttribute("firstName", firstName);
-        Attributes.storeAttribute("lastName", lastName);
-        Attributes.storeAttribute("username", username);
-    }
-
-    private boolean isPasswordNull() {
-        return password == null || password.isEmpty();
-    }
-
-    private boolean isUsernameNull() {
-        return username == null || username.isEmpty();
+        HttpSession session = request.getSession();
+        session.setAttribute("welcomeName", welcomeName);
+        session.setAttribute("currentUser", currentAccount);
+        session.setAttribute("firstName", firstName);
+        session.setAttribute("lastName", lastName);
+        session.setAttribute("username", username);
     }
 }

@@ -1,5 +1,6 @@
-<%@ page import="model.Attributes" %>
+<%@ page import="database.DTO.User" %>
 <%
-	session.setAttribute("userid", Attributes.getAttribute(Attributes.CURRENT_USER));
+    User currentUser = (User) session.getAttribute("currentUser");
+	session.setAttribute("userid", currentUser);
 	response.sendRedirect("index.jsp");
 %>
