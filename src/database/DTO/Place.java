@@ -12,6 +12,14 @@ public class Place extends DTO {
     protected Time openTime;
     protected Time closeTime;
 
+    //default Constructor
+    public Place(){ this.address = new Address(); }
+
+    //getPlaceByID Constructor
+    public Place(Integer placeID){
+        this.placeID = placeID;
+    }
+
     //Getters
     public Integer getPlaceID(){
         return this.placeID;

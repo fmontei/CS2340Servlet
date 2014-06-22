@@ -5,6 +5,18 @@ public class RestaurantPreference extends DTO {
     private Integer ID;
     private RestaurantType preferredRestaurantType;
 
+    //default Constructor
+    public RestaurantPreference(){}
+
+    //getRestaurantPreferenceByID Constructor
+    public RestaurantPreference(Integer ID){ this.ID = ID; }
+
+    //saveRestaurantPreference Constructor
+    public RestaurantPreference(Integer ID, Integer restaurantPreference){
+        this.ID = ID;
+        this.preferredRestaurantType = RestaurantType.values()[restaurantPreference];
+    }
+
     //Getters
     public Integer getID(){
         return this.ID;

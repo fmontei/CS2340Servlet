@@ -6,6 +6,23 @@ public class CustomerFeedback extends DTO {
     private Double customerRating;
     private String customerReview;
 
+    //default Constructor
+    public CustomerFeedback(){}
+
+    //getCustomerFeedbackByID Constructor
+    public CustomerFeedback(Integer ID){
+        this.ID = ID;
+    }
+
+    //saveCustomerFeedback Constructor
+    public CustomerFeedback(Integer ID, String customerName,
+                            Double customerRating, String customerReview){
+        this.ID = ID;
+        this.customerName = customerName;
+        this.customerRating = customerRating;
+        this.customerReview = customerReview;
+    }
+
     //Getters
     public Integer getID(){
         return this.ID;

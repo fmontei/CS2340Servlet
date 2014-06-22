@@ -1,21 +1,19 @@
 package database.DAL;
 
-import database.DTO.User;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SQLUserSearch {
-    private String query;
+    private String query, username, fetchedUsername;
     private Connection dbConnection;
     private Statement statement;
     private ResultSet results;
-    private User fetchedUser = new User();
 
-    public SQLUserSearch(final String query) {
+    public SQLUserSearch(final String query, final String username) {
         this.query = query;
+        this.username = username;
         executeQuery();
     }
 
@@ -25,11 +23,7 @@ public class SQLUserSearch {
             statement = dbConnection.createStatement();
             results = statement.executeQuery(query);
             while (results.next()) {
-                fetchedUser.setID(results.getInt("ID"));
-                fetchedUser.setFirstName(results.getString("firstName"));
-                fetchedUser.setLastName(results.getString("lastName"));
-                fetchedUser.setUserName(results.getString("userName"));
-                fetchedUser.setPassword(results.getString("password"));
+                fetchedUsername = results.getString("userName");
                 break;
             }
         } catch (SQLException ex) {
@@ -45,7 +39,11 @@ public class SQLUserSearch {
         DbUtil.close(dbConnection);
     }
 
-    public User getFetchedUser() {
-        return fetchedUser;
+    public boolean fetchedUsernameExists() {
+        if (fetchedUsername != null && username.equals(fetchedUsername)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

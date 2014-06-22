@@ -18,27 +18,10 @@ public class SQLQueryUpdate {
         try {
             dbConnection = ConnectionManager.getConnection();
             statement = dbConnection.createStatement();
-            int updatedRows = statement.executeUpdate(query);
-            if (noChangesWereMade(updatedRows)) {
-                thenThrowUpdateFailedException();
-            }
+            statement.executeUpdate(query);
         } finally {
             DbUtil.close(statement);
             DbUtil.close(dbConnection);
-        }
-    }
-
-    private boolean noChangesWereMade(final int updatedRows) {
-        return updatedRows == 0;
-    }
-
-    private void thenThrowUpdateFailedException() throws SQLException {
-        if (query.contains("UPDATE")) {
-            throw new SQLException("Error: update failed because user " +
-                    "does not exist.");
-        } else if (query.contains("DELETE")) {
-            throw new SQLException("Error: delete failed because user " +
-                    "does not exist.");
         }
     }
 }

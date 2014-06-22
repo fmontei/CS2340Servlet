@@ -5,6 +5,21 @@ public class Lodging extends DTO {
     private String name;
     private Address address;
 
+    //default Constructor
+    public Lodging(){ this.address = new Address(); }
+
+    //getLodgingByID Constructor
+    public Lodging(Integer ID){
+        this.ID = ID;
+    }
+
+    //saveLodging Constructor
+    public Lodging(Integer ID, String name, Address address){
+        this.ID = ID;
+        this.name = name;
+        this.address = address;
+    }
+
     //Getters
     public Integer getID(){
         return this.ID;

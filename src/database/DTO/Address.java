@@ -7,6 +7,24 @@ public class Address extends DTO {
     private String state;
     private String zipCode;
 
+    //default Constructor
+    public Address(){}
+
+    //getAddressByID Constructor
+    public Address(Integer ID){
+        this.ID = ID;
+    }
+
+    //saveAddress Constructor
+    public Address(Integer ID, String streetAddress, String city,
+                   String state, String zipCode){
+        this.ID = ID;
+        this.streetAddress = streetAddress;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+    }
+
     //Getters
     public Integer getID(){
         return this.ID;

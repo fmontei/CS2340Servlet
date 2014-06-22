@@ -1,6 +1,7 @@
 package database.DTO;
 import database.DTO.Enums.UserRole;
 import java.util.List;
+import java.util.ArrayList;
 
 public class User extends DTO {
     private Integer ID;
@@ -13,17 +14,39 @@ public class User extends DTO {
     private Preference defaultPreference;
     private List<Trip> trips;
 
-    public User() {
+    //default Constructor
+    public User(){ this.defaultPreference = new Preference(); }
 
-    }
+    //getUserByID Constructor
+    public User(Integer ID){ this.ID = ID; }
 
+    //getUserByUsername Constructor
+    public User(String userName) { this.userName = userName; }
+
+    //minimum requirements Constructor
     public User(String firstName, String lastName, String userName,
                 String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
-        this.setUserRole();
+        this.setGeneralUser();
+    }
+
+    //saveUser Constructor
+    public User(Integer ID, String firstName, String lastName,
+                String userName, String password, String email,
+                Integer userRole, Preference preference,
+                List<Trip> trips) {
+        this.ID = ID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.userRole = UserRole.values()[userRole];
+        this.defaultPreference = preference;
+        this.trips = trips;
     }
 
     //Getters
@@ -80,7 +103,7 @@ public class User extends DTO {
     public void setEmail(String email){
         this.email = email;
     }
-    public void setUserRole() {
+    public void setGeneralUser() {
         this.userRole = UserRole.General;
     }
     public void setPreference(Preference preference){

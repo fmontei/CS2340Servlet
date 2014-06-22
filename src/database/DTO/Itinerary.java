@@ -6,6 +6,21 @@ public class Itinerary extends DTO {
     private String name;
     private List<TimeSlot> timeSlots;
 
+    //default Constructor
+    public Itinerary(){}
+
+    //getItineraryByID Constructor
+    public Itinerary(Integer ID){
+        this.ID = ID;
+    }
+
+    //saveItinerary Constructor
+    public Itinerary(Integer ID, String name, List<TimeSlot> timeSlots){
+        this.ID = ID;
+        this.name = name;
+        this.timeSlots = timeSlots;
+    }
+
     //Getters
     public Integer getID(){
         return this.ID;
