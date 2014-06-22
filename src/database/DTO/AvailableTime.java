@@ -6,6 +6,21 @@ public class AvailableTime extends DTO {
     private Date startDateTime;
     private Date endDateTime;
 
+    //default Constructor
+    public AvailableTime(){}
+
+    //getAvailableTimeByID Constructor
+    public AvailableTime(Integer ID){
+        this.ID = ID;
+    }
+
+    //saveAvailableTime Constructor
+    public AvailableTime(Integer ID, Date startDateTime, Date endDateTime){
+        this.ID = ID;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+    }
+
     //Getters
     public Integer getID(){
         return this.ID;

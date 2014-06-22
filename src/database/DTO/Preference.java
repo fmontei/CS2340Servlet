@@ -10,6 +10,26 @@ public class Preference extends DTO {
     private List<RestaurantPreference> restaurantPreferences;
     private List<AttractionPreference> attractionPreferences;
 
+    //default Constructor
+    public Preference(){}
+
+    //getPreferenceByID Constructor
+    public Preference(Integer ID){
+        this.ID = ID;
+    }
+
+    //savePreference
+    public Preference(Integer ID, Double minimumRating, Integer priceCategory,
+                      Integer maxDistance, List<RestaurantPreference> restaurantPreferences,
+                      List<AttractionPreference> attractionPreferences){
+        this.ID = ID;
+        this.minimumRating = minimumRating;
+        this.priceCategory = PriceCategory.values()[priceCategory];
+        this.maxDistance = maxDistance;
+        this.restaurantPreferences = restaurantPreferences;
+        this.attractionPreferences = attractionPreferences;
+    }
+
     //Getters
     public Integer getID(){
         return this.ID;

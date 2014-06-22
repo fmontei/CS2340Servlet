@@ -7,6 +7,19 @@ public class TimeSlot extends DTO {
     private Date endTime;
     private Place place;
 
+    //default Constructor
+    public TimeSlot(){ this.place = new Place(); }
+
+    //getTimeSlotByID Constructor
+    public TimeSlot(Integer ID) { this.ID = ID; }
+
+    //saveTimeSlot Constructor
+    public TimeSlot(Integer ID, Date startTime, Date endTime, Place place){
+        this.ID = ID;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
     //Getters
     public Integer getID(){
         return this.ID;

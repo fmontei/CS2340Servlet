@@ -109,31 +109,264 @@ public class Sproc {
     }
 
     //Save
-    public static String User_Save(User user) {
+    public static String Address_Create(Address address){
+        String query = "INSERT INTO available_time (streetAddress, city, " +
+                "state, zipCode) VALUES(" + "'" + address.getStreetAddress() + ", " +
+                "'" + address.getCity() + "', " +
+                "'" + address.getState() + "', " + address.getZipCode() + ")";
+        return query;
+    }
+    public static String Address_Update(Address address){
+        String ID = Integer.toString(address.getID());
+        String streetAddress, city, state, zipCode;
+        if(address.getStreetAddress() == null){
+            streetAddress = "address.streetAddress";
+        } else{
+            streetAddress = "'" + address.getStreetAddress() + "'";
+        }
+        if(address.getCity() == null){
+            city = "address.city";
+        } else{
+            city = "'" + address.getCity() + "'";
+        }
+        if(address.getState() == null){
+            state = "address.state";
+        } else{
+            state = "'" + address.getState() + "'";
+        }
+        if(address.getZipCode() == null){
+            zipCode = "address.zipCode";
+        } else{
+            zipCode = "'" + address.getZipCode() + "'";
+        }
+        String query = "UPDATE address SET address.streetAddress = " +
+                streetAddress + ", city = " + city + ", state = " +
+                ", zipCode = " + zipCode +
+                " WHERE address.ID = " + ID;
+        return query;
+    }
+    public static String Available_Time_Create(AvailableTime availableTime, int tripID){
+        String query = "INSERT INTO available_time (tripID, startDateTime, " +
+                "endDateTime) VALUES(" + tripID + ", " +
+                availableTime.getStartDateTime().toString() + ", " +
+                availableTime.getEndDateTime().toString() + ")";
+        return query;
+    }
+    public static String Available_Time_Update(AvailableTime availableTime){
+        String ID = Integer.toString(availableTime.getID());
+        String startDateTime, endDateTime;
+        if(availableTime.getStartDateTime() == null){
+            startDateTime = "availableTime.startDateTime";
+        } else{
+            startDateTime = "'" + availableTime.getStartDateTime().toString() + "'";
+        }
+        if(availableTime.getEndDateTime() == null){
+            endDateTime = "availableTime.endDateTime";
+        } else{
+            endDateTime = "'" + availableTime.getEndDateTime().toString() + "'";
+        }
+        String query = "UPDATE available_time SET available_time.startDateTime = " +
+                startDateTime + ", available_time.endDateTime = " + endDateTime +
+                " WHERE available_time.ID = " + ID;
+        return query;
+    }
+    public static String Itinerary_Create(Itinerary itinerary, int tripID){
+        String query = "INSERT INTO itinerary (name, tripID) VALUES(" +
+                "'" + itinerary.getName() + "', " +
+                Integer.toString(tripID) + ")";
+        return query;
+    }
+    public static String Itinerary_Update(Itinerary itinerary){
+        String ID = Integer.toString(itinerary.getID());
+        String name, addressID;
+        if(itinerary.getName() == null){
+            name = "itinerary.name";
+        } else{
+            name = "'" + itinerary.getName() + "'";
+        }
+        String query = "UPDATE itinerary SET name = " + name +
+                " WHERE itinerary.ID = " + ID;
+        return query;
+    }
+    public static String Lodging_Create(Lodging lodging){
+        String query = "INSERT INTO lodging (name, addressID) VALUES(" +
+                "'" + lodging.getName() + "', " +
+                Integer.toString(lodging.getAddress().getID()) + ")";
+        return query;
+    }
+    public static String Lodging_Update(Lodging lodging){
+        String ID = Integer.toString(lodging.getID());
+        String name, addressID;
+        if(lodging.getName() == null){
+            name = "lodging.name";
+        } else{
+            name = "'" + lodging.getName() + "'";
+        }
+        if(lodging.getAddress().getID() == null){
+            addressID = "lodging.addressID";
+        } else{
+            addressID = Integer.toString(lodging.getAddress().getID());
+        }
+        String query = "UPDATE lodging SET " + "name = " + name + ", " +
+                "addressID = " + addressID + " WHERE lodging.ID = " + ID;
+        return query;
+    }
+    public static String Trip_Create(Trip trip, int userID){
+        String query = "INSERT INTO trip (userID, lodgingID, " +
+                "transportationMode, startDateTime, endDateTime, " +
+                "preferenceID) VALUES(" + Integer.toString(userID) + ", " +
+                Integer.toString(trip.getLodging().getID()) + ", " +
+                Integer.toString(trip.getTransportationMode().ordinal()) + ", " +
+                trip.getStartDateTime().toString() + ", "  +
+                trip.getEndDateTime().toString() + ", " +
+                Integer.toString(trip.getPreference().getID()) + ")";
+        return query;
+    }
+    public static String Trip_Update(Trip trip){
+        String ID = Integer.toString(trip.getID());
+        String lodgingID, transportationMode, startDateTime, endDateTime,
+                preferenceID;
+        if(trip.getLodging().getID() == null){
+            lodgingID = "trip.lodgingID";
+        } else{
+            lodgingID = Integer.toString(trip.getLodging().getID());
+        }
+        if(trip.getTransportationMode().ordinal() < 1){
+            transportationMode = "trip.transportationMode";
+        } else{
+            transportationMode = Integer.toString(trip.getLodging().getID());
+        }
+        if(trip.getStartDateTime() == null){
+            startDateTime = "trip.startDateTime";
+        } else{
+            startDateTime = trip.getStartDateTime().toString();
+        }
+        if(trip.getEndDateTime() == null){
+            endDateTime = "trip.endDateTime";
+        } else{
+            endDateTime = trip.getEndDateTime().toString();
+        }
+        if(trip.getPreference().getID() == null){
+            preferenceID = "trip.preferenceID";
+        } else{
+            preferenceID = Integer.toString(trip.getLodging().getID());
+        }
+        String query = "UPDATE trip SET lodgingID = " + lodgingID +
+                ", transportationMode = " + transportationMode +
+                ", startDateTime = " + startDateTime + ", endDateTime = " +
+                endDateTime + ", preferenceID = " + preferenceID + " " +
+                "WHERE trip.ID = " + ID;
+        return query;
+    }
+    public static String Preference_Create(Preference preference){
+        String query = "INSERT INTO preference (" +
+                "minimumRating, priceCategory, maxDistance) " +
+                "VALUES(" + Double.toString(preference.getMinimumRating()) + " " +
+                Integer.toString(preference.getPriceCategoryValue()) + " " +
+                Integer.toString(preference.getMaxDistance()) + ")";
+        return query;
+    }
+    public static String Preference_Update(Preference preference){
+        String ID = Integer.toString(preference.getID());
+        String minimumRating, priceCategory, maxDistance;
+        if(preference.getMinimumRating() == null){
+            minimumRating = "preference.minimumRating";
+        } else{
+            minimumRating = Double.toString(preference.getMinimumRating());
+        }
+        if(preference.getPriceCategoryValue() < 1){
+            priceCategory = "preference.priceCategory";
+        } else{
+            priceCategory = Integer.toString(preference.getPriceCategoryValue());
+        }
+        if(preference.getMaxDistance() == null){
+            maxDistance = "preference.maxDistance";
+        } else{
+            maxDistance = Integer.toString(preference.getMaxDistance());
+        }
+        String query = "UPDATE preference SET " +
+                "minimumRating = " + maxDistance + ", priceCategory = " +
+                priceCategory + ", maxDistance = " + maxDistance + " " +
+                "WHERE preference.ID = " + ID;
+        return query;
+    }
+    public static String User_Create(User user) {
+        Integer preferenceID = null;
+        if(user.getPreference().getID() != null){
+            preferenceID = user.getPreference().getID();
+        }
         String query = "INSERT INTO user (" +
             "firstName, " +
             "lastName, " +
             "userName, " +
             "password," +
+            "email," +
+            "preferenceID," +
             "userRole) " +
             " VALUES(" +
             "'" + user.getFirstName() + "', " +
             "'" + user.getLastName() + "', " +
             "'" + user.getUsername() + "', " +
             "'" + user.getPassword() + "', " +
-            Integer.toString(user.getUserRoleValue()) + ")";
+            "'" + user.getEmail() + "', " +
+            preferenceID + ", " +
+            Integer.toString(user.getUserRoleValue()) + ");";
         return  query;
     }
-
     public static String User_Update(User user) {
+        String ID = Integer.toString(user.getID());
+        String firstName = user.getFirstName();
+        String lastName = user.getLastName();
+        String userName = user.getUsername();
+        String password = user.getPassword();
+        String email = user.getEmail();
+        String preferenceID;
+        String userRole;
+        int userRoleVal = user.getUserRoleValue();
+        if(firstName == null){
+            firstName = "user.firstName";
+        } else{
+            firstName = "'" + firstName + "'";
+        }
+        if(lastName == null){
+            lastName = "user.lastName";
+        } else{
+            lastName = "'" + lastName + "'";
+        }
+        if(userName == null){
+            userName = "user.userName";
+        } else{
+            userName = "'" + userName + "'";
+        }
+        if(password == null){
+            password = "user.password";
+        } else{
+            password = "'" + password + "'";
+        }
+        if(email == null){
+            email = "user.email";
+        } else{
+            email = "'" + email + "'";
+        }
+        if(userRoleVal < 1){
+            userRole = "user.userRole";
+        } else{
+            userRole = Integer.toString(userRoleVal);
+        }
+        if(user.getPreference().getID() == null){
+            preferenceID = "user.preferenceID";
+        } else{
+            preferenceID = Integer.toString(user.getPreference().getID());
+        }
         final String query = "UPDATE user " +
-            "SET firstName = '" + user.getFirstName() + "', " +
-            "lastName = " + "'" + user.getLastName() + "', " +
-            "userName = " + "'" + user.getUsername() + "', " +
-            "password = " + "'" + user.getPassword() + "', " +
-            "userRole = " + Integer.toString(user.getUserRoleValue()) +
-            " WHERE userName = \"" + user.getUsername() + "\";";
-        System.out.println(query);
+            "SET firstName = " + firstName + ", " +
+            "lastName = " + lastName + ", " +
+            "userName = " + userName + ", " +
+            "password = " + password + ", " +
+            "preferenceID = " + preferenceID + ", " +
+            "userRole = " + userRole + ", " +
+            "email = " + email + " " +
+            "WHERE user.ID = " + ID;
         return query;
     }
 
@@ -195,6 +428,12 @@ public class Sproc {
     public static String User_Delete(final String username){
         String query = "DELETE FROM user" +
                         " WHERE user.userName = '" + username + "';";
+        return query;
+    }
+
+    public static String User_Delete(Integer ID){
+        String query = "DELETE FROM user" +
+                " WHERE user.ID = '" + ID + "';";
         return query;
     }
 }
