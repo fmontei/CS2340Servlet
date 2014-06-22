@@ -133,7 +133,6 @@ public class Sproc {
             "password = " + "'" + user.getPassword() + "', " +
             "userRole = " + Integer.toString(user.getUserRoleValue()) +
             " WHERE userName = \"" + user.getUsername() + "\";";
-        System.out.println(query);
         return query;
     }
 

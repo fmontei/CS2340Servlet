@@ -2,5 +2,5 @@
 <%
     User currentUser = (User) session.getAttribute("currentUser");
 	session.setAttribute("userid", currentUser);
-	response.sendRedirect("index.jsp");
+	response.sendRedirect("itinerary_overview.jsp");
 %>
