@@ -302,10 +302,3 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
     
     <!-- wrapper div -->
     <div id="wrapper">
-
-
-<script>
-</script>
-
-<!-- Password color change confirmation Javascript -->
-<script src="/CS2340Servlet/js/password_check.js"></script>

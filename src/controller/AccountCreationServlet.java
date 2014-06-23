@@ -27,7 +27,7 @@ public class AccountCreationServlet extends HttpServlet {
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response)
         throws IOException, ServletException {
-        if (isSubmitButtonClicked(request)) {
+        if (isSignUpButtonClicked(request)) {
             doCreateRequest(request, response);
         }
     }

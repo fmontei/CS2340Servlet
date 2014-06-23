@@ -33,28 +33,10 @@
 
 <div class="container">
     <div class="row">
-<<<<<<< HEAD
 <!--         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <li id="li-overview" class="active"><a href="#Overview" id="a-overview">Overview</a></li>
                 <li id="li-travelMode"><a href="#TravelMode" id="a-travelMode">Travel Mode</a></li>
-=======
-        <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar visibilityOn" id="index_showOverviewActive">
-                <li class="active"><a href="#">Overview</a></li>
-                <li><a href="#" onclick="index_showTravelModeActive()">Travel Mode</a></li>
-                <li><a href="#" onclick="index_showMapActive()">Map</a></li>
-            </ul>
-            <ul class="nav nav-sidebar visibilityOff" id="index_showTravelModeActive">
-                <li><a href="#" onclick="index_showOverviewActive()">Overview</a></li>
-                <li class="active"><a href="#">Travel Mode</a></li>
-                <li><a href="#" onclick="index_showMapActive()">Map</a></li>
-            </ul>
-            <ul class="nav nav-sidebar visibilityOff" id="index_showMapActive">
-                <li><a href="#" onclick="index_showOverviewActive()">Overview</a></li>
-                <li><a href="#" onclick="index_showTravelModeActive()">Travel Mode</a></li>
-                <li class="active"><a href="#">Map</a></li>
->>>>>>> upstream/revision
             </ul>
         </div> -->
         <div class="col-md-10 col-md-offset-1">
@@ -244,7 +226,7 @@
 
 <%}%>
 
-<<<<<<< HEAD
+
 <!-- Error Message -->
 <div class="modal fade" id="errorMessage" tabindex="-1" role="dialog" aria-labelledby="errorMessageTitle" aria-hidden="true">
     <div class="modal-dialog">
@@ -264,7 +246,8 @@
         </div>
     </div>
 </div>
-=======
+
+
 <!-- Google Maps Javascript -->
 <div id="map-canvas"></div>
 <script type="text/javascript"
@@ -272,51 +255,49 @@
 </script>
 
 <script type="text/javascript">
-    var map;
-    function initialize() {
-        var mapOptions = {
-            center: new google.maps.LatLng(33.755, -84.390),
-            zoom: 12
-        };
-        map = new google.maps.Map(document.getElementById("map-canvas"),
-            mapOptions);
-        google.maps.event.addListener(map, 'click', function(event) {
-            placeMarker(event.latLng);
-        });
-    }
+    // var map;
+    // function initialize() {
+    //     var mapOptions = {
+    //         center: new google.maps.LatLng(33.755, -84.390),
+    //         zoom: 12
+    //     };
+    //     map = new google.maps.Map(document.getElementById("map-canvas"),
+    //         mapOptions);
+    //     google.maps.event.addListener(map, 'click', function(event) {
+    //         placeMarker(event.latLng);
+    //     });
+    // }
 
-    function placeMarker(location) {
-        var marker = new google.maps.Marker({
-            position: location,
-            map: map
-        });
-    }
+    // function placeMarker(location) {
+    //     var marker = new google.maps.Marker({
+    //         position: location,
+    //         map: map
+    //     });
+    // }
 </script>
 
 <!-- Index Sidebar Javascript -->
 <script type="text/javascript">
-    function index_showOverviewActive() {
-        turnOnVisibility(['index_showOverviewActive','overview']);
-        turnOffVisibility(['index_showTravelModeActive','travelMode']);
-        turnOffVisibility(['index_showMapActive', 'map']);
-    }
-    function index_showTravelModeActive() {
-        turnOnVisibility(['index_showTravelModeActive','travelMode']);
-        turnOffVisibility(['index_showOverviewActive','overview']);
-        turnOffVisibility(['index_showMapActive', 'map']);
+    // function index_showOverviewActive() {
+    //     turnOnVisibility(['index_showOverviewActive','overview']);
+    //     turnOffVisibility(['index_showTravelModeActive','travelMode']);
+    //     turnOffVisibility(['index_showMapActive', 'map']);
+    // }
+    // function index_showTravelModeActive() {
+    //     turnOnVisibility(['index_showTravelModeActive','travelMode']);
+    //     turnOffVisibility(['index_showOverviewActive','overview']);
+    //     turnOffVisibility(['index_showMapActive', 'map']);
 
-        // Travel Mode Form Javascript
-        var preferredTravelMode = "#<%= preferredTravelMode %>"
-        $(preferredTravelMode).prop("checked", true);
-    }
-    function index_showMapActive() {
-        turnOnVisibility(['index_showMapActive', 'map']);
-        turnOffVisibility(['index_showOverviewActive','overview']);
-        turnOffVisibility(['index_showTravelModeActive','travelMode']);
-    }
+    //     // Travel Mode Form Javascript
+    //     var preferredTravelMode = "#<%= preferredTravelMode %>"
+    //     $(preferredTravelMode).prop("checked", true);
+    // }
+    // function index_showMapActive() {
+    //     turnOnVisibility(['index_showMapActive', 'map']);
+    //     turnOffVisibility(['index_showOverviewActive','overview']);
+    //     turnOffVisibility(['index_showTravelModeActive','travelMode']);
+    // }
 </script>
-
->>>>>>> upstream/revision
 
 <!-- Index Javascript -->
 <script type="text/javascript">
