@@ -38,12 +38,10 @@ public class LoginForm {
 
     private void storeLoginAttributes() throws SQLException {
         User currentAccount = DataManager.fetchUser(username);
-        int userID = currentAccount.getID();
         String welcomeName = currentAccount.getWelcomeName();
         String firstName = currentAccount.getFirstName();
         String lastName = currentAccount.getLastName();
         HttpSession session = request.getSession();
-        session.setAttribute("userID", userID);
         session.setAttribute("welcomeName", welcomeName);
         session.setAttribute("currentUser", currentAccount);
         session.setAttribute("firstName", firstName);

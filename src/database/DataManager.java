@@ -1,16 +1,9 @@
 package database;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DataManager {
-    private static ResultSet results;
-    private static Connection dbConnection;
-    private static Statement statement;
 
     public static void createUser(User user) throws SQLException {
         try {
@@ -35,23 +28,14 @@ public class DataManager {
         new SQLUserQuery().updateUserQuery(user);
     }
 
+    public static void createItinerary(Itinerary itinerary) throws SQLException {
+        new SQLItineraryQuery().createItineraryQuery(itinerary);
+    }
+
     public static List<Itinerary> getItineraryByUserID(int userID)
-            throws SQLException {
-        String query = new SQLQuery().readItineraryQuery(userID);
-        List<Itinerary> itineraries = new ArrayList<Itinerary>();
-        try{
-            //executeRead(query);
-            while(results.next()) {
-                int ID = results.getInt("ID");
-                String name = results.getString("name");
-                String address = results.getString("address");
-                String transportationMOde = results.getString("transportationMode");
-                Itinerary itinerary = new Itinerary(ID, name, address, transportationMOde);
-                itineraries.add(itinerary);
-            }
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        return itineraries;
+        throws SQLException {
+        List<Itinerary> fetchedItneraries =
+                new SQLItineraryQuery().getItinerariesByUserID(userID);
+        return fetchedItneraries;
     }
 }

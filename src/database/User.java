@@ -1,5 +1,8 @@
 package database;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private int ID;
     private String firstName;
@@ -7,9 +10,10 @@ public class User {
     private String userName;
     private String password;
     private String email;
+    private List<Itinerary> itineraries;
 
     public User() {
-
+        itineraries = new ArrayList<Itinerary>();
     }
 
     public User(String firstName, String lastName, String userName,
@@ -50,7 +54,10 @@ public class User {
         return this.password;
     }
     public String getEmail() {
-        return this.email;
+        return email;
+    }
+    public List<Itinerary> getItineraries() {
+        return itineraries;
     }
 
     public void setID(int ID) {

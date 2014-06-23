@@ -1,4 +1,13 @@
 <%@ include file="header.jsp" %>
+<%@ page import="database.User" %>
+<%@ page import="database.Itinerary" %>
+<%@ page import="java.util.List" %>
+<%@ page import="database.DataManager" %>
+<%
+   User user = (User) session.getAttribute("currentUser");
+   int userID = user.getID();
+   List<Itinerary> itineraries = DataManager.getItineraryByUserID(userID);
+%>
 
 <a href="#" class="btn btn-lg btn-success"
    onclick="showPage1()"
@@ -7,10 +16,17 @@
 <br />
 <a href="index.jsp" class="btn btn-lg btn-primary">Index</a>
 
+<h1>Current Itinerary Names:</h1>
+<ul>
+    <% for (Itinerary it : itineraries) { %>
+    <li><%=it.getName()%></li>
+    <% } %>
+</ul>
+
 <div id="itineraryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="itineraryModal" aria-hidden="true">
     <div class="modal-dialog" >
         <div class="modal-content">
-            <form id="itinerary_form" action="" method="POST" class="form-inline" role="form">
+            <form id="itinerary_form" action="/CS2340Servlet/itineraryCreation" method="POST" class="form-inline" role="form">
 
                 <div id="form_page_1">
                     <div class="modal-header">

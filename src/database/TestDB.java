@@ -1,13 +1,15 @@
 package database;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class TestDB {
     public static void main(String... args)  {
-        User u = new User("me11", "me111", "me111", "me11");
+        Itinerary it = new Itinerary("b", "b", "b", 25);
         try {
-            DataManager.updateUser(u);
-            User u1 = DataManager.fetchUser("me111");
+            //DataManager.createItinerary(it);
+            List<Itinerary> itineraries = DataManager.getItineraryByUserID(25);
+            System.out.println(itineraries.size());
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
