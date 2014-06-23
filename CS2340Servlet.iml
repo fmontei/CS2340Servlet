@@ -9,6 +9,10 @@
         <webroots>
           <root url="file://$MODULE_DIR$/target" relative="/" />
         </webroots>
+        <sourceRoots>
+          <root url="file://$MODULE_DIR$/src" />
+          <root url="file://$MODULE_DIR$/target" />
+        </sourceRoots>
       </configuration>
     </facet>
     <facet type="web" name="Web2">
@@ -19,6 +23,10 @@
         <webroots>
           <root url="file://$MODULE_DIR$" relative="/WEB-INF" />
         </webroots>
+        <sourceRoots>
+          <root url="file://$MODULE_DIR$/src" />
+          <root url="file://$MODULE_DIR$/target" />
+        </sourceRoots>
       </configuration>
     </facet>
   </component>
@@ -29,7 +37,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="servlet-api" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="tomcat" level="application" />
   </component>
 </module>
 

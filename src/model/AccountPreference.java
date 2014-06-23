@@ -1,6 +1,5 @@
 package model;
 
-import database.DAL.DataManager;
 import database.DTO.User;
 
 import javax.servlet.http.HttpServletRequest;

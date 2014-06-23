@@ -154,6 +154,7 @@ public class DataManager {
             results = statement.executeQuery(query);
             while (results.next()) {
                 user = new User("", "", "", "");
+                user.setID(results.getInt("ID"));
                 user.setFirstName(results.getString("firstName"));
                 user.setLastName(results.getString("lastName"));
                 user.setUserName(results.getString("userName"));

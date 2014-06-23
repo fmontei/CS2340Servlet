@@ -7,15 +7,10 @@ import database.DTO.User;
 public class DbDemo {
     public static void main(String[] args) throws SQLException {
         System.out.println("HELLO WORLD!");
-        User user = new User("Felipe", "onTEIRO!!", "fmontei", "1");
-        if (DataManager.usernameExists(user.getUsername())) {
+        if (DataManager.usernameExists("fmontei")) {
             System.out.println("User exists");
-        } else {
-            System.out.println("User does NOT exist!");
-        }
-        deleteUser(user.getUsername());
-        if (DataManager.usernameExists(user.getUsername())) {
-            System.out.println("User exists");
+            User u = DataManager.getUserByUsername("fmontei");
+            displayUser(u);
         } else {
             System.out.println("User does NOT exist!");
         }
