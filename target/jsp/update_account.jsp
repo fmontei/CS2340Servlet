@@ -8,17 +8,17 @@
 %>
 
 
-<div class="container-fluid">
+<div class="container">
     <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
+        <div class="col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li id="li-personalInformation" class="active"><a href="#personalInformation" id="a-personalInformation">Personal Information</a></li>
-                <li id="li-changePassword"><a href="#changePassword" id="a-changePassword">Change Password</a></li>
-                <li id="li-deleteAccount"><a href="#deleteAccount" id="a-deleteAccount">Delete Your Account</a></li>
+                <li id="li-personalInformation" class="active"><a href="#" id="a-personalInformation">Personal Information</a></li>
+                <li id="li-changePassword"><a href="#" id="a-changePassword">Change Password</a></li>
+                <li id="li-deleteAccount"><a href="#" id="a-deleteAccount">Delete Your Account</a></li>
 
             </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="col-md-10 col-md-offset-1">
             <h1 class="page-header">
                 Account Settings
             </h1>
@@ -130,7 +130,7 @@
         $("#a-changePassword").click(function() {
             $("#li-personalInformation").removeClass("active");
             $("#li-changePassword").addClass("active");
-            $("#li-deleteYourAccount").removeClass("active");
+            $("#li-deleteAccount").removeClass("active");
             $("#div-personalInformation").hide();
             $("#div-saveButton").show();
             $("#div-changePassword").show();

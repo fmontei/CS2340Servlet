@@ -7,13 +7,13 @@
 
 <%if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {%>
 
-<div class="container-fluid">
+<div class="container">
     <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
+<!--         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
             </ul>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        </div> -->
+        <div class="col-md-10 col-md-offset-1">
             <h1 class="page-header">
                 Welcome to Trip Planner!
             </h1>
@@ -31,15 +31,15 @@
     preferredTravelMode = account.getPreferredTravelMode();
 %>
 
-<div class="container-fluid">
+<div class="container">
     <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
+<!--         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <li id="li-overview" class="active"><a href="#Overview" id="a-overview">Overview</a></li>
                 <li id="li-travelMode"><a href="#TravelMode" id="a-travelMode">Travel Mode</a></li>
             </ul>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        </div> -->
+        <div class="col-md-10 col-md-offset-1">
             <div id="div-overview">
                 <h1 class="page-header">
                     Welcome <%=request.getSession().getAttribute("welcomeName")%>!
@@ -260,8 +260,5 @@
     });
 </script>
 
-<!-- Facebook SDK Javascript -->
-<div id="fb-root"></div>
-<script type="text/javascript" src="/CS2340Servlet/js/facebookSDK.js"></script>
 
 <%@ include file="footer.jsp" %>
