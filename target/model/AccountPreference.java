@@ -1,7 +1,6 @@
 package model;
 
-import database.DAL.DataManager;
-import database.DTO.User;
+import database.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,6 +29,6 @@ public class AccountPreference {
         User account = (User) session.getAttribute("currentUser");
         String preferredTravelMode = request.getParameter("preferredTravelMode");
         //account.setPreferredTravelMode(preferredTravelMode);
-        DataManager.createUser(account);
+        //DataManager.createUser(account);
     }
 }

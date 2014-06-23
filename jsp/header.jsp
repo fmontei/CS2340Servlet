@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8" />
 
-
     <!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
     <link href="/CS2340Servlet/css/bootstrap.min.css" rel="stylesheet">

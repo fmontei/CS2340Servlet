@@ -1,7 +1,7 @@
 package model;
 
-import database.DAL.DataManager;
-import database.DTO.User;
+import database.DataManager;
+import database.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -29,10 +29,6 @@ public class AccountCreateForm {
             saveAccountSettings();
             storeSessionAttributes();
             return true;
-        } catch (ValidationException ex) {
-            storeAttributesForNextAttempt(request);
-            request.setAttribute("error", ex.getMessage());
-            return false;
         } catch (SQLException ex) {
             storeAttributesForNextAttempt(request);
             request.setAttribute("error", ex.getMessage());
@@ -40,7 +36,7 @@ public class AccountCreateForm {
         }
     }
 
-    private void gatherNewAccountInfo() throws ValidationException {
+    private void gatherNewAccountInfo() {
         firstName = request.getParameter("firstName");
         lastName = request.getParameter("lastName");
         username = request.getParameter("newUsername");

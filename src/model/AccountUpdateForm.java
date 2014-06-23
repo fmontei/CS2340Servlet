@@ -1,7 +1,7 @@
 package model;
 
-import database.DAL.DataManager;
-import database.DTO.User;
+import database.DataManager;
+import database.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,16 +32,13 @@ public class AccountUpdateForm {
             updateAccountSettings();
             updateSessionAttributes();
             return true;
-        } catch (ValidationException ex) {
-            request.setAttribute("error", ex.getMessage());
-            return false;
         } catch (SQLException ex) {
             request.setAttribute("error", ex.getMessage());
             return false;
         }
     }
 
-    private void gatherNewAccountInfo() throws ValidationException {
+    private void gatherNewAccountInfo() {
         firstName = request.getParameter("updateFirstName");
         lastName = request.getParameter("updateLastName");
         password = request.getParameter("oldPassword");
@@ -71,7 +68,7 @@ public class AccountUpdateForm {
     }
 
     private void revertToOldPasswordAndUpdateAccount() throws SQLException {
-        User accountBeforeChange = DataManager.getUserByUsername(username);
+        User accountBeforeChange = DataManager.fetchUser(username);
         String passwordBeforeChange = accountBeforeChange.getPassword();
         currentAccount.setPassword(passwordBeforeChange);
     }

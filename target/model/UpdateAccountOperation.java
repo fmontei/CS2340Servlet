@@ -1,21 +1,20 @@
 package model;
 
-import database.DTO.User;
+import database.User;
+
+import java.sql.SQLException;
 
 public class UpdateAccountOperation implements Validation {
-    private String username, password, confirmPassword;
-    private User account;
+    private String password, confirmPassword;
 
     public void init(User account, String username, String password) {
-        this.account = account;
-        this.username = username;
         this.password = account.getPassword();
         this.confirmPassword = password;
     }
 
-    public void validateCredentials() throws ValidationException {
+    public void validateCredentials() throws SQLException {
         if (!password.equals(confirmPassword)) {
-            throw new ValidationException("Passwords do not match. "
+            throw new SQLException("Passwords do not match. "
                     + "Please try again. " + password + " " + confirmPassword);
         }
     }

@@ -1,4 +1,4 @@
-<%@ page import="database.DTO.User" %>
+<%@ page import="database.User" %>
 
 <% String pageName = "Home"; %>
 <% String preferredTravelMode = ""; %>
