@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                         <button onclick="showPage2()" type="button" class="btn btn-primary">Next</button>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                                    required="required"
                                    placeholder = "Address" />
                             <button onclick="codeAddress()" type="button" class="btn btn-default">Find</button>
-                        </div><br /><br />
+                        </div><br /><hr />
 
                         <div id="myMap" style="width: 520px; height: 300px;"></div>
 
@@ -149,7 +149,7 @@
                     position: results[0].geometry.location
                 });
             } else {
-                alert("Geocode was not successful for the following reason: " + status);
+                alert("Address could not be found for the following reason: " + status);
             }
         });
     }

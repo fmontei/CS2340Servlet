@@ -1,7 +1,7 @@
 package model;
 
-import database.DAL.DataManager;
-import database.DTO.User;
+import database.DataManager;
+import database.User;
 
 import java.sql.SQLException;
 
@@ -30,7 +30,7 @@ public class LoginAccountOperation implements Validation {
         return realPassword.equals(password);
     }
 
-    private boolean usernameExists() {
+    private boolean usernameExists() throws SQLException {
         User user = DataManager.fetchUser(username);
         return user.getUsername() != null;
     }

@@ -1,6 +1,6 @@
 package model;
 
-import database.DTO.User;
+import database.User;
 
 import java.sql.SQLException;
 
