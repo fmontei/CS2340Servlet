@@ -31,7 +31,9 @@ body,html {
     cursor: pointer;
     height: 20px;
 }
-
+#map-canvas {
+    height: 400px;
+}
 #wrapper {
     min-height: 100%;
 }

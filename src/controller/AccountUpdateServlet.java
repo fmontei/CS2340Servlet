@@ -25,19 +25,11 @@ public class AccountUpdateServlet extends HttpServlet {
                        HttpServletResponse response)
             throws IOException, ServletException {
         if (isSubmitButtonClicked(request)) {
-            AccountUpdateForm accountForm = new AccountUpdateForm(request);
-            if (accountForm.isAccountUpdateSuccessful()) {
-                redirectToSameScreen(response);
-            } else {
-                reloadBecauseAccountCreateFailed(request, response);
-            }
+            doUpdateRequest(request, response);
         } else if (isDeleteButtonClicked(request)) {
-            AccountUpdateForm accountForm = new AccountUpdateForm(request);
-            if (accountForm.hasAccountBeenDeleted()) {
-                goToHomePage(response);
-            }
+            doDeleteRequest(request, response);
         } else {
-            response.sendRedirect("jsp/update_account.jsp");
+            doGet(request, response);
         }
     }
 
@@ -45,8 +37,15 @@ public class AccountUpdateServlet extends HttpServlet {
         return request.getParameter("submitButton") != null;
     }
 
-    private boolean isDeleteButtonClicked(HttpServletRequest request) {
-        return request.getParameter("deleteButton") != null;
+    private void doUpdateRequest(HttpServletRequest request,
+                                 HttpServletResponse response)
+            throws IOException, ServletException {
+        AccountUpdateForm accountForm = new AccountUpdateForm(request);
+        if (accountForm.isAccountUpdateSuccessful()) {
+            redirectToSameScreen(response);
+        } else {
+            reloadBecauseAccountCreateFailed(request, response);
+        }
     }
 
     private void redirectToSameScreen(HttpServletResponse response)
@@ -54,14 +53,27 @@ public class AccountUpdateServlet extends HttpServlet {
         response.sendRedirect("jsp/update_account.jsp");
     }
 
-    private void goToHomePage(HttpServletResponse response)
-            throws IOException {
-        response.sendRedirect("jsp/deleteLoginSession.jsp");
-    }
-
     private void reloadBecauseAccountCreateFailed(HttpServletRequest request,
                                                   HttpServletResponse response)
             throws IOException, ServletException {
         forwardRequest(this, request, response, "/jsp/update_account.jsp");
+    }
+
+    private boolean isDeleteButtonClicked(HttpServletRequest request) {
+        return request.getParameter("deleteButton") != null;
+    }
+
+    private void doDeleteRequest(HttpServletRequest request,
+                                 HttpServletResponse response)
+        throws IOException, ServletException {
+        AccountUpdateForm accountForm = new AccountUpdateForm(request);
+        if (accountForm.hasAccountBeenDeleted()) {
+            goToHomePage(response);
+        }
+    }
+
+    private void goToHomePage(HttpServletResponse response)
+            throws IOException {
+        response.sendRedirect("jsp/deleteLoginSession.jsp");
     }
 }

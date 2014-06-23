@@ -1,7 +1,11 @@
 package controller; 
 
 import model.AccountPreference;
+<<<<<<< HEAD
 import model.AccountCreateForm;
+=======
+import model.CreateItineraryForm;
+>>>>>>> upstream/revision
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,9 +16,10 @@ import java.io.IOException;
 
 import static model.ServletUtilities.forwardRequest;
 
-@WebServlet(name = "IndexServlet", urlPatterns = { "/index" })
+@WebServlet(name = "IndexServlet", urlPatterns = { "/index", "itineraryCreation" })
 public class IndexServlet extends HttpServlet {
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
         response.sendRedirect("jsp/createLoginSession.jsp");
@@ -23,6 +28,7 @@ public class IndexServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
+<<<<<<< HEAD
         if(isSignUpButtonClicked(request)) {
             AccountCreateForm accountForm = new AccountCreateForm(request);
             if (accountForm.isAccountCreationSuccessful()) {
@@ -32,6 +38,11 @@ public class IndexServlet extends HttpServlet {
             }
         } else if (isCreateNewItineraryButtonClicked(request)) {
 
+=======
+        if (newItineraryCreationRequested(request)) {
+            new CreateItineraryForm(request);
+            response.sendRedirect("jsp/itinerary_overview.jsp");
+>>>>>>> upstream/revision
         } else if (isTravelModeButtonClicked(request)) {
             AccountPreference accountPreference = new AccountPreference(request);
             if (accountPreference.isPreferredTravelModeSaved()) {
@@ -40,12 +51,18 @@ public class IndexServlet extends HttpServlet {
         }
     }
 
+<<<<<<< HEAD
     private boolean isSignUpButtonClicked(HttpServletRequest request) {
         return request.getParameter("signUpButton") != null;
     }
 
     private boolean isCreateNewItineraryButtonClicked(HttpServletRequest request) {
         return request.getParameter("createNewItinerary") != null;
+=======
+    private boolean newItineraryCreationRequested(HttpServletRequest request) {
+        String uri = request.getRequestURI();
+        return uri.endsWith("/itineraryCreation");
+>>>>>>> upstream/revision
     }
 
     private boolean isTravelModeButtonClicked(HttpServletRequest request) {

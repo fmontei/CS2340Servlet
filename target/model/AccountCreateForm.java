@@ -1,14 +1,18 @@
 package model;
 
+import database.DataManager;
+import database.User;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 
 public class AccountCreateForm {
     private HttpServletRequest request;
     private HttpSession session;
     private String firstName, lastName, username;
     private String password, confirmPassword;
-    private UserAccount newAccount;
+    private User newAccount;
 
     public AccountCreateForm(HttpServletRequest request) {
         this.request = request;
@@ -18,35 +22,35 @@ public class AccountCreateForm {
     public boolean isAccountCreationSuccessful() {
         try {
             gatherNewAccountInfo();
-            Validation validation = new AccountValidation(newAccount,
-                    password, confirmPassword);
+            AccountValidation validation = new AccountValidation
+                    (newAccount, confirmPassword);
+            validation.setOperation(new CreateAccountOperation());
             validation.validateCredentials();
             saveAccountSettings();
             storeSessionAttributes();
             return true;
-        } catch (ValidationException ex) {
+        } catch (SQLException ex) {
             storeAttributesForNextAttempt(request);
             request.setAttribute("error", ex.getMessage());
             return false;
         }
     }
 
-    private void gatherNewAccountInfo() throws ValidationException {
+    private void gatherNewAccountInfo() {
         firstName = request.getParameter("firstName");
         lastName = request.getParameter("lastName");
         username = request.getParameter("newUsername");
         password = request.getParameter("newPassword");
         confirmPassword = request.getParameter("confirmPassword");
-        newAccount = new UserAccount(firstName, lastName, username, password);
+        newAccount = new User(firstName, lastName, username, password);
     }
 
-    private void saveAccountSettings() {
-        DataStore dataStore = new DataStore();
-        dataStore.saveAccount(username, newAccount);
+    private void saveAccountSettings() throws SQLException {
+        DataManager.createUser(newAccount);
     }
 
     private void storeSessionAttributes() {
-        String welcomeName = newAccount.getName();
+        String welcomeName = newAccount.getWelcomeName();
         synchronized(session) {
             session.setAttribute("currentUser", newAccount);
             session.setAttribute("username", username);

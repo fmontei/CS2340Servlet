@@ -1,9 +1,11 @@
+
 package controller;
 
 import static model.ServletUtilities.*;
 
 import model.AccountCreateForm;
 
+import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,18 +27,24 @@ public class AccountCreationServlet extends HttpServlet {
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response)
         throws IOException, ServletException {
-        if (isSignUpButtonClicked(request)) {
-            AccountCreateForm accountForm = new AccountCreateForm(request);
-            if (accountForm.isAccountCreationSuccessful()) {
-                automaticallyLogin(request, response);
-            } else {
-                reloadBecauseAccountCreateFailed(request, response);
-            }
+        if (isSubmitButtonClicked(request)) {
+            doCreateRequest(request, response);
         }
     }
 
     private boolean isSignUpButtonClicked(HttpServletRequest request) {
         return request.getParameter("signUpButton") != null;
+    }
+
+    private void doCreateRequest(HttpServletRequest request,
+                                 HttpServletResponse response)
+        throws IOException, ServletException {
+        AccountCreateForm accountForm = new AccountCreateForm(request);
+        if (accountForm.isAccountCreationSuccessful()) {
+            automaticallyLogin(request, response);
+        } else {
+            reloadBecauseAccountCreateFailed(request, response);
+        }
     }
 
     private void automaticallyLogin(HttpServletRequest request,

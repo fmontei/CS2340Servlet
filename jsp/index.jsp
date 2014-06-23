@@ -1,4 +1,4 @@
-<%@ page import="model.UserAccount" %>
+<%@ page import="database.User" %>
 
 <% String pageName = "Home"; %>
 <% String preferredTravelMode = ""; %>
@@ -27,8 +27,8 @@
 <%} else {%>
 
 <%
-    UserAccount account = (UserAccount) session.getAttribute("currentUser");
-    preferredTravelMode = account.getPreferredTravelMode();
+    User account = (User) session.getAttribute("currentUser");
+    //preferredTravelMode = account.getPreferredTravelMode();
 %>
 
 <div class="container">
@@ -77,7 +77,10 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="#">Create New Itinerary</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
+                                <li><a onclick="index_showMapActive()"
+                                       style="cursor:  pointer">
+                                    View Map for Itinerary</a>
+                                </li>
                             </ul>
                         </div>
 
@@ -121,6 +124,7 @@
                 <h1 class="page-header">
                     Travel Mode
                 </h1>
+
                 <form id="" action="/CS2340Servlet/index" method="POST" class="form-inline" role="form">
 
                     <b>Select your preferred mode of transportation</b>
@@ -199,11 +203,29 @@
 
                 </form>
             </div>
+
+            <div id="map" class="visibilityOff">
+                <h1 class="page-header">
+                    Itinerary Map
+                </h1>
+
+                <div class="panel-group">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                    </div>
+                    <div class="panel-body">
+                      <div id="map-canvas"></div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
 
 <%}%>
+
 
 <!-- Error Message -->
 <div class="modal fade" id="errorMessage" tabindex="-1" role="dialog" aria-labelledby="errorMessageTitle" aria-hidden="true">
@@ -224,6 +246,58 @@
         </div>
     </div>
 </div>
+
+
+<!-- Google Maps Javascript -->
+<div id="map-canvas"></div>
+<script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwnaM0fAa8jqx3O7ZdABTaWmbOW3Uft2Y">
+</script>
+
+<script type="text/javascript">
+    // var map;
+    // function initialize() {
+    //     var mapOptions = {
+    //         center: new google.maps.LatLng(33.755, -84.390),
+    //         zoom: 12
+    //     };
+    //     map = new google.maps.Map(document.getElementById("map-canvas"),
+    //         mapOptions);
+    //     google.maps.event.addListener(map, 'click', function(event) {
+    //         placeMarker(event.latLng);
+    //     });
+    // }
+
+    // function placeMarker(location) {
+    //     var marker = new google.maps.Marker({
+    //         position: location,
+    //         map: map
+    //     });
+    // }
+</script>
+
+<!-- Index Sidebar Javascript -->
+<script type="text/javascript">
+    // function index_showOverviewActive() {
+    //     turnOnVisibility(['index_showOverviewActive','overview']);
+    //     turnOffVisibility(['index_showTravelModeActive','travelMode']);
+    //     turnOffVisibility(['index_showMapActive', 'map']);
+    // }
+    // function index_showTravelModeActive() {
+    //     turnOnVisibility(['index_showTravelModeActive','travelMode']);
+    //     turnOffVisibility(['index_showOverviewActive','overview']);
+    //     turnOffVisibility(['index_showMapActive', 'map']);
+
+    //     // Travel Mode Form Javascript
+    //     var preferredTravelMode = "#<%= preferredTravelMode %>"
+    //     $(preferredTravelMode).prop("checked", true);
+    // }
+    // function index_showMapActive() {
+    //     turnOnVisibility(['index_showMapActive', 'map']);
+    //     turnOffVisibility(['index_showOverviewActive','overview']);
+    //     turnOffVisibility(['index_showTravelModeActive','travelMode']);
+    // }
+</script>
 
 <!-- Index Javascript -->
 <script type="text/javascript">
