@@ -27,22 +27,12 @@ public class AccountCreationServlet extends HttpServlet {
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response)
         throws IOException, ServletException {
-<<<<<<< HEAD
-        if (isSignUpButtonClicked(request)) {
-            AccountCreateForm accountForm = new AccountCreateForm(request);
-            if (accountForm.isAccountCreationSuccessful()) {
-                automaticallyLogin(request, response);
-            } else {
-                reloadBecauseAccountCreateFailed(request, response);
-            }
-=======
         if (isSubmitButtonClicked(request)) {
             doCreateRequest(request, response);
->>>>>>> upstream/revision
         }
     }
 
-    private boolean isSignUpButtonClicked(HttpServletRequest request) {
+    private boolean isSubmitButtonClicked(HttpServletRequest request) {
         return request.getParameter("signUpButton") != null;
     }
 

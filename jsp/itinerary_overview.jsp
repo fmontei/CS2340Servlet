@@ -4,9 +4,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="database.DataManager" %>
 <%
-   User user = (User) session.getAttribute("currentUser");
-   int userID = user.getID();
-   List<Itinerary> itineraries = DataManager.getItineraryByUserID(userID);
+   // User user = (User) session.getAttribute("currentUser");
+   // int userID = user.getID();
+   // List<Itinerary> itineraries = DataManager.getItineraryByUserID(userID);
 %>
 
 <a href="#" class="btn btn-lg btn-success"
@@ -17,11 +17,6 @@
 <a href="index.jsp" class="btn btn-lg btn-primary">Index</a>
 
 <h1>Current Itinerary Names:</h1>
-<ul>
-    <% for (Itinerary it : itineraries) { %>
-    <li><%=it.getName()%></li>
-    <% } %>
-</ul>
 
 <div id="itineraryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="itineraryModal" aria-hidden="true">
     <div class="modal-dialog" >

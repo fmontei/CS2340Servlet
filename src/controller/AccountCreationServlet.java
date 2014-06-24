@@ -32,7 +32,7 @@ public class AccountCreationServlet extends HttpServlet {
         }
     }
 
-    private boolean isSignUpButtonClicked(HttpServletRequest request) {
+    private boolean isSubmitButtonClicked(HttpServletRequest request) {
         return request.getParameter("signUpButton") != null;
     }
 
