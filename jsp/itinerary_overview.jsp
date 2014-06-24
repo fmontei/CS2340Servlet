@@ -5,9 +5,9 @@
 <%@ page import="database.DataManager" %>
 <%@ page import="java.util.ArrayList" %>
 <%
-   User user = (User) session.getAttribute("currentUser");
-   int userID = user.getID();
-   List<Itinerary> itineraries = DataManager.getItineraryByUserID(userID);
+    User user = (User) session.getAttribute("currentUser");
+    int userID = user.getID();
+    List<Itinerary> itineraries = DataManager.getItineraryByUserID(userID);
     if (itineraries == null) {
         itineraries = new ArrayList<Itinerary>();
     }
@@ -63,7 +63,7 @@
 
                         <p>Enter an address for the Itinerary's location:</p>
                         <div class="form-group">
-                            <label class="sr-only" for="itineraryAddress">Location</label>
+                            <label class="sr-only" for="itineraryAddress">Address</label>
                             <input type="text" class="form-control" id="itineraryAddress" name="itineraryAddress"
                                    required="required"
                                    placeholder = "Address" />
@@ -132,14 +132,8 @@
 
     function showPage2() {
         // Check if page 1 fields are empty
-        var elements = document.getElementById("form_page_1")
-                .getElementsByTagName("input");
-        for (var i = 0; i < elements.length; i++) {
-            if (elements[i].value === "") {
-                document.getElementById("submitButton").click();
-                return;
-            }
-        }
+        var check = checkIfPreviousPageHasEmptyFields(1);
+        if (!check) return;
         $("#form_page_1").hide();
         $("#form_page_2").show();
         $("#form_page_3").hide();
@@ -147,8 +141,24 @@
     }
 
     function showPage3() {
+        // Check if page 2 fields are empty
+        var check = checkIfPreviousPageHasEmptyFields(2);
+        if (!check) return;
+        $("#form_page_1").hide();
         $("#form_page_2").hide();
         $("#form_page_3").show();
+    }
+
+    function checkIfPreviousPageHasEmptyFields(pageNum) {
+        var pageID = "form_page_" + pageNum;
+        var elements = document.getElementById(pageID).getElementsByTagName("input");
+        for (var i = 0; i < elements.length; i++) {
+            if (elements[i].value === "") {
+                document.getElementById("submitButton").click();
+                return false;
+            }
+        }
+        return true;
     }
 
     var geocoder;
