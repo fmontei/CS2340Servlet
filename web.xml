@@ -56,7 +56,15 @@ metadata-complete="true">
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/index</url-pattern>
-        <url-pattern>/itineraryCreation</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ItineraryServlet</servlet-name>
+        <servlet-class>controller.ItineraryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ItineraryServlet</servlet-name>
+        <url-pattern>/itinerary</url-pattern>
     </servlet-mapping>
 
     <servlet>

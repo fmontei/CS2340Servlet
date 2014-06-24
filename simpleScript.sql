@@ -127,6 +127,7 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`user` (
   `preferenceID` INT(11) NULL DEFAULT NULL,
   `email` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`ID`),
+  UNIQUE INDEX `userName_UNIQUE` (`userName` ASC),
   INDEX `preferenceID_idx` (`preferenceID` ASC),
   CONSTRAINT `preferenceID`
     FOREIGN KEY (`preferenceID`)
@@ -134,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`user` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 40
+AUTO_INCREMENT = 45
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -214,10 +215,11 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`itinerary` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(25) NOT NULL,
+  `name` VARCHAR(60) NOT NULL,
   `userID` INT(11) NULL DEFAULT NULL,
-  `address` VARCHAR(45) NOT NULL,
+  `address` VARCHAR(100) NOT NULL,
   `transportation` VARCHAR(45) NOT NULL,
+  `creationDate` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`ID`),
   INDEX `tripID_itinerary_idx` (`userID` ASC),
   CONSTRAINT `userID`
@@ -226,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`itinerary` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 22
 DEFAULT CHARACTER SET = utf8;
 
 
