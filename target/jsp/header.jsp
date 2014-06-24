@@ -17,7 +17,6 @@
 <%
 if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
 %>
-
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="row">
@@ -70,15 +69,15 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
                     <h4 class="modal-title" id="signUpLabel">Sign Up</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="/CS2340Servlet/index" method="POST" class="form-inline" role="form">
+                    <form action="/CS2340Servlet/createAccount" method="POST" class="form-inline" role="form">
                         <b>Enter your Personal Information</b>
 
                         <br />
                         <br />
 
                         <div class="form-group">
-                            <label class="sr-only" for="name">Name</label>
-                            <input type="text" class="form-control" id="name" name="firstName"
+                            <label class="sr-only" for="firstName">Name</label>
+                            <input type="text" class="form-control" id="firstName" name="firstName"
                             required="required"
                             placeholder = "Enter First Name" />
                         </div>
@@ -87,8 +86,8 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
                         <br />
 
                         <div class="form-group">
-                            <label class="sr-only" for="name">Name</label>
-                            <input type="text" class="form-control" id="name" name="lastName"
+                            <label class="sr-only" for="lastName">Name</label>
+                            <input type="text" class="form-control" id="lastName" name="lastName"
                             required="required"
                             placeholder = "Enter Last Name" />
                         </div>
@@ -103,8 +102,8 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
                         <br />
 
                         <div class="form-group">
-                            <label class="sr-only" for="name">Name</label>
-                            <input type="text" class="form-control" id="name"
+                            <label class="sr-only" for="newUsername">Name</label>
+                            <input type="text" class="form-control" id="newUsername"
                             name="newUsername"
                             required="required"
                             placeholder = "Enter Username" />
@@ -114,12 +113,12 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
                         <br />
 
                         <div class="form-group">
-                            <label class="sr-only" for="name">Password</label>
+                            <label class="sr-only" for="newPassword">Password</label>
                             <input type="password" class="form-control" id="newPassword"
                             name="newPassword"
                             onkeyup="checkPass(document.getElementById('newPassword'),
                             document.getElementById('confirmPassword'),
-                            document.getElementById('confirmMessage'));
+                            document.getElementById('passwordError'));
                             return false;"
                             required="required"
                             placeholder = "Enter Password" />
@@ -129,22 +128,24 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
                         <br />
 
                         <div class="form-group">
-                            <label class="sr-only" for="name">Password</label>
+                            <label class="sr-only" for="confirmPassword">Password</label>
                             <input type="password" class="form-control" id="confirmPassword"
                             name="confirmPassword"
                             onkeyup="checkPass(document.getElementById('newPassword'),
                             document.getElementById('confirmPassword'),
-                            document.getElementById('confirmMessage'));
+                            document.getElementById('passwordError'));
                             return false;"
                             required="required"
                             placeholder = "Re-enter Password" />
                         </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" name="signUpButton" class="btn btn-primary">Sign Up</button>
-                </div> 
+
+                        <div class="modal-footer">
+                            <div id="passwordError" class="breadcrumb pull-left" style="text-align: left"></div>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" name="signUpButton" class="btn btn-primary">Sign Up</button>
+                        </div>
                     </form>
+                </div>
             </div>
         </div>
     </div>
@@ -212,8 +213,8 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
                         <br />
 
                         <div class="form-group">
-                            <label class="sr-only" for="name">Name</label>
-                            <input type="text" class="form-control" name="nameOfItinerary"
+                            <label class="sr-only" for="nameOfItinerary">Name</label>
+                            <input type="text" class="form-control" id="nameOfItinerary" name="nameOfItinerary"
                             required="required"
                             placeholder = "Enter Name of Itinerary" />
                         </div>

@@ -20,7 +20,6 @@ public class AccountCreationServlet extends HttpServlet {
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
         throws IOException, ServletException {
-        response.sendRedirect("jsp/create_account.jsp");
     }
 
     @Override
@@ -51,12 +50,12 @@ public class AccountCreationServlet extends HttpServlet {
                                     HttpServletResponse response)
             throws IOException, ServletException {
         request.setAttribute("accountCreateSuccess", "success");
-        forwardRequest(this, request, response, "/jsp/create_account.jsp");
+        forwardRequest(this, request, response, "/jsp/index.jsp");
     }
 
     private void reloadBecauseAccountCreateFailed(HttpServletRequest request,
                                                   HttpServletResponse response)
             throws IOException, ServletException {
-        forwardRequest(this, request, response, "/jsp/create_account.jsp");
+        forwardRequest(this, request, response, "/jsp/index.jsp");
     }
 }

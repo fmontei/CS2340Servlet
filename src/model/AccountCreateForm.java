@@ -50,8 +50,8 @@ public class AccountCreateForm {
     }
 
     private void storeSessionAttributes() {
-        String welcomeName = newAccount.getWelcomeName();
         synchronized(session) {
+            String welcomeName = newAccount.getWelcomeName();
             session.setAttribute("currentUser", newAccount);
             session.setAttribute("username", username);
             session.setAttribute("welcomeName", welcomeName);

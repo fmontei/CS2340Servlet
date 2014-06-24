@@ -6,15 +6,15 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- Schema mydb
 -- -----------------------------------------------------
 -- -----------------------------------------------------
--- Schema trip_planner_db_v2
+-- Schema trip_planner_db_simple
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `trip_planner_db_v2` DEFAULT CHARACTER SET utf8 ;
-USE `trip_planner_db_v2` ;
+CREATE SCHEMA IF NOT EXISTS `trip_planner_db_simple` DEFAULT CHARACTER SET utf8 ;
+USE `trip_planner_db_simple` ;
 
 -- -----------------------------------------------------
--- Table `trip_planner_db_v2`.`address`
+-- Table `trip_planner_db_simple`.`address`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`address` (
+CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`address` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `streetAddress` VARCHAR(100) NOT NULL,
   `city` VARCHAR(25) NOT NULL,
@@ -26,9 +26,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `trip_planner_db_v2`.`place`
+-- Table `trip_planner_db_simple`.`place`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`place` (
+CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`place` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `placeType` TINYINT(4) NOT NULL,
   `name` VARCHAR(25) NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`place` (
   INDEX `addressID_place_idx` (`addressID` ASC),
   CONSTRAINT `addressID_place`
     FOREIGN KEY (`addressID`)
-    REFERENCES `trip_planner_db_v2`.`address` (`ID`)
+    REFERENCES `trip_planner_db_simple`.`address` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -48,9 +48,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `trip_planner_db_v2`.`attraction`
+-- Table `trip_planner_db_simple`.`attraction`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`attraction` (
+CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`attraction` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `placeID` INT(11) NOT NULL,
   `activityCategory` TINYINT(4) NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`attraction` (
   INDEX `placeID_attraction_idx` (`placeID` ASC),
   CONSTRAINT `placeID_attraction`
     FOREIGN KEY (`placeID`)
-    REFERENCES `trip_planner_db_v2`.`place` (`ID`)
+    REFERENCES `trip_planner_db_simple`.`place` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -67,9 +67,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `trip_planner_db_v2`.`preference`
+-- Table `trip_planner_db_simple`.`preference`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`preference` (
+CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`preference` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `minimumRating` FLOAT NOT NULL,
   `priceCategory` TINYINT(4) NOT NULL,
@@ -80,9 +80,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `trip_planner_db_v2`.`attraction_preference`
+-- Table `trip_planner_db_simple`.`attraction_preference`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`attraction_preference` (
+CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`attraction_preference` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `preferenceID` INT(11) NOT NULL,
   `preferredAttractionType` TINYINT(4) NOT NULL,
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`attraction_preference` (
   INDEX `preferenceID_attraction_preference_idx` (`preferenceID` ASC),
   CONSTRAINT `preferenceID_attraction_preference`
     FOREIGN KEY (`preferenceID`)
-    REFERENCES `trip_planner_db_v2`.`preference` (`ID`)
+    REFERENCES `trip_planner_db_simple`.`preference` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -98,9 +98,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `trip_planner_db_v2`.`lodging`
+-- Table `trip_planner_db_simple`.`lodging`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`lodging` (
+CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`lodging` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(25) NOT NULL,
   `addressID` INT(11) NOT NULL,
@@ -108,16 +108,16 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`lodging` (
   INDEX `addressID_lodging_idx` (`addressID` ASC),
   CONSTRAINT `addressID_lodging`
     FOREIGN KEY (`addressID`)
-    REFERENCES `trip_planner_db_v2`.`address` (`ID`)
+    REFERENCES `trip_planner_db_simple`.`address` (`ID`)
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `trip_planner_db_v2`.`user`
+-- Table `trip_planner_db_simple`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`user` (
+CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`user` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `firstName` VARCHAR(25) NOT NULL,
   `lastName` VARCHAR(25) NOT NULL,
@@ -130,18 +130,18 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`user` (
   INDEX `preferenceID_idx` (`preferenceID` ASC),
   CONSTRAINT `preferenceID`
     FOREIGN KEY (`preferenceID`)
-    REFERENCES `trip_planner_db_v2`.`preference` (`ID`)
+    REFERENCES `trip_planner_db_simple`.`preference` (`ID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 31
+AUTO_INCREMENT = 40
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `trip_planner_db_v2`.`trip`
+-- Table `trip_planner_db_simple`.`trip`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`trip` (
+CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`trip` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `userID` INT(11) NOT NULL,
   `lodgingID` INT(11) NOT NULL,
@@ -155,25 +155,25 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`trip` (
   INDEX `lodgingID_trip_idx` (`lodgingID` ASC),
   CONSTRAINT `lodgingID_trip`
     FOREIGN KEY (`lodgingID`)
-    REFERENCES `trip_planner_db_v2`.`lodging` (`ID`)
+    REFERENCES `trip_planner_db_simple`.`lodging` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `preferenceID_trip`
     FOREIGN KEY (`preferenceID`)
-    REFERENCES `trip_planner_db_v2`.`preference` (`ID`)
+    REFERENCES `trip_planner_db_simple`.`preference` (`ID`)
     ON UPDATE NO ACTION,
   CONSTRAINT `userID_trip`
     FOREIGN KEY (`userID`)
-    REFERENCES `trip_planner_db_v2`.`user` (`ID`)
+    REFERENCES `trip_planner_db_simple`.`user` (`ID`)
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `trip_planner_db_v2`.`available_time`
+-- Table `trip_planner_db_simple`.`available_time`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`available_time` (
+CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`available_time` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `tripID` INT(11) NOT NULL,
   `startDateTime` DATETIME NOT NULL,
@@ -182,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`available_time` (
   INDEX `tripID_available_time_idx` (`tripID` ASC),
   CONSTRAINT `tripID_available_time`
     FOREIGN KEY (`tripID`)
-    REFERENCES `trip_planner_db_v2`.`trip` (`ID`)
+    REFERENCES `trip_planner_db_simple`.`trip` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -190,9 +190,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `trip_planner_db_v2`.`customer_feedback`
+-- Table `trip_planner_db_simple`.`customer_feedback`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`customer_feedback` (
+CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`customer_feedback` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `customerName` VARCHAR(25) NOT NULL,
   `customerRating` FLOAT NOT NULL,
@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`customer_feedback` (
   INDEX `placeID_customer_feedback_idx` (`placeID` ASC),
   CONSTRAINT `placeID_customer_feedback`
     FOREIGN KEY (`placeID`)
-    REFERENCES `trip_planner_db_v2`.`place` (`ID`)
+    REFERENCES `trip_planner_db_simple`.`place` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -210,9 +210,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `trip_planner_db_v2`.`itinerary`
+-- Table `trip_planner_db_simple`.`itinerary`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`itinerary` (
+CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`itinerary` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(25) NOT NULL,
   `userID` INT(11) NULL DEFAULT NULL,
@@ -222,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`itinerary` (
   INDEX `tripID_itinerary_idx` (`userID` ASC),
   CONSTRAINT `userID`
     FOREIGN KEY (`userID`)
-    REFERENCES `trip_planner_db_v2`.`user` (`ID`)
+    REFERENCES `trip_planner_db_simple`.`user` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -231,9 +231,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `trip_planner_db_v2`.`restaurant`
+-- Table `trip_planner_db_simple`.`restaurant`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`restaurant` (
+CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`restaurant` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `placeID` INT(11) NOT NULL,
   `restaurantCategory` TINYINT(4) NOT NULL,
@@ -242,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`restaurant` (
   INDEX `placeID_restaurant_idx` (`placeID` ASC),
   CONSTRAINT `placeID_restaurant`
     FOREIGN KEY (`placeID`)
-    REFERENCES `trip_planner_db_v2`.`place` (`ID`)
+    REFERENCES `trip_planner_db_simple`.`place` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -250,9 +250,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `trip_planner_db_v2`.`restaurant_preference`
+-- Table `trip_planner_db_simple`.`restaurant_preference`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`restaurant_preference` (
+CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`restaurant_preference` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `preferenceID` INT(11) NOT NULL,
   `preferredRestaurantType` TINYINT(4) NOT NULL,
@@ -260,7 +260,7 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`restaurant_preference` (
   INDEX `preferenceID_restaurant_preference_idx` (`preferenceID` ASC),
   CONSTRAINT `preferenceID_restaurant_preference`
     FOREIGN KEY (`preferenceID`)
-    REFERENCES `trip_planner_db_v2`.`preference` (`ID`)
+    REFERENCES `trip_planner_db_simple`.`preference` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -268,9 +268,9 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `trip_planner_db_v2`.`time_slot`
+-- Table `trip_planner_db_simple`.`time_slot`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`time_slot` (
+CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`time_slot` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `startTime` DATETIME NOT NULL,
   `endTime` DATETIME NOT NULL,
@@ -281,12 +281,12 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_v2`.`time_slot` (
   INDEX `placeID_time_slot_idx` (`placeID` ASC),
   CONSTRAINT `itineraryID_time_slot`
     FOREIGN KEY (`itineraryID`)
-    REFERENCES `trip_planner_db_v2`.`itinerary` (`ID`)
+    REFERENCES `trip_planner_db_simple`.`itinerary` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `placeID_time_slot`
     FOREIGN KEY (`placeID`)
-    REFERENCES `trip_planner_db_v2`.`place` (`ID`)
+    REFERENCES `trip_planner_db_simple`.`place` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
