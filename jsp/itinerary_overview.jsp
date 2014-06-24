@@ -13,20 +13,6 @@
     }
 %>
 
-<a href="#" class="btn btn-lg btn-success"
-   onclick="showPage1()"
-   data-toggle="modal"
-   data-target="#itineraryModal">Create New Itinerary</a>
-<br />
-<a href="index.jsp" class="btn btn-lg btn-primary">Index</a>
-
-<h1>Current Itinerary Names:</h1>
-<ul>
-    <% for (Itinerary it : itineraries) { %>
-    <li><%=it.getName()%></li>
-    <% } %>
-</ul>
-
 <div id="itineraryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="itineraryModal" aria-hidden="true">
     <div class="modal-dialog" >
         <div class="modal-content">
@@ -109,6 +95,36 @@
     </div>
 </div>
 
+<div class="container">
+    <h1>Your Current Itineraries:</h1>
+    <ul class = "pagination">
+        <li><a href="#" class="btn btn-lg btn-success"
+           onclick="showPage1()"
+           data-toggle="modal"
+           data-target="#itineraryModal">Create New Itinerary</a>
+        </li>
+        <li><a href="index.jsp" class="btn btn-lg btn-primary">Index</a></li>
+    </ul>
+    <ul class="nav nav-pills nav-stacked" style="height: 400px; overflow: scroll">
+        <li>
+            <h3><a href="#"><strong>Itinerary Name</strong>
+                <span class="pull-right" style="padding-right: 10px"><strong>Creation Date</strong></span>
+            </a></h3>
+        </li>
+        <% for (int i = 0; i < itineraries.size(); i++) { %>
+        <% String className = (i % 2 == 0) ? "active" : ""; %>
+        <li class="<%=className%> ">
+            <a href="#">
+                <span class="badge pull-right"
+                      style="background-color: #b9def0; color: #3276b1">
+                <%=itineraries.get(i).getCreationDate()%></span>
+                <%=itineraries.get(i).getName()%><br />
+            </a>
+        </li>
+        <% } %>
+    </ul>
+<div>
+
 <script type="text/javascript"
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwnaM0fAa8jqx3O7ZdABTaWmbOW3Uft2Y">
 </script>
@@ -169,7 +185,7 @@
         var mapOptions = {
             zoom: 8,
             center: latlng
-        }
+        };
         map = new google.maps.Map(document.getElementById("myMap"), mapOptions);
     }
 
