@@ -3,10 +3,14 @@
 <%@ page import="database.Itinerary" %>
 <%@ page import="java.util.List" %>
 <%@ page import="database.DataManager" %>
+<%@ page import="java.util.ArrayList" %>
 <%
    User user = (User) session.getAttribute("currentUser");
    int userID = user.getID();
    List<Itinerary> itineraries = DataManager.getItineraryByUserID(userID);
+    if (itineraries == null) {
+        itineraries = new ArrayList<Itinerary>();
+    }
 %>
 
 <a href="#" class="btn btn-lg btn-success"
@@ -113,8 +117,11 @@
     // If the user has no itineraries, automatically load the modal dialog.
     // This is a tentative feature.
     window.onload = function() {
-        $("#itineraryModal").modal("show");
-        showPage1();
+        var numberOfItineraries = <%=itineraries.size()%>;
+        if (numberOfItineraries === 0) {
+            $("#itineraryModal").modal("show");
+            showPage1();
+        }
     }
 
     function showPage1() {
@@ -135,6 +142,7 @@
         }
         $("#form_page_1").hide();
         $("#form_page_2").show();
+        $("#form_page_3").hide();
         initialize();
     }
 
