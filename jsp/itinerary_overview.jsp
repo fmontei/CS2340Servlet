@@ -30,7 +30,7 @@
 
                 <div id="form_page_1">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">Itinerary Creation (1/3)</h4>
                     </div>
                     <div class="modal-body">
@@ -51,7 +51,7 @@
 
                 <div id="form_page_2">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">Itinerary Creation (2/3)</h4>
                     </div>
                     <div class="modal-body">
@@ -78,7 +78,7 @@
 
                 <div id="form_page_3">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">Itinerary Creation (3/3)</h4>
                     </div>
                     <div class="modal-body">
