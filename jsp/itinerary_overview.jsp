@@ -21,7 +21,7 @@
                 <div id="form_page_1">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Itinerary Creation (1/3)</h4>
+                        <h4 class="modal-title">Itinerary Creation (1/4)</h4>
                     </div>
                     <div class="modal-body">
                         <h4>First, let's create a name for your Itinerary</h4><br />
@@ -42,7 +42,58 @@
                 <div id="form_page_2">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Itinerary Creation (2/3)</h4>
+                        <h4 class="modal-title">Itinerary Creation (2/4)</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Now, let's set your Preferences</h4><br />
+                        <p>Enter your preferences:</p>
+                        <div class="form-group">
+                            <label class="sr-only" for="minRating">Minimum Rating</label>
+                            <input type="number" class="form-control" id="minRating" name="minRating"
+                                   required="required"
+                                   min="1"
+                                   max="4"
+                                   step="0.5"
+                                   placeholder = "Enter a number between 1 and 4" />
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="priceCategory">Price Category</label>
+                            <input type="text" class="form-control" id="priceCategory" name="priceCategory"
+                                   required="required"
+                                   placeholder = "Enter value between $ and $$$$" />
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="maxDistance">Max Distance</label>
+                            <input type="number" class="form-control" id="maxDistance" name="maxDistance"
+                                   required="required"
+                                   min="1"
+                                   max="100"
+                                   placeholder = "Enter a number between 1 and 100" />
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="preferredFoodType">Preferred Food Type</label>
+                            <input type="text" class="form-control" id="preferredFoodType" name="preferredFoodType"
+                                   required="required"
+                                   placeholder = "i.e Seafood" />
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="preferredAttrType">Preferred Attraction Type</label>
+                            <input type="text" class="form-control" id="preferredAttrType" name="preferredAttrType"
+                                   required="required"
+                                   placeholder = "i.e Museum" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button onclick="showPage1()" type="button" class="btn btn-primary">Previous</button>
+                        <button onclick="showPage3()" type="button" class="btn btn-primary">Next</button>
+                    </div>
+                </div>
+
+                <div id="form_page_3">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Itinerary Creation (3/4)</h4>
                     </div>
                     <div class="modal-body">
                         <h4>Next, let's designate your Itinerary's Address</h4><br />
@@ -61,15 +112,15 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <button onclick="showPage1()" type="button" class="btn btn-primary">Previous</button>
-                        <button onclick="showPage3()" type="submit" class="btn btn-primary">Next</button>
+                        <button onclick="showPage2()" type="button" class="btn btn-primary">Previous</button>
+                        <button onclick="showPage4()" type="submit" class="btn btn-primary">Next</button>
                     </div>
                 </div>
 
-                <div id="form_page_3">
+                <div id="form_page_4">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Itinerary Creation (3/3)</h4>
+                        <h4 class="modal-title">Itinerary Creation (4/4)</h4>
                     </div>
                     <div class="modal-body">
                         <h4>Finally, let's specify your Transportation Style</h4><br />
@@ -86,7 +137,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <button onclick="showPage2()" type="button" class="btn btn-primary">Previous</button>
+                        <button onclick="showPage3()" type="button" class="btn btn-primary">Previous</button>
                         <button type="submit" class="btn btn-success" id="submitButton">Create</button>
                     </div>
                 </div>
@@ -99,9 +150,9 @@
     <h1>Your Current Itineraries:</h1>
     <ul class = "pagination">
         <li><a href="#" class="btn btn-lg btn-success"
-           onclick="showPage1()"
-           data-toggle="modal"
-           data-target="#itineraryModal">Create New Itinerary</a>
+               onclick="showPage1()"
+               data-toggle="modal"
+               data-target="#itineraryModal">Create New Itinerary</a>
         </li>
         <li><a href="index.jsp" class="btn btn-lg btn-primary">Index</a></li>
     </ul>
@@ -123,86 +174,101 @@
         </li>
         <% } %>
     </ul>
-<div>
+    <div>
 
-<script type="text/javascript"
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwnaM0fAa8jqx3O7ZdABTaWmbOW3Uft2Y">
-</script>
+        <script type="text/javascript"
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwnaM0fAa8jqx3O7ZdABTaWmbOW3Uft2Y">
+        </script>
 
-<script type="text/javascript">
-    // If the user has no itineraries, automatically load the modal dialog.
-    // This is a tentative feature.
-    window.onload = function() {
-        var numberOfItineraries = <%=itineraries.size()%>;
-        if (numberOfItineraries === 0) {
-            $("#itineraryModal").modal("show");
-            showPage1();
-        }
-    }
-
-    function showPage1() {
-        $("#form_page_1").show();
-        $("#form_page_2").hide();
-        $("#form_page_3").hide();
-    }
-
-    function showPage2() {
-        // Check if page 1 fields are empty
-        var check = checkIfPreviousPageHasEmptyFields(1);
-        if (!check) return;
-        $("#form_page_1").hide();
-        $("#form_page_2").show();
-        $("#form_page_3").hide();
-        initialize();
-    }
-
-    function showPage3() {
-        // Check if page 2 fields are empty
-        var check = checkIfPreviousPageHasEmptyFields(2);
-        if (!check) return;
-        $("#form_page_1").hide();
-        $("#form_page_2").hide();
-        $("#form_page_3").show();
-    }
-
-    function checkIfPreviousPageHasEmptyFields(pageNum) {
-        var pageID = "form_page_" + pageNum;
-        var elements = document.getElementById(pageID).getElementsByTagName("input");
-        for (var i = 0; i < elements.length; i++) {
-            if (elements[i].value === "") {
-                document.getElementById("submitButton").click();
-                return false;
+        <script type="text/javascript">
+            // If the user has no itineraries, automatically load the modal dialog.
+            // This is a tentative feature.
+            window.onload = function() {
+                var numberOfItineraries = <%=itineraries.size()%>;
+                if (numberOfItineraries === 0) {
+                    $("#itineraryModal").modal("show");
+                    showPage1();
+                }
             }
-        }
-        return true;
-    }
 
-    var geocoder;
-    var map;
-    function initialize() {
-        geocoder = new google.maps.Geocoder();
-        var latlng = new google.maps.LatLng(-34.397, 150.644);
-        var mapOptions = {
-            zoom: 8,
-            center: latlng
-        };
-        map = new google.maps.Map(document.getElementById("myMap"), mapOptions);
-    }
+            function showPage1() {
+                $("#form_page_1").show();
+                $("#form_page_2").hide();
+                $("#form_page_3").hide();
+                $("#form_page_4").hide();
+            }
 
-    function codeAddress() {
-        var address = document.getElementById("itineraryAddress").value;
-        geocoder.geocode( { 'address': address}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                map.setCenter(results[0].geometry.location);
-                var marker = new google.maps.Marker({
-                    map: map,
-                    position: results[0].geometry.location
+            function showPage2() {
+                // Check if page 1 fields are empty
+                var check = checkIfPreviousPageHasEmptyFields(1);
+                if (!check) return;
+                $("#form_page_1").hide();
+                $("#form_page_2").show();
+                $("#form_page_3").hide();
+                $("#form_page_4").hide();
+                initialize();
+            }
+
+            function showPage3() {
+                // Check if page 2 fields are empty
+                var check = checkIfPreviousPageHasEmptyFields(2);
+                if (!check) return;
+                $("#form_page_1").hide();
+                $("#form_page_2").hide();
+                $("#form_page_3").show();
+                $("#form_page_4").hide();
+            }
+
+            function showPage4() {
+                // Check if page 2 fields are empty
+                var check = checkIfPreviousPageHasEmptyFields(3);
+                if (!check) return;
+                $("#form_page_1").hide();
+                $("#form_page_2").hide();
+                $("#form_page_3").hide();
+                $("#form_page_4").show();
+            }
+
+            function checkIfPreviousPageHasEmptyFields(pageNum) {
+                var pageID = "form_page_" + pageNum;
+
+                var elements = document.getElementById(pageID).getElementsByTagName("input");
+
+                for (var i = 0; i < elements.length; i++) {
+                    if (elements[i].value === "") {
+                        document.getElementById("submitButton").click();
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            var geocoder;
+            var map;
+            function initialize() {
+                geocoder = new google.maps.Geocoder();
+                var latlng = new google.maps.LatLng(-34.397, 150.644);
+                var mapOptions = {
+                    zoom: 8,
+                    center: latlng
+                };
+                map = new google.maps.Map(document.getElementById("myMap"), mapOptions);
+            }
+
+            function codeAddress() {
+                var address = document.getElementById("itineraryAddress").value;
+                geocoder.geocode( { 'address': address}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        map.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            position: results[0].geometry.location
+                        });
+                    } else {
+                        alert("Address could not be found for the following reason: " + status);
+                    }
                 });
-            } else {
-                alert("Address could not be found for the following reason: " + status);
             }
-        });
-    }
-</script>
+        </script>
 
 <%@ include file="footer.jsp" %>
