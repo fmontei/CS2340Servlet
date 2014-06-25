@@ -1,5 +1,5 @@
     </div> <!-- wrapper /div -->
-    <div id="footer" style="position: absolute; bottom: 0;">
+    <div id="footer" style="bottom: 0;">
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
@@ -20,7 +20,7 @@
     <script type="text/javascript" src="/CS2340Servlet/js/facebookSDK.js"></script>
 
     <!-- Itinerary Javascript -->
-    <script type="text/javascript" src="/CS2340Servlet/js/itinerary.js"></script> 
+    <script type="text/javascript" src="/CS2340Servlet/js/itinerary.js"></script>
 
     <!-- Bootstrap core JavaScript -->
     <script type="text/javascript" src="/CS2340Servlet/js/bootstrap.min.js"></script>

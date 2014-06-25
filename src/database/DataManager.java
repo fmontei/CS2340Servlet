@@ -37,9 +37,19 @@ public class DataManager {
     }
 
     public static List<Itinerary> getItineraryByUserID(int userID)
-        throws SQLException {
+            throws SQLException {
         List<Itinerary> fetchedItneraries =
                 new SQLItineraryQuery().getItinerariesByUserID(userID);
         return fetchedItneraries;
+    }
+
+    public static int createPreference(Preference preference) throws SQLException {
+        int lastID = 0;
+        try {
+            lastID = new SQLPreferenceQuery().createPreferenceQuery(preference);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lastID;
     }
 }

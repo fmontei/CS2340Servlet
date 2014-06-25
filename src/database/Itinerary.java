@@ -6,18 +6,21 @@ import java.util.Date;
 public class Itinerary {
     private int ID;
     private int userID;
+    private int preferenceID;
     private String name;
     private String address;
     private String transportationMode;
     private String creationDate;
 
     public Itinerary(String name, String address,
-                     String transportationMode, int userID) {
+                     String transportationMode, int userID,
+                     int preferenceID) {
         this.userID = userID;
         this.name = name;
         this.address = address;
         this.transportationMode = transportationMode;
         this.creationDate = generateFormattedCreationDate();
+        this.preferenceID = preferenceID;
     }
 
     public Itinerary(String name, String address,  String transportationMode,
@@ -54,5 +57,6 @@ public class Itinerary {
     public int getUserID() {
         return userID;
     }
-
+    public int getPreferenceID() { return preferenceID; }
 }
+
