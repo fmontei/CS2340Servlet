@@ -32,10 +32,24 @@ public class DataManager {
         new SQLItineraryQuery().createItineraryQuery(itinerary);
     }
 
+    public static void deleteItinerary(String itineraryID) throws SQLException {
+        new SQLItineraryQuery().deleteItineraryQuery(itineraryID);
+    }
+
     public static List<Itinerary> getItineraryByUserID(int userID)
-        throws SQLException {
+            throws SQLException {
         List<Itinerary> fetchedItneraries =
                 new SQLItineraryQuery().getItinerariesByUserID(userID);
         return fetchedItneraries;
+    }
+
+    public static int createPreference(Preference preference) throws SQLException {
+        int lastID = 0;
+        try {
+            lastID = new SQLPreferenceQuery().createPreferenceQuery(preference);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lastID;
     }
 }

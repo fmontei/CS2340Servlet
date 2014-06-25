@@ -13,7 +13,7 @@ public class SQLItineraryQuery extends SQLQuery {
 
     public void createItineraryQuery(Itinerary itinerary) throws SQLException {
         String query = "INSERT INTO ITINERARY (name, address, transportation, "
-                + "creationDate, userID) VALUES(?, ?, ?, ?, ?)";
+                + "creationDate, userID, preferenceID) VALUES(?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement =
                 super.dbConnection.prepareStatement(query);
         preparedStatement.setString(1, itinerary.getName());
@@ -21,6 +21,15 @@ public class SQLItineraryQuery extends SQLQuery {
         preparedStatement.setString(3, itinerary.getTransportationMode());
         preparedStatement.setString(4, itinerary.getCreationDate());
         preparedStatement.setInt(5, itinerary.getUserID());
+        preparedStatement.setInt(6, itinerary.getPreferenceID());
+        preparedStatement.executeUpdate();
+    }
+
+    public void deleteItineraryQuery(String itineraryID) throws SQLException {
+        String query = "DELETE FROM ITINERARY WHERE ITINERARY.ID = ?";
+        PreparedStatement preparedStatement =
+                super.dbConnection.prepareStatement(query);
+        preparedStatement.setString(1, itineraryID);
         preparedStatement.executeUpdate();
     }
 
