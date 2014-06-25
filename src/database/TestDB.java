@@ -11,7 +11,9 @@ public class TestDB {
         try {
             //User u = new User("u", "u", "u", "u");
             //DataManager.createUser(u);
-            DataManager.createItinerary(it);
+            List<Itinerary> its = DataManager.getItineraryByUserID(41);
+            String s = its.get(0).getCreationDate();
+            System.out.println(s);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

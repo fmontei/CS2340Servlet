@@ -24,6 +24,14 @@ public class SQLItineraryQuery extends SQLQuery {
         preparedStatement.executeUpdate();
     }
 
+    public void deleteItineraryQuery(String itineraryID) throws SQLException {
+        String query = "DELETE FROM ITINERARY WHERE ITINERARY.ID = ?";
+        PreparedStatement preparedStatement =
+                super.dbConnection.prepareStatement(query);
+        preparedStatement.setString(1, itineraryID);
+        preparedStatement.executeUpdate();
+    }
+
     public List<Itinerary> getItinerariesByUserID(int userID)
             throws SQLException {
         List<Itinerary> itineraries = new ArrayList<Itinerary>();

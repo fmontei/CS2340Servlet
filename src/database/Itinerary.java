@@ -10,7 +10,6 @@ public class Itinerary {
     private String address;
     private String transportationMode;
     private String creationDate;
-    private SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
     public Itinerary(String name, String address,
                      String transportationMode, int userID) {
@@ -32,6 +31,7 @@ public class Itinerary {
     }
 
     private String generateFormattedCreationDate() {
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         String todayDate = dateFormatter.format(new Date());
         return todayDate;
     }
@@ -45,10 +45,14 @@ public class Itinerary {
     public String getTransportationMode() {
         return transportationMode;
     }
-    public int getUserID() {
-        return userID;
-    }
     public String getCreationDate() {
         return creationDate;
     }
+    public int getID() {
+        return ID;
+    }
+    public int getUserID() {
+        return userID;
+    }
+
 }

@@ -56,8 +56,8 @@
                             <button onclick="codeAddress()" type="button" class="btn btn-default">Find</button>
                         </div><br /><hr />
 
-                        <div id="myMap" style="width: 520px; height: 300px;"></div>
-
+                        <div id="myMap" style="width: 520px; height: 300px;"></div><br />
+                        <span class="label label-primary" id="formattedAddress"></span>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
@@ -87,7 +87,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                         <button onclick="showPage2()" type="button" class="btn btn-primary">Previous</button>
-                        <button type="submit" class="btn btn-success" id="submitButton">Create</button>
+                        <button type="submit" class="btn btn-success" name="submitButton" id="submitButton">Create</button>
                     </div>
                 </div>
             </form>
@@ -97,28 +97,38 @@
 
 <div class="container">
     <h1>Your Current Itineraries:</h1>
-    <ul class = "pagination">
-        <li><a href="#" class="btn btn-lg btn-success"
+    <ul class = "pager">
+        <li><a href="#"
            onclick="showPage1()"
            data-toggle="modal"
            data-target="#itineraryModal">Create New Itinerary</a>
         </li>
-        <li><a href="index.jsp" class="btn btn-lg btn-primary">Index</a></li>
+        <li><a href="index.jsp">Index</a></li>
     </ul>
     <ul class="nav nav-pills nav-stacked" style="height: 400px; overflow: scroll">
         <li>
             <h3><a href="#"><strong>Itinerary Name</strong>
-                <span class="pull-right" style="padding-right: 10px"><strong>Creation Date</strong></span>
+                <span class="pull-right" style="margin-right: 110px"><strong>Creation Date</strong></span>
             </a></h3>
         </li>
         <% for (int i = 0; i < itineraries.size(); i++) { %>
         <% String className = (i % 2 == 0) ? "active" : ""; %>
         <li class="<%=className%> ">
             <a href="#">
+                <form action="/CS2340Servlet/itinerary" method="POST">
+                    <button type="submit"
+                            value="<%=itineraries.get(i).getID()%>"
+                            name="deleteItinerary"
+                            class="badge pull-right btn btn-default"
+                            style="background-color: darkred; color: ghostwhite; border: none">
+                            Delete
+                    </button>
+                </form>
                 <span class="badge pull-right"
-                      style="background-color: #b9def0; color: #3276b1">
-                <%=itineraries.get(i).getCreationDate()%></span>
-                <%=itineraries.get(i).getName()%><br />
+                      style="background-color: #b9def0; color: #3276b1; margin-right: 100px">
+                      <%=itineraries.get(i).getCreationDate()%>
+                </span>
+                <%=itineraries.get(i).getName()%>
             </a>
         </li>
         <% } %>
@@ -198,10 +208,15 @@
                     map: map,
                     position: results[0].geometry.location
                 });
+                setFormattedAddress(results[0].formatted_address);
             } else {
                 alert("Address could not be found for the following reason: " + status);
             }
         });
+    }
+
+    function setFormattedAddress(formattedAddress) {
+        $("#formattedAddress").text("Starting Address currently set to: " + formattedAddress);
     }
 </script>
 
