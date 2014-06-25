@@ -48,17 +48,4 @@ public class IndexServlet extends HttpServlet {
             throws IOException {
         response.sendRedirect("jsp/index.jsp");
     }
-
-    private void automaticallyLogin(HttpServletRequest request,
-                                    HttpServletResponse response)
-            throws IOException, ServletException {
-        request.setAttribute("accountCreateSuccess", "success");
-        forwardRequest(this, request, response, "/jsp/index.jsp");
-    }
-
-    private void reloadBecauseAccountCreateFailed(HttpServletRequest request,
-                                                  HttpServletResponse response)
-            throws IOException, ServletException {
-        forwardRequest(this, request, response, "/jsp/index.jsp");
-    }
 }

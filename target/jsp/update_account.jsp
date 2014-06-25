@@ -7,7 +7,6 @@
     String pageName = "Account Settings";
 %>
 
-
 <div class="container">
     <div class="row">
         <div class="col-md-2 sidebar">
@@ -15,10 +14,10 @@
                 <li id="li-personalInformation" class="active"><a href="#" id="a-personalInformation">Personal Information</a></li>
                 <li id="li-changePassword"><a href="#" id="a-changePassword">Change Password</a></li>
                 <li id="li-deleteAccount"><a href="#" id="a-deleteAccount">Delete Your Account</a></li>
-
+                <li class = "list-group-item-success" nav-sidebar id="li-ApplyAllChanges"><a href="index.jsp">Apply All Changes</a></li>
             </ul>
         </div>
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-10 col-md-offset-2">
             <h1 class="page-header">
                 Account Settings
             </h1>
@@ -32,8 +31,8 @@
                     <br />
 
                     <div class="form-group">
-                        <label class="sr-only" for="name">Name</label>
-                        <input type="text" class="form-control" id="name"
+                        <label class="sr-only" for="updateFirstNamee">Name</label>
+                        <input type="text" class="form-control" id="updateFirstNamee"
                         name="updateFirstName"
                         value="<%=firstName == null ? "" : firstName %>"
                         required="required"
@@ -44,8 +43,8 @@
                     <br />
 
                     <div class="form-group">
-                        <label class="sr-only" for="name">Name</label>
-                        <input type="text" class="form-control" id="name"
+                        <label class="sr-only" for="updateLastName">Name</label>
+                        <input type="text" class="form-control" id="updateLastName"
                         name="updateLastName"
                         value="<%=lastName == null ? "" : lastName %>"
                         required="required"
@@ -61,12 +60,12 @@
                     <br />
 
                     <div class="form-group">
-                        <label class="sr-only" for="password">Password</label>
+                        <label class="sr-only" for="oldPassword">Password</label>
                         <input type="password" class="form-control" id="oldPassword"
                         name="oldPassword"
                         onkeyup="checkPass(document.getElementById('oldPassword'),
                         document.getElementById('confirmOldPassword'),
-                        document.getElementById('confirmMessage'));
+                        document.getElementById('passwordError'));
                         return false;"
                         placeholder = "Enter New Password" />
                     </div>
@@ -75,12 +74,12 @@
                     <br />
 
                     <div class="form-group">
-                        <label class="sr-only" for="password">Password</label>
+                        <label class="sr-only" for="confirmOldPassword">Password</label>
                         <input type="password" class="form-control" id="confirmOldPassword"
                         name="confirmOldPassword"
                         onkeyup="checkPass(document.getElementById('oldPassword'),
                         document.getElementById('confirmOldPassword'),
-                        document.getElementById('confirmMessage'));
+                        document.getElementById('passwordError'));
                         return false;"
                         placeholder = "Re-enter New Password" />
                     </div>
@@ -88,7 +87,7 @@
                 </div>
 
                 <div id="div-saveButton">
-                    <span id="confirmMessage" class="confirmMessage"></span><br /><br />
+                    <span id="passwordError" class="passwordError"></span><br /><br />
                     <span class="text-danger">${error}</span><br />
                     <div class="form-group">
                         <button type="submit" name="submitButton"
@@ -126,6 +125,7 @@
             $("#div-saveButton").show();
             $("#div-changePassword").hide();
             $("#div-deleteAccount").hide();
+            $("#passwordError").hide();
         });
         $("#a-changePassword").click(function() {
             $("#li-personalInformation").removeClass("active");
@@ -135,6 +135,7 @@
             $("#div-saveButton").show();
             $("#div-changePassword").show();
             $("#div-deleteAccount").hide();
+            $("#passwordError").show();
         });
         $("#a-deleteAccount").click(function() {
             $("#li-personalInformation").removeClass("active");
@@ -144,6 +145,7 @@
             $("#div-saveButton").hide();
             $("#div-changePassword").hide();
             $("#div-deleteAccount").show();
+            $("#passwordError").hide();
         });
     });
 </script>
