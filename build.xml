@@ -79,6 +79,14 @@
         </copy>
     </target>
 
+    <target name="clean-deploy" depends="clean, copy-other-files"
+            description="clean webapps folder and deploy files">
+        <mkdir dir="${catalina.home}/webapps/${app.name}"/>
+        <copy  todir="${catalina.home}/webapps/${app.name}">
+            <fileset dir="${build.home}"/>
+        </copy>
+    </target>
+
     <target name="deploy" depends="copy-other-files"
             description="deploy files to tomcat server">
         <mkdir dir="${catalina.home}/webapps/${app.name}"/>
