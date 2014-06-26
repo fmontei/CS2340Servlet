@@ -2,6 +2,74 @@ body,html {
     height: 100%;
 }
 
+.customCarousel {
+    position: relative;
+    width: 100%; /* for IE 6 */
+}
+
+.customCarousel img {
+    width: 1000px;
+    max-height: 100%;
+    vertical-align: middle;
+}
+
+.customCarousel h2 {
+    left: 0;
+    position:absolute;
+    text-align:center;
+    top: 30px;
+    width: 100%
+}
+
+.customCarousel h2 span {
+    color: white;
+    font: bold 24px/45px Helvetica, Sans-Serif;
+    letter-spacing: -1px;
+    background: rgb(0, 0, 0); /* fallback color */
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+}
+
+.carouselLogin {
+    left: 390px;
+    position:absolute;
+    top: 200px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.carouselLogin button {
+    background: transparent;
+    color: white;
+    display:inline-block;
+    min-width: 50px;
+    width: 100px;
+    padding: 5px 10px;
+    border: solid 4px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.carouselRegister {
+    left: 510px;
+    position: absolute;
+    top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.carouselRegister button {
+    background: transparent;
+    color: white;
+    display:inline-block;
+    min-width: 50px;
+    width: 100px;
+    padding: 5px 10px;
+    border: solid 4px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
 #overviewMessage {
 	position: fixed;
 	top: 5px;

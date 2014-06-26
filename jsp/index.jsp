@@ -10,12 +10,73 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <h1 class="page-header">
-                Welcome to Trip Planner!
-            </h1>
-            <p>
-                Please login to begin
-            </p>
+            <br /><br /><br />
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel"
+                 style="width: 1000px; height: 400px; margin: 0 auto">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <div class="customCarousel">
+                            <img src="http://www.listofimages.com/wp-content/uploads/2013/07/city-urban-photography-effects-landscape.jpg"
+                                 alt="" />
+                            <h2>
+                                <span>Welcome to Trip Planner!</span>
+                            </h2>
+                            <div class="carouselLogin">
+                                <button type="button" class="btn btn-default navbar-btn">Login</button>
+                            </div>
+                            <div class="carouselRegister">
+                                <button type="button" class="btn btn-default navbar-btn">Register</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="customCarousel">
+                            <img src="http://3.bp.blogspot.com/-bj_PsFI4lDA/UEOyL6Tab0I/AAAAAAAAALM/lNAotGu8b9U/s1600/Ariel-New-York-City.jpg" alt="" />
+                            <h2>
+                                <span>Welcome to Trip Planner!</span>
+                            </h2>
+                            <div class="carouselLogin">
+                                <button type="button" class="btn btn-default navbar-btn">Login</button>
+                            </div>
+                            <div class="carouselRegister">
+                                <button type="button" class="btn btn-default navbar-btn">Register</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="customCarousel">
+                            <img src="http://sumsphere.files.wordpress.com/2012/09/2652009650_2c14a9cf7d_b.jpg?w=848" alt="" />
+                            <h2>
+                                <span>Welcome to Trip Planner!</span>
+                            </h2>
+                            <div class="carouselLogin">
+                                <button type="button" class="btn btn-default navbar-btn">Login</button>
+                            </div>
+                            <div class="carouselRegister">
+                                <button type="button" class="btn btn-default navbar-btn">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
         </div>
     </div>
 </div>
@@ -34,50 +95,6 @@
                 <h1 class="page-header">
                     Welcome <%=request.getSession().getAttribute("welcomeName")%>!
                 </h1>
-
-                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators">
-                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                    </ol>
-
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner">
-                        <div class="item active">
-                            <img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/11/1397210130748/Spring-Lamb.-Image-shot-2-011.jpg" alt="..."
-                                 style="width: 400px; height: 270px; display: block; margin-left: auto; margin-right: auto">
-                            <div class="carousel-caption">
-                                Jimmy Nguyen
-                            </div>
-                        </div>
-
-                        <div class="item">
-                            <img src="http://www5.pcmag.com/media/images/397260-mobile-threat-monday-top-image.jpg?thumb=y" alt="..."
-                                 style="width: 400px; height: 270px; display: block; margin-left: auto; margin-right: auto">
-                            <div class="carousel-caption">
-                                Johnathan Kester
-                            </div>
-                        </div>
-
-                        <div class="item">
-                            <img src="http://images.gizmag.com/hero/ibm_human_brain.jpg" alt="..."
-                                 style="width: 400px; height: 270px; display: block; margin-left: auto; margin-right: auto">
-                            <div class="carousel-caption">
-                                Joseph Umujaren
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Controls -->
-                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </a>
-                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </a>
-                </div><br />
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">
