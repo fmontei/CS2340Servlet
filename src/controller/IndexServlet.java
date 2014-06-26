@@ -1,9 +1,6 @@
 package controller; 
 
-import database.Itinerary;
-import database.Preference;
-import database.SQLItineraryQuery;
-import database.SQLPreferenceQuery;
+import database.*;
 import model.AccountPreference;
 
 import javax.servlet.ServletException;
@@ -13,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "IndexServlet", urlPatterns = { "/index" })
 public class IndexServlet extends HttpServlet {
@@ -25,8 +22,12 @@ public class IndexServlet extends HttpServlet {
         throws IOException, ServletException {
         if (request.getQueryString().contains("itinerary_id=")) {
             loadActiveItineraryAndPreferences(request, response);
-        } else
+        } else if (request.getQueryString().contains("create_event=")) {
+            createNewEvents(request);
+            response.sendRedirect("jsp/index.jsp");
+        } else {
             response.sendRedirect("jsp/createLoginSession.jsp");
+        }
     }
 
     @Override
@@ -82,5 +83,20 @@ public class IndexServlet extends HttpServlet {
         SQLPreferenceQuery query = new SQLPreferenceQuery();
         Preference activePreferences = query.getPreferencesByID(preferenceID);
         session.setAttribute("activePreferences", activePreferences);
+    }
+
+    private void createNewEvents(HttpServletRequest request) {
+        final HttpSession session = request.getSession();
+        final String queryString = request.getQueryString();
+        final int startIndex = queryString.indexOf("=") + 1;
+        final String numberOfEvents = queryString.substring(startIndex);
+        List<Event> events = new ArrayList<Event>();
+        if (session.getAttribute("events") != null) {
+            events = (ArrayList<Event>) session.getAttribute("events");
+        }
+        for (int i = 0; i < Integer.parseInt(numberOfEvents); i++) {
+            events.add(new Event());
+        }
+        session.setAttribute("events", events);
     }
 }

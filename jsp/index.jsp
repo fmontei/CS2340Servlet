@@ -1,4 +1,6 @@
 <%@ page import="database.User" %>
+<%@ page import="database.Event" %>
+<%@ page import="java.util.ArrayList" %>
 
 <% String pageName = "Home"; %>
 <% String preferredTravelMode = ""; %>
@@ -122,8 +124,11 @@
                                 </a>
                             </li>
                             <li>
-                                <a id="a-create-event" href="#">Create New Event</a>
+                                <a id="a-create-event" href="#"
+                                   id="create-event-breadcrumb">
+                                    Create New Event</a>
                             </li>
+
                         </ol>
 
                         <ul class="nav nav-pills">
@@ -148,20 +153,66 @@
                                     Preferences
                                 </a>
                             </li>
-                            <li class="alert-success" style="float: right">
-                                <a href="#">
+                            <li class="dropdown alert-success" style="float: right">
+                                <a href="#" class="dropdown-toggle"data-toggle="dropdown" id="create-event-pill">
                                     <span class="glyphicon glyphicon-plus-sign"
                                           style="position: relative; top: 2px"></span>
-                                    <b> Add Event</b>
+                                    <b>Add Event</b>
+                                    <span class="caret"></span>
                                 </a>
+                                <ul class="dropdown-menu pull-left">
+                                    <li role ="presentation" class="dropdown-header">
+                                        <a role="menuitem" tabindex="-1" href="/CS2340Servlet/index?create_event=1">
+                                            Create <b>ONE</b>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="dropdown-header">
+                                        <a role="menuitem" tabindex="-1" href="/CS2340Servlet/index?create_event=2">
+                                            Create <b>TWO</b>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="dropdown-header">
+                                        <a role="menuitem" tabindex="-1" href="/CS2340Servlet/index?create_event=3">
+                                            Create <b>THREE</b>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="dropdown-header">
+                                        <a role="menuitem" tabindex="-1" href="/CS2340Servlet/index?create_event=5">
+                                            Create <b>FIVE</b>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="dropdown-header">
+                                        <a role="menuitem" tabindex="-1" href="/CS2340Servlet/index?create_event=10">
+                                            Create <b>TEN</b>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="dropdown-header">
+                                        <a role="menuitem" tabindex="-1" href="/CS2340Servlet/index?create_event=20">
+                                            Create <b>TWENTY</b>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                         <br />
-                        <p>Use a for loop using jsp code that for every event in the database, shows
-                        vital statistics about the event that was created. Or something like that.
-                        Can initiate an event creation using a wizard, or, better yet, a side panel
-                        that looked like our overview panel that has a bunch of drop downs, and finally
-                        a search button or something.</p>
+
+                        <%  ArrayList<Event> events = (ArrayList<Event>) session.getAttribute("events");
+                            int numberOfEvents = 0;
+                            if (events != null) {
+                                numberOfEvents = events.size();
+                            }
+                            for (int i = 0; i < numberOfEvents; i++) { %>
+                        <div id="event-no-<%=i%>">
+                            <div class="panel panel-primary" style="background-color: rgb(223, 240, 216)">
+                                <div class="panel-heading">
+                                    New Event no. <%=i + 1%>
+                                </div>
+                                <div class="panel-body">
+                                    Body Text
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
 
                     </div>
                 </div>
@@ -216,12 +267,7 @@
         });
 
         // Create New Event
-        $("#a-create-event").click(function() {
-            //$("#itinerary-panel-body").append('<p id="foo">Some HTML</p>');
-        });
-
-        // Stuff
-        $("button-createNewItinerary").click(function() {
+        $("#create-event-pill").click(function() {
 
         });
 
