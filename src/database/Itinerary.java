@@ -29,9 +29,10 @@ public class Itinerary {
     }
 
     public Itinerary(String name, String address,  String transportationMode,
-                     String creationDate, int ID, int userID) {
+                     String creationDate, int ID, int userID, int preferenceID) {
         this.ID = ID;
         this.userID = userID;
+        this.preferenceID = preferenceID;
         this.name = name;
         this.address = address;
         this.transportationMode = transportationMode;

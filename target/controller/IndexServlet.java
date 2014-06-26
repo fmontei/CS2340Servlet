@@ -1,9 +1,10 @@
 package controller; 
 
 import database.Itinerary;
+import database.Preference;
 import database.SQLItineraryQuery;
+import database.SQLPreferenceQuery;
 import model.AccountPreference;
-import model.CreateItineraryForm;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,8 +15,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import static model.ServletUtilities.forwardRequest;
-
 @WebServlet(name = "IndexServlet", urlPatterns = { "/index" })
 public class IndexServlet extends HttpServlet {
 
@@ -23,7 +22,7 @@ public class IndexServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
         if (request.getQueryString().contains("itinerary_id=")) {
-            loadActiveItineraryOnIndexPage(request);
+            loadActiveItineraryAndPreferences(request, response);
             response.sendRedirect("jsp/index.jsp");
         } else
             response.sendRedirect("jsp/createLoginSession.jsp");
@@ -49,18 +48,36 @@ public class IndexServlet extends HttpServlet {
         response.sendRedirect("jsp/index.jsp");
     }
 
-    private void loadActiveItineraryOnIndexPage(HttpServletRequest request) {
+    private void loadActiveItineraryAndPreferences(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        try {
+            Itinerary active = loadActiveItinerary(request);
+            loadActivePreferences(active, request);
+        } catch (SQLException ex) {
+            response.sendRedirect("http://google.com");
+            ex.printStackTrace();
+        }
+    }
+
+    private Itinerary loadActiveItinerary(HttpServletRequest request)
+            throws SQLException {
         final HttpSession session = request.getSession();
         final String queryString = request.getQueryString();
         final int startIndex = queryString.indexOf("=") + 1;
         String itineraryId = queryString.substring(startIndex);
-        try {
-            SQLItineraryQuery query = new SQLItineraryQuery();
-            Itinerary activeItinerary = query.getItineraryByID(itineraryId);
-            session.setAttribute("activeItinerary", activeItinerary);
-            session.setAttribute("ITINERARY_NAME", activeItinerary.getName());
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        SQLItineraryQuery query = new SQLItineraryQuery();
+        Itinerary activeItinerary = query.getItineraryByID(itineraryId);
+        session.setAttribute("activeItinerary", activeItinerary);
+        session.setAttribute("ITINERARY_NAME", activeItinerary.getName());
+        return activeItinerary;
+    }
+
+    private void loadActivePreferences(Itinerary activeItinerary,
+                                       HttpServletRequest request)
+            throws SQLException {
+        HttpSession session = request.getSession();
+        final int preferenceID = activeItinerary.getPreferenceID();
+        SQLPreferenceQuery query = new SQLPreferenceQuery();
+        Preference activePreferences = query.getPreferencesByID(preferenceID);
+        session.setAttribute("activePreferences", activePreferences);
     }
 }

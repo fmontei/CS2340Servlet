@@ -35,22 +35,23 @@ public class SQLItineraryQuery extends SQLQuery {
     }
 
     public Itinerary getItineraryByID(final String ID) throws SQLException {
-        final String query = "SELECT * FROM itinerary " +
-                "WHERE ID = ?;";
+        final String query = "SELECT * FROM itinerary WHERE ID = ?;";
         PreparedStatement preparedStatement =
                 super.dbConnection.prepareStatement(query);
         preparedStatement.setString(1, ID);
         ResultSet results = preparedStatement.executeQuery();
         Itinerary itinerary = new Itinerary();
-        while(results.next()) {
+        while (results.next()) {
             String name = results.getString("name");
             String address = results.getString("address");
             String transportationMode = results.getString("transportation");
             String creationDate = results.getString("creationDate");
-            int userID = results.getInt("userID");
             int intID = Integer.parseInt(ID);
+            int userID = results.getInt("userID");
+            int preferenceID = results.getInt("preferenceID");
             itinerary = new Itinerary(name, address,
-                    transportationMode, creationDate, intID, userID);
+                    transportationMode, creationDate, intID, userID,
+                    preferenceID);
             break;
         }
         return itinerary;
@@ -67,12 +68,13 @@ public class SQLItineraryQuery extends SQLQuery {
         ResultSet results = preparedStatement.executeQuery();
         while(results.next()) {
             int ID = results.getInt("ID");
+            int preferenceID = results.getInt("preferenceID");
             String name = results.getString("name");
             String address = results.getString("address");
             String transportationMode = results.getString("transportation");
             String creationDate = results.getString("creationDate");
             Itinerary itinerary = new Itinerary(name, address,
-                    transportationMode, creationDate, ID, userID);
+                    transportationMode, creationDate, ID, userID, preferenceID);
             itineraries.add(itinerary);
         }
         return itineraries;

@@ -29,26 +29,26 @@ public class SQLPreferenceQuery extends SQLQuery {
         return lastID;
     }
 
-    public List<Preference> getPreferencesByUserID(int userID)
+    public Preference getPreferencesByID(int ID)
             throws SQLException {
-        List<Preference> preferences = new ArrayList<Preference>();
         final String query = "SELECT * FROM preference " +
-                "WHERE userID = ?;";
+                "WHERE ID = ?;";
         PreparedStatement preparedStatement =
                 super.dbConnection.prepareStatement(query);
-        preparedStatement.setInt(1, userID);
+        preparedStatement.setInt(1, ID);
         ResultSet results = preparedStatement.executeQuery();
+        Preference preference = new Preference();
         while (results.next()) {
-            int ID = results.getInt("ID");
             float minimumRating = results.getFloat("minimumRating");
             String priceCategory = results.getString("priceCategory");
             int maxDistance = results.getInt("maxDistance");
-            String foodType = results.getString("preferredFoodType");
-            String attractionType = results.getString("preferredAttractionType");
-            Preference preference = new Preference(minimumRating, priceCategory,
+            String foodType = results.getString("foodType");
+            String attractionType = results.getString("attractionType");
+            preference = new Preference(minimumRating, priceCategory,
                     maxDistance, foodType, attractionType);
-            preferences.add(preference);
+            preference.setID(ID);
+            break;
         }
-        return preferences;
+        return preference;
     }
 }
