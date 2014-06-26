@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.SQLException;
 
 @WebServlet(name = "IndexServlet", urlPatterns = { "/index" })
@@ -22,8 +24,7 @@ public class IndexServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
         if (request.getQueryString().contains("itinerary_id=")) {
-            loadActiveItineraryAndPreferences(request);
-            response.sendRedirect("jsp/index.jsp");
+            loadActiveItineraryAndPreferences(request, response);
         } else
             response.sendRedirect("jsp/createLoginSession.jsp");
     }
@@ -48,12 +49,15 @@ public class IndexServlet extends HttpServlet {
         response.sendRedirect("jsp/index.jsp");
     }
 
-    private void loadActiveItineraryAndPreferences(HttpServletRequest request) {
+    private void loadActiveItineraryAndPreferences(HttpServletRequest request,
+                                                   HttpServletResponse response)
+        throws IOException {
         try {
             Itinerary active = loadActiveItinerary(request);
             loadActivePreferences(active, request);
+            response.sendRedirect("jsp/index.jsp");
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
     }
 

@@ -49,17 +49,59 @@
                     <div class="panel-heading">
                         Itineraries
                     </div>
-                    <div class="panel-body">
-                        <p>YOUR CURRENT ITINERARY'S NAME IS: ${ITINERARY_NAME}</p>
-                        <div class="btn-group" >
-                            <button id="button-createNewItinerary" type="button" class="btn btn-default">
-                                <a href="#"
+                    <div class="panel-body" id="itinerary-panel-body">
+                        <ol class="breadcrumb">
+                            <li>
+                                <a href="itinerary_overview.jsp">Select Itinerary</a>
+                            </li>
+                            <li><a href="#"
                                    onclick="showPage1()"
                                    data-toggle="modal"
                                    data-target="#itineraryModal">Create New Itinerary
                                 </a>
-                            </button>
-                        </div>
+                            </li>
+                            <li>
+                                <a id="a-create-event" href="#">Create New Event</a>
+                            </li>
+                        </ol>
+
+                        <ul class="nav nav-pills">
+                            <li class="active">
+                                <a href="#">
+                                    Currently Viewing: ${ITINERARY_NAME}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="badge pull-right">0</span>
+                                    Events
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Map
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Preferences
+                                </a>
+                            </li>
+                            <li class="alert-success" style="float: right">
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-plus-sign"
+                                          style="position: relative; top: 2px"></span>
+                                    <b> Add Event</b>
+                                </a>
+                            </li>
+                        </ul>
+                        <br />
+                        <p>Use a for loop using jsp code that for every event in the database, shows
+                        vital statistics about the event that was created. Or something like that.
+                        Can initiate an event creation using a wizard, or, better yet, a side panel
+                        that looked like our overview panel that has a bunch of drop downs, and finally
+                        a search button or something.</p>
+
                     </div>
                 </div>
             </div>
@@ -112,6 +154,11 @@
             $("#div-travelMode").show();
         });
 
+        // Create New Event
+        $("#a-create-event").click(function() {
+            //$("#itinerary-panel-body").append('<p id="foo">Some HTML</p>');
+        });
+
         // Stuff
         $("button-createNewItinerary").click(function() {
 
@@ -121,7 +168,6 @@
         if (error != 'null') {
             $("#errorMessage").modal("show");
         }
-
     });
 </script>
 
