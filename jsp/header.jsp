@@ -178,14 +178,12 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
                                 <ul class="dropdown-menu">
                                     <!-- If there are no itineraries -->
                                     <li class="dropdown-header">
-                                        <a href="#" data-toggle="modal" data-target="#newItineraryForm">Create New Itinerary</a>
+                                        <a href="#"
+                                           onclick="showPage1()"
+                                           data-toggle="modal"
+                                           data-target="#itineraryModal">Create New Itinerary
+                                        </a>
                                     </li>
-                                    <!-- If there are itineraries -->
-                                    <!-- <li class="dropdown-header"> Itinerary 1 </li>
-                                    <li class="divider"></li>
-                                    <li class="dropdown-header">
-                                        Create New Itinerary
-                                    </li> -->
                                 </ul>
                             </li>
                             <li><a href="/CS2340Servlet/jsp/update_account.jsp">Settings</a></li>
@@ -297,7 +295,6 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
             </div>
         </div>
     </div>
-
 
 <% } %>
     
