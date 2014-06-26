@@ -22,7 +22,7 @@ public class IndexServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
         if (request.getQueryString().contains("itinerary_id=")) {
-            loadActiveItineraryAndPreferences(request, response);
+            loadActiveItineraryAndPreferences(request);
             response.sendRedirect("jsp/index.jsp");
         } else
             response.sendRedirect("jsp/createLoginSession.jsp");
@@ -48,12 +48,11 @@ public class IndexServlet extends HttpServlet {
         response.sendRedirect("jsp/index.jsp");
     }
 
-    private void loadActiveItineraryAndPreferences(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    private void loadActiveItineraryAndPreferences(HttpServletRequest request) {
         try {
             Itinerary active = loadActiveItinerary(request);
             loadActivePreferences(active, request);
         } catch (SQLException ex) {
-            response.sendRedirect("http://google.com");
             ex.printStackTrace();
         }
     }
