@@ -15,7 +15,7 @@ function showPage2() {
     $("#form_page_4").hide();
 }
 
-function showPage3() {
+function showPage3(myMap) {
     // Check if page 2 fields are empty
     var check = checkIfPreviousPageHasEmptyFields(2);
     if (!check) return;
@@ -23,7 +23,7 @@ function showPage3() {
     $("#form_page_2").hide();
     $("#form_page_3").show();
     $("#form_page_4").hide();
-    initialize();
+    initialize(myMap);
 }
 
 function showPage4() {
@@ -50,14 +50,14 @@ function checkIfPreviousPageHasEmptyFields(pageNum) {
 
 var geocoder;
 var map;
-function initialize() {
+function initialize(myMap) {
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(-34.397, 150.644);
     var mapOptions = {
         zoom: 8,
         center: latlng
     };
-    map = new google.maps.Map(document.getElementById("myMap"), mapOptions);
+    map = new google.maps.Map(myMap, mapOptions);
 }
 
 function codeAddress() {

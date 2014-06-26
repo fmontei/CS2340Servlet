@@ -1,3 +1,6 @@
+<!-- Itinerary Wizard Javascript -->
+<script src="/CS2340Servlet/js/itinerary_wizard_js.js"></script>
+
 <div id="itineraryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="itineraryModal" aria-hidden="true">
     <div class="modal-dialog" >
         <div class="modal-content">
@@ -95,7 +98,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                         <button onclick="showPage1()" type="button" class="btn btn-primary">Previous</button>
-                        <button onclick="showPage3()" type="button" class="btn btn-primary">Next</button>
+                        <button onclick="showPage3(document.getElementById('myMap'))" type="button" class="btn btn-primary">Next</button>
                     </div>
                 </div>
 
@@ -152,7 +155,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <button onclick="showPage3()" type="button" class="btn btn-primary">Previous</button>
+                        <button onclick="showPage3(document.getElementById('myMap'))" type="button" class="btn btn-primary">Previous</button>
                         <button type="submit" class="btn btn-success" name="createItineraryButton" id="createItineraryButton">Create</button>
                     </div>
                 </div>
@@ -160,4 +163,5 @@
         </div>
     </div>
 </div>
+
 
