@@ -45,8 +45,8 @@
         </li>
         <% for (int i = 0; i < itineraries.size(); i++) { %>
         <% String className = (i % 2 == 0) ? "active" : ""; %>
-        <li class="<%=className%> ">
-            <a href="#">
+        <li class="<%=className%>">
+            <a href="/CS2340Servlet/index?itinerary_id=<%=itineraries.get(i).getID()%>">
                 <form action="/CS2340Servlet/itinerary" method="POST">
                     <button type="submit"
                             value="<%=itineraries.get(i).getID()%>"

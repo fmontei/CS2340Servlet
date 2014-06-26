@@ -4,18 +4,15 @@ import model.AccountCreateForm;
 
 import java.sql.SQLException;
 import java.util.List;
-/*
+
 public class TestDB {
     public static void main(String... args)  {
-        Itinerary it = new Itinerary("b", "b", "b", 41);
         try {
-            //User u = new User("u", "u", "u", "u");
-            //DataManager.createUser(u);
-            List<Itinerary> its = DataManager.getItineraryByUserID(41);
-            String s = its.get(0).getCreationDate();
-            System.out.println(s);
+            SQLItineraryQuery query = new SQLItineraryQuery();
+            Itinerary activeItinerary = query.getItineraryByID(new String("12"));
+            System.out.println(activeItinerary.getName());
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-}*/
+}

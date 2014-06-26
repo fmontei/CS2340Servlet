@@ -50,7 +50,7 @@
                         Itineraries
                     </div>
                     <div class="panel-body">
-                        <p>Print itineraries here</p>
+                        <p>YOUR CURRENT ITINERARY'S NAME IS: ${ITINERARY_NAME}</p>
                         <div class="btn-group" >
                             <button id="button-createNewItinerary" type="button" class="btn btn-default">
                                 <a href="#"

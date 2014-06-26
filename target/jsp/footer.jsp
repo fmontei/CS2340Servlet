@@ -14,7 +14,7 @@
 
     <!-- Itinerary Wizard -->
     <%@ include file="itinerary_wizard.jsp" %>
-    
+
     <!-- Google Maps Javascript -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwnaM0fAa8jqx3O7ZdABTaWmbOW3Uft2Y"></script>
 
