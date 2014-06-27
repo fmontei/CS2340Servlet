@@ -1,5 +1,8 @@
 <%@ page import="database.User" %>
 <%@ page import="database.Event" %>
+<%@ page import="database.Itinerary" %>
+<%@ page import="database.SQLPreferenceQuery" %>
+<%@ page import="database.Preference" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="org.json.simple.JSONArray" %>
 <%@ page import="org.json.simple.JSONObject" %>
@@ -282,9 +285,17 @@
                                     } else {
                                         if (session.getAttribute("businesses") != null) {
                                             JSONArray businesses = (JSONArray) session.getAttribute("businesses");
+                                            int count = 0;
                                             for (int j = 0; j < businesses.size(); j++) {
                                                 JSONObject business = (JSONObject) businesses.get(j);
                                                 String businessName = business.get("name").toString();
+                                                String businessRating = business.get("rating").toString();
+
+                                                Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
+                                                final int preferenceID = activeItinerary.getPreferenceID();
+                                                SQLPreferenceQuery query = new SQLPreferenceQuery();
+                                                Preference activePreferences = query.getPreferencesByID(preferenceID);
+                                                if (Float.parseFloat(businessRating) >= activePreferences.getMinimumRating()) {
                                     %>  
                                         <div class="row" style="padding-top:20px; padding-left:5px">
                                             <div class="col-md-6">
@@ -292,18 +303,23 @@
                                                     <span class="input-group-addon">
                                                         <input type="radio" name="eventLocation<%=i%>" value="<%= businessName %>">
                                                     </span>
-                                                    <input type="text" class="form-control" value="<%= businessName %>" readonly>
+                                                    <input type="text" class="form-control" value="<%= businessName %> <%= businessRating %>" readonly>
                                                 </div>
                                             </div>
                                         </div>
-                                    <%
+                                    <%  
+                                                    count++;
+                                                }
                                             }
                                     %>
 
                                         <div class="row" style="padding-top:20px; padding-left:5px">
                                             <div class="col-md-6">
                                                 <div class="input-group">
-                                                    <input name="selectBusinessButton" type="submit" class="btn btn-primary" value="Select Location"/>
+                                                    <input name="selectBusinessButton" type="submit" class="btn btn-primary" value="Select Location"/> 
+                                                    <br/>
+                                                    Businesses: <%= businesses.size() %>
+                                                    Shown: <%= count %>
                                                 </div>
                                             </div>
                                         </div>

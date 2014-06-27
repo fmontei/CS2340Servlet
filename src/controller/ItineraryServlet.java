@@ -54,8 +54,12 @@ public class ItineraryServlet extends HttpServlet {
             session.setAttribute("eventStartTime" + eventID, request.getParameter("eventStartTime" + eventID));
             session.setAttribute("eventEndTime" + eventID, request.getParameter("eventEndTime" + eventID));
 
-            YelpAPI yelpAPI = new YelpAPI(request);
-            yelpAPI.queryAPI();
+            try {
+                YelpAPI yelpAPI = new YelpAPI(request);
+                yelpAPI.queryAPI();
+            } catch (SQLException ex) {
+                BrowserErrorHandling.printErrorToBrowser(request, response, ex);
+            }
             response.sendRedirect("jsp/index.jsp");
         } else if (selectBusinessRequested(request)) {
             final HttpSession session = request.getSession();

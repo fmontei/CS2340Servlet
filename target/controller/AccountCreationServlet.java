@@ -28,6 +28,7 @@ public class AccountCreationServlet extends HttpServlet {
         throws IOException, ServletException {
         if (isSubmitButtonClicked(request)) {
             doCreateRequest(request, response);
+            response.sendRedirect("jsp/index.jsp");
         }
     }
 

@@ -22,6 +22,9 @@ import java.util.List;
 import database.DataManager;
 import database.Itinerary;
 import database.Preference;
+import database.SQLPreferenceQuery;
+
+import java.sql.SQLException;
 
 /**
  * Code sample for accessing the Yelp API V2.
@@ -82,7 +85,7 @@ public class YelpAPI {
      * //@param yelpApi <tt>YelpAPI</tt> service instance
      * //@param yelpApiCli <tt>YelpAPICLI</tt> command line arguments
      */
-    public void queryAPI() {
+    public void queryAPI() throws SQLException {
         this.term = getTerm();
         this.location = getLocation();
         this.radius_filter = convertMilesToMeters(getRadiusFilter());
@@ -128,10 +131,13 @@ public class YelpAPI {
         return activeItinerary.getAddress();
     }
 
-    private int getRadiusFilter() {
+    private int getRadiusFilter() throws SQLException{
         HttpSession session = servletRequest.getSession();
-        Preference preference = (Preference) session.getAttribute("activePreference");
-        return preference.getMaxDistance();
+        Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
+        final int preferenceID = activeItinerary.getPreferenceID();
+        SQLPreferenceQuery query = new SQLPreferenceQuery();
+        Preference activePreferences = query.getPreferencesByID(preferenceID);
+        return activePreferences.getMaxDistance();
     }
 
     private int convertMilesToMeters(int miles) {
