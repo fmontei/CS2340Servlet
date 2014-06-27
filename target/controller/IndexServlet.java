@@ -1,9 +1,6 @@
 package controller; 
 
-import database.Itinerary;
-import database.Preference;
-import database.SQLItineraryQuery;
-import database.SQLPreferenceQuery;
+import database.*;
 import model.AccountPreference;
 
 import javax.servlet.ServletException;
@@ -13,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "IndexServlet", urlPatterns = { "/index" })
 public class IndexServlet extends HttpServlet {
@@ -25,8 +22,9 @@ public class IndexServlet extends HttpServlet {
         throws IOException, ServletException {
         if (request.getQueryString().contains("itinerary_id=")) {
             loadActiveItineraryAndPreferences(request, response);
-        } else
+        } else {
             response.sendRedirect("jsp/createLoginSession.jsp");
+        }
     }
 
     @Override
