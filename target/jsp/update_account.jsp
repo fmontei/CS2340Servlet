@@ -97,7 +97,10 @@
 
                 <div id="div-deleteAccount">
                     <div class="form-group">
-                        <button type="submit" name="deleteButton" class="btn btn-default" onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</button>
+                        <button type="submit" name="deleteButton" class="btn btn-default"
+                                onclick="return confirm('Are you sure you want to delete your account?')">
+                            Delete Account
+                        </button>
                     </div>
                 </div>
 

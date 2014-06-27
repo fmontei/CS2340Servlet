@@ -22,9 +22,6 @@ public class IndexServlet extends HttpServlet {
         throws IOException, ServletException {
         if (request.getQueryString().contains("itinerary_id=")) {
             loadActiveItineraryAndPreferences(request, response);
-        } else if (request.getQueryString().contains("create_event=")) {
-            createNewEvents(request);
-            response.sendRedirect("jsp/index.jsp");
         } else {
             response.sendRedirect("jsp/createLoginSession.jsp");
         }
@@ -83,20 +80,5 @@ public class IndexServlet extends HttpServlet {
         SQLPreferenceQuery query = new SQLPreferenceQuery();
         Preference activePreferences = query.getPreferencesByID(preferenceID);
         session.setAttribute("activePreferences", activePreferences);
-    }
-
-    private void createNewEvents(HttpServletRequest request) {
-        final HttpSession session = request.getSession();
-        final String queryString = request.getQueryString();
-        final int startIndex = queryString.indexOf("=") + 1;
-        final String numberOfEvents = queryString.substring(startIndex);
-        List<Event> events = new ArrayList<Event>();
-        if (session.getAttribute("events") != null) {
-            events = (ArrayList<Event>) session.getAttribute("events");
-        }
-        for (int i = 0; i < Integer.parseInt(numberOfEvents); i++) {
-            events.add(new Event());
-        }
-        session.setAttribute("events", events);
     }
 }

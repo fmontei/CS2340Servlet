@@ -162,32 +162,32 @@
                                 </a>
                                 <ul class="dropdown-menu pull-left">
                                     <li role ="presentation" class="dropdown-header">
-                                        <a role="menuitem" tabindex="-1" href="/CS2340Servlet/index?create_event=1">
+                                        <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=1">
                                             Create <b>ONE</b>
                                         </a>
                                     </li>
                                     <li role="presentation" class="dropdown-header">
-                                        <a role="menuitem" tabindex="-1" href="/CS2340Servlet/index?create_event=2">
+                                        <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=2">
                                             Create <b>TWO</b>
                                         </a>
                                     </li>
                                     <li role="presentation" class="dropdown-header">
-                                        <a role="menuitem" tabindex="-1" href="/CS2340Servlet/index?create_event=3">
+                                        <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=3">
                                             Create <b>THREE</b>
                                         </a>
                                     </li>
                                     <li role="presentation" class="dropdown-header">
-                                        <a role="menuitem" tabindex="-1" href="/CS2340Servlet/index?create_event=5">
+                                        <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=5">
                                             Create <b>FIVE</b>
                                         </a>
                                     </li>
                                     <li role="presentation" class="dropdown-header">
-                                        <a role="menuitem" tabindex="-1" href="/CS2340Servlet/index?create_event=10">
+                                        <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=10">
                                             Create <b>TEN</b>
                                         </a>
                                     </li>
                                     <li role="presentation" class="dropdown-header">
-                                        <a role="menuitem" tabindex="-1" href="/CS2340Servlet/index?create_event=20">
+                                        <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=20">
                                             Create <b>TWENTY</b>
                                         </a>
                                     </li>
@@ -203,12 +203,32 @@
                             }
                             for (int i = 0; i < numberOfEvents; i++) { %>
                         <div id="event-no-<%=i%>">
-                            <div class="panel panel-primary" style="background-color: rgb(223, 240, 216)">
+                            <div class="panel panel-primary" style="background-color: rgb(208, 213, 239)">
                                 <div class="panel-heading">
                                     New Event no. <%=i + 1%>
                                 </div>
                                 <div class="panel-body">
-                                    Body Text
+                                    <div class="row">
+
+                                        <form class="form-inline" role="form" action="/CS2340Servlet/itinerary?event_id=<%=i%>" method="POST">
+                                            <div class="form-group" style="padding-left: 20px">
+                                                <input name="eventName" type="text" class="form-control" placeholder="Event Name" />
+                                            </div>
+                                            <div class="form-group" style="padding-left: 20px">
+                                                <input name="eventType" type="text" class="form-control" placeholder="Event Type" />
+                                            </div>
+                                            <div class="form-group" style="padding-left: 20px">
+                                                Start: <input name="eventStartTime" type="time" class="form-control" />
+                                            </div>
+                                            <div class="form-group" style="padding-left: 20px">
+                                                End: <input name="eventEndTime" type="time" class="form-control" />
+                                            </div>
+                                            <div class="form-group" style="float: right; padding-right: 20px">
+                                                <input name="updateEventButton" type="submit" class="form-control btn-primary" />
+                                            </div>
+                                        </form>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
