@@ -1,6 +1,9 @@
 package controller; 
 
-import database.*;
+import database.Itinerary;
+import database.Preference;
+import database.SQLItineraryQuery;
+import database.SQLPreferenceQuery;
 import model.AccountPreference;
 
 import javax.servlet.ServletException;
@@ -11,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 @WebServlet(name = "IndexServlet", urlPatterns = { "/index" })
 public class IndexServlet extends HttpServlet {
@@ -49,7 +50,7 @@ public class IndexServlet extends HttpServlet {
 
     private void loadActiveItineraryAndPreferences(HttpServletRequest request,
                                                    HttpServletResponse response)
-        throws IOException {
+            throws IOException {
         try {
             Itinerary active = loadActiveItinerary(request);
             loadActivePreferences(active, request);

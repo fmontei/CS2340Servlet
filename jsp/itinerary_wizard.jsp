@@ -127,6 +127,8 @@
 
                         <div id="myMap" style="width: 520px; height: 300px;"></div><br />
                         <span class="label label-primary" id="formattedAddress"></span>
+                        <span class="label label-default" id="coordinates"></span>
+                        <input type="hidden" id="coordinates-hidden" name="coordinates" required="false" />
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>

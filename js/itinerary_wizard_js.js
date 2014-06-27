@@ -43,7 +43,7 @@ function checkIfPreviousPageHasEmptyFields(pageNum) {
         if (elements[i].value === "") {
             document.getElementById("createItineraryButton").click();
             return false;
-            }
+        }
     }
     return true;
 }
@@ -69,13 +69,19 @@ function codeAddress() {
                 map: map,
                 position: results[0].geometry.location
             });
+            setFormattedAddress(results[0].formatted_address);
+            setCoordinates(results[0].geometry.location);
         } else {
             alert("Address could not be found for the following reason: " + status);
         }
     });
-        setFormattedAddress(results[0].formatted_address);
-    };
+};
 
 function setFormattedAddress(formattedAddress) {
     $("#formattedAddress").text("Starting Address currently set to: " + formattedAddress);
+}
+
+function setCoordinates(coordinates) {
+    $("#coordinates").text(coordinates);
+    $("#coordinates-hidden").val(coordinates);
 }

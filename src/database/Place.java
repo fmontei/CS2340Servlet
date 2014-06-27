@@ -1,4 +1,4 @@
-package model;
+package database;
 
 public class Place {
     private String name, placeID, formattedAddress;

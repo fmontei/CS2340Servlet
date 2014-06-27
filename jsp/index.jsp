@@ -199,6 +199,14 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li style="float: right">
+                                <a href="#" class="alert-danger" id="create-lodging-pill">
+                                    <span class="glyphicon glyphicon-plus-sign"
+                                          style="position: relative; top: 2px">
+                                    </span>
+                                    <b>Add Lodging</b>
+                                </a>
+                            </li>
                         </ul>
                         <br />
 
