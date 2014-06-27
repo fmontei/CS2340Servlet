@@ -348,6 +348,9 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
                                     String address = place.getFormattedAddress();
                                     int priceLevel = place.getPriceLevel();
                                     double rating = place.getRating();
+                                    boolean openNow = place.isOpenNow();
+                                    String openOrClosed = (openNow) ? "Open" : "Closed";
+                                    String color = (openNow) ? "rgb(0, 153, 0)" : "red";
                         %>
                         <li
                             data-container="body"
@@ -355,7 +358,7 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
                             data-placement="left"
                             data-content="Price level: <%=priceLevel%> | Rating: <%=rating%>">
                             <a class="popLink" href="javascript:void(0);" style="font-size: 10px;">
-                                <b><%=++i%>.<%=placeName%></b> | <%=address%>
+                                <b><%=++i%>.<%=placeName%></b> | <%=address%> | <span style="color: <%=color%>"><%=openOrClosed%></span>
                             </a>
                         </li>
                         <%      } %>

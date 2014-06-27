@@ -70,18 +70,33 @@ public class GooglePlaceService {
 
     private ArrayList<Place> parseJsonResults() throws JSONException {
         ArrayList<Place> placeResults;
-        JSONObject jsonObj = new JSONObject(jsonResults.toString());
-        JSONArray jsonArray = jsonObj.getJSONArray("results");
+        JSONObject mainJsonObj = new JSONObject(jsonResults.toString());
+        JSONArray jsonArray = mainJsonObj.getJSONArray("results");
         placeResults = new ArrayList<Place>(jsonArray.length());
         for (int i = 0; i < jsonArray.length(); i++) {
             final JSONObject jsonObject = jsonArray.getJSONObject(i);
-            String name = jsonObject.getString("name");
-            String placeID = jsonObject.getString("place_id");
-            String formattedAddress = jsonObject.getString("formatted_address");
-            int priceLevel = jsonObject.getInt("price_level");
-            double rating = jsonObject.getDouble("rating");
+            String name = "", placeID = "", formattedAddress = "";
+            int priceLevel = 0;
+            double rating = 0;
+            boolean openNow = false;
+            if (jsonObject.has("name"))
+                name = jsonObject.getString("name");
+            if (jsonObject.has("place_id"))
+                placeID = jsonObject.getString("place_id");
+            if (jsonObject.has("formatted_address"))
+                formattedAddress = jsonObject.getString("formatted_address");
+            if (jsonObject.has("price_level"))
+                priceLevel = jsonObject.getInt("price_level");
+            if (jsonObject.has("rating"))
+                rating = jsonObject.getDouble("rating");
+            if (jsonObject.has("opening_hours")) {
+                JSONObject hours = jsonObject.getJSONObject("opening_hours");
+                if (hours.has("open_now")) {
+                    openNow = hours.getBoolean("open_now");
+                }
+            }
             final Place place = new Place(name, placeID, formattedAddress,
-                    priceLevel, rating);
+                    priceLevel, rating, openNow);
             placeResults.add(place);
         }
         return placeResults;

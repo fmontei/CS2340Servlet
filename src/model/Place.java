@@ -2,16 +2,18 @@ package model;
 
 public class Place {
     private String name, placeID, formattedAddress;
-    int priceLevel;
-    double rating;
+    private int priceLevel;
+    private double rating;
+    private boolean openNow;
 
     public Place(String name, String placeID, String formattedAddress,
-                 int priceLevel, double rating) {
+                 int priceLevel, double rating, boolean openNow) {
         this.name = name;
         this.placeID = placeID;
         this.formattedAddress = formattedAddress;
         this.priceLevel = priceLevel;
         this.rating = rating;
+        this.openNow = openNow;
     }
 
     public String getName() {
@@ -28,5 +30,8 @@ public class Place {
     }
     public double getRating() {
         return rating;
+    }
+    public boolean isOpenNow() {
+        return openNow;
     }
 }

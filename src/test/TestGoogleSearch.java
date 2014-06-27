@@ -7,7 +7,7 @@ public class TestGoogleSearch {
     public static void main(String... args) {
         List<Place> places;
         try {
-            places = new GooglePlaceService().textSearch("pizza in atlanta");
+            places = new GooglePlaceService().textSearch("pizza in china");
             System.out.println("Printing results:");
             for (Place p : places) {
                 System.out.println(p.getName() + "\t" + p.getPriceLevel());
