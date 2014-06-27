@@ -10,6 +10,7 @@
     <link href="/CS2340Servlet/css/bootstrap.css" rel="stylesheet">
     <link href="/CS2340Servlet/css/dashboard.css" rel="stylesheet">
     <link href="/CS2340Servlet/css/lavish-bootstrap.css" rel="stylesheet">
+    <link href="/CS2340Servlet/css/jquery.raty.css" rel="stylesheet" type="text/css">
 
     <!-- Jquery Javascript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>

@@ -3,6 +3,7 @@ package controller;
 import database.DataManager;
 import model.CreateItineraryForm;
 import model.EventForm;
+import model.YelpAPI;
 import model.GooglePlaceService;
 import database.Place;
 
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "ItineraryServlet", urlPatterns = { "/itinerary" })
 public class ItineraryServlet extends HttpServlet {
@@ -29,7 +32,6 @@ public class ItineraryServlet extends HttpServlet {
             response.sendRedirect("jsp/itinerary_overview.jsp");
         }
     }
-
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
@@ -42,6 +44,31 @@ public class ItineraryServlet extends HttpServlet {
         } else if (updateEventRequested(request)) {
             EventForm eventForm = new EventForm(request);
             eventForm.updateEvent();
+
+            HttpSession session = request.getSession();
+            final String queryString = request.getQueryString();
+            final int startIndex = queryString.indexOf("=") + 1;
+            String eventID = queryString.substring(startIndex);
+            session.setAttribute("eventName" + eventID, request.getParameter("eventName" + eventID));
+            session.setAttribute("eventType" + eventID, request.getParameter("eventType" + eventID));
+            session.setAttribute("eventStartTime" + eventID, request.getParameter("eventStartTime" + eventID));
+            session.setAttribute("eventEndTime" + eventID, request.getParameter("eventEndTime" + eventID));
+
+            try {
+                YelpAPI yelpAPI = new YelpAPI(request);
+                yelpAPI.queryAPI();
+            } catch (SQLException ex) {
+                BrowserErrorHandling.printErrorToBrowser(request, response, ex);
+            }
+            response.sendRedirect("jsp/index.jsp");
+        } else if (selectBusinessRequested(request)) {
+            final HttpSession session = request.getSession();
+            final String queryString = request.getQueryString();
+            final int startIndex = queryString.indexOf("=") + 1;
+            final String eventID = queryString.substring(startIndex);
+            session.setAttribute("isEvent" + eventID + "Set", "true");
+            session.setAttribute("eventLocation" + eventID, request.getParameter("eventLocation" + eventID));
+            response.sendRedirect("jsp/index.jsp");
         } else if (textSearchRequest(request)) {
             doSearchRequest(request, response);
         }
@@ -66,6 +93,10 @@ public class ItineraryServlet extends HttpServlet {
 
     private boolean updateEventRequested(HttpServletRequest request) {
         return request.getParameter("updateEventButton") != null;
+    }
+
+    private boolean selectBusinessRequested(HttpServletRequest request) {
+        return request.getParameter("selectBusinessButton") != null;
     }
 
     private boolean textSearchRequest(HttpServletRequest request) {

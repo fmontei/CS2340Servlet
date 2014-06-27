@@ -20,6 +20,7 @@ public class EventForm {
         final String queryString = request.getQueryString();
         final int startIndex = queryString.indexOf("=") + 1;
         final String numberOfEvents = queryString.substring(startIndex);
+
         List<Event> events = new ArrayList<Event>();
         if (session.getAttribute("events") != null) {
             events = (ArrayList<Event>) session.getAttribute("events");

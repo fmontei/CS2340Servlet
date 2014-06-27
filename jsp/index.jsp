@@ -1,6 +1,12 @@
 <%@ page import="database.User" %>
 <%@ page import="database.Event" %>
+<%@ page import="database.Itinerary" %>
+<%@ page import="database.SQLPreferenceQuery" %>
+<%@ page import="database.Preference" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="org.json.simple.JSONArray" %>
+<%@ page import="org.json.simple.JSONObject" %>
+
 
 <% String pageName = "Home"; %>
 <% String preferredTravelMode = ""; %>
@@ -215,35 +221,119 @@
                         <div id="event-no-<%=i%>">
                             <div class="panel panel-<%=color%>">
                                 <div class="panel-heading">
-                                    New Event no. <%=i + 1%>
+                                    <% 
+                                        String isEventSet = (String) session.getAttribute("isEvent" + i + "Set");
+                                        String temp = "true";
+                                        if (isEventSet != null && isEventSet.equals(temp)) { %>
+
+                                        <p>
+                                            Event no. <%=i + 1%>: <%= session.getAttribute("eventName" + i) %>
+                                        </p>
+
+                                    <% } else { %>
+                                        New Event no. <%=i + 1%>
+                                    <% } %>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row">
 
                                         <form class="form-inline" role="form" action="/CS2340Servlet/itinerary?event_id=<%=i%>" method="POST">
-                                            <div class="form-group" style="padding-left: 20px">
-                                                <input name="eventName<%=i%>" type="text" class="form-control" placeholder="Event Name" />
+                                            <% if (session.getAttribute("eventName"+i) != null) { %>
+                                                <div class="form-group" style="padding-left: 20px"> 
+                                                    <input name="eventName<%=i%>" type="text" class="form-control" placeholder="Event Name" value='<%=session.getAttribute("eventName"+i)%>'/> 
+                                                </div>
+                                                <div class="form-group" style="padding-left: 15px">
+                                                    <input name="eventType<%=i%>" type="text" class="form-control" placeholder="Event Type" value='<%=session.getAttribute("eventType"+i)%>'/>
+                                                </div>
+                                                <div class="form-group" style="padding-left: 15px">
+                                                    Start: <input name="eventStartTime<%=i%>" type="time" class="form-control" value='<%=session.getAttribute("eventStartTime"+i)%>'/>
+                                                </div>
+                                                <div class="form-group" style="padding-left: 15px">
+                                                    End: <input name="eventEndTime<%=i%>" type="time" class="form-control" value='<%=session.getAttribute("eventEndTime"+i)%>'/>
+                                                </div>
+                                                <div class="form-group" style="float: right; padding-right: 15px">
+                                                    <input name="updateEventButton" type="submit" class="form-control btn-primary" value="Search Location"/>
+                                                </div>
+                                            <% } else { %>
+                                                <div class="form-group" style="padding-left: 20px">
+                                                    <input name="eventName<%=i%>" type="text" class="form-control" placeholder="Event Name"/> 
+                                                </div>
+                                                <div class="form-group" style="padding-left: 15px">
+                                                    <input name="eventType<%=i%>" type="text" class="form-control" placeholder="Event Type" />
+                                                </div>
+                                                <div class="form-group" style="padding-left: 15px">
+                                                    Start: <input name="eventStartTime<%=i%>" type="time" class="form-control" />
+                                                </div>
+                                                <div class="form-group" style="padding-left: 15px">
+                                                    End: <input name="eventEndTime<%=i%>" type="time" class="form-control" />
+                                                </div>
+                                                <div class="form-group" style="float: right; padding-right: 15px">
+                                                    <input name="updateEventButton" type="submit" class="form-control btn-primary" value="Search Location"/>
+                                                </div>
+                                            <% } %>
+                                    </div>
+
+
+                                    <% if (isEventSet != null && isEventSet.equals(temp)) { %>
+                                        <div class="row" style="padding-top:20px; padding-left:5px">
+                                            <div class="col-md-6">
+                                                Event Location: <input type="text" class="form-control" value="<%= session.getAttribute("eventLocation" + i) %>" readonly>
                                             </div>
-                                            <div class="form-group" style="padding-left: 20px">
-                                                <input name="eventType<%=i%>" type="text" class="form-control" placeholder="Event Type" />
+                                        </div>
+
+                                    <% 
+                                    } else {
+                                        if (session.getAttribute("businesses") != null) {
+                                            JSONArray businesses = (JSONArray) session.getAttribute("businesses");
+                                            int count = 0;
+                                            for (int j = 0; j < businesses.size(); j++) {
+                                                JSONObject business = (JSONObject) businesses.get(j);
+                                                String businessName = business.get("name").toString();
+                                                String businessRating = business.get("rating").toString();
+
+                                                Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
+                                                final int preferenceID = activeItinerary.getPreferenceID();
+                                                SQLPreferenceQuery query = new SQLPreferenceQuery();
+                                                Preference activePreferences = query.getPreferencesByID(preferenceID);
+                                                if (Float.parseFloat(businessRating) >= activePreferences.getMinimumRating()) {
+                                    %>  
+                                        <div class="row" style="padding-top:20px; padding-left:5px">
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <input type="radio" name="eventLocation<%=i%>" value="<%= businessName %>">
+                                                    </span>
+                                                    <input type="text" class="form-control" value="<%= businessName %> <%= businessRating %>" readonly>
+                                                </div>
                                             </div>
-                                            <div class="form-group" style="padding-left: 20px">
-                                                Start: <input name="eventStartTime<%=i%>" type="time" class="form-control" />
+                                        </div>
+                                    <%  
+                                                    count++;
+                                                }
+                                            }
+                                    %>
+
+                                        <div class="row" style="padding-top:20px; padding-left:5px">
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <input name="selectBusinessButton" type="submit" class="btn btn-primary" value="Select Location"/> 
+                                                    <br/>
+                                                    Businesses: <%= businesses.size() %>
+                                                    Shown: <%= count %>
+                                                </div>
                                             </div>
-                                            <div class="form-group" style="padding-left: 20px">
-                                                End: <input name="eventEndTime<%=i%>" type="time" class="form-control" />
-                                            </div>
-                                            <div class="form-group" style="float: right; padding-right: 20px">
-                                                <input name="updateEventButton" type="submit" class="form-control btn-primary" />
-                                            </div>
+                                        </div>
+
+                                    <%
+                                        }
+                                    }
+                                    %>
                                         </form>
 
-                                    </div>
                                 </div>
                             </div>
                         </div>
                         <% } %>
-
                     </div>
                 </div>
             </div>
