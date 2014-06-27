@@ -9,6 +9,7 @@ import java.util.List;
 
 public class EventForm {
     private HttpServletRequest request;
+    private int eventID = 0;
 
     public EventForm(HttpServletRequest request) {
         this.request = request;
@@ -19,6 +20,7 @@ public class EventForm {
         final String queryString = request.getQueryString();
         final int startIndex = queryString.indexOf("=") + 1;
         final String numberOfEvents = queryString.substring(startIndex);
+
         List<Event> events = new ArrayList<Event>();
         if (session.getAttribute("events") != null) {
             events = (ArrayList<Event>) session.getAttribute("events");
@@ -29,10 +31,10 @@ public class EventForm {
         session.setAttribute("events", events);
     }
 
-    public int updateEvent() {
+    public void updateEvent() {
         final String queryString = request.getQueryString();
         final int startIndex = queryString.indexOf("=") + 1;
-        String eventID = queryString.substring(startIndex);
-        return Integer.parseInt(eventID);
+        String rawEventID = queryString.substring(startIndex);
+        eventID = Integer.parseInt(rawEventID);
     }
 }

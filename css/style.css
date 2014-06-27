@@ -2,6 +2,11 @@ body,html {
     height: 100%;
 }
 
+#itinerary-side-bar {
+    left: auto;
+    right: 0px;
+}
+
 .customCarousel {
     position: relative;
     width: 100%; /* for IE 6 */
@@ -99,9 +104,11 @@ body,html {
     cursor: pointer;
     height: 20px;
 }
+
 #map-canvas {
     height: 400px;
 }
+
 #wrapper {
     min-height: 100%;
 }

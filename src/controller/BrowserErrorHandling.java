@@ -4,12 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.sql.SQLException;
 
 public class BrowserErrorHandling {
     public static final void printErrorToBrowser(HttpServletRequest request,
                                      HttpServletResponse response,
-                                     SQLException ex) {
+                                     Exception ex) {
         try {
             StringWriter sw = new StringWriter();
             ex.printStackTrace(new PrintWriter(sw));

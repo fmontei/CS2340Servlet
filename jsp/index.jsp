@@ -101,21 +101,6 @@
                     Welcome <%=request.getSession().getAttribute("welcomeName")%>!
                 </h1>
 
-                <%
-                if (session.getAttribute("businesses") != null) {
-                    JSONArray businesses = (JSONArray) session.getAttribute("businesses");
-                    for (int i = 0; i < businesses.size(); i++) {
-                        JSONObject business = (JSONObject) businesses.get(i);
-                        String businessID = business.get("id").toString();
-                %>
-                    <p>
-
-                    </p>
-                <%
-                    }
-                }
-                %>
-
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         Facebook Login
@@ -150,8 +135,8 @@
                         </ol>
 
                         <ul class="nav nav-pills">
-                            <li class="active">
-                                <a href="#">
+                            <li>
+                                <a href="#" class="alert-success" style="color: rgb(66, 139, 202); font-weight: bold">
                                     Currently Viewing: ${ITINERARY_NAME}
                                 </a>
                             </li>
@@ -168,12 +153,12 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="#" id="map-trigger">
                                     Map
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="#" id="preferences-trigger">
                                     Preferences
                                 </a>
                             </li>
@@ -220,39 +205,111 @@
                         </ul>
                         <br />
 
-                        <%  for (int i = 0; i < numberOfEvents; i++) { %>
+                        <% for (int i = 0; i < numberOfEvents; i++) { %>
+                        <% String color = (i % 2 == 0) ? "info" : "success"; %>
                         <div id="event-no-<%=i%>">
-                            <div class="panel panel-primary" style="background-color: rgb(208, 213, 239)">
+                            <div class="panel panel-<%=color%>">
                                 <div class="panel-heading">
-                                    New Event no. <%=i + 1%>
+                                    <% 
+                                        String isEventSet = (String) session.getAttribute("isEvent" + i + "Set");
+                                        String temp = "true";
+                                        if (isEventSet != null && isEventSet.equals(temp)) { %>
+
+                                        <p>
+                                            Event no. <%=i + 1%>: <%= session.getAttribute("eventName" + i) %>
+                                        </p>
+
+                                    <% } else { %>
+                                        New Event no. <%=i + 1%>
+                                    <% } %>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row">
 
                                         <form class="form-inline" role="form" action="/CS2340Servlet/itinerary?event_id=<%=i%>" method="POST">
-                                            <div class="form-group" style="padding-left: 20px">
-                                                <input name="eventName<%=i%>" type="text" class="form-control" placeholder="Event Name" />
+                                            <% if (session.getAttribute("eventName"+i) != null) { %>
+                                                <div class="form-group" style="padding-left: 20px"> 
+                                                    <input name="eventName<%=i%>" type="text" class="form-control" placeholder="Event Name" value='<%=session.getAttribute("eventName"+i)%>'/> 
+                                                </div>
+                                                <div class="form-group" style="padding-left: 15px">
+                                                    <input name="eventType<%=i%>" type="text" class="form-control" placeholder="Event Type" value='<%=session.getAttribute("eventType"+i)%>'/>
+                                                </div>
+                                                <div class="form-group" style="padding-left: 15px">
+                                                    Start: <input name="eventStartTime<%=i%>" type="time" class="form-control" value='<%=session.getAttribute("eventStartTime"+i)%>'/>
+                                                </div>
+                                                <div class="form-group" style="padding-left: 15px">
+                                                    End: <input name="eventEndTime<%=i%>" type="time" class="form-control" value='<%=session.getAttribute("eventEndTime"+i)%>'/>
+                                                </div>
+                                                <div class="form-group" style="float: right; padding-right: 15px">
+                                                    <input name="updateEventButton" type="submit" class="form-control btn-primary" value="Search Location"/>
+                                                </div>
+                                            <% } else { %>
+                                                <div class="form-group" style="padding-left: 20px">
+                                                    <input name="eventName<%=i%>" type="text" class="form-control" placeholder="Event Name"/> 
+                                                </div>
+                                                <div class="form-group" style="padding-left: 15px">
+                                                    <input name="eventType<%=i%>" type="text" class="form-control" placeholder="Event Type" />
+                                                </div>
+                                                <div class="form-group" style="padding-left: 15px">
+                                                    Start: <input name="eventStartTime<%=i%>" type="time" class="form-control" />
+                                                </div>
+                                                <div class="form-group" style="padding-left: 15px">
+                                                    End: <input name="eventEndTime<%=i%>" type="time" class="form-control" />
+                                                </div>
+                                                <div class="form-group" style="float: right; padding-right: 15px">
+                                                    <input name="updateEventButton" type="submit" class="form-control btn-primary" value="Search Location"/>
+                                                </div>
+                                            <% } %>
+                                    </div>
+
+
+                                    <% if (isEventSet != null && isEventSet.equals(temp)) { %>
+                                        <div class="row" style="padding-top:20px; padding-left:5px">
+                                            <div class="col-md-6">
+                                                Event Location: <input type="text" class="form-control" value="<%= session.getAttribute("eventLocation" + i) %>" readonly>
                                             </div>
-                                            <div class="form-group" style="padding-left: 20px">
-                                                <input name="eventType<%=i%>" type="text" class="form-control" placeholder="Event Type" />
+                                        </div>
+
+                                    <% 
+                                    } else {
+                                        if (session.getAttribute("businesses") != null) {
+                                            JSONArray businesses = (JSONArray) session.getAttribute("businesses");
+                                            for (int j = 0; j < businesses.size(); j++) {
+                                                JSONObject business = (JSONObject) businesses.get(j);
+                                                String businessName = business.get("name").toString();
+                                    %>  
+                                        <div class="row" style="padding-top:20px; padding-left:5px">
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <input type="radio" name="eventLocation<%=i%>" value="<%= businessName %>">
+                                                    </span>
+                                                    <input type="text" class="form-control" value="<%= businessName %>" readonly>
+                                                </div>
                                             </div>
-                                            <div class="form-group" style="padding-left: 20px">
-                                                Start: <input name="eventStartTime<%=i%>" type="time" class="form-control" />
+                                        </div>
+                                    <%
+                                            }
+                                    %>
+
+                                        <div class="row" style="padding-top:20px; padding-left:5px">
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <input name="selectBusinessButton" type="submit" class="btn btn-primary" value="Select Location"/>
+                                                </div>
                                             </div>
-                                            <div class="form-group" style="padding-left: 20px">
-                                                End: <input name="eventEndTime<%=i%>" type="time" class="form-control" />
-                                            </div>
-                                            <div class="form-group" style="float: right; padding-right: 20px">
-                                                <input name="updateEventButton" type="submit" class="form-control btn-primary" />
-                                            </div>
+                                        </div>
+
+                                    <%
+                                        }
+                                    }
+                                    %>
                                         </form>
 
-                                    </div>
                                 </div>
                             </div>
                         </div>
                         <% } %>
-
                     </div>
                 </div>
             </div>
@@ -283,6 +340,7 @@
     </div>
 </div>
 
+
 <!-- Index Javascript -->
 <script type="text/javascript">
     var error = '<%= request.getAttribute("error")%>';
@@ -290,6 +348,7 @@
         // Initial view
         $("#div-overview").show();
         $("#div-travelMode").hide();
+        $("#itinerary-side-bar").show();
 
         // Sidebar
         $("#a-overview").click(function() {
@@ -298,6 +357,7 @@
             $("#div-overview").show();
             $("#div-travelMode").hide();
         });
+
         $("#a-travelMode").click(function() {
             $("#li-overview").removeClass("active");
             $("#li-travelMode").addClass("active");
@@ -305,9 +365,9 @@
             $("#div-travelMode").show();
         });
 
-        // Create New Event
-        $("#create-event-pill").click(function() {
-
+        $("#preferences-trigger").click(function() {
+            $("#itinerary-side-bar").show();
+            $("#preferences-itinerary-overview").show();
         });
 
         // Error Message

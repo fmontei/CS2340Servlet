@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import database.DataManager;
+import database.Itinerary;
+import database.Preference;
 
 /**
  * Code sample for accessing the Yelp API V2.
@@ -37,9 +39,9 @@ public class YelpAPI {
     private HttpServletRequest servletRequest;
 
     private static final String API_HOST = "api.yelp.com";
-    private String term = "restaurant";
+    private String term;
     private String location; // pull from itinerary
-    private int radius_filter = 20000; // in meters 40000 max ~ 25 miles
+    private int radius_filter; // in meters 40000 max ~ 25 miles
     private int offset = 0; // offset number of businesses returned by
     private int limit = 10; // number of businesses returned
     private static final String SEARCH_PATH = "/v2/search";
@@ -83,6 +85,7 @@ public class YelpAPI {
     public void queryAPI() {
         this.term = getTerm();
         this.location = getLocation();
+        this.radius_filter = convertMilesToMeters(getRadiusFilter());
         String searchResponseJSON = searchForBusinessesByLocation();
 
         JSONParser parser = new JSONParser();
@@ -104,7 +107,7 @@ public class YelpAPI {
         //             businesses.size(), firstBusinessID));
 
         //         // Select the first business and display business details
-        //     String businessResponseJSON = yelpApi.searchByBusinessId(firstBusinessID.toString());
+        //     String businessResponseJSON = searchByBusinessId(firstBusinessID.toString());
         //     System.out.println(String.format("Result for business \"%s\" found:", firstBusinessID));
         //     System.out.println(businessResponseJSON);
         // }
@@ -116,12 +119,24 @@ public class YelpAPI {
         final String queryString = servletRequest.getQueryString();
         final int startIndex = queryString.indexOf("=") + 1;
         String eventID = queryString.substring(startIndex);
-        System.out.println("eventType" + eventID);
-        return (String) servletRequest.getAttribute("eventType" + eventID); 
+        return (String) servletRequest.getParameter("eventType" + eventID); 
     }
 
     private String getLocation() {
-        return (String) servletRequest.getAttribute("ITINERARY_NAME");
+        HttpSession session = servletRequest.getSession();
+        Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
+        return activeItinerary.getAddress();
+    }
+
+    private int getRadiusFilter() {
+        HttpSession session = servletRequest.getSession();
+        Preference preference = (Preference) session.getAttribute("activePreference");
+        return preference.getMaxDistance();
+    }
+
+    private int convertMilesToMeters(int miles) {
+        int meters = miles*40000/25;
+        return meters;
     }
 
     /**
@@ -136,14 +151,11 @@ public class YelpAPI {
      */
     public String searchForBusinessesByLocation() {
         OAuthRequest request = createOAuthRequest(SEARCH_PATH);
-        System.out.println(term);
         request.addQuerystringParameter("term", term);
-        System.out.println("URL: " + request.getCompleteUrl());
         request.addQuerystringParameter("location", location);
         request.addQuerystringParameter("limit", String.valueOf(limit));
-        // request.addQuerystringParameter("offset", String.valueOf(offset));
-        // request.addQuerystringParameter("radius_filter", String.valueOf(radius_filter));
-        System.out.println("URL: " + request.getCompleteUrl());
+        request.addQuerystringParameter("offset", String.valueOf(offset));
+        request.addQuerystringParameter("radius_filter", String.valueOf(radius_filter));
         return sendRequestAndGetResponse(request);
     }
 

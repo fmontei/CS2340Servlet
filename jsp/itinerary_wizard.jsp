@@ -46,10 +46,10 @@
                                 </span>
                                 <input type="number" class="form-control" id="minRating" name="minRating"
                                        required="required"
-                                       min="0"
+                                       min="1"
                                        max="5"
                                        step="0.5"
-                                       placeholder = "Enter a number between 0 and 5"
+                                       placeholder = "Enter a number between 1 and 5"
                                        pattern="\b[0-5]|[0-4][.][5]\b"
                                         />
                             </div>
@@ -75,9 +75,10 @@
                                 </span>
                                 <input type="number" class="form-control" id="maxDistance" name="maxDistance"
                                        required="required"
-                                       min="1"
-                                       max="100"
-                                       placeholder = "Enter a number between 1 and 100" />
+                                       min="5"
+                                       max="25"
+                                       step="5"
+                                       placeholder = "Enter a number between 5 and 25" />
                             </div>
                         </label><br /><br />
  <!--                        <label>Food Preference *

@@ -45,7 +45,7 @@ public class SQLPreferenceQuery extends SQLQuery {
             String foodType = results.getString("foodType");
             String attractionType = results.getString("attractionType");
             preference = new Preference(minimumRating, priceCategory,
-                    maxDistance, foodType, attractionType);
+                    maxDistance, attractionType, foodType);
             preference.setID(ID);
             break;
         }

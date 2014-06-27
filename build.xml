@@ -66,7 +66,7 @@
         <copy file="${basedir}/context.xml" todir="${basedir}/target/META-INF" />
         <copy file="${basedir}/lib/mysql-connector-java-5.0.8-bin.jar" todir="${catalina.home}/lib" />
         <copy file="${basedir}/lib/mysql-connector-java-5.0.8-bin.jar" todir="${basedir}/target/WEB-INF/lib" />
-
+        <copy file="${basedir}/lib/org.json-20120521.jar" todir="${basedir}/target/WEB-INF/lib" />
 
         <copy todir="${basedir}/target/css">
                 <fileset dir="${basedir}/css"></fileset>

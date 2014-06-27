@@ -1,4 +1,4 @@
-    </div> <!-- wrapper /div -->
+</div> <!-- wrapper /div -->
     <div id="footer" style="bottom: 0;">
         <div class="container">
             <div class="row">
