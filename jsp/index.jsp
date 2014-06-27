@@ -212,16 +212,16 @@
 
                                         <form class="form-inline" role="form" action="/CS2340Servlet/itinerary?event_id=<%=i%>" method="POST">
                                             <div class="form-group" style="padding-left: 20px">
-                                                <input name="eventName" type="text" class="form-control" placeholder="Event Name" />
+                                                <input name="eventName<%=i%>" type="text" class="form-control" placeholder="Event Name" />
                                             </div>
                                             <div class="form-group" style="padding-left: 20px">
-                                                <input name="eventType" type="text" class="form-control" placeholder="Event Type" />
+                                                <input name="eventType<%=i%>" type="text" class="form-control" placeholder="Event Type" />
                                             </div>
                                             <div class="form-group" style="padding-left: 20px">
-                                                Start: <input name="eventStartTime" type="time" class="form-control" />
+                                                Start: <input name="eventStartTime<%=i%>" type="time" class="form-control" />
                                             </div>
                                             <div class="form-group" style="padding-left: 20px">
-                                                End: <input name="eventEndTime" type="time" class="form-control" />
+                                                End: <input name="eventEndTime<%=i%>" type="time" class="form-control" />
                                             </div>
                                             <div class="form-group" style="float: right; padding-right: 20px">
                                                 <input name="updateEventButton" type="submit" class="form-control btn-primary" />
