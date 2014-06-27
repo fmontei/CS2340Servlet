@@ -1,5 +1,5 @@
 <%@ page import="database.Preference" %>
-<%@ page import="model.Place" %>
+<%@ page import="database.Place" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -334,7 +334,7 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
                         <li>
                             <form class="form-inline" role="form" action="/CS2340Servlet/itinerary" method="POST">
                                 <div class="form-group" style="padding-left: 20px; padding-top: 10px">
-                                    <input name="google-textsearch-query" type="text" class="form-control" placeholder="Type a keyword in" />
+                                    <input name="google-textsearch-query" type="text" class="form-control" placeholder="e.g. Pizza in Atlanta" />
                                 </div>
                                 <div class="form-group" style="padding-left: 20px; padding-top: 10px">
                                     <input name="google-textsearch-submit" type="submit" class="form-control" />

@@ -1,12 +1,11 @@
 package controller;
 
 import database.DataManager;
-import database.Event;
 import model.CreateItineraryForm;
 import model.EventForm;
 import model.YelpAPI;
 import model.GooglePlaceService;
-import model.Place;
+import database.Place;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,10 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -40,10 +37,10 @@ public class ItineraryServlet extends HttpServlet {
             throws IOException, ServletException {
         if (newItineraryCreationRequested(request)) {
             new CreateItineraryForm(request);
-            doGet(request, response);
+            response.sendRedirect("jsp/itinerary_overview.jsp");
         } else if (itineraryDeleteRequested(request)) {
             doDeleteRequest(request);
-            doGet(request, response);
+            response.sendRedirect("jsp/itinerary_overview.jsp");
         } else if (updateEventRequested(request)) {
             EventForm eventForm = new EventForm(request);
             eventForm.updateEvent();

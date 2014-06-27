@@ -1,5 +1,5 @@
 import model.GooglePlaceService;
-import model.Place;
+import database.Place;
 
 import java.util.List;
 

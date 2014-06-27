@@ -7,6 +7,7 @@ import database.Preference;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.awt.geom.Point2D;
 import java.sql.SQLException;
 
 public class CreateItineraryForm {
@@ -22,8 +23,8 @@ public class CreateItineraryForm {
     private void gatherNewItineraryInfo() {
         String name = request.getParameter("itineraryName");
         String address = request.getParameter("itineraryAddress");
+        Point2D coordinates = getCoordinates();
         String transportation = request.getParameter("itineraryTransportation");
-        //preference info
         float minRating = Float.parseFloat(request.getParameter("minRating").trim());
         String priceCategory = request.getParameter("priceCategory");
         int maxDistance = Integer.parseInt(request.getParameter("maxDistance").trim());
@@ -34,8 +35,22 @@ public class CreateItineraryForm {
         int preferenceID = savePreference(preference);
         User user = (User) session.getAttribute("currentUser");
         int userID = user.getID();
-        Itinerary newItinerary = new Itinerary(name, address, transportation, userID, preferenceID);
+        Itinerary newItinerary = new Itinerary(name, address, coordinates,
+                transportation, userID, preferenceID);
         saveItinerary(newItinerary);
+    }
+
+    private Point2D getCoordinates() {
+        String coordinates = request.getParameter("coordinates");
+        int latBeginIndex = coordinates.indexOf("(") + 1;
+        int lngBeginIndex = coordinates.indexOf(",") + 1;
+        String latitude = coordinates.substring(latBeginIndex,
+                lngBeginIndex - 1);
+        String longitude = coordinates.substring(lngBeginIndex,
+                coordinates.length() - 1);
+        float lat = Float.parseFloat(latitude);
+        float lng = Float.parseFloat(longitude);
+        return new Point2D.Double(lat, lng);
     }
 
     private int savePreference(Preference preference){

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class EventForm {
     private HttpServletRequest request;
-    private int eventID = 0;
+    private int eventID;
 
     public EventForm(HttpServletRequest request) {
         this.request = request;
