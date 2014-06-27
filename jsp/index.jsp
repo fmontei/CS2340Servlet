@@ -138,8 +138,14 @@
                                 </a>
                             </li>
                             <li>
+                                <%  ArrayList<Event> events = (ArrayList<Event>) session.getAttribute("events");
+                                    int numberOfEvents = 0;
+                                    if (events != null) {
+                                        numberOfEvents = events.size();
+                                    }
+                                %>
                                 <a href="#">
-                                    <span class="badge pull-right">0</span>
+                                    <span class="badge pull-right"><%=numberOfEvents%></span>
                                     Events
                                 </a>
                             </li>
@@ -196,12 +202,7 @@
                         </ul>
                         <br />
 
-                        <%  ArrayList<Event> events = (ArrayList<Event>) session.getAttribute("events");
-                            int numberOfEvents = 0;
-                            if (events != null) {
-                                numberOfEvents = events.size();
-                            }
-                            for (int i = 0; i < numberOfEvents; i++) { %>
+                        <%  for (int i = 0; i < numberOfEvents; i++) { %>
                         <div id="event-no-<%=i%>">
                             <div class="panel panel-primary" style="background-color: rgb(208, 213, 239)">
                                 <div class="panel-heading">
