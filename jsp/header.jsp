@@ -1,3 +1,5 @@
+<%@ page import="database.Preference" %>
+<%@ page import="model.Place" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,8 +7,9 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
-    <link href="/CS2340Servlet/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/CS2340Servlet/css/bootstrap.css" rel="stylesheet">
     <link href="/CS2340Servlet/css/dashboard.css" rel="stylesheet">
+    <link href="/CS2340Servlet/css/lavish-bootstrap.css" rel="stylesheet">
 
     <!-- Jquery Javascript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -295,6 +298,80 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
             </div>
         </div>
     </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 sidebar" id="itinerary-side-bar">
+                <div id="preferences-itinerary-overview">
+                    <%  Preference preference = (Preference) session.getAttribute("activePreferences"); %>
+                    <%  int maxDistance;
+                        float minRating;
+                        String priceCategory, attractionType, foodType;
+                        maxDistance = 0;
+                        minRating = 0;
+                        priceCategory = attractionType = foodType = "";
+                        if (preference != null) {
+                            maxDistance = preference.getMaxDistance();
+                            minRating = preference.getMinimumRating();
+                            priceCategory = preference.getPriceCategory();
+                            attractionType = preference.getPreferredAttractionType();
+                            foodType = preference.getPreferredFoodType();
+                        }
+                    %>
+                    <ul class="nav nav-sidebar">
+                        <li class="active"><a href="#">Itinerary Preferences</a></li>
+                        <li><a href="#">Max Distance: <%=maxDistance%></a></li>
+                        <li><a href="#">Rating Preference: <%=minRating%></a></li>
+                        <li><a href="#">Price Category: <%=priceCategory%></a></li>
+                        <li><a href="#">Attraction Preference: <%=attractionType%></a></li>
+                        <li><a href="#">Food Preference: <%=foodType%></a></li>
+                    </ul>
+                </div>
+                <div id="google-textsearch">
+                    <ul class="nav nav-sidebar">
+                        <li class="active"><a href="#">Keyword Search</a></li>
+                        <li>
+                            <form class="form-inline" role="form" action="/CS2340Servlet/itinerary" method="POST">
+                                <div class="form-group" style="padding-left: 20px; padding-top: 10px">
+                                    <input name="google-textsearch-query" type="text" class="form-control" placeholder="Type a keyword in" />
+                                </div>
+                                <div class="form-group" style="padding-left: 20px; padding-top: 10px">
+                                    <input name="google-textsearch-submit" type="submit" class="form-control" />
+                                </div>
+                            </form>
+                        </li>
+                        <%  ArrayList<Place> places = (ArrayList<Place>) session.getAttribute("textSearchResults");
+                            if (places != null) {
+                                int i = 0;
+                                for (Place place : places) {
+                                    String placeName = place.getName();
+                                    String address = place.getFormattedAddress();
+                                    int priceLevel = place.getPriceLevel();
+                                    double rating = place.getRating();
+                        %>
+                        <li
+                            data-container="body"
+                            data-toggle="popover"
+                            data-placement="left"
+                            data-content="Price level: <%=priceLevel%> | Rating: <%=rating%>">
+                            <a class="popLink" href="javascript:void(0);" style="font-size: 10px;">
+                                <b><%=++i%>.<%=placeName%></b> | <%=address%>
+                            </a>
+                        </li>
+                        <%      } %>
+                        <%  }     %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Create New Event
+            $("#itinerary-side-bar").hide();
+        });
+    </script>
 
 <% } %>
     

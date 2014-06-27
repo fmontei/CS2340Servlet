@@ -4,6 +4,8 @@ import database.DataManager;
 import database.Event;
 import model.CreateItineraryForm;
 import model.EventForm;
+import model.GooglePlaceService;
+import model.Place;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,9 +44,9 @@ public class ItineraryServlet extends HttpServlet {
             doGet(request, response);
         } else if (updateEventRequested(request)) {
             EventForm eventForm = new EventForm(request);
-            int eventID = eventForm.updateEvent();
-            PrintWriter out = response.getWriter();
-            out.println("<html>" + "EventID: " + eventID + "</html>");
+            eventForm.updateEvent();
+        } else if (textSearchRequest(request)) {
+            doSearchRequest(request, response);
         }
     }
 
@@ -67,5 +69,24 @@ public class ItineraryServlet extends HttpServlet {
 
     private boolean updateEventRequested(HttpServletRequest request) {
         return request.getParameter("updateEventButton") != null;
+    }
+
+    private boolean textSearchRequest(HttpServletRequest request) {
+        return request.getParameter("google-textsearch-submit") != null;
+    }
+
+    private void doSearchRequest(HttpServletRequest request,
+                                 HttpServletResponse response)
+            throws IOException {
+        final String query = request.getParameter("google-textsearch-query");
+        try {
+            GooglePlaceService googleSearch = new GooglePlaceService();
+            final ArrayList<Place> results = googleSearch.textSearch(query);
+            final HttpSession session = request.getSession();
+            session.setAttribute("textSearchResults", results);
+        } catch (Exception ex) {
+            BrowserErrorHandling.printErrorToBrowser(request, response, ex);
+        }
+        response.sendRedirect("jsp/index.jsp");
     }
 }

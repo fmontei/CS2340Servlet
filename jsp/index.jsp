@@ -132,8 +132,8 @@
                         </ol>
 
                         <ul class="nav nav-pills">
-                            <li class="active">
-                                <a href="#">
+                            <li>
+                                <a href="#" class="alert-success" style="color: rgb(66, 139, 202); font-weight: bold">
                                     Currently Viewing: ${ITINERARY_NAME}
                                 </a>
                             </li>
@@ -150,12 +150,12 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="#" id="map-trigger">
                                     Map
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="#" id="preferences-trigger">
                                     Preferences
                                 </a>
                             </li>
@@ -202,9 +202,10 @@
                         </ul>
                         <br />
 
-                        <%  for (int i = 0; i < numberOfEvents; i++) { %>
+                        <% for (int i = 0; i < numberOfEvents; i++) { %>
+                        <% String color = (i % 2 == 0) ? "info" : "success"; %>
                         <div id="event-no-<%=i%>">
-                            <div class="panel panel-primary" style="background-color: rgb(208, 213, 239)">
+                            <div class="panel panel-<%=color%>">
                                 <div class="panel-heading">
                                     New Event no. <%=i + 1%>
                                 </div>
@@ -265,6 +266,7 @@
     </div>
 </div>
 
+
 <!-- Index Javascript -->
 <script type="text/javascript">
     var error = '<%= request.getAttribute("error")%>';
@@ -272,6 +274,7 @@
         // Initial view
         $("#div-overview").show();
         $("#div-travelMode").hide();
+        $("#itinerary-side-bar").show();
 
         // Sidebar
         $("#a-overview").click(function() {
@@ -280,6 +283,7 @@
             $("#div-overview").show();
             $("#div-travelMode").hide();
         });
+
         $("#a-travelMode").click(function() {
             $("#li-overview").removeClass("active");
             $("#li-travelMode").addClass("active");
@@ -287,9 +291,9 @@
             $("#div-travelMode").show();
         });
 
-        // Create New Event
-        $("#create-event-pill").click(function() {
-
+        $("#preferences-trigger").click(function() {
+            $("#itinerary-side-bar").show();
+            $("#preferences-itinerary-overview").show();
         });
 
         // Error Message
