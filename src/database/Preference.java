@@ -11,6 +11,11 @@ public class Preference {
     private String preferredFoodType;
     private String preferredAttractionType;
 
+    public Preference() {
+        ID = maxDistance = 0;
+        priceCategory = preferredFoodType = preferredAttractionType = "";
+    }
+
     public Preference(float minimumRating, String priceCategory,
                       int maxDistance, String preferredAttractionType,
                       String preferredFoodType){
@@ -21,21 +26,31 @@ public class Preference {
         this.preferredFoodType = preferredFoodType;
     }
 
-    //Getters
     public int getID(){ return this.ID; }
     public float getMinimumRating() { return this.minimumRating; }
     public String getPriceCategory() { return this.priceCategory; }
     public int getMaxDistance() { return this.maxDistance; }
     public String getPreferredFoodType() { return this.preferredFoodType; }
-    public String getPreferredAttractionType() { return this.preferredAttractionType; }
+    public String getPreferredAttractionType() {
+        return this.preferredAttractionType;
+    }
 
-    //Setters
-    public void setID() { this.ID = ID; }
-    public void setMinimumRating() { this.minimumRating = minimumRating; }
-    public void setPriceCategory() { this.priceCategory = priceCategory; }
-    public void setMaxDistance() { this.maxDistance = maxDistance; }
-    public void setPreferredFoodType() { this.preferredFoodType = preferredFoodType; }
-    public void setPreferredAttractionType() { this.preferredAttractionType = preferredAttractionType; }
-
-
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+    public void setMinimumRating(float minimumRating) {
+        this.minimumRating = minimumRating;
+    }
+    public void setPriceCategory(String priceCategory) {
+        this.priceCategory = priceCategory;
+    }
+    public void setMaxDistance(int maxDistance) {
+        this.maxDistance = maxDistance;
+    }
+    public void setPreferredFoodType(String preferredFoodTypee) {
+        this.preferredFoodType = preferredFoodType;
+    }
+    public void setPreferredAttractionType(String preferredAttractionType) {
+        this.preferredAttractionType = preferredAttractionType;
+    }
 }

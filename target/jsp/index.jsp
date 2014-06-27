@@ -9,10 +9,6 @@
 
 <div class="container">
     <div class="row">
-<!--         <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-            </ul>
-        </div> -->
         <div class="col-md-10 col-md-offset-1">
             <h1 class="page-header">
                 Welcome to Trip Planner!
@@ -33,17 +29,55 @@
 
 <div class="container">
     <div class="row">
-<!--         <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-                <li id="li-overview" class="active"><a href="#Overview" id="a-overview">Overview</a></li>
-                <li id="li-travelMode"><a href="#TravelMode" id="a-travelMode">Travel Mode</a></li>
-            </ul>
-        </div> -->
         <div class="col-md-10 col-md-offset-1">
             <div id="div-overview">
                 <h1 class="page-header">
                     Welcome <%=request.getSession().getAttribute("welcomeName")%>!
                 </h1>
+
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/11/1397210130748/Spring-Lamb.-Image-shot-2-011.jpg" alt="..."
+                                 style="width: 400px; height: 270px; display: block; margin-left: auto; margin-right: auto">
+                            <div class="carousel-caption">
+                                Jimmy Nguyen
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <img src="http://www5.pcmag.com/media/images/397260-mobile-threat-monday-top-image.jpg?thumb=y" alt="..."
+                                 style="width: 400px; height: 270px; display: block; margin-left: auto; margin-right: auto">
+                            <div class="carousel-caption">
+                                Johnathan Kester
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <img src="http://images.gizmag.com/hero/ibm_human_brain.jpg" alt="..."
+                                 style="width: 400px; height: 270px; display: block; margin-left: auto; margin-right: auto">
+                            <div class="carousel-caption">
+                                Joseph Umujaren
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div><br />
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -59,167 +93,62 @@
                     <div class="panel-heading">
                         Itineraries
                     </div>
-                    <div class="panel-body">
-                        <p>Print itineraries here</p>
-                        <div class="btn-group" >
-                            <button id="button-createNewItinerary" type="button" class="btn btn-default">Create New Itinerary</button>
-                        </div>
+                    <div class="panel-body" id="itinerary-panel-body">
+                        <ol class="breadcrumb">
+                            <li>
+                                <a href="itinerary_overview.jsp">Select Itinerary</a>
+                            </li>
+                            <li><a href="#"
+                                   onclick="showPage1()"
+                                   data-toggle="modal"
+                                   data-target="#itineraryModal">Create New Itinerary
+                                </a>
+                            </li>
+                            <li>
+                                <a id="a-create-event" href="#">Create New Event</a>
+                            </li>
+                        </ol>
 
+                        <ul class="nav nav-pills">
+                            <li class="active">
+                                <a href="#">
+                                    Currently Viewing: ${ITINERARY_NAME}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="badge pull-right">0</span>
+                                    Events
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Map
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Preferences
+                                </a>
+                            </li>
+                            <li class="alert-success" style="float: right">
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-plus-sign"
+                                          style="position: relative; top: 2px"></span>
+                                    <b> Add Event</b>
+                                </a>
+                            </li>
+                        </ul>
+                        <br />
+                        <p>Use a for loop using jsp code that for every event in the database, shows
+                        vital statistics about the event that was created. Or something like that.
+                        Can initiate an event creation using a wizard, or, better yet, a side panel
+                        that looked like our overview panel that has a bunch of drop downs, and finally
+                        a search button or something.</p>
 
-
-
-                        <!-- <div class="btn-group" id="start-dropdown">
-                            <button type="button" class="btn btn-info">What would you like to do?</button>
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span>
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Create New Itinerary</a></li>
-                                <li class="divider"></li>
-                                <li><a onclick="index_showMapActive()"
-                                       style="cursor:  pointer">
-                                    View Map for Itinerary</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div style="float: right;">
-                            <div class="btn-group" >
-                                <button type="button" class="btn btn-success" id="create-itinerary">Create</button>
-                            </div>
-                            <div class="btn-group" >
-                                <button type="button" class="btn btn-danger" id="cancel-itinerary">Cancel</button>
-                            </div>
-                        </div><br /><br />
-
-                        <div id="new-itinerary-info">
-                            <div class="input-group">
-                                <span class="input-group-addon">Name your Itinerary:</span>
-                                <input type="text" class="form-control" placeholder="Name">
-                            </div><br />
-
-                            <div class="input-group">
-                                <span class="input-group-addon">Address:</span>
-                                <input type="text" class="form-control" placeholder="Street">
-                                <span class="input-group-addon">City:</span>
-                                <input type="text" class="form-control" placeholder="City">
-                                <span class="input-group-addon">State:</span>
-                                <input type="text" class="form-control" placeholder="State">
-                                <span class="input-group-addon">Zip Code:</span>
-                                <input type="text" class="form-control" placeholder="Zip Code">
-                                <span class="input-group-addon">Country:</span>
-                                <input type="text" class="form-control" placeholder="Country">
-                            </div><br />
-
-                            <div class="input-group">
-                                <span class="input-group-addon">Mode of Transportation:</span>
-                                <input type="text" class="form-control" placeholder="Transportation">
-                            </div>
-                        </div> -->
                     </div>
                 </div>
             </div>
-            <div id="div-travelMode">
-                <h1 class="page-header">
-                    Travel Mode
-                </h1>
-
-                <form id="" action="/CS2340Servlet/index" method="POST" class="form-inline" role="form">
-
-                    <b>Select your preferred mode of transportation</b>
-
-                    <br />
-                    <br />
-
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <input type="radio" id="driving"
-                                    name="preferredTravelMode"
-                                    value="driving">
-                                </span>
-                                <input type="text" class="form-control" value="Driving" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <br />
-
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <input type="radio" id="walking"
-                                    name="preferredTravelMode"
-                                    value="walking" checked>
-                                </span>
-                                <input type="text" class="form-control" 
-                                value="Walking" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <br />
-
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <input type="radio" id="bicycling"
-                                    name="preferredTravelMode"
-                                    value="bicycling" checked>
-                                </span>
-                                <input type="text" class="form-control" 
-                                value="Bicycling" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <br />
-
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <input type="radio" id="transit"
-                                    name="preferredTravelMode"
-                                    value="transit" checked>
-                                </span>
-                                <input type="text" class="form-control" 
-                                value="Transit" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-                    <br />
-                    <br />
-
-                    <div class="form-group">
-                        <button type="submit" name="submitTravelMode"
-                        class="btn btn-default">Save</button>
-                    </div>
-
-                </form>
-            </div>
-
-            <div id="map" class="visibilityOff">
-                <h1 class="page-header">
-                    Itinerary Map
-                </h1>
-
-                <div class="panel-group">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                    </div>
-                    <div class="panel-body">
-                      <div id="map-canvas"></div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-
         </div>
     </div>
 </div>
@@ -247,58 +176,6 @@
     </div>
 </div>
 
-
-<!-- Google Maps Javascript -->
-<div id="map-canvas"></div>
-<script type="text/javascript"
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwnaM0fAa8jqx3O7ZdABTaWmbOW3Uft2Y">
-</script>
-
-<script type="text/javascript">
-    // var map;
-    // function initialize() {
-    //     var mapOptions = {
-    //         center: new google.maps.LatLng(33.755, -84.390),
-    //         zoom: 12
-    //     };
-    //     map = new google.maps.Map(document.getElementById("map-canvas"),
-    //         mapOptions);
-    //     google.maps.event.addListener(map, 'click', function(event) {
-    //         placeMarker(event.latLng);
-    //     });
-    // }
-
-    // function placeMarker(location) {
-    //     var marker = new google.maps.Marker({
-    //         position: location,
-    //         map: map
-    //     });
-    // }
-</script>
-
-<!-- Index Sidebar Javascript -->
-<script type="text/javascript">
-    // function index_showOverviewActive() {
-    //     turnOnVisibility(['index_showOverviewActive','overview']);
-    //     turnOffVisibility(['index_showTravelModeActive','travelMode']);
-    //     turnOffVisibility(['index_showMapActive', 'map']);
-    // }
-    // function index_showTravelModeActive() {
-    //     turnOnVisibility(['index_showTravelModeActive','travelMode']);
-    //     turnOffVisibility(['index_showOverviewActive','overview']);
-    //     turnOffVisibility(['index_showMapActive', 'map']);
-
-    //     // Travel Mode Form Javascript
-    //     var preferredTravelMode = "#<%= preferredTravelMode %>"
-    //     $(preferredTravelMode).prop("checked", true);
-    // }
-    // function index_showMapActive() {
-    //     turnOnVisibility(['index_showMapActive', 'map']);
-    //     turnOffVisibility(['index_showOverviewActive','overview']);
-    //     turnOffVisibility(['index_showTravelModeActive','travelMode']);
-    // }
-</script>
-
 <!-- Index Javascript -->
 <script type="text/javascript">
     var error = '<%= request.getAttribute("error")%>';
@@ -321,6 +198,11 @@
             $("#div-travelMode").show();
         });
 
+        // Create New Event
+        $("#a-create-event").click(function() {
+            //$("#itinerary-panel-body").append('<p id="foo">Some HTML</p>');
+        });
+
         // Stuff
         $("button-createNewItinerary").click(function() {
 
@@ -330,9 +212,7 @@
         if (error != 'null') {
             $("#errorMessage").modal("show");
         }
-
     });
 </script>
-
 
 <%@ include file="footer.jsp" %>

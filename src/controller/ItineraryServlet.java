@@ -33,7 +33,7 @@ public class ItineraryServlet extends HttpServlet {
     }
 
     private boolean newItineraryCreationRequested(HttpServletRequest request) {
-        return request.getParameter("submitButton") != null;
+        return request.getParameter("createItineraryButton") != null;
     }
 
     private boolean itineraryDeleteRequested(HttpServletRequest request) {

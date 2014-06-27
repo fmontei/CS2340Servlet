@@ -12,6 +12,11 @@ public class Itinerary {
     private String transportationMode;
     private String creationDate;
 
+    public Itinerary() {
+        this.userID = this.preferenceID = this.ID = 0;
+        this.name = this.address = this.transportationMode = this.address = "";
+    }
+
     public Itinerary(String name, String address,
                      String transportationMode, int userID,
                      int preferenceID) {
@@ -24,9 +29,10 @@ public class Itinerary {
     }
 
     public Itinerary(String name, String address,  String transportationMode,
-                     String creationDate, int ID, int userID) {
+                     String creationDate, int ID, int userID, int preferenceID) {
         this.ID = ID;
         this.userID = userID;
+        this.preferenceID = preferenceID;
         this.name = name;
         this.address = address;
         this.transportationMode = transportationMode;
