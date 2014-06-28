@@ -1,11 +1,8 @@
 package controller;
 
 import database.DataManager;
-import model.CreateItineraryForm;
-import model.EventForm;
-import model.GooglePlaceService;
+import model.*;
 import database.Place;
-import model.LodgingForm;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,9 +43,44 @@ public class ItineraryServlet extends HttpServlet {
         } else if (updateEventRequested(request)) {
             EventForm eventForm = new EventForm(request);
             eventForm.updateEvent();
-        } else if (textSearchRequested(request)) {
+
+            HttpSession session = request.getSession();
+            final String queryString = request.getQueryString();
+            final int startIndex = queryString.indexOf("=") + 1;
+            String eventID = queryString.substring(startIndex);
+            session.setAttribute("eventName" + eventID, request.getParameter("eventName" + eventID));
+            session.setAttribute("eventType" + eventID, request.getParameter("eventType" + eventID));
+            session.setAttribute("eventStartTime" + eventID, request.getParameter("eventStartTime" + eventID));
+            session.setAttribute("eventEndTime" + eventID, request.getParameter("eventEndTime" + eventID));
+
+            try {
+                YelpAPI yelpAPI = new YelpAPI(request);
+                yelpAPI.queryAPI();
+            } catch (SQLException ex) {
+                BrowserErrorHandling.printErrorToBrowser(request, response, ex);
+            } finally {
+                response.sendRedirect("jsp/index.jsp");
+            }
+        } else if (selectBusinessRequested(request)) {
+            final HttpSession session = request.getSession();
+            final String queryString = request.getQueryString();
+            final int startIndex = queryString.indexOf("=") + 1;
+            final String eventID = queryString.substring(startIndex);
+            session.setAttribute("isEvent" + eventID + "Set", "true");
+            session.setAttribute("eventLocation" + eventID, request.getParameter("eventLocation" + eventID));
+            response.sendRedirect("jsp/index.jsp");
+        } else if (textSearchRequest(request)) {
             doSearchRequest(request, response);
         }
+    }
+
+    private boolean lodgingSearchRequested(HttpServletRequest request) {
+        return request.getQueryString().contains("add_lodging=true");
+    }
+
+    private void doLodgingSearchRequest(HttpServletRequest request,
+                                        HttpServletResponse response) {
+        new LodgingForm(request, response).getLodgingsAroundLocation();
     }
 
     private boolean newItineraryCreationRequested(HttpServletRequest request) {
@@ -72,7 +104,11 @@ public class ItineraryServlet extends HttpServlet {
         return request.getParameter("updateEventButton") != null;
     }
 
-    private boolean textSearchRequested(HttpServletRequest request) {
+    private boolean selectBusinessRequested(HttpServletRequest request) {
+        return request.getParameter("selectBusinessButton") != null;
+    }
+
+    private boolean textSearchRequest(HttpServletRequest request) {
         return request.getParameter("google-textsearch-submit") != null;
     }
 
@@ -89,14 +125,5 @@ public class ItineraryServlet extends HttpServlet {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
         response.sendRedirect("jsp/index.jsp");
-    }
-
-    private boolean lodgingSearchRequested(HttpServletRequest request) {
-        return request.getQueryString().contains("add_lodging=true");
-    }
-
-    private void doLodgingSearchRequest(HttpServletRequest request,
-                                        HttpServletResponse response) {
-        new LodgingForm(request, response).getLodgingsAroundLocation();
     }
 }

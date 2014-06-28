@@ -26,12 +26,13 @@ public class AccountCreationServlet extends HttpServlet {
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response)
         throws IOException, ServletException {
-        if (isSignUpButtonClicked(request)) {
+        if (isSubmitButtonClicked(request)) {
             doCreateRequest(request, response);
+            response.sendRedirect("jsp/index.jsp");
         }
     }
 
-    private boolean isSignUpButtonClicked(HttpServletRequest request) {
+    private boolean isSubmitButtonClicked(HttpServletRequest request) {
         return request.getParameter("signUpButton") != null;
     }
 
