@@ -7,8 +7,10 @@ public class TestGoogleSearch {
     public static void main(String... args) {
         try {
             GooglePlaceService googleService = new GooglePlaceService();
-            List<Lodging> lodgings = googleService.placeSearch("18.971188,-72.28522", 5000, "lodging");
-            System.out.println(lodgings.size());
+            List<Lodging> lodgings = googleService.placeSearch("-33.867217,151.195939", 50000, "lodging");
+            for (Lodging l : lodgings) {
+                System.out.println( l.getFormattedAddress());
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -229,6 +229,17 @@
                                         <p>Select a lodging below. This list has been created
                                             based on your Itinerary's address.
                                         </p>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Address</th>
+                                                    <th>Rating</th>
+                                                    <th>Open</th>
+                                                    <th>Select</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
                         <%  Object lodgingObject = session.getAttribute("lodgingResults");
                             int numberOfLodgingsFound = 0;
                             List<Lodging> lodgingResults = new ArrayList<Lodging>();
@@ -237,10 +248,31 @@
                                 numberOfLodgingsFound = lodgingResults.size();
                             }
                             for (int i = 0; i < numberOfLodgingsFound; i++) {
+                                String color = (lodgingResults.get(i).isOpenNow()) ? "green" : "red";
+                                String openClose = (lodgingResults.get(i).isOpenNow()) ? "Open" : "Closed";
                         %>
-                                        <div class="lodging-name" style="padding-left: 20px"><%=lodgingResults.get(i).getName()%></div>
-
+                                                <tr>
+                                                    <td class="lodging-name"><%=lodgingResults.get(i).getName()%></td>
+                                                    <td class="lodging-address"><%=lodgingResults.get(i).getFormattedAddress()%></td>
+                                                    <td class="lodging-rating"><%=lodgingResults.get(i).getRating()%></td>
+                                                    <td class="lodging-open-closed" style="color: <%=color%>"><%=openClose%></td>
+                                                    <td><a href="/CS2340Servlet/itinerary?lodging_id=<%=i%>">Select</a></td>
+                                                </tr>
                         <% } %>
+                                            </tbody>
+                                            <tfoot>
+                                                <div class="row">
+                                                    <form class="form-inline" role="form" action="/CS2340Servlet/itinerary?lodging_id=" method="POST">
+                                                        <div class="form-group" style="padding-left: 20px; padding-right: 40px">
+                                                            <input name="lodgingSelection" type="text" class="form-control" placeholder="Lodging Name" />
+                                                        </div>
+                                                        <div class="form-group" style="padding-left: 20px; padding-right: 40px">
+                                                            <input name="submitLodgingButton" type="submit" class="form-control btn-primary" />
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </tfoot>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

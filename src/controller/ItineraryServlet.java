@@ -26,6 +26,8 @@ public class ItineraryServlet extends HttpServlet {
         } else if (lodgingSearchRequested(request)) {
             doLodgingSearchRequest(request, response);
             response.sendRedirect("jsp/index.jsp");
+        } else if (lodgingSelectionMade(request)) {
+            new LodgingForm(request, response).saveLodgingSelection();
         } else {
             response.sendRedirect("jsp/itinerary_overview.jsp");
         }
@@ -43,7 +45,6 @@ public class ItineraryServlet extends HttpServlet {
         } else if (updateEventRequested(request)) {
             EventForm eventForm = new EventForm(request);
             eventForm.updateEvent();
-
             HttpSession session = request.getSession();
             final String queryString = request.getQueryString();
             final int startIndex = queryString.indexOf("=") + 1;
@@ -52,7 +53,6 @@ public class ItineraryServlet extends HttpServlet {
             session.setAttribute("eventType" + eventID, request.getParameter("eventType" + eventID));
             session.setAttribute("eventStartTime" + eventID, request.getParameter("eventStartTime" + eventID));
             session.setAttribute("eventEndTime" + eventID, request.getParameter("eventEndTime" + eventID));
-
             try {
                 YelpAPI yelpAPI = new YelpAPI(request);
                 yelpAPI.queryAPI();
@@ -84,6 +84,10 @@ public class ItineraryServlet extends HttpServlet {
     private void doLodgingSearchRequest(HttpServletRequest request,
                                         HttpServletResponse response) {
         new LodgingForm(request, response).getLodgingsAroundLocation();
+    }
+
+    private boolean lodgingSelectionMade(HttpServletRequest request) {
+        return request.getQueryString().contains("lodging_id=");
     }
 
     private boolean newItineraryCreationRequested(HttpServletRequest request) {

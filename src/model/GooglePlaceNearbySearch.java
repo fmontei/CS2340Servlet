@@ -52,8 +52,8 @@ public class GooglePlaceNearbySearch extends GooglePlaceService {
                 name = jsonObject.getString("name");
             if (jsonObject.has("place_id"))
                 placeID = jsonObject.getString("place_id");
-            if (jsonObject.has("formatted_address"))
-                formattedAddress = jsonObject.getString("formatted_address");
+            if (jsonObject.has("vicinity"))
+                formattedAddress = jsonObject.getString("vicinity");
             if (jsonObject.has("price_level"))
                 priceLevel = jsonObject.getInt("price_level");
             if (jsonObject.has("rating"))
