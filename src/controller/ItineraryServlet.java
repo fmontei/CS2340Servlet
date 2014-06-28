@@ -67,7 +67,10 @@ public class ItineraryServlet extends HttpServlet {
             final int startIndex = queryString.indexOf("=") + 1;
             final String eventID = queryString.substring(startIndex);
             session.setAttribute("isEvent" + eventID + "Set", "true");
-            session.setAttribute("eventLocation" + eventID, request.getParameter("eventLocation" + eventID));
+            String locationAndURL = request.getParameter("eventLocation" + eventID);
+            int delimiterLocation = locationAndURL.indexOf(",");
+            session.setAttribute("eventLocation" + eventID, locationAndURL.substring(0, delimiterLocation));
+            session.setAttribute("eventBusinessURL" + eventID, locationAndURL.substring(delimiterLocation + 1));
             response.sendRedirect("jsp/index.jsp");
         } else if (textSearchRequest(request)) {
             doSearchRequest(request, response);

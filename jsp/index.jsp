@@ -307,7 +307,19 @@
                                     <% if (isEventSet != null && isEventSet.equals(temp)) { %>
                                         <div class="row" style="padding-top:20px; padding-left:5px">
                                             <div class="col-md-6">
-                                                Event Location: <input type="text" class="form-control" value="<%= session.getAttribute("eventLocation" + i) %>" readonly>
+                                                <div class="input-group">
+                                                    Event Location:
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="padding-top:20px; padding-left:5px">
+                                            <div class="col-md-6">
+                                                <input type="text" class="form-control" value="<%= session.getAttribute("eventLocation" + i) %>" readonly>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="input-group">
+                                                    <a href="<%= session.getAttribute("eventBusinessURL" + i) %>" class="btn btn-default" target="_blank"> See More </a>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -332,7 +344,7 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
-                                                        <input type="radio" name="eventLocation<%=i%>" value="<%= businessName %>">
+                                                        <input type="radio" name="eventLocation<%=i%>" value="<%= businessName %>,<%= businessURL %>">
                                                     </span>
                                                     <input type="text" class="form-control" value="<%= businessName %> <%= businessRating %>" readonly>
                                                 </div>
