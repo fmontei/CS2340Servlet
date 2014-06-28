@@ -6,6 +6,7 @@
 <%@ page import="database.Itinerary" %>
 <%@ page import="database.SQLPreferenceQuery" %>
 <%@ page import="database.Preference" %>
+<%@ page import="database.Lodging" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="org.json.simple.JSONArray" %>
 <%@ page import="org.json.simple.JSONObject" %>
@@ -219,16 +220,28 @@
                         </ul>
                         <br />
 
+                        <% Lodging selection = (Lodging) session.getAttribute("lodgingSelection");
+                            String lodgingIsOpenColor, openClose;
+                            lodgingIsOpenColor = (selection.isOpenNow()) ? "green" : "red";
+                            openClose = (selection.isOpenNow()) ? "Open" : "Closed";
+                        %>
+
                         <div id="main-lodging">
                             <div class="panel panel-warning">
                                 <div class="panel-heading">
+                                    <% if (selection == null) { %>
                                     New Lodging
+                                    <% } else { %>
+                                    <b>Loding: <%=selection.getName()%></b>
+                                    <% } %>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row" style="padding-left: 20px">
+                                        <% if (selection == null) { %>
                                         <p>Select a lodging below. This list has been created
                                             based on your Itinerary's address.
                                         </p>
+                                        <% } %>
                                         <table class="table table-striped">
                                             <thead>
                                                 <tr>
@@ -236,29 +249,32 @@
                                                     <th>Address</th>
                                                     <th>Rating</th>
                                                     <th>Open</th>
+                                                    <% if (selection == null) { %>
                                                     <th>Select</th>
+                                                    <% } %>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                        <%  Object lodgingObject = session.getAttribute("lodgingResults");
-                            int numberOfLodgingsFound = 0;
-                            List<Lodging> lodgingResults = new ArrayList<Lodging>();
-                            if (lodgingObject != null) {
-                                lodgingResults = (List<Lodging>) lodgingObject;
-                                numberOfLodgingsFound = lodgingResults.size();
-                            }
-                            for (int i = 0; i < numberOfLodgingsFound; i++) {
-                                String color = (lodgingResults.get(i).isOpenNow()) ? "green" : "red";
-                                String openClose = (lodgingResults.get(i).isOpenNow()) ? "Open" : "Closed";
+                        <%  if (selection == null) {
+                                Object lodgingObject = session.getAttribute("lodgingResults");
+                                int numberOfLodgingsFound = 0;
+                                List<Lodging> lodgingResults = new ArrayList<Lodging>();
+                                if (lodgingObject != null) {
+                                    lodgingResults = (List<Lodging>) lodgingObject;
+                                    numberOfLodgingsFound = lodgingResults.size();
+                                }
+                                for (int i = 0; i < numberOfLodgingsFound; i++) {
+                                    lodgingIsOpenColor = (lodgingResults.get(i).isOpenNow()) ? "green" : "red";
+                                    openClose = (lodgingResults.get(i).isOpenNow()) ? "Open" : "Closed";
                         %>
                                                 <tr>
                                                     <td class="lodging-name"><%=lodgingResults.get(i).getName()%></td>
                                                     <td class="lodging-address"><%=lodgingResults.get(i).getFormattedAddress()%></td>
                                                     <td class="lodging-rating"><%=lodgingResults.get(i).getRating()%></td>
-                                                    <td class="lodging-open-closed" style="color: <%=color%>"><%=openClose%></td>
+                                                    <td class="lodging-open-closed" style="color: <%=lodgingIsOpenColor%>"><%=openClose%></td>
                                                     <td><a href="/CS2340Servlet/itinerary?lodging_id=<%=i%>">Select</a></td>
                                                 </tr>
-                        <% } %>
+                                <% } %>
                                             </tbody>
                                             <tfoot>
                                                 <div class="row">
@@ -272,6 +288,15 @@
                                                     </form>
                                                 </div>
                                             </tfoot>
+                            <% } else { %>
+                                                <tr>
+                                                    <td class="lodging-name"><%=selection.getName()%></td>
+                                                    <td class="lodging-address"><%=selection.getFormattedAddress()%></td>
+                                                    <td class="lodging-rating"><%=selection.getRating()%></td>
+                                                    <td class="lodging-open-closed" style="color: <%=lodgingIsOpenColor%>"><%=openClose%></td>
+                                                </tr>
+                                            </tbody>
+                            <% } %>
                                         </table>
                                     </div>
                                 </div>
