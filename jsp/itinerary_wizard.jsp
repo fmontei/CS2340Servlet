@@ -1,5 +1,4 @@
-<!-- Itinerary Wizard Javascript -->
-<script src="/CS2340Servlet/js/itinerary_wizard_js.js"></script>
+
 
 <div id="itineraryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="itineraryModal" aria-hidden="true">
     <div class="modal-dialog" >

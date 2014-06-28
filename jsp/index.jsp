@@ -100,11 +100,20 @@
     //preferredTravelMode = account.getPreferredTravelMode();
 %>
 
-<div class="container">
+<div class="container" data-spy="scroll" data-target="#myScrollspy">
+
+    <div id="myScrollspy" style="position: fixed; left: 5px">
+        <ul class="nav nav-tabs nav-stacked affix-top" data-spy="affix" >
+            <li><a href="javascript:void(0)">Navigation</a></li>
+            <li><a href="#page-header">Top</a></li>
+            <li><a href="#footer">Bottom</a></li>
+        </ul>
+    </div>
+
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div id="div-overview">
-                <h1 class="page-header">
+                <h1 class="page-header" id="page-header">
                     Welcome <%=request.getSession().getAttribute("welcomeName")%>!
                 </h1>
 
@@ -155,15 +164,17 @@
                                     }
                                 %>
                                 <a href="#">
-                                    <span class="badge pull-right"><%=numberOfEvents%></span>
+                                    <span class="badge pull-right"
+                                          style="position: relative; top: 2px; background-color: rgb(66, 139, 202)">
+                                        <%=numberOfEvents%>
+                                    </span>
                                     Events
                                 </a>
                             </li>
-                            <li>
-                                <a href="#" id="map-trigger">
-                                    Map
-                                </a>
-                            </li>
+
+
+
+
                             <li>
                                 <a href="#" id="preferences-trigger">
                                     Preferences
@@ -220,6 +231,25 @@
                         </ul>
                         <br />
 
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <a data-toggle="collapse"
+                                       data-parent="#accordion"
+                                       href="#collapseOne"
+                                       id="parentCollapse">
+                                        View Map
+                                    </a>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div class="center-block" id="accordion-map" style="width: 520px; height: 300px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <% Lodging selection = (Lodging) session.getAttribute("lodgingSelection");
                             String lodgingIsOpenColor = "";
                             String openClose = "";
@@ -230,7 +260,7 @@
                         %>
 
                         <div id="main-lodging">
-                            <div class="panel panel-warning">
+                            <div class="panel panel-danger">
                                 <div class="panel-heading">
                                     <% if (selection == null) { %>
                                     New Lodging
@@ -246,17 +276,26 @@
                                         </p>
                                         <% } %>
                                         <table class="table table-striped">
+                                        <% if (selection == null) { %>
+                                            <thead id="lodging-table-head">
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Address</th>
+                                                    <th>Rating</th>
+                                                    <th>Open</th>
+                                                    <th>Select</th>
+                                                </tr>
+                                            </thead>
+                                        <% } else { %>
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
                                                     <th>Address</th>
                                                     <th>Rating</th>
                                                     <th>Open</th>
-                                                    <% if (selection == null) { %>
-                                                    <th>Select</th>
-                                                    <% } %>
                                                 </tr>
                                             </thead>
+                                        <% } %>
                                             <tbody>
                         <%  if (selection == null) {
                                 Object lodgingObject = session.getAttribute("lodgingResults");
@@ -285,7 +324,7 @@
                                                         <div class="form-group" style="padding-left: 20px; padding-right: 40px">
                                                             <input name="lodgingSelection" type="text" class="form-control" placeholder="Lodging Name" />
                                                         </div>
-                                                        <div class="form-group" style="padding-left: 20px; padding-right: 40px">
+                                                        <div class="form-group center-block" style="width: 30%; padding-top: 10px">
                                                             <input name="submitLodgingButton" type="submit" class="form-control btn-primary" />
                                                         </div>
                                                     </form>
@@ -362,7 +401,6 @@
                                                 </div>
                                             <% } %>
                                     </div>
-
 
                                     <% if (isEventSet != null && isEventSet.equals(temp)) { %>
                                         <div class="row" style="padding-top:20px; padding-left:5px">
@@ -451,7 +489,6 @@
 
 <%}%>
 
-
 <!-- Error Message -->
 <div class="modal fade" id="errorMessage" tabindex="-1" role="dialog" aria-labelledby="errorMessageTitle" aria-hidden="true">
     <div class="modal-dialog">
@@ -472,10 +509,26 @@
     </div>
 </div>
 
+<!-- Includes Google Maps Javascript functionality needed by this page -->
+<script src="/CS2340Servlet/js/itinerary_wizard_js.js"></script>
 
 <!-- Index Javascript -->
 <script type="text/javascript">
     var error = '<%= request.getAttribute("error")%>';
+
+    // Lodging functionality
+    var lodging_selection = '<%=session.getAttribute("lodgingSelection")%>';
+    var lodging_results = '<%=session.getAttribute("lodgingResults")%>';
+    if (lodging_selection === "null" && lodging_results === "null") {
+        $("#lodging-table-head").hide();
+    } else {
+        $("#create-lodging-pill").hide();
+    }
+
+    $("#create-lodging-pill").click(function() {
+        $("#lodging-table-head").fadeIn("slow");
+    });
+
     $(document).ready(function() {
         // Initial view
         $("#div-overview").show();
@@ -497,23 +550,21 @@
             $("#div-travelMode").show();
         });
 
-<<<<<<< HEAD
-=======
-        $("#preferences-trigger").click(function() {
-            $("#itinerary-side-bar").show();
-            $("#preferences-itinerary-overview").show();
-        });
-
         // Details button for new event location search
         $('.popover-dismiss').popover({
             trigger: 'focus'
-        })
+        });
 
->>>>>>> 6590a9699161b863fc44c466e220968cc656e13f
         // Error Message
         if (error != 'null') {
             $("#errorMessage").modal("show");
         }
+
+        // Automatically collapse the accordion-map
+        $("#collapseOne").collapse("hide");
+        $("#parentCollapse").one("click", function(){
+            initialize();
+        });
     });
 </script>
 
