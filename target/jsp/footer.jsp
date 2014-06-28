@@ -1,5 +1,5 @@
 </div> <!-- wrapper /div -->
-    <div id="footer" style="bottom: 0;">
+    <div id="footer">
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">

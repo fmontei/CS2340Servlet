@@ -116,7 +116,6 @@ body,html {
 #footer {
     position:relative;
     height: 60px;
-    margin-top: -60px;
 }
 
 #footerTopBorder {    height: 1px;
