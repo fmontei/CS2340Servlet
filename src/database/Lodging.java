@@ -46,4 +46,23 @@ public class Lodging {
     public boolean isOpenNow() {
         return openNow;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setPlaceID(String placeID) {
+        this.placeID = placeID;
+    }
+    public void setFormattedAddress(String formattedAddress) {
+        this.formattedAddress = formattedAddress;
+    }
+    public void setPriceLevel(int priceLevel) {
+        this.priceLevel = priceLevel;
+    }
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+    public void setOpenNow(boolean openNow) {
+        this.openNow = openNow;
+    }
 }

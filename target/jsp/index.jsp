@@ -1,6 +1,6 @@
-<%@ page import="database.User" %>
-<%@ page import="database.Event" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="database.*" %>
+<%@ page import="java.util.List" %>
 
 <% String pageName = "Home"; %>
 <% String preferredTravelMode = ""; %>
@@ -123,9 +123,9 @@
                                    data-target="#itineraryModal">Create New Itinerary
                                 </a>
                             </li>
-                            <li>
+                            <li id="li-create-event-breadcrumb">
                                 <a id="a-create-event" href="#"
-                                   id="create-event-breadcrumb">
+                                   id="a-create-event-breadcrumb">
                                     Create New Event</a>
                             </li>
 
@@ -159,8 +159,8 @@
                                     Preferences
                                 </a>
                             </li>
-                            <li class="dropdown alert-success" style="float: right">
-                                <a href="#" class="dropdown-toggle"data-toggle="dropdown" id="create-event-pill">
+                            <li class="dropdown alert-success" style="float: right" id="create-event-pill">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <span class="glyphicon glyphicon-plus-sign"
                                           style="position: relative; top: 2px"></span>
                                     <b>Add Event</b>
@@ -200,7 +200,7 @@
                                 </ul>
                             </li>
                             <li style="float: right">
-                                <a href="#" class="alert-danger" id="create-lodging-pill">
+                                <a href="/CS2340Servlet/itinerary?add_lodging=true" class="alert-danger" id="create-lodging-pill">
                                     <span class="glyphicon glyphicon-plus-sign"
                                           style="position: relative; top: 2px">
                                     </span>
@@ -209,6 +209,33 @@
                             </li>
                         </ul>
                         <br />
+
+                        <div id="main-lodging">
+                            <div class="panel panel-warning">
+                                <div class="panel-heading">
+                                    New Lodging
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row" style="padding-left: 20px">
+                                        <p>Select a lodging below. This list has been created
+                                            based on your Itinerary's address.
+                                        </p>
+                        <%  Object lodgingObject = session.getAttribute("lodgingResults");
+                            int numberOfLodgingsFound = 0;
+                            List<Lodging> lodgingResults = new ArrayList<Lodging>();
+                            if (lodgingObject != null) {
+                                lodgingResults = (List<Lodging>) lodgingObject;
+                                numberOfLodgingsFound = lodgingResults.size();
+                            }
+                            for (int i = 0; i < numberOfLodgingsFound; i++) {
+                        %>
+                                    <div class="lodging-name" style="padding-left: 20px"><%=lodgingResults.get(i).getName()%></div>
+
+                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <% for (int i = 0; i < numberOfEvents; i++) { %>
                         <% String color = (i % 2 == 0) ? "info" : "success"; %>
@@ -297,11 +324,6 @@
             $("#li-travelMode").addClass("active");
             $("#div-overview").hide();
             $("#div-travelMode").show();
-        });
-
-        $("#preferences-trigger").click(function() {
-            $("#itinerary-side-bar").show();
-            $("#preferences-itinerary-overview").show();
         });
 
         // Error Message

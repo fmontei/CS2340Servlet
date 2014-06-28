@@ -1,5 +1,6 @@
 package model;
 
+import database.Lodging;
 import database.Place;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,34 +10,39 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class GooglePlaceNearbySearch extends GooglePlaceService {
-    private String query;
+    private String coordinates, type;
+    private int radius;
 
-    public GooglePlaceNearbySearch(String query) {
-        this.query = query;
+    public GooglePlaceNearbySearch(String coordinates, int radius,
+                                   String type) {
+        this.coordinates = coordinates;
+        this.radius = radius;
+        this.type = type;
     }
 
     public String getSearchURL() throws IOException, JSONException {
-        final String urlQuery = buildTextSearchQuery(query);
+        final String urlQuery = buildTextSearchQuery();
         return urlQuery;
     }
 
-    private String buildTextSearchQuery(String query) {
-        query = query.replaceAll("\\s+", "+");
+    private String buildTextSearchQuery() {
         StringBuilder queryBuilder = new StringBuilder();
         queryBuilder.append(PLACES_API_BASE);
         queryBuilder.append(NEARBY_SEARCH);
         queryBuilder.append(OUT_JSON);
-        queryBuilder.append("?query=" + query);
+        queryBuilder.append("?location=" + coordinates);
+        queryBuilder.append("&radius=" + radius);
+        queryBuilder.append("&types=" + type);
         queryBuilder.append("&key=" + API_KEY);
         return queryBuilder.toString();
     }
 
-    public ArrayList<Place> parseJsonResults(StringBuilder jsonResults)
+    public ArrayList<Lodging> parseJsonResults(StringBuilder jsonResults)
             throws JSONException {
-        ArrayList<Place> placeResults;
+        ArrayList<Lodging> lodgingResults;
         JSONObject mainJsonObj = new JSONObject(jsonResults.toString());
         JSONArray jsonArray = mainJsonObj.getJSONArray("results");
-        placeResults = new ArrayList<Place>(jsonArray.length());
+        lodgingResults = new ArrayList<Lodging>(jsonArray.length());
         for (int i = 0; i < jsonArray.length(); i++) {
             final JSONObject jsonObject = jsonArray.getJSONObject(i);
             String name = "", placeID = "", formattedAddress = "";
@@ -59,11 +65,16 @@ public class GooglePlaceNearbySearch extends GooglePlaceService {
                     openNow = hours.getBoolean("open_now");
                 }
             }
-            final Place place = new Place(name, placeID, formattedAddress,
-                    priceLevel, rating, openNow);
-            placeResults.add(place);
+            final Lodging lodging = new Lodging();
+            lodging.setName(name);
+            lodging.setPlaceID(placeID);
+            lodging.setFormattedAddress(formattedAddress);
+            lodging.setPriceLevel(priceLevel);
+            lodging.setRating(rating);
+            lodging.setOpenNow(openNow);
+            lodgingResults.add(lodging);
         }
-        return placeResults;
+        return lodgingResults;
     }
 }
 

@@ -1,5 +1,6 @@
 package model;
 
+import database.Lodging;
 import database.Place;
 import org.json.JSONException;
 
@@ -8,6 +9,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GooglePlaceService {
     protected static final String PLACES_API_BASE =
@@ -16,13 +18,9 @@ public class GooglePlaceService {
     protected static final String NEARBY_SEARCH = "/nearbysearch";
     protected static final String OUT_JSON = "/json";
     protected static final String API_KEY =
-            "AIzaSyArSEUjPiYSGlkygmjWk7-IzcozBDqNKqw";
+            "AIzaSyB5fL-GAeqRAg0eRTf3NGaiQPrKAlR8iGE";
 
-    private StringBuilder jsonResults;
-
-    public GooglePlaceService() {
-        jsonResults = new StringBuilder();
-    }
+    private StringBuilder jsonResults = new StringBuilder();
 
     public ArrayList<Place> textSearch(final String query) throws
             IOException, JSONException {
@@ -34,14 +32,14 @@ public class GooglePlaceService {
         return results;
     }
 
-    public ArrayList<Place> placeSearch(final String query) throws
+    public List<Lodging> placeSearch(final String coordinates, int radius, String type, String name) throws
             IOException, JSONException {
-        ArrayList<Place> results;
-        GooglePlaceNearbySearch placeSearch = new GooglePlaceNearbySearch(query);
-        final String urlQuery = placeSearch.getSearchURL();
+        GooglePlaceNearbySearch placeNearbySearch =
+                new GooglePlaceNearbySearch(coordinates, radius, type);
+        final String urlQuery = placeNearbySearch.getSearchURL();
         queryGoogle(urlQuery);
-        results = placeSearch.parseJsonResults(jsonResults);
-        return results;
+        List<Lodging> lodgings = placeNearbySearch.parseJsonResults(jsonResults);
+        return lodgings;
     }
 
     private void queryGoogle(final String urlQuery)

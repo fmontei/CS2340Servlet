@@ -29,7 +29,7 @@ public class AccountUpdateServlet extends HttpServlet {
         } else if (isDeleteButtonClicked(request)) {
             doDeleteRequest(request, response);
         } else {
-            doGet(request, response);
+            response.sendRedirect("jsp/update_account.jsp");
         }
     }
 

@@ -17,7 +17,11 @@ public class TestDB {
             int lngBeginIndex = coordinates.indexOf(",") + 1;
             String latitude = coordinates.substring(latBeginIndex, lngBeginIndex - 1);
             String longitude = coordinates.substring(lngBeginIndex, coordinates.length() - 1);
-            System.out.println(latitude + " " + longitude);
+            Point2D coords = new Point2D.Double(Double.parseDouble(latitude), Double.parseDouble(longitude));
+            String formattedCoords = coords.toString();
+            formattedCoords = formattedCoords.substring(formattedCoords.indexOf("[") + 1, formattedCoords.length() - 1);
+            formattedCoords = formattedCoords.replaceAll("\\s", "");
+            System.out.println(formattedCoords);
 
             //Itinerary it = new Itinerary("Name", "Brazil", new Point2D.Double(3.33333, 4.4444), "car", 42, 2);
             //DataManager.createItinerary(it);

@@ -5,6 +5,7 @@ import model.CreateItineraryForm;
 import model.EventForm;
 import model.GooglePlaceService;
 import database.Place;
+import model.LodgingForm;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +26,9 @@ public class ItineraryServlet extends HttpServlet {
             EventForm eventForm = new EventForm(request);
             eventForm.createNewEvents();
             response.sendRedirect("jsp/index.jsp");
+        } else if (lodgingSearchRequested(request)) {
+            doLodgingSearchRequest(request, response);
+            response.sendRedirect("jsp/index.jsp");
         } else {
             response.sendRedirect("jsp/itinerary_overview.jsp");
         }
@@ -42,7 +46,7 @@ public class ItineraryServlet extends HttpServlet {
         } else if (updateEventRequested(request)) {
             EventForm eventForm = new EventForm(request);
             eventForm.updateEvent();
-        } else if (textSearchRequest(request)) {
+        } else if (textSearchRequested(request)) {
             doSearchRequest(request, response);
         }
     }
@@ -68,7 +72,7 @@ public class ItineraryServlet extends HttpServlet {
         return request.getParameter("updateEventButton") != null;
     }
 
-    private boolean textSearchRequest(HttpServletRequest request) {
+    private boolean textSearchRequested(HttpServletRequest request) {
         return request.getParameter("google-textsearch-submit") != null;
     }
 
@@ -85,5 +89,14 @@ public class ItineraryServlet extends HttpServlet {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
         response.sendRedirect("jsp/index.jsp");
+    }
+
+    private boolean lodgingSearchRequested(HttpServletRequest request) {
+        return request.getQueryString().contains("add_lodging=true");
+    }
+
+    private void doLodgingSearchRequest(HttpServletRequest request,
+                                        HttpServletResponse response) {
+        new LodgingForm(request, response).getLodgingsAroundLocation();
     }
 }
