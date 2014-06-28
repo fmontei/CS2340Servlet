@@ -6,7 +6,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="org.json.simple.JSONArray" %>
 <%@ page import="org.json.simple.JSONObject" %>
-
+<%@ page import="java.util.Dictionary" %>
 
 <% String pageName = "Home"; %>
 <% String preferredTravelMode = ""; %>
@@ -290,6 +290,7 @@
                                                 JSONObject business = (JSONObject) businesses.get(j);
                                                 String businessName = business.get("name").toString();
                                                 String businessRating = business.get("rating").toString();
+                                                String businessURL = business.get("url").toString();
 
                                                 Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
                                                 final int preferenceID = activeItinerary.getPreferenceID();
@@ -304,6 +305,11 @@
                                                         <input type="radio" name="eventLocation<%=i%>" value="<%= businessName %>">
                                                     </span>
                                                     <input type="text" class="form-control" value="<%= businessName %> <%= businessRating %>" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="input-group">
+                                                    <a href="<%= businessURL %>" class="btn btn-default" target="_blank"> See More </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -393,6 +399,11 @@
             $("#itinerary-side-bar").show();
             $("#preferences-itinerary-overview").show();
         });
+
+        // Details button for new event location search
+        $('.popover-dismiss').popover({
+            trigger: 'focus'
+        })
 
         // Error Message
         if (error != 'null') {
