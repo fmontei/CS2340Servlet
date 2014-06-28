@@ -229,7 +229,7 @@
                             }
                             for (int i = 0; i < numberOfLodgingsFound; i++) {
                         %>
-                                    <div class="lodging-name" style="padding-left: 20px"><%=lodgingResults.get(i).getName()%></div>
+                                        <div class="lodging-name" style="padding-left: 20px"><%=lodgingResults.get(i).getName()%></div>
 
                         <% } %>
                                     </div>

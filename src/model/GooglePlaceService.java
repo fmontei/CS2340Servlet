@@ -32,8 +32,8 @@ public class GooglePlaceService {
         return results;
     }
 
-    public List<Lodging> placeSearch(final String coordinates, int radius, String type, String name) throws
-            IOException, JSONException {
+    public List<Lodging> placeSearch(final String coordinates, int radius, String type)
+            throws IOException, JSONException {
         GooglePlaceNearbySearch placeNearbySearch =
                 new GooglePlaceNearbySearch(coordinates, radius, type);
         final String urlQuery = placeNearbySearch.getSearchURL();

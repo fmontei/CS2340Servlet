@@ -1,7 +1,6 @@
 package model;
 
 import database.Lodging;
-import database.Place;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,11 +1,14 @@
+import database.Lodging;
 import model.GooglePlaceService;
+
+import java.util.List;
 
 public class TestGoogleSearch {
     public static void main(String... args) {
         try {
             GooglePlaceService googleService = new GooglePlaceService();
-            //String search = googleService.placeSearch("-33.8670522,151.1957362", 5000, "lodging", "lodging");
-            //System.out.println(search);
+            List<Lodging> lodgings = googleService.placeSearch("18.971188,-72.28522", 5000, "lodging");
+            System.out.println(lodgings.size());
         } catch (Exception ex) {
             ex.printStackTrace();
         }

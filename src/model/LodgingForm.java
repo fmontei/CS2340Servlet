@@ -29,8 +29,7 @@ public class LodgingForm {
         final String lodging = "lodging";
         try {
             GooglePlaceService googleSearch = new GooglePlaceService();
-            lodgings = googleSearch.placeSearch(formattedCoords, 5000, lodging,
-                    lodging);
+            lodgings = googleSearch.placeSearch(formattedCoords, 50000, lodging);
             session.setAttribute("lodgingResults", lodgings);
         } catch (Exception ex) {
             try {
