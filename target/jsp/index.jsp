@@ -221,9 +221,12 @@
                         <br />
 
                         <% Lodging selection = (Lodging) session.getAttribute("lodgingSelection");
-                            String lodgingIsOpenColor, openClose;
-                            lodgingIsOpenColor = (selection.isOpenNow()) ? "green" : "red";
-                            openClose = (selection.isOpenNow()) ? "Open" : "Closed";
+                            String lodgingIsOpenColor = "";
+                            String openClose = "";
+                            if (selection != null) {
+                                lodgingIsOpenColor = (selection.isOpenNow()) ? "green" : "red";
+                                openClose = (selection.isOpenNow()) ? "Open" : "Closed";
+                            }
                         %>
 
                         <div id="main-lodging">
@@ -232,7 +235,7 @@
                                     <% if (selection == null) { %>
                                     New Lodging
                                     <% } else { %>
-                                    <b>Loding: <%=selection.getName()%></b>
+                                    <b>Lodging: <%=selection.getName()%></b>
                                     <% } %>
                                 </div>
                                 <div class="panel-body">
