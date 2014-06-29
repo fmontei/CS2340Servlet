@@ -3,7 +3,7 @@ package database;
 import java.awt.*;
 
 public class NearbyPlace {
-    private String name, placeID, formattedAddress;
+    private String name, placeID, formattedAddress, URL;
     private Point coordinates = new Point();
     private int priceLevel;
     private double rating;
@@ -25,11 +25,14 @@ public class NearbyPlace {
         this.openNow = openNow;
     }
 
+    public String getPlaceID() {
+        return placeID;
+    }
     public String getName() {
         return name;
     }
-    public String getPlaceID() {
-        return placeID;
+    public String getURL() {
+        return URL;
     }
     public String getFormattedAddress() {
         return formattedAddress;
@@ -47,11 +50,14 @@ public class NearbyPlace {
         return openNow;
     }
 
+    public void setPlaceID(String placeID) {
+        this.placeID = placeID;
+    }
     public void setName(String name) {
         this.name = name;
     }
-    public void setPlaceID(String placeID) {
-        this.placeID = placeID;
+    public void setURL(String URL) {
+        this.URL = URL;
     }
     public void setFormattedAddress(String formattedAddress) {
         this.formattedAddress = formattedAddress;

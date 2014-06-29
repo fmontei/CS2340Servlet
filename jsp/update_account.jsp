@@ -153,4 +153,4 @@
     });
 </script>
 
-<%@ include file="footer.jsp" %>
+<%@ include file="footer-centered.jsp" %>

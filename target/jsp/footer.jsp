@@ -1,18 +1,16 @@
-    <div data-spy="scroll" data-target="#myScrollspy">
-        <div id="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-10 col-md-push-2">
-                        <div id="footerTopBorder"></div>
+    <footer class="panel-footer" id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-push-2" style="padding-left: 80px">
+                    <div id="footerTopBorder"></div>
 
-                        <p style="text-align: center">
-                            &copy; 2014 Georgia Tech Summer 2014 CS2340 Team 3. All Rights Reserved.
-                        </p>
-                    </div>
+                    <p style="text-align: center">
+                        &copy; 2014 Georgia Tech Summer 2014 CS2340 Team 3. All Rights Reserved.
+                    </p>
                 </div>
             </div>
         </div>
-    </div>
+    </footer>
 
     <!-- Itinerary Wizard -->
     <%@ include file="itinerary_wizard.jsp" %>

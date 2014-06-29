@@ -85,6 +85,8 @@
     </div>
 </div>
 
+<%@ include file="footer-centered.jsp" %>
+
 <%} else {%>
 
 <%
@@ -199,7 +201,7 @@
                 </div>
             </div>
 
-            <div class="col-md-10 col-md-push-2" style="padding-left: 70px">
+            <div class="col-md-10 col-md-push-2" style="padding-left: 80px">
                 <div id="div-overview">
                     <h1 class="page-header" id="page-header">
                         Welcome <%=request.getSession().getAttribute("welcomeName")%>!
@@ -456,19 +458,22 @@
                                             <form class="form-inline" role="form" action="/CS2340Servlet/itinerary?event_id=<%=i%>" method="POST">
                                                 <% if (session.getAttribute("eventName"+i) != null) { %>
                                                     <div class="form-group" style="padding-left: 20px">
-                                                        <input name="eventName<%=i%>" type="text" class="form-control" placeholder="Event Name" value='<%=session.getAttribute("eventName"+i)%>'/>
+                                                        <input name="eventName<%=i%>" type="text" class="form-control" placeholder="Event Name"
+                                                               value='<%=session.getAttribute("eventName"+i)%>'/>
                                                     </div>
                                                     <div class="form-group" style="padding-left: 15px">
-                                                        <input name="eventType<%=i%>" type="text" class="form-control typeahead" placeholder="Event Type" value='<%=session.getAttribute("eventType"+i)%>'/>
+                                                        <input name="eventType<%=i%>" type="text" class="form-control typeahead" placeholder="Event Type"
+                                                               value='<%=session.getAttribute("eventType"+i)%>'/>
                                                     </div>
                                                     <div class="form-group" style="padding-left: 15px">
-                                                        Start: <input name="eventStartTime<%=i%>" type="time" class="form-control" value='<%=session.getAttribute("eventStartTime"+i)%>'/>
-                                                    </div>
-                                                    <div class="form-group" style="padding-left: 15px">
-                                                        End: <input name="eventEndTime<%=i%>" type="time" class="form-control" value='<%=session.getAttribute("eventEndTime"+i)%>'/>
-                                                    </div>
-                                                    <div class="form-group" style="float: right; padding-right: 15px">
-                                                        <input name="searcEventButton" type="submit" class="form-control btn-primary" value="Search"
+                                                        Radius (miles):  <input name="eventRadius<%=i%>" type="number" min="1" max="25" step="1" class="form-control"
+                                                                       value='<%=session.getAttribute("eventEndTime"+i)%>'/>
+                                                        <span style="padding-left: 15px">Required for Yelp Search</span>
+                                                    </div><br />
+                                                    <div class="form-group" style="float: left; padding-left: 20px; padding-top: 10px">
+                                                        <input name="searcEventButton" type="submit" class="form-control btn-primary" value="Google Search"
+                                                               onclick="changeValueToGoogleCode(document.getElementById('eventType' + '<%=i%>'))" />
+                                                        <input name="getEventsWithYelpButton" type="submit" class="form-control btn-primary" value="Yelp Search"
                                                                onclick="changeValueToGoogleCode(document.getElementById('eventType' + '<%=i%>'))" />
                                                     </div>
                                                 <% } else { %>
@@ -479,14 +484,15 @@
                                                         <input name="eventType<%=i%>" id="eventType<%=i%>" type="text" class="form-control typeahead" placeholder="Event Type" />
                                                     </div>
                                                     <div class="form-group" style="padding-left: 15px">
-                                                        Start: <input name="eventStartTime<%=i%>" type="time" class="form-control" />
-                                                    </div>
-                                                    <div class="form-group" style="padding-left: 15px">
-                                                        End: <input name="eventEndTime<%=i%>" type="time" class="form-control" />
-                                                    </div>
-                                                    <div class="form-group" style="float: right; padding-right: 15px">
-                                                        <input name="searcEventButton" type="submit" class="form-control btn-primary" value="Search"
+                                                        Radius (miles):  <input name="eventRadius<%=i%>" type="number" min="1" max="25" step="1" class="form-control"
+                                                                       value='<%=session.getAttribute("eventEndTime"+i)%>'/>
+                                                        <span style="padding-left: 15px">Required for Yelp Search</span>
+                                                    </div><br />
+                                                    <div class="form-group" style="float: left; padding-left: 20px; padding-top: 10px">
+                                                        <input name="getEventsWithGoogleButton" type="submit" class="form-control btn-primary" value="Google Search"
                                                                 onclick="changeValueToGoogleCode(document.getElementById('eventType' + '<%=i%>'))" />
+                                                        <input name="getEventsWithYelpButton" type="submit" class="form-control btn-primary" value="Yelp Search"
+                                                               onclick="changeValueToGoogleCode(document.getElementById('eventType' + '<%=i%>'))" />
                                                     </div>
                                                 <% } %>
                                         </div>
@@ -519,7 +525,7 @@
 
                                                     final String businessName = business.getName();
                                                     final double businessRating = business.getRating();
-                                                    String businessURL = "unknown";
+                                                    String businessURL = (business.getURL()) != null ? business.getURL() : "unknown";
 
                                                     Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
                                                     final int preferenceID = activeItinerary.getPreferenceID();
@@ -577,6 +583,8 @@
             </div>
         </div>
     </div>
+
+    <%@ include file="footer.jsp" %>
 
 <%}%>
 
@@ -676,5 +684,3 @@
 <!-- Event Search Bar Javascript -->
 <script src="../js/typeahead.bundle.js"></script>
 <script src="../js/event_autocomplete.js"></script>
-
-<%@ include file="footer.jsp" %>

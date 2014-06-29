@@ -22,10 +22,8 @@ public class ItineraryServlet extends HttpServlet {
         if (request.getQueryString().contains("create_event=")) {
             EventForm eventForm = new EventForm(request, response);
             eventForm.createNewEvents();
-            response.sendRedirect("jsp/index.jsp");
         } else if (lodgingSearchRequested(request)) {
             doLodgingSearchRequest(request, response);
-            response.sendRedirect("jsp/index.jsp");
         } else if (lodgingSelectionMade(request)) {
             new LodgingForm(request, response).saveLodgingSelection();
         } else {
@@ -42,23 +40,12 @@ public class ItineraryServlet extends HttpServlet {
         } else if (itineraryDeleteRequested(request)) {
             doDeleteRequest(request);
             response.sendRedirect("jsp/itinerary_overview.jsp");
-        } else if (searchEventRequested(request)) {
+        } else if (userRequestedEventSearch(request)) {
             EventForm eventForm = new EventForm(request, response);
             eventForm.getEventsAroundCentralLocation();
-
-
-
-        } else if (selectBusinessRequested(request)) {
-            final HttpSession session = request.getSession();
-            final String queryString = request.getQueryString();
-            final int startIndex = queryString.indexOf("=") + 1;
-            final String eventID = queryString.substring(startIndex);
-            session.setAttribute("isEvent" + eventID + "Set", "true");
-            String locationAndURL = request.getParameter("eventLocation" + eventID);
-            int delimiterLocation = locationAndURL.indexOf(",");
-            session.setAttribute("eventLocation" + eventID, locationAndURL.substring(0, delimiterLocation));
-            session.setAttribute("eventBusinessURL" + eventID, locationAndURL.substring(delimiterLocation + 1));
-            response.sendRedirect("jsp/index.jsp");
+        } else if (userSelectedEvent(request)) {
+            EventForm eventForm = new EventForm(request, response);
+            eventForm.saveSelection();
         } else if (textSearchRequest(request)) {
             doSearchRequest(request, response);
         }
@@ -69,8 +56,10 @@ public class ItineraryServlet extends HttpServlet {
     }
 
     private void doLodgingSearchRequest(HttpServletRequest request,
-                                        HttpServletResponse response) {
+                                        HttpServletResponse response)
+        throws IOException {
         new LodgingForm(request, response).getLodgingsAroundLocation();
+        response.sendRedirect("jsp/index.jsp");
     }
 
     private boolean lodgingSelectionMade(HttpServletRequest request) {
@@ -94,11 +83,12 @@ public class ItineraryServlet extends HttpServlet {
         }
     }
 
-    private boolean searchEventRequested(HttpServletRequest request) {
-        return request.getParameter("searcEventButton") != null;
+    private boolean userRequestedEventSearch(HttpServletRequest request) {
+        return request.getParameter("getEventsWithGoogleButton") != null ||
+                request.getParameter("getEventsWithYelpButton") != null;
     }
 
-    private boolean selectBusinessRequested(HttpServletRequest request) {
+    private boolean userSelectedEvent(HttpServletRequest request) {
         return request.getParameter("selectBusinessButton") != null;
     }
 
