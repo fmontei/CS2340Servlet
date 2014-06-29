@@ -2,7 +2,7 @@
         <div id="footer">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
+                    <div class="col-md-10 col-md-push-2">
                         <div id="footerTopBorder"></div>
 
                         <p style="text-align: center">

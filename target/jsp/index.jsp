@@ -93,7 +93,9 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-2 sidebar" id="itinerary-side-bar">
+            <div class="col-md-2 sidebar" id="itinerary-side-bar"
+                 style="position: absolute; width: 270px;">
+                <div class="sidebad-wrapper" >
                 <ul class="list-unstyled">
                     <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">
                         <h4>User <i class="glyphicon glyphicon-chevron-down"></i></h4>
@@ -194,9 +196,10 @@
                         </ul>
                     </li>
                 </ul>
+                </div>
             </div>
 
-            <div class="col-md-10 col-md-push-2">
+            <div class="col-md-10 col-md-push-2" style="padding-left: 70px">
                 <div id="div-overview">
                     <h1 class="page-header" id="page-header">
                         Welcome <%=request.getSession().getAttribute("welcomeName")%>!
