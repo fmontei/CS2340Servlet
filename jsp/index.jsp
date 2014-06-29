@@ -350,7 +350,7 @@
                         <div id="event-no-<%=i%>">
                             <div class="panel panel-<%=color%>">
                                 <div class="panel-heading">
-                                    <% 
+                                    <%
                                         String isEventSet = (String) session.getAttribute("isEvent" + i + "Set");
                                         String temp = "true";
                                         if (isEventSet != null && isEventSet.equals(temp)) { %>
@@ -368,11 +368,11 @@
 
                                         <form class="form-inline" role="form" action="/CS2340Servlet/itinerary?event_id=<%=i%>" method="POST">
                                             <% if (session.getAttribute("eventName"+i) != null) { %>
-                                                <div class="form-group" style="padding-left: 20px"> 
-                                                    <input name="eventName<%=i%>" type="text" class="form-control" placeholder="Event Name" value='<%=session.getAttribute("eventName"+i)%>'/> 
+                                                <div class="form-group" style="padding-left: 20px">
+                                                    <input name="eventName<%=i%>" type="text" class="form-control" placeholder="Event Name" value='<%=session.getAttribute("eventName"+i)%>'/>
                                                 </div>
                                                 <div class="form-group" style="padding-left: 15px">
-                                                    <input name="eventType<%=i%>" type="text" class="form-control" placeholder="Event Type" value='<%=session.getAttribute("eventType"+i)%>'/>
+                                                    <input name="eventType<%=i%>" type="text" class="form-control typeahead" placeholder="Event Type" value='<%=session.getAttribute("eventType"+i)%>'/>
                                                 </div>
                                                 <div class="form-group" style="padding-left: 15px">
                                                     Start: <input name="eventStartTime<%=i%>" type="time" class="form-control" value='<%=session.getAttribute("eventStartTime"+i)%>'/>
@@ -381,14 +381,14 @@
                                                     End: <input name="eventEndTime<%=i%>" type="time" class="form-control" value='<%=session.getAttribute("eventEndTime"+i)%>'/>
                                                 </div>
                                                 <div class="form-group" style="float: right; padding-right: 15px">
-                                                    <input name="updateEventButton" type="submit" class="form-control btn-primary" value="Search Location"/>
+                                                    <input name="searcEventButton" type="submit" class="form-control btn-primary" value="Search Location"/>
                                                 </div>
                                             <% } else { %>
                                                 <div class="form-group" style="padding-left: 20px">
-                                                    <input name="eventName<%=i%>" type="text" class="form-control" placeholder="Event Name"/> 
+                                                    <input name="eventName<%=i%>" type="text" class="form-control" placeholder="Event Name"/>
                                                 </div>
                                                 <div class="form-group" style="padding-left: 15px">
-                                                    <input name="eventType<%=i%>" type="text" class="form-control" placeholder="Event Type" />
+                                                    <input name="eventType<%=i%>" id="eventType<%=i%>" type="text" class="form-control typeahead" placeholder="Event Type" />
                                                 </div>
                                                 <div class="form-group" style="padding-left: 15px">
                                                     Start: <input name="eventStartTime<%=i%>" type="time" class="form-control" />
@@ -397,7 +397,8 @@
                                                     End: <input name="eventEndTime<%=i%>" type="time" class="form-control" />
                                                 </div>
                                                 <div class="form-group" style="float: right; padding-right: 15px">
-                                                    <input name="updateEventButton" type="submit" class="form-control btn-primary" value="Search Location"/>
+                                                    <input name="searcEventButton" type="submit" class="form-control btn-primary" value="Search Location"
+                                                            onclick="changeValueToGoogleCode(document.getElementById('eventType' + '<%=i%>'))"/>
                                                 </div>
                                             <% } %>
                                     </div>
@@ -421,7 +422,7 @@
                                             </div>
                                         </div>
 
-                                    <% 
+                                    <%
                                     } else {
                                         if (session.getAttribute("businesses") != null) {
                                             JSONArray businesses = (JSONArray) session.getAttribute("businesses");
@@ -437,7 +438,7 @@
                                                 SQLPreferenceQuery query = new SQLPreferenceQuery();
                                                 Preference activePreferences = query.getPreferencesByID(preferenceID);
                                                 if (Float.parseFloat(businessRating) >= activePreferences.getMinimumRating()) {
-                                    %>  
+                                    %>
                                         <div class="row" style="padding-top:20px; padding-left:5px">
                                             <div class="col-md-6">
                                                 <div class="input-group">
@@ -453,7 +454,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    <%  
+                                    <%
                                                     count++;
                                                 }
                                             }
@@ -462,7 +463,7 @@
                                         <div class="row" style="padding-top:20px; padding-left:5px">
                                             <div class="col-md-6">
                                                 <div class="input-group">
-                                                    <input name="selectBusinessButton" type="submit" class="btn btn-primary" value="Select Location"/> 
+                                                    <input name="selectBusinessButton" type="submit" class="btn btn-primary" value="Select Location"/>
                                                     <br/>
                                                     Businesses: <%= businesses.size() %>
                                                     Shown: <%= count %>
@@ -567,5 +568,8 @@
         });
     });
 </script>
+
+<script src="../js/typeahead.bundle.js"></script>
+<script src="../js/event_autocomplete.js"></script>
 
 <%@ include file="footer.jsp" %>

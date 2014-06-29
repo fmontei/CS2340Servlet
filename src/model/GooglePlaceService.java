@@ -38,8 +38,8 @@ public class GooglePlaceService {
                 new GooglePlaceNearbySearch(coordinates, radius, type);
         final String urlQuery = placeNearbySearch.getSearchURL();
         queryGoogle(urlQuery);
-        List<Lodging> lodgings = placeNearbySearch.parseJsonResults(jsonResults);
-        return lodgings;
+        List results = placeNearbySearch.parseJsonResults(jsonResults);
+        return results;
     }
 
     private void queryGoogle(final String urlQuery)

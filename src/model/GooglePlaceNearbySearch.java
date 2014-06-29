@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GooglePlaceNearbySearch extends GooglePlaceService {
     private String coordinates, type;
@@ -36,12 +37,12 @@ public class GooglePlaceNearbySearch extends GooglePlaceService {
         return queryBuilder.toString();
     }
 
-    public ArrayList<Lodging> parseJsonResults(StringBuilder jsonResults)
+    public List<Lodging> parseJsonResults(StringBuilder jsonResults)
             throws JSONException {
-        ArrayList<Lodging> lodgingResults;
+        ArrayList<Lodging> results;
         JSONObject mainJsonObj = new JSONObject(jsonResults.toString());
         JSONArray jsonArray = mainJsonObj.getJSONArray("results");
-        lodgingResults = new ArrayList<Lodging>(jsonArray.length());
+        results = new ArrayList<Lodging>(jsonArray.length());
         for (int i = 0; i < jsonArray.length(); i++) {
             final JSONObject jsonObject = jsonArray.getJSONObject(i);
             String name = "", placeID = "", formattedAddress = "";
@@ -64,16 +65,16 @@ public class GooglePlaceNearbySearch extends GooglePlaceService {
                     openNow = hours.getBoolean("open_now");
                 }
             }
-            final Lodging lodging = new Lodging();
-            lodging.setName(name);
-            lodging.setPlaceID(placeID);
-            lodging.setFormattedAddress(formattedAddress);
-            lodging.setPriceLevel(priceLevel);
-            lodging.setRating(rating);
-            lodging.setOpenNow(openNow);
-            lodgingResults.add(lodging);
+            final Lodging parsedObject = new Lodging();
+            parsedObject.setName(name);
+            parsedObject.setPlaceID(placeID);
+            parsedObject.setFormattedAddress(formattedAddress);
+            parsedObject.setPriceLevel(priceLevel);
+            parsedObject.setRating(rating);
+            parsedObject.setOpenNow(openNow);
+            results.add(parsedObject);
         }
-        return lodgingResults;
+        return results;
     }
 }
 
