@@ -74,6 +74,9 @@
         <copy todir="${basedir}/target/css">
             <fileset dir="${basedir}/css"></fileset>
         </copy>
+        <copy todir="${basedir}/target/images">
+            <fileset dir="${basedir}/images"></fileset>
+        </copy>
         <copy todir="${basedir}/target/jsp">
             <fileset dir="${basedir}/jsp"></fileset>
         </copy>

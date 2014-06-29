@@ -1,4 +1,3 @@
-</div> <!-- wrapper /div -->
     <div data-spy="scroll" data-target="#myScrollspy">
         <div id="footer">
             <div class="container">
