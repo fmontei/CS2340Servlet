@@ -1,6 +1,6 @@
 package model;
 
-import database.Lodging;
+import database.NearbyPlace;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GooglePlaceNearbySearch extends GooglePlaceService {
+public class GooglePlaceNearbySearch extends GooglePlaceAPI {
     private String coordinates, type;
     private int radius;
 
@@ -37,12 +37,12 @@ public class GooglePlaceNearbySearch extends GooglePlaceService {
         return queryBuilder.toString();
     }
 
-    public List<Lodging> parseJsonResults(StringBuilder jsonResults)
+    public List<NearbyPlace> parseJsonResults(StringBuilder jsonResults)
             throws JSONException {
-        ArrayList<Lodging> results;
+        ArrayList<NearbyPlace> results;
         JSONObject mainJsonObj = new JSONObject(jsonResults.toString());
         JSONArray jsonArray = mainJsonObj.getJSONArray("results");
-        results = new ArrayList<Lodging>(jsonArray.length());
+        results = new ArrayList<NearbyPlace>(jsonArray.length());
         for (int i = 0; i < jsonArray.length(); i++) {
             final JSONObject jsonObject = jsonArray.getJSONObject(i);
             String name = "", placeID = "", formattedAddress = "";
@@ -65,7 +65,7 @@ public class GooglePlaceNearbySearch extends GooglePlaceService {
                     openNow = hours.getBoolean("open_now");
                 }
             }
-            final Lodging parsedObject = new Lodging();
+            final NearbyPlace parsedObject = new NearbyPlace();
             parsedObject.setName(name);
             parsedObject.setPlaceID(placeID);
             parsedObject.setFormattedAddress(formattedAddress);

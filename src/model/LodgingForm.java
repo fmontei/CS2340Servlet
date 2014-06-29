@@ -1,15 +1,13 @@
 package model;
 
-import controller.BrowserErrorHandling;
+import database.NearbyPlace;
 import database.Itinerary;
-import database.Lodging;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class LodgingForm {
@@ -28,10 +26,10 @@ public class LodgingForm {
         session = request.getSession();
         activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
         final String formattedCoords = reformatCoordsForQueryCompliance();
-        List<Lodging> lodgings;
+        List<NearbyPlace> lodgings;
         final String lodging = "lodging";
         try {
-            GooglePlaceService googleSearch = new GooglePlaceService();
+            GooglePlaceAPI googleSearch = new GooglePlaceAPI();
             lodgings = googleSearch.placeSearch(formattedCoords, 50000, lodging);
             session.setAttribute("lodgingResults", lodgings);
         } catch (Exception ex) {
@@ -56,9 +54,9 @@ public class LodgingForm {
         int begin = lodgingURI.indexOf("=") + 1;
         String lodgingIDAsString = lodgingURI.substring(begin);
         final int lodgingID = Integer.parseInt(lodgingIDAsString);
-        List<Lodging> results =
-                (List<Lodging>) session.getAttribute("lodgingResults");
-        final Lodging selection = results.get(lodgingID);
+        List<NearbyPlace> results =
+                (List<NearbyPlace>) session.getAttribute("lodgingResults");
+        final NearbyPlace selection = results.get(lodgingID);
         session.setAttribute("lodgingSelection", selection);
         response.sendRedirect("jsp/index.jsp");
     }

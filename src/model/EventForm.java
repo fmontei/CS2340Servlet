@@ -2,15 +2,14 @@ package model;
 
 import controller.BrowserErrorHandling;
 import database.Event;
+import database.NearbyPlace;
 import database.Itinerary;
-import database.Lodging;
 import org.json.JSONException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,23 +50,15 @@ public class EventForm {
         final String eventEndTime
                 = request.getParameter("eventEventTime" + eventID);
         try {
-            List<Lodging> eventResults = queryGoogleForEvents(eventName, eventType);
-            //response.sendRedirect("jsp/index.jsp");
-            PrintWriter out = response.getWriter();
-            String names = "";
-            for (Lodging lodging : eventResults) {
-                names += lodging.getName() + "\n";
-            }
-            out.println("<html>Names:<br />" + names + "</html>");
+            List<NearbyPlace> eventResults = queryGoogleForEvents
+                    (eventName, eventType);
+            populateSessionWithEventResults(eventID, eventResults);
+            response.sendRedirect("jsp/index.jsp");
         } catch (IOException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         } catch (JSONException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
-        //session.setAttribute("eventName" + eventID, request.getParameter("eventName" + eventID));
-        //session.setAttribute("eventType" + eventID, request.getParameter("eventType" + eventID));
-        //session.setAttribute("eventStartTime" + eventID, request.getParameter("eventStartTime" + eventID));
-        //session.setAttribute("eventEndTime" + eventID, request.getParameter("eventEndTime" + eventID));
     }
 
     private String parseEventIDFromRequestURI() {
@@ -77,11 +68,11 @@ public class EventForm {
         return eventID;
     }
 
-    private List<Lodging> queryGoogleForEvents(String eventName, String eventType)
+    private List<NearbyPlace> queryGoogleForEvents(String eventName, String eventType)
         throws IOException, JSONException {
         final String coordinates = reformatCoordsForQueryCompliance();
-        GooglePlaceService googleSearch = new GooglePlaceService();
-        List<Lodging> eventResults = googleSearch.placeSearch
+        GooglePlaceAPI googleSearch = new GooglePlaceAPI();
+        List<NearbyPlace> eventResults = googleSearch.placeSearch
                 (coordinates, MAX_DISTANCE, eventType);
         return eventResults;
     }
@@ -95,5 +86,13 @@ public class EventForm {
         String formattedCoords = coords.substring(begin, end);
         formattedCoords = formattedCoords.replaceAll("\\s+", "");
         return formattedCoords;
+    }
+
+    public void populateSessionWithEventResults(final String eventID, List<NearbyPlace> eventResults) {
+        session.setAttribute("eventName" + eventID, request.getParameter("eventName" + eventID));
+        session.setAttribute("eventType" + eventID, request.getParameter("eventType" + eventID));
+        session.setAttribute("eventStartTime" + eventID, request.getParameter("eventStartTime" + eventID));
+        session.setAttribute("eventEndTime" + eventID, request.getParameter("eventEndTime" + eventID));
+        session.setAttribute("businesses", eventResults);
     }
 }

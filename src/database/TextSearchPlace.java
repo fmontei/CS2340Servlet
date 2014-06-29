@@ -1,13 +1,13 @@
 package database;
 
-public class Place {
+public class TextSearchPlace {
     private String name, placeID, formattedAddress;
     private int priceLevel;
     private double rating;
     private boolean openNow;
 
-    public Place(String name, String placeID, String formattedAddress,
-                 int priceLevel, double rating, boolean openNow) {
+    public TextSearchPlace(String name, String placeID, String formattedAddress,
+                           int priceLevel, double rating, boolean openNow) {
         this.name = name;
         this.placeID = placeID;
         this.formattedAddress = formattedAddress;

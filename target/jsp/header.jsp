@@ -1,10 +1,13 @@
 <%@ page import="database.Preference" %>
-<%@ page import="database.Place" %>
+<%@ page import="database.TextSearchPlace" %>
 <%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
+
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
@@ -341,10 +344,10 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
                                 </div>
                             </form>
                         </li>
-                        <%  ArrayList<Place> places = (ArrayList<Place>) session.getAttribute("textSearchResults");
+                        <%  ArrayList<TextSearchPlace> places = (ArrayList<TextSearchPlace>) session.getAttribute("textSearchResults");
                             if (places != null) {
                                 int i = 0;
-                                for (Place place : places) {
+                                for (TextSearchPlace place : places) {
                                     String placeName = place.getName();
                                     String address = place.getFormattedAddress();
                                     int priceLevel = place.getPriceLevel();

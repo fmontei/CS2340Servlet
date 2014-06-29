@@ -1,7 +1,7 @@
 package model;
 
-import database.Lodging;
-import database.Place;
+import database.NearbyPlace;
+import database.TextSearchPlace;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GooglePlaceService {
+public class GooglePlaceAPI {
     protected static final String PLACES_API_BASE =
             "https://maps.googleapis.com/maps/api/place";
     protected static final String TEXT_SEARCH = "/textsearch";
@@ -22,9 +22,9 @@ public class GooglePlaceService {
 
     private StringBuilder jsonResults = new StringBuilder();
 
-    public ArrayList<Place> textSearch(final String query) throws
+    public ArrayList<TextSearchPlace> textSearch(final String query) throws
             IOException, JSONException {
-        ArrayList<Place> results;
+        ArrayList<TextSearchPlace> results;
         GooglePlaceTextSearch placeTextSearch = new GooglePlaceTextSearch(query);
         final String urlQuery = placeTextSearch.getTextSearchURL();
         queryGoogle(urlQuery);
@@ -32,7 +32,7 @@ public class GooglePlaceService {
         return results;
     }
 
-    public List<Lodging> placeSearch(final String coordinates, int radius, String type)
+    public List<NearbyPlace> placeSearch(final String coordinates, int radius, String type)
             throws IOException, JSONException {
         GooglePlaceNearbySearch placeNearbySearch =
                 new GooglePlaceNearbySearch(coordinates, radius, type);

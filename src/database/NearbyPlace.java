@@ -2,20 +2,20 @@ package database;
 
 import java.awt.*;
 
-public class Lodging {
+public class NearbyPlace {
     private String name, placeID, formattedAddress;
     private Point coordinates = new Point();
     private int priceLevel;
     private double rating;
     private boolean openNow;
 
-    public Lodging() {
+    public NearbyPlace() {
 
     }
 
-    public Lodging(String name, String placeID, String formattedAddress,
-                   Point coordinates, int priceLevel, double rating,
-                   boolean openNow) {
+    public NearbyPlace(String name, String placeID, String formattedAddress,
+                       Point coordinates, int priceLevel, double rating,
+                       boolean openNow) {
         this.name = name;
         this.placeID = placeID;
         this.formattedAddress = formattedAddress;

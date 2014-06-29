@@ -6,8 +6,7 @@
 <%@ page import="database.Itinerary" %>
 <%@ page import="database.SQLPreferenceQuery" %>
 <%@ page import="database.Preference" %>
-<%@ page import="database.Lodging" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="database.NearbyPlace" %>
 <%@ page import="org.json.simple.JSONArray" %>
 <%@ page import="org.json.simple.JSONObject" %>
 <%@ page import="java.util.Dictionary" %>
@@ -250,7 +249,7 @@
                         </div>
 
 
-                        <% Lodging selection = (Lodging) session.getAttribute("lodgingSelection");
+                        <% NearbyPlace selection = (NearbyPlace) session.getAttribute("lodgingSelection");
                             String lodgingIsOpenColor = "";
                             String openClose = "";
                             if (selection != null) {
@@ -300,9 +299,9 @@
                         <%  if (selection == null) {
                                 Object lodgingObject = session.getAttribute("lodgingResults");
                                 int numberOfLodgingsFound = 0;
-                                List<Lodging> lodgingResults = new ArrayList<Lodging>();
+                                List<NearbyPlace> lodgingResults = new ArrayList<NearbyPlace>();
                                 if (lodgingObject != null) {
-                                    lodgingResults = (List<Lodging>) lodgingObject;
+                                    lodgingResults = (List<NearbyPlace>) lodgingObject;
                                     numberOfLodgingsFound = lodgingResults.size();
                                 }
                                 for (int i = 0; i < numberOfLodgingsFound; i++) {
@@ -381,7 +380,8 @@
                                                     End: <input name="eventEndTime<%=i%>" type="time" class="form-control" value='<%=session.getAttribute("eventEndTime"+i)%>'/>
                                                 </div>
                                                 <div class="form-group" style="float: right; padding-right: 15px">
-                                                    <input name="searcEventButton" type="submit" class="form-control btn-primary" value="Search Location"/>
+                                                    <input name="searcEventButton" type="submit" class="form-control btn-primary" value="Search"
+                                                           onclick="changeValueToGoogleCode(document.getElementById('eventType' + '<%=i%>'))" />
                                                 </div>
                                             <% } else { %>
                                                 <div class="form-group" style="padding-left: 20px">
@@ -397,8 +397,8 @@
                                                     End: <input name="eventEndTime<%=i%>" type="time" class="form-control" />
                                                 </div>
                                                 <div class="form-group" style="float: right; padding-right: 15px">
-                                                    <input name="searcEventButton" type="submit" class="form-control btn-primary" value="Search Location"
-                                                            onclick="changeValueToGoogleCode(document.getElementById('eventType' + '<%=i%>'))"/>
+                                                    <input name="searcEventButton" type="submit" class="form-control btn-primary" value="Search"
+                                                            onclick="changeValueToGoogleCode(document.getElementById('eventType' + '<%=i%>'))" />
                                                 </div>
                                             <% } %>
                                     </div>
@@ -425,19 +425,21 @@
                                     <%
                                     } else {
                                         if (session.getAttribute("businesses") != null) {
-                                            JSONArray businesses = (JSONArray) session.getAttribute("businesses");
-                                            int count = 0;
-                                            for (int j = 0; j < businesses.size(); j++) {
-                                                JSONObject business = (JSONObject) businesses.get(j);
-                                                String businessName = business.get("name").toString();
-                                                String businessRating = business.get("rating").toString();
-                                                String businessURL = business.get("url").toString();
+                                            List<NearbyPlace> businesses = (List<NearbyPlace>) session.getAttribute("businesses");
+                                            int numberOfBusinessesShown = 0;
+                                            for (NearbyPlace business : businesses) {
+
+                                                final String businessName = business.getName();
+                                                final double businessRating = business.getRating();
+                                                String businessURL = "unknown";
 
                                                 Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
                                                 final int preferenceID = activeItinerary.getPreferenceID();
                                                 SQLPreferenceQuery query = new SQLPreferenceQuery();
                                                 Preference activePreferences = query.getPreferencesByID(preferenceID);
-                                                if (Float.parseFloat(businessRating) >= activePreferences.getMinimumRating()) {
+                                                final int unknownRating = 0;
+                                                if (businessRating >= activePreferences.getMinimumRating()
+                                                        || businessRating == unknownRating) {
                                     %>
                                         <div class="row" style="padding-top:20px; padding-left:5px">
                                             <div class="col-md-6">
@@ -445,7 +447,7 @@
                                                     <span class="input-group-addon">
                                                         <input type="radio" name="eventLocation<%=i%>" value="<%= businessName %>,<%= businessURL %>">
                                                     </span>
-                                                    <input type="text" class="form-control" value="<%= businessName %> <%= businessRating %>" readonly>
+                                                    <input type="text" class="form-control" value="<%= businessName %> <%= businessRating == 0 ? "N/A" : businessRating %>" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-md-1">
@@ -455,7 +457,7 @@
                                             </div>
                                         </div>
                                     <%
-                                                    count++;
+                                                    numberOfBusinessesShown++;
                                                 }
                                             }
                                     %>
@@ -466,7 +468,7 @@
                                                     <input name="selectBusinessButton" type="submit" class="btn btn-primary" value="Select Location"/>
                                                     <br/>
                                                     Businesses: <%= businesses.size() %>
-                                                    Shown: <%= count %>
+                                                    Shown: <%= numberOfBusinessesShown %>
                                                 </div>
                                             </div>
                                         </div>
@@ -569,6 +571,7 @@
     });
 </script>
 
+<!-- Event Search Bar Javascript -->
 <script src="../js/typeahead.bundle.js"></script>
 <script src="../js/event_autocomplete.js"></script>
 

@@ -1,6 +1,6 @@
 package model;
 
-import database.Place;
+import database.TextSearchPlace;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GooglePlaceTextSearch extends  GooglePlaceService {
+public class GooglePlaceTextSearch extends GooglePlaceAPI {
     private String query;
 
     public GooglePlaceTextSearch(final String query) {
@@ -32,12 +32,12 @@ public class GooglePlaceTextSearch extends  GooglePlaceService {
         return queryBuilder.toString();
     }
 
-    public ArrayList<Place> parseJsonResults(StringBuilder jsonResults)
+    public ArrayList<TextSearchPlace> parseJsonResults(StringBuilder jsonResults)
             throws JSONException {
-        ArrayList<Place> placeResults;
+        ArrayList<TextSearchPlace> placeResults;
         JSONObject mainJsonObj = new JSONObject(jsonResults.toString());
         JSONArray jsonArray = mainJsonObj.getJSONArray("results");
-        placeResults = new ArrayList<Place>(jsonArray.length());
+        placeResults = new ArrayList<TextSearchPlace>(jsonArray.length());
         for (int i = 0; i < jsonArray.length(); i++) {
             final JSONObject jsonObject = jsonArray.getJSONObject(i);
             String name = "", placeID = "", formattedAddress = "";
@@ -60,7 +60,7 @@ public class GooglePlaceTextSearch extends  GooglePlaceService {
                     openNow = hours.getBoolean("open_now");
                 }
             }
-            final Place place = new Place(name, placeID, formattedAddress,
+            final TextSearchPlace place = new TextSearchPlace(name, placeID, formattedAddress,
                     priceLevel, rating, openNow);
             placeResults.add(place);
         }
