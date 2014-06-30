@@ -438,7 +438,7 @@
                                                 <%  if (event.getName() != null) { %>
 
                                                     <p>
-                                                       <b><%= session.getAttribute("eventName" + curEventID) %></b><span style="float: right"><i>Place no. <%=curEventID + 1%></i></span>
+                                                       <b><%= event.getName() %></b><span style="float: right"><i>Place no. <%=curEventID + 1%></i></span>
                                                     </p>
 
                                                 <% } else { %>
@@ -501,7 +501,7 @@
                                                                             <td class="lodging-address"><%=businesses.get(j).getFormattedAddress()%></td>
                                                                             <td class="lodging-rating"><%=businesses.get(j).getRating()%></td>
                                                                             <td class="lodging-open-closed"></td>
-                                                                            <td><a href="/CS2340Servlet/itinerary?event_id=<%=j%>">Select</a></td>
+                                                                            <td><a href="/CS2340Servlet/itinerary?select_business_id=<%=j%>&event_id=<%=curEventID%>">Select</a></td>
                                                                         </tr>
                                                                     <% } %> <!-- Each row for each business found -->
                                                                     </tbody>

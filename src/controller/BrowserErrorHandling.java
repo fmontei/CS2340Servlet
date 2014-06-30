@@ -17,4 +17,14 @@ public class BrowserErrorHandling {
                     .forward(request, response);
         } catch (Exception ignore) {}
     }
+
+    public static final void printErrorToBrowser(HttpServletRequest request,
+                                                 HttpServletResponse response,
+                                                 String message) {
+        try {
+            request.setAttribute("STACK_TRACE", message);
+            request.getRequestDispatcher("jsp/errorStackTrace.jsp")
+                    .forward(request, response);
+        } catch (Exception ignore) {}
+    }
 }

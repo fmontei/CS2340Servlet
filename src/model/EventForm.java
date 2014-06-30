@@ -44,6 +44,37 @@ public class EventForm {
         response.sendRedirect("jsp/index.jsp");
     }
 
+    public void saveSelection() throws IOException {
+        int businessNum, eventNum;
+        final String eventID = parseEventIDFromQueryString();
+        final String businessID = parseBusinessIDFromQueryString();
+        eventNum = Integer.parseInt(eventID);
+        businessNum = Integer.parseInt(businessID);
+        List<Event> events = (List<Event>) session.getAttribute("events");
+        List<Place> businesses = (List<Place>) session.getAttribute("businesses" + eventNum);
+        Event eventToBeUpdated = events.get(eventNum);
+        Place businessToBeSaved = businesses.get(businessNum);
+        eventToBeUpdated.setName(businessToBeSaved.getName());
+        events.set(eventNum, eventToBeUpdated);
+        session.setAttribute("events", events);
+        response.sendRedirect("jsp/index.jsp");
+    }
+
+    private String parseEventIDFromQueryString() {
+        final String queryString = request.getQueryString();
+        final int startIndex = queryString.lastIndexOf("=") + 1;
+        final String eventID = queryString.substring(startIndex);
+        return eventID;
+    }
+
+    private String parseBusinessIDFromQueryString() {
+        final String queryString = request.getQueryString();
+        final int startIndex = queryString.indexOf("=") + 1;
+        final int endIndex = queryString.indexOf("&");
+        final String businessID = queryString.substring(startIndex, endIndex);
+        return businessID;
+    }
+
     public void getEventsAroundCentralLocation() throws IOException {
         List<Place> eventResults;
         final String eventID = parseEventIDFromQueryString();
@@ -80,13 +111,6 @@ public class EventForm {
         session.setAttribute("eventQueryString" + eventID, "Event Name = '" +
                 eventName + "' | Event Type = '" + eventType + "' | Radius = '" +
                 radius + "'.");
-    }
-
-    private String parseEventIDFromQueryString() {
-        final String queryString = request.getQueryString();
-        final int startIndex = queryString.indexOf("=") + 1;
-        final String eventID = queryString.substring(startIndex);
-        return eventID;
     }
 
     private String getSearchAPIFromRequest() {
@@ -131,14 +155,5 @@ public class EventForm {
     private void populateSessionWithEventResults(String eventID,
                                                  List<Place> eventResults) {
         session.setAttribute("businesses" + eventID, eventResults);
-    }
-
-    public void saveSelection() throws IOException {
-        final String eventID = parseEventIDFromQueryString();
-        final int eventNum = Integer.parseInt(eventID);
-        List<Event> events = (List<Event>) session.getAttribute("events");
-        Event eventToBeUpdated = events.get(eventNum);
-        eventToBeUpdated.setName("BLAH BLAH");
-        response.sendRedirect("jsp/index.jsp");
     }
 }
