@@ -60,7 +60,7 @@ public class YelpAPI {
         this.accessToken = new Token(TOKEN, TOKEN_SECRET);
     }
 
-    public List<NearbyPlace> queryAPI(String term, String location,
+    public List<Place> queryAPI(String term, String location,
                                       final int radiusInMiles)
             throws SQLException {
         this.term = term;
@@ -75,28 +75,56 @@ public class YelpAPI {
         } catch (ParseException pe) {
 
         }
-
-        List<NearbyPlace> businessResults = new ArrayList<NearbyPlace>();
+        List<Place> businessResults = new ArrayList<Place>();
         JSONArray businesses = (JSONArray) jsonResponse.get("businesses");
         try {
             for (int j = 0; j < businesses.size(); j++) {
-                String businessName, businessURL, ratingAsString;
+                String businessName, businessURL, ratingAsString,
+                        displayAddress, displayPhone;
+                boolean isOpen;
                 double ratingAsDouble;
                 JSONObject jsonObject = (JSONObject) businesses.get(j);
                 businessName = jsonObject.get("name").toString();
+                displayAddress = getDisplayAddress(jsonObject);
+                //displayPhone = jsonObject.get("display_phone").toString();
                 ratingAsString = jsonObject.get("rating").toString();
                 ratingAsDouble = Double.parseDouble(ratingAsString);
                 businessURL = jsonObject.get("url").toString();
-                NearbyPlace business = new NearbyPlace();
+                isOpen = getIsOpen(jsonObject);
+                Place business = new Place();
                 business.setName(businessName);
+                business.setFormattedAddress(displayAddress);
+                //business.setPhoneNumber(displayPhone);
                 business.setRating(ratingAsDouble);
                 business.setURL(businessURL);
+                business.setOpenNow(isOpen);
                 businessResults.add(business);
             }
-        } catch (NullPointerException ex) {
+        } catch (Exception ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
         return businessResults;
+    }
+
+    private String getDisplayAddress(final JSONObject jsonObject) {
+        StringBuilder displayAddress = new StringBuilder();
+        JSONObject locationArray = (JSONObject) jsonObject.get("location");
+        final JSONArray address = (JSONArray) locationArray.get("display_address");
+        for (int i = 0; i < address.size(); i++) {
+            final String jsonPiece = address.get(i).toString();
+            if (i != 1 && i != 2) {
+                if (i == 0) {
+                    displayAddress.append(jsonPiece + " ");
+                } else {
+                    displayAddress.append(jsonPiece);
+                }
+            }
+        }
+        return displayAddress.toString();
+    }
+
+    private boolean getIsOpen(final JSONObject jsonObject) {
+        return jsonObject.get("is_closed").equals("true") ? false : true;
     }
 
     private int convertMilesToMeters(int miles) {

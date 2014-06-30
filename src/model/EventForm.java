@@ -2,9 +2,8 @@ package model;
 
 import controller.BrowserErrorHandling;
 import database.Event;
-import database.NearbyPlace;
 import database.Itinerary;
-import database.Preference;
+import database.Place;
 import org.json.JSONException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventForm {
-    private static final int MAX_DISTANCE = 50000;
     private HttpServletRequest request;
     private HttpServletResponse response;
     private HttpSession session;
@@ -46,34 +44,45 @@ public class EventForm {
         response.sendRedirect("jsp/index.jsp");
     }
 
-    public void getEventsAroundCentralLocation() {
-        List<NearbyPlace> eventResults;
-        final String eventID = parseEventIDFromRequestURI();
+    public void getEventsAroundCentralLocation() throws IOException {
+        List<Place> eventResults;
+        final String eventID = parseEventIDFromQueryString();
         final String API = getSearchAPIFromRequest();
         final String eventName = request.getParameter("eventName" + eventID);
         final String eventType = request.getParameter("eventType" + eventID);
-        final String eventStartTime
-                = request.getParameter("eventStartTime" + eventID);
-        final String eventEndTime
-                = request.getParameter("eventEventTime" + eventID);
+        final String radiusAsString = request.getParameter("eventRadius" + eventID);
+        final int radiusInMiles = Integer.parseInt(radiusAsString);
+        putQueryStringForReviewInSession(eventID, eventName, eventType,
+                radiusAsString);
         try {
             if (API.equals("Google")) {
-                eventResults = queryGoogleForEvents(eventName, eventType);
+                eventResults = queryGoogleForEvents(eventName, eventType,
+                        radiusInMiles);
             } else {
-                eventResults = queryYelpForEvents(eventType);
+                eventResults = queryYelpForEvents(eventType, radiusInMiles);
             }
             populateSessionWithEventResults(eventID, eventResults);
-            response.sendRedirect("jsp/index.jsp");
-        } catch (IOException ex) {
-            BrowserErrorHandling.printErrorToBrowser(request, response, ex);
+            response.sendRedirect("jsp/index.jsp?event-no-" + eventID);
         } catch (JSONException ex) {
+            request.setAttribute("googleSearchError", ex.getMessage());
+            ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
+        } catch (IOException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
     }
 
-    private String parseEventIDFromRequestURI() {
+    private void putQueryStringForReviewInSession(String eventID,
+                                                  String eventName,
+                                                  String eventType,
+                                                  String radius) {
+        session.setAttribute("eventQueryString" + eventID, "Event Name = '" +
+                eventName + "' | Event Type = '" + eventType + "' | Radius = '" +
+                radius + "'.");
+    }
+
+    private String parseEventIDFromQueryString() {
         final String queryString = request.getQueryString();
         final int startIndex = queryString.indexOf("=") + 1;
         final String eventID = queryString.substring(startIndex);
@@ -90,12 +99,14 @@ public class EventForm {
         return API;
     }
 
-    private List<NearbyPlace> queryGoogleForEvents(String eventName, String eventType)
+    private List<Place> queryGoogleForEvents(String eventName,
+                                                   String eventType,
+                                                   int radius)
         throws IOException, JSONException {
         final String coordinates = reformatCoordsForQueryCompliance();
         GooglePlaceAPI googleSearch = new GooglePlaceAPI();
-        List<NearbyPlace> eventResults = googleSearch.placeSearch
-                (coordinates, MAX_DISTANCE, eventType);
+        List<Place> eventResults = googleSearch.placeSearch
+                (coordinates, radius, eventType);
         return eventResults;
     }
 
@@ -108,34 +119,26 @@ public class EventForm {
         return formattedCoords;
     }
 
-    private List<NearbyPlace> queryYelpForEvents(final String term)
+    private List<Place> queryYelpForEvents(final String term, int radius)
             throws SQLException {
-        List<NearbyPlace> results;
+        List<Place> results;
         final String location = activeItinerary.getAddress();
-        final String eventID = parseEventIDFromRequestURI();
-        final String radiusAsString = request.getParameter("eventRadius" + eventID);
-        final int radiusInMiles = Integer.parseInt(radiusAsString);
         YelpAPI yelpAPI = new YelpAPI(request, response);
-        results = yelpAPI.queryAPI(term, location, radiusInMiles);
+        results = yelpAPI.queryAPI(term, location, radius);
         return results;
     }
 
-    private void populateSessionWithEventResults(final String eventID,
-                                                 List<NearbyPlace> eventResults) {
-        final String specificEventName = request.getParameter("eventName" + eventID);
-        final String specificEventType = request.getParameter("eventType" + eventID);
-        session.setAttribute("eventName" + eventID, specificEventName);
-        session.setAttribute("eventType" + eventID, specificEventType);
-        session.setAttribute("businesses", eventResults);
+    private void populateSessionWithEventResults(String eventID,
+                                                 List<Place> eventResults) {
+        session.setAttribute("businesses" + eventID, eventResults);
     }
 
     public void saveSelection() throws IOException {
-        String eventID = parseEventIDFromRequestURI();
-        session.setAttribute("isEvent" + eventID + "Set", "true");
-        String locationAndURL = request.getParameter("eventLocation" + eventID);
-        int delimiterLocation = locationAndURL.indexOf(",");
-        session.setAttribute("eventLocation" + eventID, locationAndURL.substring(0, delimiterLocation));
-        session.setAttribute("eventBusinessURL" + eventID, locationAndURL.substring(delimiterLocation + 1));
+        final String eventID = parseEventIDFromQueryString();
+        final int eventNum = Integer.parseInt(eventID);
+        List<Event> events = (List<Event>) session.getAttribute("events");
+        Event eventToBeUpdated = events.get(eventNum);
+        eventToBeUpdated.setName("BLAH BLAH");
         response.sendRedirect("jsp/index.jsp");
     }
 }

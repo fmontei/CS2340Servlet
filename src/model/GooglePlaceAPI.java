@@ -1,7 +1,6 @@
 package model;
 
-import database.NearbyPlace;
-import database.TextSearchPlace;
+import database.Place;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -22,9 +21,9 @@ public class GooglePlaceAPI {
 
     private StringBuilder jsonResults = new StringBuilder();
 
-    public ArrayList<TextSearchPlace> textSearch(final String query) throws
+    public ArrayList<Place> textSearch(final String query) throws
             IOException, JSONException {
-        ArrayList<TextSearchPlace> results;
+        ArrayList<Place> results;
         GooglePlaceTextSearch placeTextSearch = new GooglePlaceTextSearch(query);
         final String urlQuery = placeTextSearch.getTextSearchURL();
         queryGoogle(urlQuery);
@@ -32,13 +31,15 @@ public class GooglePlaceAPI {
         return results;
     }
 
-    public List<NearbyPlace> placeSearch(final String coordinates, int radius, String type)
+    public List<Place> placeSearch(final String coordinates,
+                                         final int radius,
+                                         final String type)
             throws IOException, JSONException {
         GooglePlaceNearbySearch placeNearbySearch =
                 new GooglePlaceNearbySearch(coordinates, radius, type);
         final String urlQuery = placeNearbySearch.getSearchURL();
         queryGoogle(urlQuery);
-        List results = placeNearbySearch.parseJsonResults(jsonResults);
+        List<Place> results = placeNearbySearch.parseJsonResults(jsonResults);
         return results;
     }
 
@@ -47,7 +48,8 @@ public class GooglePlaceAPI {
         InputStreamReader in = null;
         try {
             final URL url = new URL(urlQuery);
-            final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            final HttpURLConnection conn =
+                    (HttpURLConnection) url.openConnection();
             in = new InputStreamReader(conn.getInputStream());
             recordResults(in);
         } finally {

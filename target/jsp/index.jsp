@@ -2,10 +2,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="database.User" %>
 <%@ page import="database.Event" %>
-<%@ page import="database.Itinerary" %>
-<%@ page import="database.SQLPreferenceQuery" %>
 <%@ page import="database.Preference" %>
-<%@ page import="database.NearbyPlace" %>
+<%@ page import="database.Place" %>
 
 <%@ include file="header.jsp" %>
 
@@ -87,7 +85,7 @@
 
 <%@ include file="footer-centered.jsp" %>
 
-<%} else {%>
+<% } else { %>
 
 <%
     User account = (User) session.getAttribute("currentUser");
@@ -171,11 +169,10 @@
                                     </form>
                                 </div>
                             </li>
-                                <%  ArrayList<TextSearchPlace> places =
-                                        (ArrayList<TextSearchPlace>) session.getAttribute("textSearchResults");
+                                <%  List<Place> places = (List<Place>) session.getAttribute("textSearchResults");
                                     if (places != null) {
                                         int i = 0;
-                                        for (TextSearchPlace place : places) {
+                                        for (Place place : places) {
                                             String placeName = place.getName();
                                             String address = place.getFormattedAddress();
                                             int priceLevel = place.getPriceLevel();
@@ -246,7 +243,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <%  ArrayList<Event> events = (ArrayList<Event>) session.getAttribute("events");
+                                    <%  List<Event> events = (List<Event>) session.getAttribute("events");
                                         int numberOfEvents = 0;
                                         if (events != null) {
                                             numberOfEvents = events.size();
@@ -260,9 +257,6 @@
                                         Events
                                     </a>
                                 </li>
-
-
-
 
                                 <li>
                                     <a href="#" id="preferences-trigger">
@@ -339,7 +333,7 @@
                             </div>
 
 
-                            <% NearbyPlace selection = (NearbyPlace) session.getAttribute("lodgingSelection");
+                            <%  Place selection = (Place) session.getAttribute("lodgingSelection");
                                 String lodgingIsOpenColor = "";
                                 String openClose = "";
                                 if (selection != null) {
@@ -389,15 +383,15 @@
                             <%  if (selection == null) {
                                     Object lodgingObject = session.getAttribute("lodgingResults");
                                     int numberOfLodgingsFound = 0;
-                                    List<NearbyPlace> lodgingResults = new ArrayList<NearbyPlace>();
+                                    List<Place> lodgingResults = new ArrayList<Place>();
                                     if (lodgingObject != null) {
-                                        lodgingResults = (List<NearbyPlace>) lodgingObject;
+                                        lodgingResults = (List<Place>) lodgingObject;
                                         numberOfLodgingsFound = lodgingResults.size();
                                     }
                                     for (int i = 0; i < numberOfLodgingsFound; i++) {
                                         lodgingIsOpenColor = (lodgingResults.get(i).isOpenNow()) ? "green" : "red";
-                                        openClose = (lodgingResults.get(i).isOpenNow()) ? "Open" : "Closed";
-                            %>
+                                        openClose = (lodgingResults.get(i).isOpenNow()) ? "Open" : "Closed"; %>
+
                                                     <tr>
                                                         <td class="lodging-name"><%=lodgingResults.get(i).getName()%></td>
                                                         <td class="lodging-address"><%=lodgingResults.get(i).getFormattedAddress()%></td>
@@ -419,7 +413,7 @@
                                                         </form>
                                                     </div>
                                                 </tfoot>
-                                <% } else { %>
+                            <% } else { %>
                                                     <tr>
                                                         <td class="lodging-name"><%=selection.getName()%></td>
                                                         <td class="lodging-address"><%=selection.getFormattedAddress()%></td>
@@ -427,260 +421,222 @@
                                                         <td class="lodging-open-closed" style="color: <%=lodgingIsOpenColor%>"><%=openClose%></td>
                                                     </tr>
                                                 </tbody>
-                                <% } %>
+                            <% } %>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <% for (int i = 0; i < numberOfEvents; i++) { %>
-                            <% String color = (i % 2 == 0) ? "info" : "success"; %>
-                            <div id="event-no-<%=i%>">
-                                <div class="panel panel-<%=color%>">
-                                    <div class="panel-heading">
-                                        <%
-                                            String isEventSet = (String) session.getAttribute("isEvent" + i + "Set");
-                                            String temp = "true";
-                                            if (isEventSet != null && isEventSet.equals(temp)) { %>
+                            <% for (int curEventID = 0; curEventID < numberOfEvents; curEventID++) {
+                                    String eventPanelColor = (curEventID % 2 == 0) ? "info" : "success";
+                                    Event event = events.get(curEventID); %>
+                                    <div id="event-no-<%=curEventID%>">
+                                        <div class="panel panel-<%=eventPanelColor%>">
+                                            <div class="panel-heading">
 
-                                            <p>
-                                                Event no. <%=i + 1%>: <%= session.getAttribute("eventName" + i) %>
-                                            </p>
+                                                <%  if (event.getName() != null) { %>
 
-                                        <% } else { %>
-                                            New Event no. <%=i + 1%>
-                                        <% } %>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="row">
+                                                    <p>
+                                                       <b><%= session.getAttribute("eventName" + curEventID) %></b><span style="float: right"><i>Place no. <%=curEventID + 1%></i></span>
+                                                    </p>
 
-                                            <form class="form-inline" role="form" action="/CS2340Servlet/itinerary?event_id=<%=i%>" method="POST">
-                                                <% if (session.getAttribute("eventName"+i) != null) { %>
-                                                    <div class="form-group" style="padding-left: 20px">
-                                                        <input name="eventName<%=i%>" type="text" class="form-control" placeholder="Event Name"
-                                                               value='<%=session.getAttribute("eventName"+i)%>'/>
-                                                    </div>
-                                                    <div class="form-group" style="padding-left: 15px">
-                                                        <input name="eventType<%=i%>" type="text" class="form-control typeahead" placeholder="Event Type"
-                                                               value='<%=session.getAttribute("eventType"+i)%>'/>
-                                                    </div>
-                                                    <div class="form-group" style="padding-left: 15px">
-                                                        Radius (miles):  <input name="eventRadius<%=i%>" type="number" min="1" max="25" step="1" class="form-control"
-                                                                       value='<%=session.getAttribute("eventEndTime"+i)%>'/>
-                                                        <span style="padding-left: 15px">Required for Yelp Search</span>
-                                                    </div><br />
-                                                    <div class="form-group" style="float: left; padding-left: 20px; padding-top: 10px">
-                                                        <input name="searcEventButton" type="submit" class="form-control btn-primary" value="Google Search"
-                                                               onclick="changeValueToGoogleCode(document.getElementById('eventType' + '<%=i%>'))" />
-                                                        <input name="getEventsWithYelpButton" type="submit" class="form-control btn-primary" value="Yelp Search"
-                                                               onclick="changeValueToGoogleCode(document.getElementById('eventType' + '<%=i%>'))" />
-                                                    </div>
                                                 <% } else { %>
-                                                    <div class="form-group" style="padding-left: 20px">
-                                                        <input name="eventName<%=i%>" type="text" class="form-control" placeholder="Event Name"/>
-                                                    </div>
-                                                    <div class="form-group" style="padding-left: 15px">
-                                                        <input name="eventType<%=i%>" id="eventType<%=i%>" type="text" class="form-control typeahead" placeholder="Event Type" />
-                                                    </div>
-                                                    <div class="form-group" style="padding-left: 15px">
-                                                        Radius (miles):  <input name="eventRadius<%=i%>" type="number" min="1" max="25" step="1" class="form-control"
-                                                                       value='<%=session.getAttribute("eventEndTime"+i)%>'/>
-                                                        <span style="padding-left: 15px">Required for Yelp Search</span>
-                                                    </div><br />
-                                                    <div class="form-group" style="float: left; padding-left: 20px; padding-top: 10px">
-                                                        <input name="getEventsWithGoogleButton" type="submit" class="form-control btn-primary" value="Google Search"
-                                                                onclick="changeValueToGoogleCode(document.getElementById('eventType' + '<%=i%>'))" />
-                                                        <input name="getEventsWithYelpButton" type="submit" class="form-control btn-primary" value="Yelp Search"
-                                                               onclick="changeValueToGoogleCode(document.getElementById('eventType' + '<%=i%>'))" />
-                                                    </div>
+                                                    New Place no. <%=curEventID + 1%>
                                                 <% } %>
-                                        </div>
-
-                                        <% if (isEventSet != null && isEventSet.equals(temp)) { %>
-                                            <div class="row" style="padding-top:20px; padding-left:5px">
-                                                <div class="col-md-6">
-                                                    <div class="input-group">
-                                                        Event Location:
-                                                    </div>
-                                                </div>
                                             </div>
-                                            <div class="row" style="padding-top:20px; padding-left:5px">
-                                                <div class="col-md-6">
-                                                    <input type="text" class="form-control" value="<%= session.getAttribute("eventLocation" + i) %>" readonly>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <div class="input-group">
-                                                        <a href="<%= session.getAttribute("eventBusinessURL" + i) %>" class="btn btn-default" target="_blank"> See More </a>
+                                            <div class="panel-body">
+                                                <form class="form-inline" role="form" action="/CS2340Servlet/itinerary?event_id=<%=curEventID%>" method="POST">
+                                                <%  if (event.getName() == null) { %>
+                                                    <div class="row">
+                                                        <div class="form-group" style="padding-left: 20px">
+                                                            <input name="eventName<%=curEventID%>" type="text" class="form-control" placeholder="Event Name"/>
+                                                        </div>
+                                                        <div class="form-group" style="padding-left: 15px">
+                                                            <input name="eventType<%=curEventID%>" id="eventType<%=curEventID%>" type="text" class="form-control typeahead" placeholder="Event Type" />
+                                                        </div>
+                                                        <div class="form-group" style="padding-left: 15px">
+                                                            Radius (miles):  <input name="eventRadius<%=curEventID%>" type="number" min="1" max="25" step="1" class="form-control" required="required"
+                                                                                    value='<%=session.getAttribute("eventEndTime"+curEventID)%>'/>
+                                                            <span style="padding-left: 15px">Required for Yelp Search</span>
+                                                        </div><br />
+                                                        <div class="form-group" style="float: left; padding-left: 20px; padding-top: 10px">
+                                                            <input name="getEventsWithGoogleButton" type="submit" class="form-control btn-primary" value="Google Search"
+                                                                    onclick="changeValueToGoogleCode(document.getElementById('eventType' + '<%=curEventID%>'))" />
+                                                            <input name="getEventsWithYelpButton" type="submit" class="form-control btn-primary" value="Yelp Search"
+                                                                   onclick="changeValueToGoogleCode(document.getElementById('eventType' + '<%=curEventID%>')); " />
+                                                        </div>
+                                                    </div><br />
+                                                    <% if (request.getAttribute("googleSearchError") != null) { %>
+                                                        <div class="alert alert-danger" role="alert" style="padding-left: 25px">
+                                                            <a href="https://developers.google.com/places/documentation/search#PlaceSearchStatusCodes" target="_blank"
+                                                               class="alert-link"><%=request.getAttribute("googleSearchError")%></a>
+                                                        </div>
+                                                    <% } %>
+                                                    <%  List<Place> businesses = (List<Place>) session.getAttribute("businesses" + curEventID);
+                                                        if (businesses != null) { %>
+                                                        <div class="panel panel-<%=eventPanelColor%>">
+                                                            <div class="panel-heading">
+                                                                <p>Search Parameters: <%=session.getAttribute("eventQueryString" + curEventID)%><br />
+                                                                    The results of your search are listed below.</p>
+                                                            </div>
+                                                            <div class="panel-body">
+                                                                <table class="table table-striped">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            Google Results
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th>Name</th>
+                                                                            <th>Address</th>
+                                                                            <th>Rating</th>
+                                                                            <th>Open</th>
+                                                                            <th>Select</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <%  for (int j = 0; j  < businesses.size(); j++) { %>
+                                                                        <tr>
+                                                                            <td class="lodging-name"><%=businesses.get(j).getName()%></td>
+                                                                            <td class="lodging-address"><%=businesses.get(j).getFormattedAddress()%></td>
+                                                                            <td class="lodging-rating"><%=businesses.get(j).getRating()%></td>
+                                                                            <td class="lodging-open-closed"></td>
+                                                                            <td><a href="/CS2340Servlet/itinerary?event_id=<%=j%>">Select</a></td>
+                                                                        </tr>
+                                                                    <% } %> <!-- Each row for each business found -->
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <% } %>
+                                                <% } %>
+                                                </form> <!-- Location Selection Form -->
+                                            </div> <!-- Location Body Div -->
+                                        </div> <!-- Location Panel Div -->
+                                    </div> <!-- Location Div -->
+                                <% } %>
+
+
+                                                <!--<div class="row" style="padding-top:20px; padding-left:5px">
+                                                    <div class="col-md-6">
+                                                        <div class="input-group">
+                                                            Event Location:
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                        <%
-                                        } else {
-                                            if (session.getAttribute("businesses") != null) {
-                                                List<NearbyPlace> businesses = (List<NearbyPlace>) session.getAttribute("businesses");
-                                                int numberOfBusinessesShown = 0;
-                                                for (NearbyPlace business : businesses) {
-
-                                                    final String businessName = business.getName();
-                                                    final double businessRating = business.getRating();
-                                                    String businessURL = (business.getURL()) != null ? business.getURL() : "unknown";
-
-                                                    Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
-                                                    final int preferenceID = activeItinerary.getPreferenceID();
-                                                    SQLPreferenceQuery query = new SQLPreferenceQuery();
-                                                    Preference activePreferences = query.getPreferencesByID(preferenceID);
-                                                    final int unknownRating = 0;
-                                                    if (businessRating >= activePreferences.getMinimumRating()
-                                                            || businessRating == unknownRating) {
-                                        %>
-                                            <div class="row" style="padding-top:20px; padding-left:5px">
-                                                <div class="col-md-6">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            <input type="radio" name="eventLocation<%=i%>" value="<%= businessName %>,<%= businessURL %>">
-                                                        </span>
-                                                        <input type="text" class="form-control" value="<%= businessName %> <%= businessRating == 0 ? "N/A" : businessRating %>" readonly>
+                                                <div class="row" style="padding-top:20px; padding-left:5px">
+                                                    <div class="col-md-6">
+                                                        <input type="text" class="form-control" value="" readonly>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <div class="input-group">
-                                                        <a href="<%= businessURL %>" class="btn btn-default" target="_blank"> See More </a>
+                                                    <div class="col-md-1">
+                                                        <div class="input-group">
+                                                            <a href="" class="btn btn-default" target="_blank"> See More </a>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        <%
-                                                        numberOfBusinessesShown++;
-                                                    }
-                                                }
-                                        %>
-
-                                            <div class="row" style="padding-top:20px; padding-left:5px">
-                                                <div class="col-md-6">
-                                                    <div class="input-group">
-                                                        <input name="selectBusinessButton" type="submit" class="btn btn-primary" value="Select Location"/>
-                                                        <br/>
-                                                        Businesses: <%= businesses.size() %>
-                                                        Shown: <%= numberOfBusinessesShown %>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        <%
-                                            }
-                                        }
-                                        %>
-                                            </form>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <% } %>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                                </div>-->
+                        </div> <!-- Locations Panel Body -->
+                    </div> <!-- Locations Panel -->
+                </div> <!-- Div Overview -->
+            </div> <!-- Div for central application panel -->
         </div>
     </div>
 
     <%@ include file="footer.jsp" %>
 
-<%}%>
-
-<!-- Error Message -->
-<div class="modal fade" id="errorMessage" tabindex="-1" role="dialog" aria-labelledby="errorMessageTitle" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="errorMessageTitle">Error</h4>
-            </div>
-            <div class="modal-body">
-                <span class="text-danger">
-                    ${error}
-                </span>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <!-- Error Message -->
+    <div class="modal fade" id="errorMessage" tabindex="-1" role="dialog" aria-labelledby="errorMessageTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="errorMessageTitle">Error</h4>
+                </div>
+                <div class="modal-body">
+                    <span class="text-danger">
+                        ${error}
+                    </span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Includes Google Maps Javascript functionality needed by this page -->
-<script src="/CS2340Servlet/js/itinerary_wizard_js.js"></script>
+    <!-- Includes Google Maps Javascript functionality needed by this page -->
+    <script src="/CS2340Servlet/js/itinerary_wizard_js.js"></script>
 
-<!-- Index Javascript -->
-<script type="text/javascript">
+    <!-- Event Search Bar Javascript -->
+    <script src="../js/typeahead.bundle.js"></script>
+    <script src="../js/event_autocomplete.js"></script>
 
-    // Sidebar Functionality
-    $('[data-toggle=collapse]').click(function(){
-        $(this).find("i").toggleClass("glyphicon-chevron-right glyphicon-chevron-down");
-    });
-
-    $('.collapse').on('show', function (e) {
-        $('.collapse').each(function(){
-            if ($(this).hasClass('in')) {
-                $(this).collapse('toggle');
-            }
-        });
-    });
-
-    var error = '<%= request.getAttribute("error")%>';
-
-    // Lodging functionality
-    var lodging_selection = '<%=session.getAttribute("lodgingSelection")%>';
-    var lodging_results = '<%=session.getAttribute("lodgingResults")%>';
-    if (lodging_selection === "null" && lodging_results === "null") {
-        $("#lodging-table-head").hide();
-    } else {
-        $("#create-lodging-pill").hide();
-    }
-
-    $("#create-lodging-pill").click(function() {
-        $("#lodging-table-head").fadeIn("slow");
-    });
-
-    $(document).ready(function() {
-        // Initial view
-        $("#div-overview").show();
-        $("#div-travelMode").hide();
-        $("#itinerary-side-bar").show();
-
-        // Sidebar
-        $("#a-overview").click(function() {
-            $("#li-overview").addClass("active");
-            $("#li-travelMode").removeClass("active");
-            $("#div-overview").show();
-            $("#div-travelMode").hide();
+    <!-- Index Javascript -->
+    <script type="text/javascript">
+        // Sidebar Functionality
+        $('[data-toggle=collapse]').click(function(){
+            $(this).find("i").toggleClass("glyphicon-chevron-right glyphicon-chevron-down");
         });
 
-        $("#a-travelMode").click(function() {
-            $("#li-overview").removeClass("active");
-            $("#li-travelMode").addClass("active");
-            $("#div-overview").hide();
-            $("#div-travelMode").show();
+        $('.collapse').on('show', function (e) {
+            $('.collapse').each(function(){
+                if ($(this).hasClass('in')) {
+                    $(this).collapse('toggle');
+                }
+            });
         });
 
-        // Details button for new event location search
-        $('.popover-dismiss').popover({
-            trigger: 'focus'
-        });
+        var error = '<%= request.getAttribute("error")%>';
 
-        // Error Message
-        if (error != 'null') {
-            $("#errorMessage").modal("show");
+        // Lodging functionality
+        var lodging_selection = '<%=session.getAttribute("lodgingSelection")%>';
+        var lodging_results = '<%=session.getAttribute("lodgingResults")%>';
+        if (lodging_selection === "null" && lodging_results === "null") {
+            $("#lodging-table-head").hide();
+        } else {
+            $("#create-lodging-pill").hide();
         }
 
-        // Automatically collapse the accordion-map
-        $("#collapseOne").collapse("hide");
-        $("#parentCollapse").one("click", function(){
-            initialize();
+        $("#create-lodging-pill").click(function() {
+            $("#lodging-table-head").fadeIn("slow");
         });
-    });
-</script>
 
-<!-- Event Search Bar Javascript -->
-<script src="../js/typeahead.bundle.js"></script>
-<script src="../js/event_autocomplete.js"></script>
+        $(document).ready(function() {
+            // Initial view
+            $("#div-overview").show();
+            $("#div-travelMode").hide();
+            $("#itinerary-side-bar").show();
+
+            // Sidebar
+            $("#a-overview").click(function() {
+                $("#li-overview").addClass("active");
+                $("#li-travelMode").removeClass("active");
+                $("#div-overview").show();
+                $("#div-travelMode").hide();
+            });
+
+            $("#a-travelMode").click(function() {
+                $("#li-overview").removeClass("active");
+                $("#li-travelMode").addClass("active");
+                $("#div-overview").hide();
+                $("#div-travelMode").show();
+            });
+
+            // Details button for new event location search
+            $('.popover-dismiss').popover({
+                trigger: 'focus'
+            });
+
+            // Error Message
+            if (error != 'null') {
+                $("#errorMessage").modal("show");
+            }
+
+            // Automatically collapse the accordion-map
+            $("#collapseOne").collapse("hide");
+            $("#parentCollapse").one("click", function(){
+                initialize();
+            });
+        });
+    </script>
+
+<%}%>

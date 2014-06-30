@@ -1,5 +1,5 @@
 <%@ page import="database.Preference" %>
-<%@ page import="database.TextSearchPlace" %>
+<%@ page import="database.Place" %>
 <%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>

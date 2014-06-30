@@ -16,4 +16,13 @@ public class ServletUtilities {
         RequestDispatcher dispatcher = servlet.getServletContext().getRequestDispatcher(target);
         dispatcher.forward(request, response);
     }
+
+    public static void forwardRequest(HttpServletRequest request,
+                                      HttpServletResponse response,
+                                      String target)
+            throws IOException {
+        try {
+            request.getRequestDispatcher(target).forward(request, response);
+        } catch (ServletException ignore) {}
+    }
 }

@@ -1,7 +1,7 @@
 package controller;
 
 import database.DataManager;
-import database.TextSearchPlace;
+import database.Place;
 import model.*;
 
 import javax.servlet.ServletException;
@@ -102,7 +102,7 @@ public class ItineraryServlet extends HttpServlet {
         final String query = request.getParameter("google-textsearch-query");
         try {
             GooglePlaceAPI googleSearch = new GooglePlaceAPI();
-            final ArrayList<TextSearchPlace> results = googleSearch.textSearch(query);
+            final ArrayList<Place> results = googleSearch.textSearch(query);
             final HttpSession session = request.getSession();
             session.setAttribute("textSearchResults", results);
         } catch (Exception ex) {

@@ -1,4 +1,4 @@
-    <footer class="panel-footer" id="footer">
+    <footer id="footer">
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-push-2" style="padding-left: 80px">

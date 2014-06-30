@@ -1,6 +1,7 @@
 package model;
 
-import database.TextSearchPlace;
+import database.Place;
+import database.Place;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,12 +33,12 @@ public class GooglePlaceTextSearch extends GooglePlaceAPI {
         return queryBuilder.toString();
     }
 
-    public ArrayList<TextSearchPlace> parseJsonResults(StringBuilder jsonResults)
+    public ArrayList<Place> parseJsonResults(StringBuilder jsonResults)
             throws JSONException {
-        ArrayList<TextSearchPlace> placeResults;
+        ArrayList<Place> placeResults;
         JSONObject mainJsonObj = new JSONObject(jsonResults.toString());
         JSONArray jsonArray = mainJsonObj.getJSONArray("results");
-        placeResults = new ArrayList<TextSearchPlace>(jsonArray.length());
+        placeResults = new ArrayList<Place>(jsonArray.length());
         for (int i = 0; i < jsonArray.length(); i++) {
             final JSONObject jsonObject = jsonArray.getJSONObject(i);
             String name = "", placeID = "", formattedAddress = "";
@@ -60,7 +61,7 @@ public class GooglePlaceTextSearch extends GooglePlaceAPI {
                     openNow = hours.getBoolean("open_now");
                 }
             }
-            final TextSearchPlace place = new TextSearchPlace(name, placeID, formattedAddress,
+            final Place place = new Place(name, placeID, formattedAddress,
                     priceLevel, rating, openNow);
             placeResults.add(place);
         }

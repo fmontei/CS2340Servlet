@@ -1,7 +1,7 @@
 package model;
 
-import database.NearbyPlace;
 import database.Itinerary;
+import database.Place;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +26,7 @@ public class LodgingForm {
         session = request.getSession();
         activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
         final String formattedCoords = reformatCoordsForQueryCompliance();
-        List<NearbyPlace> lodgings;
+        List<Place> lodgings;
         final String lodging = "lodging";
         try {
             GooglePlaceAPI googleSearch = new GooglePlaceAPI();
@@ -54,9 +54,9 @@ public class LodgingForm {
         int begin = lodgingURI.indexOf("=") + 1;
         String lodgingIDAsString = lodgingURI.substring(begin);
         final int lodgingID = Integer.parseInt(lodgingIDAsString);
-        List<NearbyPlace> results =
-                (List<NearbyPlace>) session.getAttribute("lodgingResults");
-        final NearbyPlace selection = results.get(lodgingID);
+        List<Place> results =
+                (List<Place>) session.getAttribute("lodgingResults");
+        final Place selection = results.get(lodgingID);
         session.setAttribute("lodgingSelection", selection);
         response.sendRedirect("jsp/index.jsp");
     }

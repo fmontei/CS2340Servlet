@@ -1,44 +1,34 @@
 package database;
 
-import java.awt.*;
-
-public class NearbyPlace {
-    private String name, placeID, formattedAddress, URL;
-    private Point coordinates = new Point();
+public class Place {
+    private String name, placeID, formattedAddress, phoneNumber, URL;
     private int priceLevel;
     private double rating;
     private boolean openNow;
 
-    public NearbyPlace() {
+    public Place() {}
 
-    }
-
-    public NearbyPlace(String name, String placeID, String formattedAddress,
-                       Point coordinates, int priceLevel, double rating,
-                       boolean openNow) {
+    public Place(String name, String placeID, String formattedAddress,
+                 int priceLevel, double rating, boolean openNow) {
         this.name = name;
         this.placeID = placeID;
         this.formattedAddress = formattedAddress;
-        this.coordinates = coordinates;
         this.priceLevel = priceLevel;
         this.rating = rating;
         this.openNow = openNow;
     }
 
-    public String getPlaceID() {
-        return placeID;
-    }
     public String getName() {
         return name;
     }
-    public String getURL() {
-        return URL;
+    public String getPlaceID() {
+        return placeID;
     }
     public String getFormattedAddress() {
         return formattedAddress;
     }
-    public Point getCoordinates() {
-        return coordinates;
+    public String getURL() {
+        return this.URL;
     }
     public int getPriceLevel() {
         return priceLevel;
@@ -61,6 +51,9 @@ public class NearbyPlace {
     }
     public void setFormattedAddress(String formattedAddress) {
         this.formattedAddress = formattedAddress;
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
     public void setPriceLevel(int priceLevel) {
         this.priceLevel = priceLevel;
