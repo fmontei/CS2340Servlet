@@ -444,8 +444,7 @@
                             <div class="page-header">
                                 <h1><span class="glyphicon glyphicon-th"></span>Events & Places</h1>
                             </div>
-                            <%@ include file="business_panels.jsp" %>
-
+                            <%@ include file="events_places_panels.jsp" %>
                         </div> <!-- Locations Panel Body -->
                     </div> <!-- Locations Panel -->
                 </div> <!-- Div Overview -->
@@ -549,6 +548,20 @@
                 initialize();
             });
         });
+
+        /* Scrolls to the event from which event search request was issued
+            following page reload */
+        $('html, body').animate({
+            scrollTop: $(parseEventIDFromQueryString()).offset().top
+        }, 'slow');
+
+        function parseEventIDFromQueryString() {
+            var queryString = '<%=request.getQueryString()%>';
+            var beginIndex = queryString.lastIndexOf("=") + 1;
+            var eventID = queryString.substring(beginIndex);
+            var elementID = "#event-no-" + eventID;
+            return elementID;
+        }
     </script>
 
 <%}%>

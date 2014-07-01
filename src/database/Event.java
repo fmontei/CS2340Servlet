@@ -3,7 +3,7 @@ package database;
 import java.awt.*;
 
 public class Event {
-    private String name, placeID, formattedAddress, Api;
+    private String name, placeID, formattedAddress, phoneNumber, Api;
     private Point coordinates = new Point();
     private int priceLevel;
     private double rating;
@@ -34,6 +34,9 @@ public class Event {
     public String getFormattedAddress() {
         return formattedAddress;
     }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
     public Point getCoordinates() {
         return coordinates;
     }
@@ -58,6 +61,9 @@ public class Event {
     }
     public void setFormattedAddress(String formattedAddress) {
         this.formattedAddress = formattedAddress;
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
     public void setPriceLevel(int priceLevel) {
         this.priceLevel = priceLevel;

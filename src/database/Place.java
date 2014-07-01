@@ -27,6 +27,9 @@ public class Place {
     public String getFormattedAddress() {
         return formattedAddress;
     }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
     public String getURL() {
         return this.URL;
     }

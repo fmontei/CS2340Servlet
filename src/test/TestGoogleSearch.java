@@ -12,8 +12,8 @@ public class TestGoogleSearch {
     public static void main(String... args) {
         TestGoogleSearch test = new TestGoogleSearch();
         try {
-            test.testYelpAPI();
-            //test.testGoogleNearbySearch();
+            //test.testYelpAPI();
+            test.testGoogleNearbySearch();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -31,9 +31,8 @@ public class TestGoogleSearch {
     private void testGoogleNearbySearch() throws IOException, JSONException {
         GooglePlaceAPI googleSearch
                 = new GooglePlaceAPI();
-        List<Place> results = googleSearch.placeSearch("-33.870943,151.190311", 5, "food");
-        for (Place p : results) {
-            System.out.println(p.getName());
-        }
+        List<Place> results = googleSearch.getByPlaceSearch("-33.870943,151.190311", 5, "food", "italian");
+        googleSearch.getByDetailSearch(results.get(0));
+        System.out.println(results.get(0).getURL());
     }
 }

@@ -31,13 +31,15 @@
                 <form class="form-inline" role="form" action="/CS2340Servlet/itinerary?event_id=<%=curEventID%>" method="POST">
                     <div class="row">
                         <div class="form-group" style="padding-left: 20px">
-                            <input name="eventName<%=curEventID%>" type="text" class="form-control" placeholder="Event Name"/>
+                            <input name="eventName<%=curEventID%>" type="text" class="form-control" placeholder="Place Name (optional)"/>
                         </div>
                         <div class="form-group" style="padding-left: 15px">
-                            <input name="eventType<%=curEventID%>" id="eventType<%=curEventID%>" type="text" class="form-control typeahead" placeholder="Event Type" />
+                            <input name="eventType<%=curEventID%>" id="eventType<%=curEventID%>" type="text"
+                                   class="form-control typeahead" placeholder="Place Type" required="required" />
                         </div>
                         <div class="form-group" style="padding-left: 15px">
-                            Radius (miles):  <input name="eventRadius<%=curEventID%>" type="number" min="1" max="25" step="1" class="form-control" required="required"
+                            Radius (miles):  <input name="eventRadius<%=curEventID%>"
+                                                    type="number" min="1" max="25" step="1" class="form-control" required="required"
                                                     value='<%=session.getAttribute("eventEndTime"+curEventID)%>'/>
                         </div><br />
                         <div class="form-group" style="float: left; padding-left: 20px; padding-top: 10px">
@@ -67,7 +69,7 @@
                                     <%  String apiIcon = (event.getApi() != null) ? event.getApi() : "google";
                                         String apiWidth = apiIcon.equals("google") ? "90px" : "50px";
                                         String apiHeight = apiIcon.equals("google") ? "25px" : "40px"; %>
-                                    <img src="../images/<%=apiIcon%>.png" width="<%=apiWidth%>" height="<%=apiHeight%>" /> Results
+                                    <img src="../images/<%=apiIcon%>.png" width="<%=apiWidth%>" height="<%=apiHeight%>" />&nbsp;&nbsp;Results
                                 </tr>
                                 <tr>
                                     <th>Name</th>
@@ -81,14 +83,17 @@
                                 <tbody>
                                 <%  for (int j = 0; j  < businesses.size(); j++) {
                                     String openOrClosedColor = (businesses.get(j).isOpenNow()) ? "green" : "red";
-                                    String openOrClosed = (businesses.get(j).isOpenNow()) ? "Open" : "Closed"; %>
+                                    String openOrClosed = (businesses.get(j).isOpenNow()) ? "Open" : "Closed";
+                                    String businessURL = businesses.get(j).getURL();
+                                    businessURL = (businessURL != null) ? businessURL :
+                                            "/CS2340Servlet/itinerary?detail_search&place_id=" + j + "&event_id=" + curEventID;%>
                                     <tr>
                                         <td class="lodging-name"><%=businesses.get(j).getName()%></td>
                                         <td class="lodging-address"><%=businesses.get(j).getFormattedAddress()%></td>
                                         <td class="lodging-rating"><%=businesses.get(j).getRating()%></td>
                                         <td class="lodging-open-closed" style="color: <%=openOrClosedColor%>"><%=openOrClosed%></td>
                                         <td><a href="/CS2340Servlet/itinerary?select_business_id=<%=j%>&event_id=<%=curEventID%>">Select</a></td>
-                                        <td><a href='<%=businesses.get(j).getURL()%>' target="_blank">See More</a></td>
+                                        <td><a href='<%=businessURL%>' target="_blank">See More</a></td>
                                     </tr>
                                 <% } %>
                                 </tbody>
@@ -105,17 +110,17 @@
                         <thead>
                             <tr>
                                 <th style="width: 300px">Address</th>
-                                <th>Coordinates</th>
+                                <th>Phone Number</th>
                                 <th>Price Level</th>
                                 <th>Rating</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="lodging-address"><%=event.getFormattedAddress()%></td>
-                                <td class="lodging-rating"><%=event.getCoordinates()%></td>
-                                <td class="lodging-address"><%=event.getPriceLevel()%></td>
-                                <td class="lodging-rating"><%=event.getRating()%></td>
+                                <td><%=event.getFormattedAddress()%></td>
+                                <td><%=event.getPhoneNumber()%></td>
+                                <td><%=event.getPriceLevel()%></td>
+                                <td><%=event.getRating()%></td>
                             </tr>
                         </tbody>
                     </table>

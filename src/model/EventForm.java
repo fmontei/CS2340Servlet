@@ -64,6 +64,7 @@ public class EventForm {
     private void setEventParameters(Event event, Place business) {
         event.setName(business.getName());
         event.setFormattedAddress(business.getFormattedAddress());
+        event.setPhoneNumber(business.getPhoneNumber());
         event.setRating(business.getRating());
     }
 
@@ -102,7 +103,7 @@ public class EventForm {
             populateSessionWithEventResults(eventID, eventResults);
             updateImageIcon(eventID, API);
             response.sendRedirect("jsp/index.jsp?search=" + API +
-                    "&event-no-" + eventID);
+                    "&event-no=" + eventID);
         } catch (JSONException ex) {
             request.setAttribute("googleSearchError", ex.getMessage());
             ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
@@ -138,8 +139,8 @@ public class EventForm {
         throws IOException, JSONException {
         final String coordinates = reformatCoordsForQueryCompliance();
         GooglePlaceAPI googleSearch = new GooglePlaceAPI();
-        List<Place> eventResults = googleSearch.placeSearch
-                (coordinates, radius, eventType);
+        List<Place> eventResults = googleSearch.getByPlaceSearch
+                (coordinates, radius, eventType, eventName);
         return eventResults;
     }
 
@@ -170,5 +171,27 @@ public class EventForm {
     private void populateSessionWithEventResults(String eventID,
                                                  List<Place> eventResults) {
         session.setAttribute("businesses" + eventID, eventResults);
+    }
+
+    public void doDetailedSearch() throws IOException {
+        final String queryString = request.getQueryString();
+        final int placeBeginIndex = queryString.indexOf("=") + 1;
+        final int placeEndIndex = queryString.lastIndexOf("&");
+        final String placeID = queryString.substring(placeBeginIndex, placeEndIndex);
+        final int placeNum = Integer.parseInt(placeID);
+        final int eventBeginIndex = queryString.lastIndexOf("=") + 1;
+        final String eventID = queryString.substring(eventBeginIndex);
+        final List<Place> places = (List) session.getAttribute("businesses" + eventID);
+        final Place placeToBeUpdated = places.get(placeNum);
+        GooglePlaceAPI googlePlaceAPI = new GooglePlaceAPI();
+        try {
+            googlePlaceAPI.getByDetailSearch(placeToBeUpdated);
+            response.sendRedirect(placeToBeUpdated.getURL());
+        } catch (JSONException ex) {
+            request.setAttribute("googleSearchError", ex.getMessage());
+            ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
+        } catch (IOException ex) {
+            BrowserErrorHandling.printErrorToBrowser(request, response, ex);
+        }
     }
 }

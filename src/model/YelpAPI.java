@@ -80,13 +80,14 @@ public class YelpAPI {
         try {
             for (int j = 0; j < businesses.size(); j++) {
                 String businessName, businessURL, ratingAsString,
-                        displayAddress, displayPhone;
+                        displayAddress, displayPhone = "unknown";
                 boolean isOpen;
                 double ratingAsDouble;
                 JSONObject jsonObject = (JSONObject) businesses.get(j);
                 businessName = jsonObject.get("name").toString();
                 displayAddress = getDisplayAddress(jsonObject);
-                //displayPhone = jsonObject.get("display_phone").toString();
+                if (jsonObject.get("display_phone") != null)
+                    displayPhone = jsonObject.get("display_phone").toString();
                 ratingAsString = jsonObject.get("rating").toString();
                 ratingAsDouble = Double.parseDouble(ratingAsString);
                 businessURL = jsonObject.get("url").toString();
@@ -94,7 +95,7 @@ public class YelpAPI {
                 Place business = new Place();
                 business.setName(businessName);
                 business.setFormattedAddress(displayAddress);
-                //business.setPhoneNumber(displayPhone);
+                business.setPhoneNumber(displayPhone);
                 business.setRating(ratingAsDouble);
                 business.setURL(businessURL);
                 business.setOpenNow(isOpen);

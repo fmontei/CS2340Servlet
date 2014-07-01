@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "ItineraryServlet", urlPatterns = { "/itinerary" })
 public class ItineraryServlet extends HttpServlet {
@@ -26,6 +26,9 @@ public class ItineraryServlet extends HttpServlet {
             doLodgingSearchRequest(request, response);
         } else if (lodgingSelectionMade(request)) {
             new LodgingForm(request, response).saveLodgingSelection();
+        } else if (detailedGoogleSearchRequested(request)) {
+            EventForm eventForm = new EventForm(request, response);
+            eventForm.doDetailedSearch();
         } else if (eventSelectionMade(request)) {
             EventForm eventForm = new EventForm(request, response);
             eventForm.saveSelection();
@@ -96,13 +99,17 @@ public class ItineraryServlet extends HttpServlet {
         return request.getParameter("google-textsearch-submit") != null;
     }
 
+    private boolean detailedGoogleSearchRequested(HttpServletRequest request) {
+        return request.getQueryString().contains("detail_search");
+    }
+
     private void doSearchRequest(HttpServletRequest request,
                                  HttpServletResponse response)
             throws IOException {
         final String query = request.getParameter("google-textsearch-query");
         try {
             GooglePlaceAPI googleSearch = new GooglePlaceAPI();
-            final ArrayList<Place> results = googleSearch.textSearch(query);
+            final List<Place> results = googleSearch.getByTextSearch(query);
             final HttpSession session = request.getSession();
             session.setAttribute("textSearchResults", results);
         } catch (Exception ex) {

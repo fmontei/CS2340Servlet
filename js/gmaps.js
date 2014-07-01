@@ -1200,7 +1200,7 @@ GMaps.prototype.addLayer = function(layerName, options) {
           }
         }
 
-        //textSearch callback
+        //getByTextSearch callback
         if (options.textSearch) {
           var textSearchRequest  = {
             bounds : options.bounds || null,

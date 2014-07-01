@@ -30,7 +30,7 @@ public class LodgingForm {
         final String lodging = "lodging";
         try {
             GooglePlaceAPI googleSearch = new GooglePlaceAPI();
-            lodgings = googleSearch.placeSearch(formattedCoords, 50000, lodging);
+            lodgings = googleSearch.getByPlaceSearch(formattedCoords, 50000, lodging, lodging);
             session.setAttribute("lodgingResults", lodgings);
         } catch (Exception ex) {
             try {

@@ -11,14 +11,15 @@ import java.util.List;
 
 public class GooglePlaceNearbySearch extends GooglePlaceAPI {
     private static final int MAX_DISTANCE_IN_METERS = 50000;
-    private String coordinates, type;
+    private String coordinates, type, name;
     private int radius;
 
     public GooglePlaceNearbySearch(String coordinates, int radius,
-                                   String type) {
+                                   String type, String name) {
         this.coordinates = coordinates;
         this.radius = convertFromMilesToMeters(radius);
         this.type = type;
+        this.name = name;
     }
 
     private int convertFromMilesToMeters(final int radius) {
@@ -42,6 +43,7 @@ public class GooglePlaceNearbySearch extends GooglePlaceAPI {
         queryBuilder.append("?location=" + coordinates);
         queryBuilder.append("&radius=" + radius);
         queryBuilder.append("&types=" + type);
+        queryBuilder.append("&name=" + name);
         queryBuilder.append("&key=" + API_KEY);
         return queryBuilder.toString();
     }
@@ -50,7 +52,7 @@ public class GooglePlaceNearbySearch extends GooglePlaceAPI {
             throws JSONException {
         ArrayList<Place> results;
         JSONObject mainJsonObj = new JSONObject(jsonResults.toString());
-        parsePotentialError(mainJsonObj);
+        super.parsePotentialError(mainJsonObj);
         JSONArray jsonArray = mainJsonObj.getJSONArray("results");
         results = new ArrayList<Place>(jsonArray.length());
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -85,15 +87,6 @@ public class GooglePlaceNearbySearch extends GooglePlaceAPI {
             results.add(parsedObject);
         }
         return results;
-    }
-
-    private void parsePotentialError(final JSONObject mainJsonObj)
-            throws JSONException {
-        final String status = mainJsonObj.getString("status");
-        if (!status.equals("OK")) {
-            throw new JSONException("The search could not be completed. " +
-                    "Google return the following error code: " + status + ".");
-        }
     }
 }
 
