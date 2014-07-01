@@ -31,7 +31,10 @@ public class TestGoogleSearch {
     private void testGoogleNearbySearch() throws IOException, JSONException {
         GooglePlaceAPI googleSearch
                 = new GooglePlaceAPI();
-        List<Place> results = googleSearch.getByPlaceSearch("-33.870943,151.190311", 5, "food", "italian");
+        List<Place> results = googleSearch.getByPlaceSearch("-33.870943,151.190311", 15, "food", "italian%food");
+        for (Place p : results) {
+            System.out.println(p.getName());
+        }
         googleSearch.getByDetailSearch(results.get(0));
         System.out.println(results.get(0).getURL());
     }

@@ -102,11 +102,12 @@ public class EventForm {
             }
             populateSessionWithEventResults(eventID, eventResults);
             updateImageIcon(eventID, API);
+            session.removeAttribute("googleSearchError" + eventID);
             response.sendRedirect("jsp/index.jsp?search=" + API +
                     "&event-no=" + eventID);
         } catch (JSONException ex) {
-            request.setAttribute("googleSearchError", ex.getMessage());
-            ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
+            session.setAttribute("googleSearchError" + eventID, ex.getMessage());
+            response.sendRedirect("jsp/index.jsp");
         } catch (IOException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         } catch (SQLException ex) {
@@ -137,20 +138,11 @@ public class EventForm {
                                                    String eventType,
                                                    int radius)
         throws IOException, JSONException {
-        final String coordinates = reformatCoordsForQueryCompliance();
+        final String coordinates = activeItinerary.getCoordinates().toString();
         GooglePlaceAPI googleSearch = new GooglePlaceAPI();
         List<Place> eventResults = googleSearch.getByPlaceSearch
                 (coordinates, radius, eventType, eventName);
         return eventResults;
-    }
-
-    private String reformatCoordsForQueryCompliance() {
-        final String coords = activeItinerary.getCoordinates().toString();
-        int begin = coords.indexOf("[") + 1;
-        int end = coords.length() - 1;
-        String formattedCoords = coords.substring(begin, end);
-        formattedCoords = formattedCoords.replaceAll("\\s+", "");
-        return formattedCoords;
     }
 
     private void updateImageIcon(final String eventID, final String API) {
@@ -186,10 +178,11 @@ public class EventForm {
         GooglePlaceAPI googlePlaceAPI = new GooglePlaceAPI();
         try {
             googlePlaceAPI.getByDetailSearch(placeToBeUpdated);
+            session.removeAttribute("googleSearchError" + eventID);
             response.sendRedirect(placeToBeUpdated.getURL());
         } catch (JSONException ex) {
-            request.setAttribute("googleSearchError", ex.getMessage());
-            ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
+            session.setAttribute("googleSearchError" + eventID, ex.getMessage());
+            response.sendRedirect("jsp/index.jsp");
         } catch (IOException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }

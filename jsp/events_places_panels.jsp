@@ -49,10 +49,11 @@
                                    onclick="changeValueToGoogleCode(document.getElementById('eventType' + '<%=curEventID%>')); " />
                         </div>
                     </div><br />
-                    <% if (request.getAttribute("googleSearchError") != null) { %>
+                    <%  if (session.getAttribute("googleSearchError" + curEventID) != null) {
+                        session.removeAttribute("businesses" + curEventID); %>
                     <div class="alert alert-danger" role="alert" style="padding-left: 25px">
                         <a href="https://developers.google.com/places/documentation/search#PlaceSearchStatusCodes" target="_blank"
-                           class="alert-link"><%=request.getAttribute("googleSearchError")%></a>
+                           class="alert-link"><%=session.getAttribute("googleSearchError" + curEventID)%></a>
                     </div>
                     <% } %>
                     <%  List<Place> businesses = (List<Place>) session.getAttribute("businesses" + curEventID);

@@ -31,17 +31,35 @@ public class GooglePlaceAPI {
         return results;
     }
 
-    public List<Place> getByPlaceSearch(final String coordinates,
+    public List<Place> getByPlaceSearch(final String coords,
                                         final int radius,
                                         final String type,
                                         final String name)
             throws IOException, JSONException {
-        GooglePlaceNearbySearch placeNearbySearch =
-                new GooglePlaceNearbySearch(coordinates, radius, type, name);
+        String reformattedCoords = reformatCoordinatesForQueryCompliance(coords);
+        String reformattedName = reformateNameForQueryCompliance(name);
+        GooglePlaceNearbySearch placeNearbySearch = new GooglePlaceNearbySearch
+                (reformattedCoords, radius, type, reformattedName);
         final String urlQuery = placeNearbySearch.getSearchURL();
         final StringBuilder jsonResults = queryGoogle(urlQuery);
         List<Place> results = placeNearbySearch.parseJsonResults(jsonResults);
         return results;
+    }
+
+    private String reformatCoordinatesForQueryCompliance(final String coords) {
+        int begin = coords.indexOf("[") + 1;
+        int end = coords.length() - 1;
+        String formattedCoords = coords.substring(begin, end);
+        formattedCoords = formattedCoords.replaceAll("\\s+", "");
+        return formattedCoords;
+    }
+
+    private String reformateNameForQueryCompliance(final String name) {
+        final String lowerCase = name.toLowerCase();
+        final String trimmed = lowerCase.trim();
+        final String removedExtraSpaces = trimmed.replaceAll("\\s+", " ");
+        final String reformattedName = removedExtraSpaces.replaceAll(" ", "%");
+        return reformattedName;
     }
 
     public void getByDetailSearch(final Place place)
