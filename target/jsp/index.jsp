@@ -219,7 +219,12 @@
                             Itineraries
                         </div>
                         <div class="panel-body" id="itinerary-panel-body">
-                            <ol class="breadcrumb">
+
+                            <div class="page-header">
+                                <h1><span class="glyphicon glyphicon-move"></span>Overview</h1>
+                            </div>
+
+                            <ol class="breadcrumb" style="background-color: white">
                                 <li>
                                     <a href="itinerary_overview.jsp">Select Itinerary</a>
                                 </li>
@@ -314,8 +319,12 @@
                             </ul>
                             <br />
 
+                            <div class="page-header">
+                                <h1><span class="glyphicon glyphicon-globe"></span>Map</h1>
+                            </div>
+
                             <div class="panel-group" id="accordion">
-                                <div class="panel panel-info">
+                                <div class="panel panel-warning">
                                     <div class="panel-heading">
                                         <a data-toggle="collapse"
                                            data-parent="#accordion"
@@ -332,6 +341,9 @@
                                 </div>
                             </div>
 
+                            <div class="page-header">
+                                <h1><span class="glyphicon glyphicon-home"></span>Lodging</h1>
+                            </div>
 
                             <%  Place selection = (Place) session.getAttribute("lodgingSelection");
                                 String lodgingIsOpenColor = "";
@@ -429,6 +441,9 @@
                             </div>
 
                             <!-- List of business/places panels -->
+                            <div class="page-header">
+                                <h1><span class="glyphicon glyphicon-th"></span>Events & Places</h1>
+                            </div>
                             <%@ include file="business_panels.jsp" %>
 
                         </div> <!-- Locations Panel Body -->
