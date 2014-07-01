@@ -50,14 +50,21 @@ public class EventForm {
         final String businessID = parseBusinessIDFromQueryString();
         eventNum = Integer.parseInt(eventID);
         businessNum = Integer.parseInt(businessID);
-        List<Event> events = (List<Event>) session.getAttribute("events");
-        List<Place> businesses = (List<Place>) session.getAttribute("businesses" + eventNum);
+        List<Event> events = (List) session.getAttribute("events");
+        List<Place> businesses =
+                (List) session.getAttribute("businesses" + eventNum);
         Event eventToBeUpdated = events.get(eventNum);
         Place businessToBeSaved = businesses.get(businessNum);
-        eventToBeUpdated.setName(businessToBeSaved.getName());
+        setEventParameters(eventToBeUpdated, businessToBeSaved);
         events.set(eventNum, eventToBeUpdated);
         session.setAttribute("events", events);
         response.sendRedirect("jsp/index.jsp");
+    }
+
+    private void setEventParameters(Event event, Place business) {
+        event.setName(business.getName());
+        event.setFormattedAddress(business.getFormattedAddress());
+        event.setRating(business.getRating());
     }
 
     private String parseEventIDFromQueryString() {
@@ -86,14 +93,16 @@ public class EventForm {
         putQueryStringForReviewInSession(eventID, eventName, eventType,
                 radiusAsString);
         try {
-            if (API.equals("Google")) {
+            if (API.equals("google")) {
                 eventResults = queryGoogleForEvents(eventName, eventType,
                         radiusInMiles);
             } else {
                 eventResults = queryYelpForEvents(eventType, radiusInMiles);
             }
             populateSessionWithEventResults(eventID, eventResults);
-            response.sendRedirect("jsp/index.jsp?event-no-" + eventID);
+            updateImageIcon(eventID, API);
+            response.sendRedirect("jsp/index.jsp?search=" + API +
+                    "&event-no-" + eventID);
         } catch (JSONException ex) {
             request.setAttribute("googleSearchError", ex.getMessage());
             ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
@@ -104,6 +113,16 @@ public class EventForm {
         }
     }
 
+    private String getSearchAPIFromRequest() {
+        String API;
+        if (request.getParameter("getEventsWithGoogleButton") != null ) {
+            API = "google";
+        } else {
+            API = "yelp";
+        }
+        return API;
+    }
+
     private void putQueryStringForReviewInSession(String eventID,
                                                   String eventName,
                                                   String eventType,
@@ -111,16 +130,6 @@ public class EventForm {
         session.setAttribute("eventQueryString" + eventID, "Event Name = '" +
                 eventName + "' | Event Type = '" + eventType + "' | Radius = '" +
                 radius + "'.");
-    }
-
-    private String getSearchAPIFromRequest() {
-        String API;
-        if (request.getParameter("getEventsWithGoogleButton") != null ) {
-            API = "Google";
-        } else {
-            API = "Yelp";
-        }
-        return API;
     }
 
     private List<Place> queryGoogleForEvents(String eventName,
@@ -141,6 +150,12 @@ public class EventForm {
         String formattedCoords = coords.substring(begin, end);
         formattedCoords = formattedCoords.replaceAll("\\s+", "");
         return formattedCoords;
+    }
+
+    private void updateImageIcon(final String eventID, final String API) {
+        final int eventNum = Integer.parseInt(eventID);
+        List<Event> events = (List) session.getAttribute("events");
+        events.get(eventNum).setApi(API);
     }
 
     private List<Place> queryYelpForEvents(final String term, int radius)

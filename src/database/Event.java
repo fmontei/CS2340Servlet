@@ -3,7 +3,7 @@ package database;
 import java.awt.*;
 
 public class Event {
-    private String name, placeID, formattedAddress;
+    private String name, placeID, formattedAddress, Api;
     private Point coordinates = new Point();
     private int priceLevel;
     private double rating;
@@ -46,6 +46,9 @@ public class Event {
     public boolean isOpenNow() {
         return openNow;
     }
+    public String getApi() {
+        return this.Api;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -64,5 +67,8 @@ public class Event {
     }
     public void setOpenNow(boolean openNow) {
         this.openNow = openNow;
+    }
+    public void setApi(String API) {
+        this.Api = API;
     }
 }
