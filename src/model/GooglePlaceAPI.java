@@ -104,7 +104,7 @@ public class GooglePlaceAPI {
         final String status = mainJsonObj.getString("status");
         if (!status.equals("OK")) {
             throw new JSONException("The search could not be completed. " +
-                    "Google return the following error code: " + status + ".");
+                    "Google returned the following error code: " + status + ".");
         }
     }
 }

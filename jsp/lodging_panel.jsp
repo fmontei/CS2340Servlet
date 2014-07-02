@@ -25,7 +25,13 @@
 </div>
 
 <%  Place selection = (Place) session.getAttribute("lodgingSelection");
-
+    Object lodgingObject = session.getAttribute("lodgingResults");
+    int numberOfLodgingsFound = 0;
+    List<Place> lodgingResults = new ArrayList<Place>();
+    if (lodgingObject != null) {
+        lodgingResults = (List<Place>) lodgingObject;
+        numberOfLodgingsFound = lodgingResults.size();
+    }
     String lodgingIsOpenColor = "";
     String openClose = "";
     if (selection != null) {
@@ -48,77 +54,90 @@
             </div>
             <div class="panel-body">
                 <div class="row" style="padding-left: 20px">
-                    <% if (selection == null) { %>
-                    <p>Select a lodging below. This list has been created
-                        based on your Itinerary's address.
-                    </p>
-                    <% } %>
                     <table class="table table-striped">
-                        <% if (selection == null) { %>
-                            <div class="row">
-                                <div class="form-group" style="padding-left: 20px; padding-right: 40px">
-                                    <input name="lodgingSelection" type="text"
-                                           class="form-control" placeholder="Lodging Name" />
+                    <% if (selection == null) { %>
+                        <div class="row">
+                            <form action="/CS2340Servlet/itinerary" method="GET">
+                                <div class="form-inline" style="padding-left: 20px; padding-right: 20px">
+                                    <input name="lodgingName" type="text"
+                                           class="form-control" placeholder="Lodging Name (optional)" />
+                                    &nbsp;&nbsp;&nbsp;Radius (miles):&nbsp;&nbsp;&nbsp;
+                                    <input name="lodgingRadius" type="number" min="1" max="24"
+                                           class="form-control" />
+                                    &nbsp;&nbsp;&nbsp;No. Results:&nbsp;&nbsp;&nbsp;
+                                    <input name="lodgingFilter" type="number" min="1" max="20"
+                                           class="form-control" />
+                                </div><br />
+                                <div style="padding-left: 20px;">
+                                    <input type="submit" class="form-control btn-primary" value="Search"
+                                        name="lodgingSubmitButton" style="width: 150px;" />
                                 </div>
-                                <div class="form-group center-block" style="width: 30%; padding-top: 10px">
-                                    <a href="/CS2340Servlet/itinerary?add_lodging=true">
-                                        <input type="submit" class="form-control btn-primary" />
-                                    </a>
-                                </div>
-                            </div>
-                            <% if (session.getAttribute("lodgingResults") != null) { %>
-                                <thead id="lodging-table-head">
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Address</th>
-                                        <th>Rating</th>
-                                        <th>Open</th>
-                                        <th>Select</th>
-                                    </tr>
-                                </thead>
-                            <% } %>
-                        <% } else { %>
-                            <thead>
+                            </form>
+                        </div><br />
+                        <% if (session.getAttribute("lodgingResults") != null) { %>
+                            <p>Select a lodging below. This list has been created
+                                based on your Itinerary's address, which is:
+                                <b><%=((Itinerary) session.getAttribute("activeItinerary")).getAddress()%></b>
+                            </p>
+                            <thead id="lodging-table-head">
                                 <tr>
                                     <th>Name</th>
                                     <th>Address</th>
                                     <th>Rating</th>
                                     <th>Open</th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                         <% } %>
-                        <tbody>
-                        <%  if (selection == null) {
-                            Object lodgingObject = session.getAttribute("lodgingResults");
-                            int numberOfLodgingsFound = 0;
-                            List<Place> lodgingResults = new ArrayList<Place>();
-                            if (lodgingObject != null) {
-                                lodgingResults = (List<Place>) lodgingObject;
-                                numberOfLodgingsFound = lodgingResults.size();
-                            }
-                            for (int i = 0; i < numberOfLodgingsFound; i++) {
-                                lodgingIsOpenColor = (lodgingResults.get(i).isOpenNow()) ? "green" : "red";
-                                openClose = (lodgingResults.get(i).isOpenNow()) ? "Open" : "Closed"; %>
-
-                            <tr>
-                                <td class="lodging-name"><%=lodgingResults.get(i).getName()%></td>
-                                <td class="lodging-address"><%=lodgingResults.get(i).getFormattedAddress()%></td>
-                                <td class="lodging-rating"><%=lodgingResults.get(i).getRating()%></td>
-                                <td class="lodging-open-closed" style="color: <%=lodgingIsOpenColor%>"><%=openClose%></td>
-                                <td><a href="/CS2340Servlet/itinerary?lodging_id=<%=i%>">Select</a></td>
-                            </tr>
+                    <% } else { %>
+                            <thead>
+                                <tr>
+                                    <th>Address</th>
+                                    <th>Phone</th>
+                                    <th>Rating</th>
+                                    <th>See More</th>
+                                </tr>
+                            </thead>
+                    <% } %>
+                            <tbody>
+                    <%  if (selection == null) {
+                        for (int i = 0; i < numberOfLodgingsFound; i++) {
+                            lodgingIsOpenColor = (lodgingResults.get(i).isOpenNow()) ? "green" : "red";
+                            openClose = (lodgingResults.get(i).isOpenNow()) ? "Open" : "Closed"; %>
+                                <tr>
+                                    <td class="lodging-name"><%=lodgingResults.get(i).getName()%></td>
+                                    <td class="lodging-address"><%=lodgingResults.get(i).getFormattedAddress()%></td>
+                                    <td class="lodging-rating"><%=lodgingResults.get(i).getRating()%></td>
+                                    <td class="lodging-open-closed" style="color: <%=lodgingIsOpenColor%>"><%=openClose%></td>
+                                    <td><a href="/CS2340Servlet/itinerary?lodging_id=<%=i%>">Select</a></td>
+                                    <td><a href='<%=lodgingResults.get(i).getURL()%>' target="_blank">See More</a></td>
+                                </tr>
                         <% } %>
-                        </tbody>
-                        <% } else { %>
-                            <tr>
-                                <td class="lodging-name"><%=selection.getName()%></td>
-                                <td class="lodging-address"><%=selection.getFormattedAddress()%></td>
-                                <td class="lodging-rating"><%=selection.getRating()%></td>
-                                <td class="lodging-open-closed" style="color: <%=lodgingIsOpenColor%>"><%=openClose%></td>
-                            </tr>
-                        </tbody>
-                        <% } %>
+                            </tbody>
+                    <% } else { %>
+                                <tr>
+                                    <td class="lodging-address"><%=selection.getFormattedAddress()%></td>
+                                    <td class="lodging-name"><%=selection.getPhoneNumber()%></td>
+                                    <td class="lodging-rating"><%=selection.getRating()%></td>
+                                    <td><a href='<%=selection.getURL()%>' target="_blank">See More</a></td>
+                                </tr>
+                            </tbody>
+                    <% } %>
                     </table>
+                    <% if (selection == null && lodgingResults.size() > 0) { %>
+                        <form action="/CS2340Servlet/itinerary" method="GET">
+                                <div class="row">
+                                    <div class="col-md-8" style="padding-left: 5px">
+                                        <input type="submit" class="form-control btn-primary" value="More Results"
+                                            name="lodgingGetMoreResults" style="width: 150px;" />
+                                    </div>
+                                    <div style="float: right; padding-right: 25px; padding-top: 10px">
+                                        <b><%=numberOfLodgingsFound%></b> Results
+                                    </div>
+                                </div>
+                        </form>
+                    <% } %>
                 </div>
             </div>
         </div>

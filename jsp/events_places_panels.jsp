@@ -56,12 +56,21 @@
 </div>
 
 <!-- Java functions for this page -->
-<%! private boolean googleErrorReturned(HttpSession session, int curEventID) {
-        return session.getAttribute("googleSearchError" + curEventID) != null;
+<%! private boolean apiErrorReturned(HttpSession session, int curEventID) {
+        return session.getAttribute("apiSearchError" + curEventID) != null;
     }
 
-    private void thenRemoveResultsFrom(HttpSession session, int curEventID) {
-        session.removeAttribute("businesses" + curEventID);
+    private String getErrorMessage(final HttpSession session, final int curEventID) {
+        return session.getAttribute("apiSearchError" + curEventID).toString();
+    }
+
+    private String determineURLFromError(final String error) {
+        String url;
+        if (error.contains("Google"))
+            url = "https://developers.google.com/places/documentation/search#PlaceSearchStatusCodes";
+        else
+            url = "http://www.yelp.com/developers/documentation/v2/errors";
+        return url;
     }
 %>
 
@@ -71,6 +80,7 @@
     if (events != null) {
         numberOfEvents = events.size();
     }
+    String errorMessage = "";
     for (int curEventID = 0; curEventID < numberOfEvents; curEventID++) {
     String eventPanelColor = (curEventID % 2 == 0) ? "info" : "success";
     Event event = events.get(curEventID); %>
@@ -108,16 +118,15 @@
                         <div class="form-group" style="float: left; padding-left: 20px; padding-top: 10px">
                             <input name="getEventsWithGoogleButton" type="submit" class="form-control btn-primary" value="Google Search"
                                    onclick="changeValueToGoogleCode(document.getElementById('eventType' + '<%=curEventID%>'))" />
-                            <input name="getEventsWithYelpButton" type="submit" class="form-control btn-primary" value="Yelp Search"
+                            <input name="getEventsWithYelpButton" type="submit" class="form-control btn-danger" value="Yelp Search"
                                    onclick="changeValueToGoogleCode(document.getElementById('eventType' + '<%=curEventID%>')); " />
                         </div>
                     </div><br />
-                    <%  if (googleErrorReturned(session, curEventID)) {
-                            thenRemoveResultsFrom(session, curEventID);
-                    %>
+                    <%  if (apiErrorReturned(session, curEventID)) { %>
                     <div class="alert alert-danger" role="alert" style="text-align: left">
-                        <a href="https://developers.google.com/places/documentation/search#PlaceSearchStatusCodes" target="_blank"
-                           class="alert-link"><%=session.getAttribute("googleSearchError" + curEventID)%></a>
+                        <% errorMessage = getErrorMessage(session, curEventID); %>
+                        <a href="<%=determineURLFromError(errorMessage)%>" target="_blank"
+                           class="alert-link"><%=errorMessage%></a>
                             <a data-toggle="collapse"
                                data-parent="#accordion"
                                href="#text-search-collapse<%=curEventID%>"
@@ -136,20 +145,20 @@
                         <div class="panel-body">
                             <table class="table table-striped">
                                 <thead>
-                                <tr>
-                                    <%  String apiIcon = (event.getApi() != null) ? event.getApi() : "google";
-                                        String apiWidth = apiIcon.equals("google") ? "90px" : "50px";
-                                        String apiHeight = apiIcon.equals("google") ? "25px" : "40px"; %>
-                                    <img src="../images/<%=apiIcon%>.png" width="<%=apiWidth%>" height="<%=apiHeight%>" />&nbsp;&nbsp;Results
-                                </tr>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Address</th>
-                                    <th>Rating</th>
-                                    <th>Open</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
+                                    <tr>
+                                        <%  String apiIcon = (event.getApi() != null) ? event.getApi() : "google";
+                                            String apiWidth = apiIcon.equals("google") ? "90px" : "50px";
+                                            String apiHeight = apiIcon.equals("google") ? "25px" : "40px"; %>
+                                        <img src="../images/<%=apiIcon%>.png" width="<%=apiWidth%>" height="<%=apiHeight%>" />&nbsp;&nbsp;Results
+                                    </tr>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                        <th>Rating</th>
+                                        <th>Open</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 <%  for (int j = 0; j  < businesses.size(); j++) {
@@ -178,7 +187,9 @@
                     <div id="text-search-collapse<%=curEventID%>" class="panel-collapse collapse">
                         <div class="alert alert-danger" role="alert" style="text-align: left">
                             <ol>
-                                <li>Try a Yelp Search instead.</li>
+                                <%  final String recommendation = (errorMessage.contains("Google")) ? "Try a Yelp Search instead."
+                                        : "Try a Google Search instead."; %>
+                                <li><%=recommendation%></li>
                                 <li>Try a Google Keyword Search instead:&nbsp;&nbsp;&nbsp;
                                     <input name="collapse-textsearch-query" type="text" placeholder="Keyword Search" />
                                     <input name="collapse-textsearch-submit" type="submit" />

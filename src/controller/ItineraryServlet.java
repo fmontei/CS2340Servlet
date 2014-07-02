@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,11 +24,13 @@ public class ItineraryServlet extends HttpServlet {
             eventForm.createNewEvents();
         } else if (lodgingSearchRequested(request)) {
             doLodgingSearchRequest(request, response);
+        } else if (moreLodgingResultsRequested(request)) {
+            doGetMoreLodgingResults(request, response);
         } else if (lodgingSelectionMade(request)) {
             new LodgingForm(request, response).saveLodgingSelection();
         } else if (detailedGoogleSearchRequested(request)) {
             EventForm eventForm = new EventForm(request, response);
-            eventForm.doDetailedSearch();
+            eventForm.getDetailedInformationForPlace();
         } else if (eventSelectionMade(request)) {
             EventForm eventForm = new EventForm(request, response);
             eventForm.saveSelection();
@@ -56,13 +57,24 @@ public class ItineraryServlet extends HttpServlet {
     }
 
     private boolean lodgingSearchRequested(HttpServletRequest request) {
-        return request.getQueryString().contains("add_lodging=true");
+        return request.getParameter("lodgingSubmitButton") != null;
     }
 
     private void doLodgingSearchRequest(HttpServletRequest request,
                                         HttpServletResponse response)
         throws IOException {
         new LodgingForm(request, response).getLodgingsAroundLocation();
+        response.sendRedirect("jsp/index.jsp");
+    }
+
+    private boolean moreLodgingResultsRequested(HttpServletRequest request) {
+        return request.getParameter("lodgingGetMoreResults") != null;
+    }
+
+    private void doGetMoreLodgingResults(HttpServletRequest request,
+                                         HttpServletResponse response)
+            throws IOException {
+        new LodgingForm(request, response).getMoreLodgingResults();
         response.sendRedirect("jsp/index.jsp");
     }
 
@@ -117,7 +129,7 @@ public class ItineraryServlet extends HttpServlet {
             request.getSession().setAttribute("businesses" + eventID, results);
             request.getSession().setAttribute("eventQueryString" + eventID,
                     "Keyword = '" + query + "'.");
-            request.getSession().removeAttribute("googleSearchError" + eventID);
+            request.getSession().removeAttribute("apiSearchError" + eventID);
             response.sendRedirect("jsp/index.jsp?event_no=" + eventID);
         } else {
             query = request.getParameter("google-textsearch-query");
