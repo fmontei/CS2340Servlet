@@ -68,7 +68,7 @@ public class EventForm {
         event.setRating(business.getRating());
     }
 
-    private String parseEventIDFromQueryString() {
+    public String parseEventIDFromQueryString() {
         final String queryString = request.getQueryString();
         final int startIndex = queryString.lastIndexOf("=") + 1;
         final String eventID = queryString.substring(startIndex);
@@ -101,13 +101,9 @@ public class EventForm {
                 eventResults = queryYelpForEvents(eventType, radiusInMiles);
             }
             populateSessionWithEventResults(eventID, eventResults);
-            updateImageIcon(eventID, API);
-            session.removeAttribute("googleSearchError" + eventID);
-            response.sendRedirect("jsp/index.jsp?search=" + API +
-                    "&event-no=" + eventID);
+            returnQueryResultsToUser(eventID, API);
         } catch (JSONException ex) {
-            session.setAttribute("googleSearchError" + eventID, ex.getMessage());
-            response.sendRedirect("jsp/index.jsp");
+            returnGoogleError(eventID, ex);
         } catch (IOException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         } catch (SQLException ex) {
@@ -178,13 +174,31 @@ public class EventForm {
         GooglePlaceAPI googlePlaceAPI = new GooglePlaceAPI();
         try {
             googlePlaceAPI.getByDetailSearch(placeToBeUpdated);
-            session.removeAttribute("googleSearchError" + eventID);
-            response.sendRedirect(placeToBeUpdated.getURL());
+            redirectUserToRequestedURL(eventID, placeToBeUpdated);
         } catch (JSONException ex) {
-            session.setAttribute("googleSearchError" + eventID, ex.getMessage());
-            response.sendRedirect("jsp/index.jsp");
+            returnGoogleError(eventID, ex);
         } catch (IOException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
+    }
+
+    private void returnQueryResultsToUser(String eventID, String API)
+            throws IOException {
+        updateImageIcon(eventID, API);
+        session.removeAttribute("googleSearchError" + eventID);
+        response.sendRedirect("jsp/index.jsp?search=" + API +
+                "&event-no=" + eventID);
+    }
+
+    private void redirectUserToRequestedURL(String eventID, Place place)
+        throws IOException {
+        session.removeAttribute("googleSearchError" + eventID);
+        response.sendRedirect(place.getURL());
+    }
+
+    private void returnGoogleError(String eventID, JSONException ex)
+        throws IOException {
+        session.setAttribute("googleSearchError" + eventID, ex.getMessage());
+        response.sendRedirect("jsp/index.jsp?search=google&event-no=" + eventID);
     }
 }

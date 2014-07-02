@@ -2,12 +2,75 @@
 <%@ page import="java.util.List" %>
 <%@ page import="database.Place" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-8">
+            <h1><span class="glyphicon glyphicon-th"></span>Events & Places</h1>
+        </div>
+        <div class="col-md-4">
+            <ul class="nav nav-pills" style="padding-top: 20px">
+                <li class="dropdown alert-success" style="float: right;" id="create-event-pill">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                    <span class="glyphicon glyphicon-plus-sign"
+                                                          style="position: relative; top: 2px"></span>
+                        <b>Add Event</b>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu pull-left">
+                        <li role ="presentation" class="dropdown-header">
+                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=1">
+                                Create <b>ONE</b>
+                            </a>
+                        </li>
+                        <li role="presentation" class="dropdown-header">
+                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=2">
+                                Create <b>TWO</b>
+                            </a>
+                        </li>
+                        <li role="presentation" class="dropdown-header">
+                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=3">
+                                Create <b>THREE</b>
+                            </a>
+                        </li>
+                        <li role="presentation" class="dropdown-header">
+                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=5">
+                                Create <b>FIVE</b>
+                            </a>
+                        </li>
+                        <li role="presentation" class="dropdown-header">
+                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=10">
+                                Create <b>TEN</b>
+                            </a>
+                        </li>
+                        <li role="presentation" class="dropdown-header">
+                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=20">
+                                Create <b>TWENTY</b>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Java functions for this page -->
+<%! private boolean googleErrorReturned(HttpSession session, int curEventID) {
+        return session.getAttribute("googleSearchError" + curEventID) != null;
+    }
+
+    private void thenRemoveResultsFrom(HttpSession session, int curEventID) {
+        session.removeAttribute("businesses" + curEventID);
+    }
+%>
+
+
 <%  List<Event> events = (List<Event>) session.getAttribute("events");
     int numberOfEvents = 0;
     if (events != null) {
         numberOfEvents = events.size();
     }
-
     for (int curEventID = 0; curEventID < numberOfEvents; curEventID++) {
     String eventPanelColor = (curEventID % 2 == 0) ? "info" : "success";
     Event event = events.get(curEventID); %>
@@ -49,11 +112,18 @@
                                    onclick="changeValueToGoogleCode(document.getElementById('eventType' + '<%=curEventID%>')); " />
                         </div>
                     </div><br />
-                    <%  if (session.getAttribute("googleSearchError" + curEventID) != null) {
-                        session.removeAttribute("businesses" + curEventID); %>
-                    <div class="alert alert-danger" role="alert" style="padding-left: 25px">
+                    <%  if (googleErrorReturned(session, curEventID)) {
+                            thenRemoveResultsFrom(session, curEventID);
+                    %>
+                    <div class="alert alert-danger" role="alert" style="text-align: left">
                         <a href="https://developers.google.com/places/documentation/search#PlaceSearchStatusCodes" target="_blank"
                            class="alert-link"><%=session.getAttribute("googleSearchError" + curEventID)%></a>
+                            <a data-toggle="collapse"
+                               data-parent="#accordion"
+                               href="#text-search-collapse<%=curEventID%>"
+                               id="parentCollapse">
+                                Recommendations
+                            </a>
                     </div>
                     <% } %>
                     <%  List<Place> businesses = (List<Place>) session.getAttribute("businesses" + curEventID);
@@ -103,6 +173,20 @@
                     </div>
                     <% } %>
                 </form>
+                <!-- Form for Google Text Search, underneath the Recommendations label following Google error code -->
+                <form role="form" action="/CS2340Servlet/itinerary?event_id=<%=curEventID%>" method="POST">
+                    <div id="text-search-collapse<%=curEventID%>" class="panel-collapse collapse">
+                        <div class="alert alert-danger" role="alert" style="text-align: left">
+                            <ol>
+                                <li>Try a Yelp Search instead.</li>
+                                <li>Try a Google Keyword Search instead:&nbsp;&nbsp;&nbsp;
+                                    <input name="collapse-textsearch-query" type="text" placeholder="Keyword Search" />
+                                    <input name="collapse-textsearch-submit" type="submit" />
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </form>
             </div>
             <% } else { %>
             <div class="panel-body" style="max-height: 220px">
@@ -110,7 +194,7 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th style="width: 300px">Address</th>
+                                <th style="width: 400px">Address</th>
                                 <th>Phone Number</th>
                                 <th>Price Level</th>
                                 <th>Rating</th>
@@ -142,5 +226,6 @@
             <% } %>
         </div>
     </div>
+
     <% } %>
 

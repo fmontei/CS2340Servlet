@@ -1,9 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
-<%@ page import="database.User" %>
-<%@ page import="database.Event" %>
-<%@ page import="database.Preference" %>
-<%@ page import="database.Place" %>
+<%@ page import="database.*" %>
 
 <%@ include file="header.jsp" %>
 
@@ -91,139 +88,148 @@
     User account = (User) session.getAttribute("currentUser");
 %>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2 sidebar" id="itinerary-side-bar"
-                 style="position: absolute; width: 270px;">
-                <div class="sidebad-wrapper" >
-                <ul class="list-unstyled">
-                    <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">
-                        <h4>User <i class="glyphicon glyphicon-chevron-down"></i></h4>
+
+<div class="row-offcanvas row-offcanvas-left">
+    <div id="sidebar" class="sidebar-offcanvas">
+        <div class="col-md-12">
+            <ul class="list-unstyled">
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">
+                    <h4>User <i class="glyphicon glyphicon-chevron-down"></i></h4>
+                </a>
+                    <ul style="list-style: none;" class="collapse in" id="userMenu">
+                        <li class="active"><a href="#"><i class="glyphicon glyphicon-home"></i> Home</a>
+                        </li>
+                        <li><a href="#"><i class="glyphicon glyphicon-envelope"></i> Messages <span class="badge badge-info">4</span></a>
+                        </li>
+                        <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Settings</a>
+                        </li>
+                        <li><a href="#"><i class="glyphicon glyphicon-comment"></i> Shoutbox</a>
+                        </li>
+                        <li><a href="#"><i class="glyphicon glyphicon-user"></i> Staff List</a>
+                        </li>
+                        <li><a href="#"><i class="glyphicon glyphicon-flag"></i> Transactions</a>
+                        </li>
+                        <li><a href="#"><i class="glyphicon glyphicon-exclamation-sign"></i> Rules</a>
+                        </li>
+                        <li><a href="#"><i class="glyphicon glyphicon-off"></i> Logout</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#preferences-menuitem">
+                    <h4>Preferences <i class="glyphicon glyphicon-chevron-right"></i></h4>
+                </a>
+                    <%  Preference preference = (Preference) session.getAttribute("activePreferences"); %>
+                    <%  int maxDistance;
+                        float minRating;
+                        String priceCategory, attractionType, foodType;
+                        maxDistance = 0;
+                        minRating = 0;
+                        priceCategory = attractionType = foodType = "";
+                        if (preference != null) {
+                            maxDistance = preference.getMaxDistance();
+                            minRating = preference.getMinimumRating();
+                            priceCategory = preference.getPriceCategory();
+                            attractionType = preference.getPreferredAttractionType();
+                            foodType = preference.getPreferredFoodType();
+                        }
+                    %>
+                    <ul style="list-style-type: square;" class="collapse" id="preferences-menuitem">
+                        <h4>Information &amp; Stats  <a href="#">edit</a></h4>
+                        <li><b>Max Distance:</b> <%=maxDistance%></li>
+                        <li><b>Rating:</b>  <%=minRating%></li>
+                        <li><b>Price</b> : <%=priceCategory%></li>
+                        <li><b>Attraction:</b>  <%=attractionType%></li>
+                        <li><b>Food:</b>  <%=foodType%></li>
+                    </ul>
+                </li>
+                <li class="nav-header">
+                    <a href="#" data-toggle="collapse" data-target="#google-search-menuitem">
+                        <h4>Keyword Search<i class="glyphicon glyphicon-chevron-right"></i></h4>
                     </a>
-                        <ul style="list-style: none;" class="collapse in" id="userMenu">
-                            <li class="active"><a href="#"><i class="glyphicon glyphicon-home"></i> Home</a>
-                            </li>
-                            <li><a href="#"><i class="glyphicon glyphicon-envelope"></i> Messages <span class="badge badge-info">4</span></a>
-                            </li>
-                            <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Settings</a>
-                            </li>
-                            <li><a href="#"><i class="glyphicon glyphicon-comment"></i> Shoutbox</a>
-                            </li>
-                            <li><a href="#"><i class="glyphicon glyphicon-user"></i> Staff List</a>
-                            </li>
-                            <li><a href="#"><i class="glyphicon glyphicon-flag"></i> Transactions</a>
-                            </li>
-                            <li><a href="#"><i class="glyphicon glyphicon-exclamation-sign"></i> Rules</a>
-                            </li>
-                            <li><a href="#"><i class="glyphicon glyphicon-off"></i> Logout</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#preferences-menuitem">
-                        <h4>Preferences <i class="glyphicon glyphicon-chevron-right"></i></h4>
-                    </a>
-                        <%  Preference preference = (Preference) session.getAttribute("activePreferences"); %>
-                        <%  int maxDistance;
-                            float minRating;
-                            String priceCategory, attractionType, foodType;
-                            maxDistance = 0;
-                            minRating = 0;
-                            priceCategory = attractionType = foodType = "";
-                            if (preference != null) {
-                                maxDistance = preference.getMaxDistance();
-                                minRating = preference.getMinimumRating();
-                                priceCategory = preference.getPriceCategory();
-                                attractionType = preference.getPreferredAttractionType();
-                                foodType = preference.getPreferredFoodType();
-                            }
-                        %>
-                        <ul style="list-style-type: square;" class="collapse" id="preferences-menuitem">
-                            <h4>Information &amp; Stats  <a href="#">edit</a></h4>
-                            <li><b>Max Distance:</b> <%=maxDistance%></li>
-                            <li><b>Rating:</b>  <%=minRating%></li>
-                            <li><b>Price</b> : <%=priceCategory%></li>
-                            <li><b>Attraction:</b>  <%=attractionType%></li>
-                            <li><b>Food:</b>  <%=foodType%></li>
-                        </ul>
-                    </li>
-                    <li class="nav-header">
-                        <a href="#" data-toggle="collapse" data-target="#google-search-menuitem">
-                            <h4>Keyword Search<i class="glyphicon glyphicon-chevron-right"></i></h4>
-                        </a>
 
-                        <ul style="list-style: none; padding-left: 0" class="collapse" id="google-search-menuitem">
-                            <li>
-                                <div id="google-textsearch">
-                                    <form class="form-inline" role="form" action="/CS2340Servlet/itinerary" method="POST">
-                                        <div class="form-group">
-                                            <input name="google-textsearch-query" type="text"
-                                                   class="form-control"
-                                                   placeholder="Keyword Search"
-                                                   style="width: 70%" />
-                                            <input name="google-textsearch-submit"
-                                                   type="image"
-                                                   value="trialSubmit"
-                                                   src="../images/search.png"
-                                                   class="form-control" />
-                                        </div>
-                                    </form>
-                                </div>
-                            </li>
-                                <%  List<Place> places = (List<Place>) session.getAttribute("textSearchResults");
-                                    if (places != null) {
-                                        int i = 0;
-                                        for (Place place : places) {
-                                            String placeName = place.getName();
-                                            String address = place.getFormattedAddress();
-                                            int priceLevel = place.getPriceLevel();
-                                            double rating = place.getRating();
-                                            boolean openNow = place.isOpenNow();
-                                            String openOrClosed = (openNow) ? "Open" : "Closed";
-                                            String color = (openNow) ? "rgb(0, 153, 0)" : "red";
-                                %>
-                                <li data-container="body"
-                                    data-toggle="popover"
-                                    data-placement="right"
-                                    data-content="Price level: <%=priceLevel%> | Rating: <%=rating%>">
-                                    <a class="popLink" href="javascript:void(0);" style="font-size: 10px;">
-                                        <b><%=++i%>.<%=placeName%></b> | <%=address%> | <span style="color: <%=color%>"><%=openOrClosed%></span>
-                                    </a>
-                                </li>
-                                <%      } %>
-                                <%  }     %>
-
-                        </ul>
-                    </li>
-                </ul>
-                </div>
-            </div>
-
-            <div class="col-md-10 col-md-push-2" style="padding-left: 80px">
-                <div id="div-overview">
-                    <h1 class="page-header" id="page-header">
-                        Welcome <%=request.getSession().getAttribute("welcomeName")%>!
-                    </h1>
-
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            Facebook Login
-                        </div>
-                        <div class="panel-body">
-                            <fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();">
-                            </fb:login-button>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            Itineraries
-                        </div>
-                        <div class="panel-body" id="itinerary-panel-body">
-
-                            <div class="page-header">
-                                <h1><span class="glyphicon glyphicon-move"></span>Overview</h1>
+                    <ul style="list-style: none; padding-left: 0" class="collapse" id="google-search-menuitem">
+                        <li>
+                            <div id="google-textsearch">
+                                <form class="form-inline" role="form" action="/CS2340Servlet/itinerary" method="POST">
+                                    <div class="form-group">
+                                        <input name="google-textsearch-query" type="text"
+                                               class="form-control"
+                                               placeholder="Keyword Search"
+                                               style="width: 70%" />
+                                        <input name="google-textsearch-submit"
+                                               type="image"
+                                               value="trialSubmit"
+                                               src="../images/search.png"
+                                               class="form-control" />
+                                    </div>
+                                </form>
                             </div>
+                        </li>
+                        <%  List<Place> places = (List<Place>) session.getAttribute("textSearchResults");
+                            if (places != null) {
+                                int i = 0;
+                                for (Place place : places) {
+                                    String placeName = place.getName();
+                                    String address = place.getFormattedAddress();
+                                    int priceLevel = place.getPriceLevel();
+                                    double rating = place.getRating();
+                                    boolean openNow = place.isOpenNow();
+                                    String openOrClosed = (openNow) ? "Open" : "Closed";
+                                    String color = (openNow) ? "rgb(0, 153, 0)" : "red";
+                        %>
+                        <li data-container="body"
+                            data-toggle="popover"
+                            data-placement="right"
+                            data-content="Price level: <%=priceLevel%> | Rating: <%=rating%>">
+                            <a class="popLink" href="javascript:void(0);" style="font-size: 10px;">
+                                <b><%=++i%>.<%=placeName%></b> | <%=address%> | <span style="color: <%=color%>"><%=openOrClosed%></span>
+                            </a>
+                        </li>
+                        <%      } %>
+                        <%  }     %>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-push-2" style="padding-left: 80px">
+            <div id="div-overview">
+                <h1 class="page-header" id="page-header">
+                    Welcome <%=request.getSession().getAttribute("welcomeName")%>!
+                </h1>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Facebook Login
+                    </div>
+                    <div class="panel-body">
+                        <fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();">
+                        </fb:login-button>
+                    </div>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Itineraries
+                    </div>
+                    <div class="panel-body" id="itinerary-panel-body">
+
+                        <div class="page-header">
+                            <h1><span class="glyphicon glyphicon-move"></span>Overview</h1>
+                        </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" style="height: 40px">
+                                <%  Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
+                                    String itineraryName = activeItinerary.getName();
+                                    String itineraryAddress = activeItinerary.getAddress(); %>
+                                <span style="float: left">Itinerary Name:&nbsp;&nbsp;&nbsp;<%=itineraryName%></span>
+                                <span style="float: right">Address:&nbsp;&nbsp;&nbsp;<%=itineraryAddress%></span>
+                            </div>
+                            <div class="panel-body">
                             <ol class="breadcrumb" style="background-color: white">
                                 <li>
                                     <a href="itinerary_overview.jsp">Select Itinerary</a>
@@ -243,7 +249,7 @@
 
                             <ul class="nav nav-pills">
                                 <li>
-                                    <a href="#" class="alert-success" style="color: rgb(66, 139, 202); font-weight: bold">
+                                    <a href="#" style="color: rgb(66, 139, 202); font-weight: bold">
                                         Currently Viewing: ${ITINERARY_NAME}
                                     </a>
                                 </li>
@@ -268,187 +274,38 @@
                                         Preferences
                                     </a>
                                 </li>
-                                <li class="dropdown alert-success" style="float: right" id="create-event-pill">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-plus-sign"
-                                              style="position: relative; top: 2px"></span>
-                                        <b>Add Event</b>
-                                        <span class="caret"></span>
-                                    </a>
-                                    <ul class="dropdown-menu pull-left">
-                                        <li role ="presentation" class="dropdown-header">
-                                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=1">
-                                                Create <b>ONE</b>
-                                            </a>
-                                        </li>
-                                        <li role="presentation" class="dropdown-header">
-                                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=2">
-                                                Create <b>TWO</b>
-                                            </a>
-                                        </li>
-                                        <li role="presentation" class="dropdown-header">
-                                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=3">
-                                                Create <b>THREE</b>
-                                            </a>
-                                        </li>
-                                        <li role="presentation" class="dropdown-header">
-                                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=5">
-                                                Create <b>FIVE</b>
-                                            </a>
-                                        </li>
-                                        <li role="presentation" class="dropdown-header">
-                                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=10">
-                                                Create <b>TEN</b>
-                                            </a>
-                                        </li>
-                                        <li role="presentation" class="dropdown-header">
-                                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=20">
-                                                Create <b>TWENTY</b>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li style="float: right">
-                                    <a href="/CS2340Servlet/itinerary?add_lodging=true" class="alert-danger" id="create-lodging-pill">
-                                        <span class="glyphicon glyphicon-plus-sign"
-                                              style="position: relative; top: 2px">
-                                        </span>
-                                        <b>Add Lodging</b>
-                                    </a>
-                                </li>
-                            </ul>
-                            <br />
+                            </ul></div>
+                        </div>
+                        <br />
 
-                            <div class="page-header">
-                                <h1><span class="glyphicon glyphicon-globe"></span>Map</h1>
-                            </div>
+                        <div class="page-header">
+                            <h1><span class="glyphicon glyphicon-globe"></span>Map</h1>
+                        </div>
 
-                            <div class="panel-group" id="accordion">
-                                <div class="panel panel-warning">
-                                    <div class="panel-heading">
-                                        <a data-toggle="collapse"
-                                           data-parent="#accordion"
-                                           href="#collapseOne"
-                                           id="parentCollapse">
-                                            View Map
-                                        </a>
-                                    </div>
-                                    <div id="collapseOne" class="panel-collapse collapse in">
-                                        <div class="panel-body">
-                                            <div class="center-block" id="accordion-map" style="width: 520px; height: 300px;"></div>
-                                        </div>
-                                    </div>
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-warning">
+                                <div class="panel-heading">
+                                    <a data-toggle="collapse"
+                                       data-parent="#accordion"
+                                       href="#collapseOne"
+                                       id="parentCollapse">
+                                        View Map
+                                    </a>
                                 </div>
-                            </div>
-
-                            <div class="page-header">
-                                <h1><span class="glyphicon glyphicon-home"></span>Lodging</h1>
-                            </div>
-
-                            <%  Place selection = (Place) session.getAttribute("lodgingSelection");
-                                String lodgingIsOpenColor = "";
-                                String openClose = "";
-                                if (selection != null) {
-                                    lodgingIsOpenColor = (selection.isOpenNow()) ? "green" : "red";
-                                    openClose = (selection.isOpenNow()) ? "Open" : "Closed";
-                                }
-                            %>
-
-                            <div id="main-lodging">
-                                <div class="panel panel-danger">
-                                    <div class="panel-heading">
-                                        <% if (selection == null) { %>
-                                        New Lodging
-                                        <% } else { %>
-                                        <b>Lodging: <%=selection.getName()%></b>
-                                        <% } %>
-                                    </div>
+                                <div id="collapseOne" class="panel-collapse collapse in">
                                     <div class="panel-body">
-                                        <div class="row" style="padding-left: 20px">
-                                            <% if (selection == null) { %>
-                                            <p>Select a lodging below. This list has been created
-                                                based on your Itinerary's address.
-                                            </p>
-                                            <% } %>
-                                            <table class="table table-striped">
-                                            <% if (selection == null) { %>
-                                                <thead id="lodging-table-head">
-                                                    <tr>
-                                                        <th>Name</th>
-                                                        <th>Address</th>
-                                                        <th>Rating</th>
-                                                        <th>Open</th>
-                                                        <th>Select</th>
-                                                    </tr>
-                                                </thead>
-                                            <% } else { %>
-                                                <thead>
-                                                    <tr>
-                                                        <th>Name</th>
-                                                        <th>Address</th>
-                                                        <th>Rating</th>
-                                                        <th>Open</th>
-                                                    </tr>
-                                                </thead>
-                                            <% } %>
-                                                <tbody>
-                            <%  if (selection == null) {
-                                    Object lodgingObject = session.getAttribute("lodgingResults");
-                                    int numberOfLodgingsFound = 0;
-                                    List<Place> lodgingResults = new ArrayList<Place>();
-                                    if (lodgingObject != null) {
-                                        lodgingResults = (List<Place>) lodgingObject;
-                                        numberOfLodgingsFound = lodgingResults.size();
-                                    }
-                                    for (int i = 0; i < numberOfLodgingsFound; i++) {
-                                        lodgingIsOpenColor = (lodgingResults.get(i).isOpenNow()) ? "green" : "red";
-                                        openClose = (lodgingResults.get(i).isOpenNow()) ? "Open" : "Closed"; %>
-
-                                                    <tr>
-                                                        <td class="lodging-name"><%=lodgingResults.get(i).getName()%></td>
-                                                        <td class="lodging-address"><%=lodgingResults.get(i).getFormattedAddress()%></td>
-                                                        <td class="lodging-rating"><%=lodgingResults.get(i).getRating()%></td>
-                                                        <td class="lodging-open-closed" style="color: <%=lodgingIsOpenColor%>"><%=openClose%></td>
-                                                        <td><a href="/CS2340Servlet/itinerary?lodging_id=<%=i%>">Select</a></td>
-                                                    </tr>
-                                    <% } %>
-                                                </tbody>
-                                                <tfoot>
-                                                    <div class="row">
-                                                        <form class="form-inline" role="form" action="/CS2340Servlet/itinerary?lodging_id=" method="POST">
-                                                            <div class="form-group" style="padding-left: 20px; padding-right: 40px">
-                                                                <input name="lodgingSelection" type="text" class="form-control" placeholder="Lodging Name" />
-                                                            </div>
-                                                            <div class="form-group center-block" style="width: 30%; padding-top: 10px">
-                                                                <input name="submitLodgingButton" type="submit" class="form-control btn-primary" />
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </tfoot>
-                            <% } else { %>
-                                                    <tr>
-                                                        <td class="lodging-name"><%=selection.getName()%></td>
-                                                        <td class="lodging-address"><%=selection.getFormattedAddress()%></td>
-                                                        <td class="lodging-rating"><%=selection.getRating()%></td>
-                                                        <td class="lodging-open-closed" style="color: <%=lodgingIsOpenColor%>"><%=openClose%></td>
-                                                    </tr>
-                                                </tbody>
-                            <% } %>
-                                            </table>
-                                        </div>
+                                        <div class="center-block" id="accordion-map" style="width: 520px; height: 300px;"></div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- List of business/places panels -->
-                            <div class="page-header">
-                                <h1><span class="glyphicon glyphicon-th"></span>Events & Places</h1>
-                            </div>
-                            <%@ include file="events_places_panels.jsp" %>
-                        </div> <!-- Locations Panel Body -->
-                    </div> <!-- Locations Panel -->
-                </div> <!-- Div Overview -->
-            </div> <!-- Div for central application panel -->
+                        <%@ include file="lodging_panel.jsp" %>
+                        <%@ include file="events_places_panels.jsp" %>
+                    </div> <!-- Locations Panel Body -->
+                </div> <!-- Locations Panel -->
+            </div> <!-- Div Overview -->
+        </div> <!-- Div for central application panel -->
         </div>
     </div>
 
@@ -498,39 +355,10 @@
 
         var error = '<%= request.getAttribute("error")%>';
 
-        // Lodging functionality
-        var lodging_selection = '<%=session.getAttribute("lodgingSelection")%>';
-        var lodging_results = '<%=session.getAttribute("lodgingResults")%>';
-        if (lodging_selection === "null" && lodging_results === "null") {
-            $("#lodging-table-head").hide();
-        } else {
-            $("#create-lodging-pill").hide();
-        }
-
-        $("#create-lodging-pill").click(function() {
-            $("#lodging-table-head").fadeIn("slow");
-        });
-
         $(document).ready(function() {
             // Initial view
             $("#div-overview").show();
-            $("#div-travelMode").hide();
             $("#itinerary-side-bar").show();
-
-            // Sidebar
-            $("#a-overview").click(function() {
-                $("#li-overview").addClass("active");
-                $("#li-travelMode").removeClass("active");
-                $("#div-overview").show();
-                $("#div-travelMode").hide();
-            });
-
-            $("#a-travelMode").click(function() {
-                $("#li-overview").removeClass("active");
-                $("#li-travelMode").addClass("active");
-                $("#div-overview").hide();
-                $("#div-travelMode").show();
-            });
 
             // Details button for new event location search
             $('.popover-dismiss').popover({

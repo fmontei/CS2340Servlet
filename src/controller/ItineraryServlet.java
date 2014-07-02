@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ItineraryServlet", urlPatterns = { "/itinerary" })
@@ -96,7 +97,8 @@ public class ItineraryServlet extends HttpServlet {
     }
 
     private boolean textSearchRequest(HttpServletRequest request) {
-        return request.getParameter("google-textsearch-submit") != null;
+        return request.getParameter("google-textsearch-submit") != null ||
+                request.getParameter("collapse-textsearch-submit") != null;
     }
 
     private boolean detailedGoogleSearchRequested(HttpServletRequest request) {
@@ -106,15 +108,40 @@ public class ItineraryServlet extends HttpServlet {
     private void doSearchRequest(HttpServletRequest request,
                                  HttpServletResponse response)
             throws IOException {
-        final String query = request.getParameter("google-textsearch-query");
+        String query;
+        if (textSearchIssuedFromMainConsole(request)) {
+            EventForm eventForm = new EventForm(request, response);
+            final String eventID = eventForm.parseEventIDFromQueryString();
+            query = request.getParameter("collapse-textsearch-query");
+            List<Place> results = tryGoogleTextSearch(request, response, query);
+            request.getSession().setAttribute("businesses" + eventID, results);
+            request.getSession().setAttribute("eventQueryString" + eventID,
+                    "Keyword = '" + query + "'.");
+            request.getSession().removeAttribute("googleSearchError" + eventID);
+            response.sendRedirect("jsp/index.jsp?event_no=" + eventID);
+        } else {
+            query = request.getParameter("google-textsearch-query");
+            List<Place> results = tryGoogleTextSearch(request, response, query);
+            request.getSession().setAttribute("textSearchResults", results);
+            response.sendRedirect("jsp/index.jsp");
+        }
+    }
+
+    private boolean textSearchIssuedFromMainConsole(HttpServletRequest request) {
+        return request.getQueryString().contains("event_id");
+    }
+
+    private List<Place> tryGoogleTextSearch(HttpServletRequest request,
+                                     HttpServletResponse response,
+                                     final String query) {
+        List<Place> results = new ArrayList<Place>();
         try {
             GooglePlaceAPI googleSearch = new GooglePlaceAPI();
-            final List<Place> results = googleSearch.getByTextSearch(query);
-            final HttpSession session = request.getSession();
-            session.setAttribute("textSearchResults", results);
+            results = googleSearch.getByTextSearch(query);
         } catch (Exception ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
+        } finally {
+            return results;
         }
-        response.sendRedirect("jsp/index.jsp");
     }
 }
