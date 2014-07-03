@@ -90,7 +90,7 @@
 
 
 <div class="row-offcanvas row-offcanvas-left">
-    <div id="sidebar" class="sidebar-offcanvas">
+    <div id="sidebar" class="sidebar">
         <div class="col-md-12">
             <ul class="list-unstyled">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">
