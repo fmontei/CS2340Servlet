@@ -87,18 +87,17 @@
     <div id="event-no-<%=curEventID%>">
         <div class="panel panel-<%=eventPanelColor%>">
             <div class="panel-heading">
-
                 <%  if (event.getName() != null) { %>
-
                 <p>
                     <b><%= event.getName() %></b><span style="float: right"><i>Place no. <%=curEventID + 1%></i></span>
                 </p>
-
                 <% } else { %>
+                <form action="/CS2340Servlet/itinerary?remove_place_id=<%=curEventID%>" method="POST">
+                    <button type="submit" class="close" aria-hidden="true">&times;</button>
+                </form>
                 New Place no. <%=curEventID + 1%>
                 <% } %>
             </div>
-
             <%  if (event.getName() == null) { %>
             <div class="panel-body">
                 <form class="form-inline" role="form" action="/CS2340Servlet/itinerary?event_id=<%=curEventID%>" method="POST">

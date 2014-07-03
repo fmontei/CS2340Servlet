@@ -32,12 +32,7 @@
         lodgingResults = (List<Place>) lodgingObject;
         numberOfLodgingsFound = lodgingResults.size();
     }
-    String lodgingIsOpenColor = "";
-    String openClose = "";
-    if (selection != null) {
-        lodgingIsOpenColor = (selection.isOpenNow()) ? "green" : "red";
-        openClose = (selection.isOpenNow()) ? "Open" : "Closed";
-                                                                        %>
+    if (selection != null) { %>
     <div id="main-lodging">
     <% } else if (session.getAttribute("lodgingResults") != null) { %>
     <div id="main-lodging" class="panel-collapse collapse in">
@@ -62,7 +57,7 @@
                                     <input name="lodgingName" type="text"
                                            class="form-control" placeholder="Lodging Name (optional)" />
                                     &nbsp;&nbsp;&nbsp;Radius (miles):&nbsp;&nbsp;&nbsp;
-                                    <input name="lodgingRadius" type="number" min="1" max="24"
+                                    <input name="lodgingRadius" type="number" min="1" max="25"
                                            class="form-control" />
                                     &nbsp;&nbsp;&nbsp;No. Results:&nbsp;&nbsp;&nbsp;
                                     <input name="lodgingFilter" type="number" min="1" max="20"
@@ -103,10 +98,19 @@
                             <tbody>
                     <%  if (selection == null) {
                         for (int i = 0; i < numberOfLodgingsFound; i++) {
+                            String lodgingIsOpenColor, openClose;
                             lodgingIsOpenColor = (lodgingResults.get(i).isOpenNow()) ? "green" : "red";
                             openClose = (lodgingResults.get(i).isOpenNow()) ? "Open" : "Closed"; %>
                                 <tr>
-                                    <td class="lodging-name"><%=lodgingResults.get(i).getName()%></td>
+                                    <td>
+                                        <a rel="popover"
+                                           data-html="true"
+                                           data-content="<img src='<%=lodgingResults.get(i).getRatingImage()%>'>
+                                                <br /><%=lodgingResults.get(i).getSnippet()%>"
+                                           data-title="<%=lodgingResults.get(i).getName()%>">
+                                            <%=lodgingResults.get(i).getName()%>
+                                        </a>
+                                    </td>
                                     <td class="lodging-address"><%=lodgingResults.get(i).getFormattedAddress()%></td>
                                     <td class="lodging-rating"><%=lodgingResults.get(i).getRating()%></td>
                                     <td class="lodging-open-closed" style="color: <%=lodgingIsOpenColor%>"><%=openClose%></td>
@@ -128,15 +132,16 @@
                     <% if (selection == null && lodgingResults.size() > 0) { %>
                         <form action="/CS2340Servlet/itinerary" method="GET">
                                 <div class="row">
-                                    <div class="col-md-8" style="padding-left: 5px">
+                                    <div class="col-md-8" style="padding-left: 15px">
                                         <input type="submit" class="form-control btn-primary" value="More Results"
                                             name="lodgingGetMoreResults" style="width: 150px;" />
                                     </div>
-                                    <div style="float: right; padding-right: 25px; padding-top: 10px">
+                                    <div style="float: right; padding-right: 35px; padding-top: 10px">
                                         <b><%=numberOfLodgingsFound%></b> Results
                                     </div>
                                 </div>
                         </form>
+
                     <% } %>
                 </div>
             </div>
@@ -149,4 +154,9 @@
     if (lodging_selection !== "null") {
         $('#create-lodging-pill').hide();
     }
+
+    $(document).ready(function() {
+        $('[rel=popover]').popover({trigger: 'click', placement: 'left'})
+    });
+
 </script>

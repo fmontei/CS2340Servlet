@@ -1,7 +1,8 @@
 package database;
 
 public class Place {
-    private String name, placeID, formattedAddress, phoneNumber, URL;
+    private String name, placeID, formattedAddress, phoneNumber, URL,
+            ratingImage, snippetText;
     private int priceLevel;
     private double rating;
     private boolean openNow;
@@ -33,6 +34,12 @@ public class Place {
     public String getURL() {
         return this.URL;
     }
+    public String getRatingImage() {
+        return this.ratingImage;
+    }
+    public String getSnippet() {
+        return this.snippetText;
+    }
     public int getPriceLevel() {
         return priceLevel;
     }
@@ -51,6 +58,12 @@ public class Place {
     }
     public void setURL(String URL) {
         this.URL = URL;
+    }
+    public void setRatingImage(String image) {
+        this.ratingImage = image;
+    }
+    public void setSnippetText(String snippet) {
+        this.snippetText = snippet;
     }
     public void setFormattedAddress(String formattedAddress) {
         this.formattedAddress = formattedAddress;

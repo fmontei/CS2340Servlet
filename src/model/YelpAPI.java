@@ -33,10 +33,10 @@ public class YelpAPI {
     private static final String API_HOST = "api.yelp.com";
 
     private String term;
-    private String location; // pull from itinerary
-    private int radius_filter; // in meters 40000 max ~ 25 miles
-    private int offset = 0; // offset number of businesses returned by
-    private int limit = 10; // number of businesses returned
+    private String location;
+    private int radius_filter;
+    private int offset = 0;
+    private int limit = 10;
 
     private OAuthService service;
     private Token accessToken;
@@ -76,6 +76,7 @@ public class YelpAPI {
         try {
             jsonResponse = (JSONObject) parser.parse(searchResponseJSON);
             parsePotentialError(jsonResponse);
+            System.out.println(jsonResponse);
         } catch (ParseException ignore) {}
         List<Place> businessResults = getParametersFromResponse(jsonResponse);
         return businessResults;
@@ -95,8 +96,8 @@ public class YelpAPI {
         List<Place> businessResults = new ArrayList<Place>();
         JSONArray businesses = (JSONArray) jsonResponse.get("businesses");
         for (int j = 0; j < businesses.size(); j++) {
-            String businessName, businessURL, ratingAsString,
-                    displayAddress, displayPhone = "unknown";
+            String businessName, businessURL, snippetText = "", imageRating = "",
+                    ratingAsString, displayAddress, displayPhone = "unknown";
             boolean isOpen;
             double ratingAsDouble;
             JSONObject jsonObject = (JSONObject) businesses.get(j);
@@ -106,7 +107,11 @@ public class YelpAPI {
                 displayPhone = jsonObject.get("display_phone").toString();
             ratingAsString = jsonObject.get("rating").toString();
             ratingAsDouble = Double.parseDouble(ratingAsString);
+            if (jsonObject.get("rating_img_url_large") != null)
+                imageRating = jsonObject.get("rating_img_url_large").toString();
             businessURL = jsonObject.get("url").toString();
+            if (jsonObject.get("snippet_text") != null)
+                snippetText = jsonObject.get("snippet_text").toString();
             isOpen = getIsOpen(jsonObject);
             Place business = new Place();
             business.setName(businessName);
@@ -114,6 +119,8 @@ public class YelpAPI {
             business.setPhoneNumber(displayPhone);
             business.setRating(ratingAsDouble);
             business.setURL(businessURL);
+            business.setRatingImage(imageRating);
+            business.setSnippetText(snippetText);
             business.setOpenNow(isOpen);
             businessResults.add(business);
         }
@@ -176,6 +183,4 @@ public class YelpAPI {
         Response response = request.send();
         return response.getBody();
     }
-
-
 }
