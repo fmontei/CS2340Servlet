@@ -44,7 +44,7 @@ public class GooglePlaceTextSearch extends GooglePlaceAPI {
             String name = "", placeID = "", formattedAddress = "";
             int priceLevel = 0;
             double rating = 0;
-            boolean openNow = false;
+            boolean openNow = true;
             if (jsonObject.has("name"))
                 name = jsonObject.getString("name");
             if (jsonObject.has("place_id"))

@@ -68,7 +68,7 @@ public class EventForm {
         event.setRating(business.getRating());
     }
 
-    private String parseEventIDFromQueryString() {
+    public String parseEventIDFromQueryString() {
         final String queryString = request.getQueryString();
         final int startIndex = queryString.lastIndexOf("=") + 1;
         final String eventID = queryString.substring(startIndex);
@@ -101,12 +101,9 @@ public class EventForm {
                 eventResults = queryYelpForEvents(eventType, radiusInMiles);
             }
             populateSessionWithEventResults(eventID, eventResults);
-            updateImageIcon(eventID, API);
-            response.sendRedirect("jsp/index.jsp?search=" + API +
-                    "&event-no=" + eventID);
+            returnQueryResults(eventID, API);
         } catch (JSONException ex) {
-            request.setAttribute("googleSearchError", ex.getMessage());
-            ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
+            returnSearchError(eventID, ex);
         } catch (IOException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         } catch (SQLException ex) {
@@ -128,8 +125,8 @@ public class EventForm {
                                                   String eventName,
                                                   String eventType,
                                                   String radius) {
-        session.setAttribute("eventQueryString" + eventID, "Event Name = '" +
-                eventName + "' | Event Type = '" + eventType + "' | Radius = '" +
+        session.setAttribute("eventQueryString" + eventID, "Place Name = '" +
+                eventName + "' | Place Type = '" + eventType + "' | Radius = '" +
                 radius + "'.");
     }
 
@@ -137,20 +134,11 @@ public class EventForm {
                                                    String eventType,
                                                    int radius)
         throws IOException, JSONException {
-        final String coordinates = reformatCoordsForQueryCompliance();
+        final String coordinates = activeItinerary.getCoordinates().toString();
         GooglePlaceAPI googleSearch = new GooglePlaceAPI();
         List<Place> eventResults = googleSearch.getByPlaceSearch
                 (coordinates, radius, eventType, eventName);
         return eventResults;
-    }
-
-    private String reformatCoordsForQueryCompliance() {
-        final String coords = activeItinerary.getCoordinates().toString();
-        int begin = coords.indexOf("[") + 1;
-        int end = coords.length() - 1;
-        String formattedCoords = coords.substring(begin, end);
-        formattedCoords = formattedCoords.replaceAll("\\s+", "");
-        return formattedCoords;
     }
 
     private void updateImageIcon(final String eventID, final String API) {
@@ -160,11 +148,11 @@ public class EventForm {
     }
 
     private List<Place> queryYelpForEvents(final String term, int radius)
-            throws SQLException {
+            throws SQLException, JSONException {
         List<Place> results;
         final String location = activeItinerary.getAddress();
         YelpAPI yelpAPI = new YelpAPI(request, response);
-        results = yelpAPI.queryAPI(term, location, radius);
+        results = yelpAPI.queryAPI(term, location, radius, 20, 0);
         return results;
     }
 
@@ -173,7 +161,7 @@ public class EventForm {
         session.setAttribute("businesses" + eventID, eventResults);
     }
 
-    public void doDetailedSearch() throws IOException {
+    public void getDetailedInformationForPlace() throws IOException {
         final String queryString = request.getQueryString();
         final int placeBeginIndex = queryString.indexOf("=") + 1;
         final int placeEndIndex = queryString.lastIndexOf("&");
@@ -186,12 +174,32 @@ public class EventForm {
         GooglePlaceAPI googlePlaceAPI = new GooglePlaceAPI();
         try {
             googlePlaceAPI.getByDetailSearch(placeToBeUpdated);
-            response.sendRedirect(placeToBeUpdated.getURL());
+            redirectUserToRequestedURL(eventID, placeToBeUpdated);
         } catch (JSONException ex) {
-            request.setAttribute("googleSearchError", ex.getMessage());
-            ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
+            returnSearchError(eventID, ex);
         } catch (IOException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
+    }
+
+    private void returnQueryResults(String eventID, String API)
+            throws IOException {
+        updateImageIcon(eventID, API);
+        session.removeAttribute("apiSearchError" + eventID);
+        response.sendRedirect("jsp/index.jsp?search=" + API +
+                "&event-no=" + eventID);
+    }
+
+    private void redirectUserToRequestedURL(String eventID, Place place)
+        throws IOException {
+        session.removeAttribute("apiSearchError" + eventID);
+        response.sendRedirect(place.getURL());
+    }
+
+    private void returnSearchError(String eventID, JSONException ex)
+        throws IOException {
+        session.removeAttribute("businesses" + eventID);
+        session.setAttribute("apiSearchError" + eventID, ex.getMessage());
+        response.sendRedirect("jsp/index.jsp?search=google&event-no=" + eventID);
     }
 }

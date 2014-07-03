@@ -2,6 +2,7 @@ package model;
 
 import controller.BrowserErrorHandling;
 import database.*;
+import org.json.JSONException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -32,10 +33,10 @@ public class YelpAPI {
     private static final String API_HOST = "api.yelp.com";
 
     private String term;
-    private String location; // pull from itinerary
-    private int radius_filter; // in meters 40000 max ~ 25 miles
-    private int offset = 0; // offset number of businesses returned by
-    private int limit = 10; // number of businesses returned
+    private String location;
+    private int radius_filter;
+    private int offset = 0;
+    private int limit = 10;
 
     private OAuthService service;
     private Token accessToken;
@@ -60,49 +61,68 @@ public class YelpAPI {
         this.accessToken = new Token(TOKEN, TOKEN_SECRET);
     }
 
-    public List<Place> queryAPI(String term, String location,
-                                      final int radiusInMiles)
-            throws SQLException {
+    public List<Place> queryAPI(final String term, final String location,
+                                final int radiusInMiles, final int limit,
+                                final int offset)
+            throws SQLException, JSONException {
         this.term = term;
         this.location = location;
+        this.limit = limit;
+        this.offset = offset;
         this.radius_filter = convertMilesToMeters(radiusInMiles);
-
         String searchResponseJSON = searchForBusinessesByLocation();
         JSONParser parser = new JSONParser();
         JSONObject jsonResponse = null;
         try {
             jsonResponse = (JSONObject) parser.parse(searchResponseJSON);
-        } catch (ParseException pe) {
+            parsePotentialError(jsonResponse);
+            System.out.println(jsonResponse);
+        } catch (ParseException ignore) {}
+        List<Place> businessResults = getParametersFromResponse(jsonResponse);
+        return businessResults;
+    }
 
+    private void parsePotentialError(JSONObject jsonResponse)
+        throws JSONException {
+        if (jsonResponse.containsKey("error")) {
+            JSONObject error = (JSONObject) jsonResponse.get("error");
+            final String errorID = error.get("id").toString();
+            throw new JSONException("The search could not be completed. " +
+                    "Yelp returned the following error code: " + errorID);
         }
+    }
+
+    private List<Place> getParametersFromResponse(final JSONObject jsonResponse) {
         List<Place> businessResults = new ArrayList<Place>();
         JSONArray businesses = (JSONArray) jsonResponse.get("businesses");
-        try {
-            for (int j = 0; j < businesses.size(); j++) {
-                String businessName, businessURL, ratingAsString,
-                        displayAddress, displayPhone = "unknown";
-                boolean isOpen;
-                double ratingAsDouble;
-                JSONObject jsonObject = (JSONObject) businesses.get(j);
-                businessName = jsonObject.get("name").toString();
-                displayAddress = getDisplayAddress(jsonObject);
-                if (jsonObject.get("display_phone") != null)
-                    displayPhone = jsonObject.get("display_phone").toString();
-                ratingAsString = jsonObject.get("rating").toString();
-                ratingAsDouble = Double.parseDouble(ratingAsString);
-                businessURL = jsonObject.get("url").toString();
-                isOpen = getIsOpen(jsonObject);
-                Place business = new Place();
-                business.setName(businessName);
-                business.setFormattedAddress(displayAddress);
-                business.setPhoneNumber(displayPhone);
-                business.setRating(ratingAsDouble);
-                business.setURL(businessURL);
-                business.setOpenNow(isOpen);
-                businessResults.add(business);
-            }
-        } catch (Exception ex) {
-            BrowserErrorHandling.printErrorToBrowser(request, response, ex);
+        for (int j = 0; j < businesses.size(); j++) {
+            String businessName, businessURL, snippetText = "", imageRating = "",
+                    ratingAsString, displayAddress, displayPhone = "unknown";
+            boolean isOpen;
+            double ratingAsDouble;
+            JSONObject jsonObject = (JSONObject) businesses.get(j);
+            businessName = jsonObject.get("name").toString();
+            displayAddress = getDisplayAddress(jsonObject);
+            if (jsonObject.get("display_phone") != null)
+                displayPhone = jsonObject.get("display_phone").toString();
+            ratingAsString = jsonObject.get("rating").toString();
+            ratingAsDouble = Double.parseDouble(ratingAsString);
+            if (jsonObject.get("rating_img_url_large") != null)
+                imageRating = jsonObject.get("rating_img_url_large").toString();
+            businessURL = jsonObject.get("url").toString();
+            if (jsonObject.get("snippet_text") != null)
+                snippetText = jsonObject.get("snippet_text").toString();
+            isOpen = getIsOpen(jsonObject);
+            Place business = new Place();
+            business.setName(businessName);
+            business.setFormattedAddress(displayAddress);
+            business.setPhoneNumber(displayPhone);
+            business.setRating(ratingAsDouble);
+            business.setURL(businessURL);
+            business.setRatingImage(imageRating);
+            business.setSnippetText(snippetText);
+            business.setOpenNow(isOpen);
+            businessResults.add(business);
         }
         return businessResults;
     }
@@ -142,7 +162,9 @@ public class YelpAPI {
         request.addQuerystringParameter("location", location);
         request.addQuerystringParameter("limit", String.valueOf(limit));
         request.addQuerystringParameter("offset", String.valueOf(offset));
-        request.addQuerystringParameter("radius_filter", String.valueOf(radius_filter));
+        request.addQuerystringParameter("sort", "0");
+        request.addQuerystringParameter("radius_filter",
+                String.valueOf(radius_filter));
         return sendRequestAndGetResponse(request);
     }
 

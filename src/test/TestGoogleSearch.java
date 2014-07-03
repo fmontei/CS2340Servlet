@@ -12,8 +12,8 @@ public class TestGoogleSearch {
     public static void main(String... args) {
         TestGoogleSearch test = new TestGoogleSearch();
         try {
-            //test.testYelpAPI();
-            test.testGoogleNearbySearch();
+            test.testYelpAPI();
+            //test.testGoogleNearbySearch();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -22,16 +22,24 @@ public class TestGoogleSearch {
     private void testYelpAPI() throws SQLException {
         List<Place> results = new ArrayList<Place>();
         YelpAPI yelpAPI = new YelpAPI();
-        results = yelpAPI.queryAPI("amusement_park", "atlanta, ga", 10000);
+        try {
+            results = yelpAPI.queryAPI("lodging", "atlanta, ga", 24, 10, 0);
+            System.out.println("NUMBER OF RESULTS: " + results.size());
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
         for (Place p : results) {
-            System.out.println(p.getFormattedAddress());
+            System.out.println(p.getRatingImage());
         }
     }
 
     private void testGoogleNearbySearch() throws IOException, JSONException {
         GooglePlaceAPI googleSearch
                 = new GooglePlaceAPI();
-        List<Place> results = googleSearch.getByPlaceSearch("-33.870943,151.190311", 5, "food", "italian");
+        List<Place> results = googleSearch.getByPlaceSearch("-33.870943,151.190311", 15, "gas_station", "bp");
+        for (Place p : results) {
+            System.out.println(p.getPriceLevel());
+        }
         googleSearch.getByDetailSearch(results.get(0));
         System.out.println(results.get(0).getURL());
     }

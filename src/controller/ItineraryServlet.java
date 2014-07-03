@@ -1,6 +1,7 @@
 package controller;
 
 import database.DataManager;
+import database.Event;
 import database.Place;
 import model.*;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ItineraryServlet", urlPatterns = { "/itinerary" })
@@ -24,11 +26,13 @@ public class ItineraryServlet extends HttpServlet {
             eventForm.createNewEvents();
         } else if (lodgingSearchRequested(request)) {
             doLodgingSearchRequest(request, response);
+        } else if (moreLodgingResultsRequested(request)) {
+            doGetMoreLodgingResults(request, response);
         } else if (lodgingSelectionMade(request)) {
             new LodgingForm(request, response).saveLodgingSelection();
         } else if (detailedGoogleSearchRequested(request)) {
             EventForm eventForm = new EventForm(request, response);
-            eventForm.doDetailedSearch();
+            eventForm.getDetailedInformationForPlace();
         } else if (eventSelectionMade(request)) {
             EventForm eventForm = new EventForm(request, response);
             eventForm.saveSelection();
@@ -51,11 +55,13 @@ public class ItineraryServlet extends HttpServlet {
             eventForm.getEventsAroundCentralLocation();
         } else if (textSearchRequest(request)) {
             doSearchRequest(request, response);
+        } else if (removeTemporaryPlaceRequested(request)) {
+            doRemovePlaceRequest(request, response);
         }
     }
 
     private boolean lodgingSearchRequested(HttpServletRequest request) {
-        return request.getQueryString().contains("add_lodging=true");
+        return request.getParameter("lodgingSubmitButton") != null;
     }
 
     private void doLodgingSearchRequest(HttpServletRequest request,
@@ -65,8 +71,23 @@ public class ItineraryServlet extends HttpServlet {
         response.sendRedirect("jsp/index.jsp");
     }
 
+    private boolean moreLodgingResultsRequested(HttpServletRequest request) {
+        return request.getParameter("lodgingGetMoreResults") != null;
+    }
+
+    private void doGetMoreLodgingResults(HttpServletRequest request,
+                                         HttpServletResponse response)
+            throws IOException {
+        new LodgingForm(request, response).getMoreLodgingResults();
+        response.sendRedirect("jsp/index.jsp");
+    }
+
     private boolean lodgingSelectionMade(HttpServletRequest request) {
         return request.getQueryString().contains("lodging_id=");
+    }
+
+    private boolean detailedGoogleSearchRequested(HttpServletRequest request) {
+        return request.getQueryString().contains("detail_search");
     }
 
     private boolean newItineraryCreationRequested(HttpServletRequest request) {
@@ -86,6 +107,25 @@ public class ItineraryServlet extends HttpServlet {
         }
     }
 
+    private boolean removeTemporaryPlaceRequested(HttpServletRequest request) {
+        return request.getQueryString().contains("remove_place_id");
+    }
+
+    private void doRemovePlaceRequest(HttpServletRequest request,
+                                      HttpServletResponse response)
+            throws IOException {
+        final HttpSession session = request.getSession();
+        List<Event> events = (List) session.getAttribute("events");
+        final String queryString = request.getQueryString();
+        final int beginIndex = queryString.lastIndexOf("=") + 1;
+        final int eventID = Integer.parseInt(queryString.substring(beginIndex));
+        events.remove(eventID);
+        session.setAttribute("events", events);
+        session.removeAttribute("businesses" + eventID);
+        session.removeAttribute("apiSearchError" + eventID);
+        response.sendRedirect("jsp/index.jsp");
+    }
+
     private boolean userRequestedEventSearch(HttpServletRequest request) {
         return request.getParameter("getEventsWithGoogleButton") != null ||
                 request.getParameter("getEventsWithYelpButton") != null;
@@ -96,25 +136,47 @@ public class ItineraryServlet extends HttpServlet {
     }
 
     private boolean textSearchRequest(HttpServletRequest request) {
-        return request.getParameter("google-textsearch-submit") != null;
-    }
-
-    private boolean detailedGoogleSearchRequested(HttpServletRequest request) {
-        return request.getQueryString().contains("detail_search");
+        return request.getParameter("google-textsearch-submit") != null ||
+                request.getParameter("collapse-textsearch-submit") != null;
     }
 
     private void doSearchRequest(HttpServletRequest request,
                                  HttpServletResponse response)
             throws IOException {
-        final String query = request.getParameter("google-textsearch-query");
+        String query;
+        if (textSearchIssuedFromMainConsole(request)) {
+            EventForm eventForm = new EventForm(request, response);
+            final String eventID = eventForm.parseEventIDFromQueryString();
+            query = request.getParameter("collapse-textsearch-query");
+            List<Place> results = tryGoogleTextSearch(request, response, query);
+            request.getSession().setAttribute("businesses" + eventID, results);
+            request.getSession().setAttribute("eventQueryString" + eventID,
+                    "Keyword = '" + query + "'.");
+            request.getSession().removeAttribute("apiSearchError" + eventID);
+            response.sendRedirect("jsp/index.jsp?event_no=" + eventID);
+        } else {
+            query = request.getParameter("google-textsearch-query");
+            List<Place> results = tryGoogleTextSearch(request, response, query);
+            request.getSession().setAttribute("textSearchResults", results);
+            response.sendRedirect("jsp/index.jsp");
+        }
+    }
+
+    private boolean textSearchIssuedFromMainConsole(HttpServletRequest request) {
+        return request.getQueryString().contains("event_id");
+    }
+
+    private List<Place> tryGoogleTextSearch(HttpServletRequest request,
+                                     HttpServletResponse response,
+                                     final String query) {
+        List<Place> results = new ArrayList<Place>();
         try {
             GooglePlaceAPI googleSearch = new GooglePlaceAPI();
-            final List<Place> results = googleSearch.getByTextSearch(query);
-            final HttpSession session = request.getSession();
-            session.setAttribute("textSearchResults", results);
+            results = googleSearch.getByTextSearch(query);
         } catch (Exception ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
+        } finally {
+            return results;
         }
-        response.sendRedirect("jsp/index.jsp");
     }
 }
