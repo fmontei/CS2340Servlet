@@ -1,11 +1,14 @@
 package database;
 
+import java.awt.geom.Point2D;
+
 public class Place {
-    private String name, placeID, formattedAddress, phoneNumber, URL,
+    private String name, placeID, formattedAddress, phoneNumber, URL, API,
             ratingImage, snippetText;
     private int priceLevel;
     private double rating;
     private boolean openNow;
+    private Point2D coordinates = new Point2D.Double();
 
     public Place() {}
 
@@ -34,6 +37,9 @@ public class Place {
     public String getURL() {
         return this.URL;
     }
+    public String getAPI() {
+        return this.API;
+    }
     public String getRatingImage() {
         return this.ratingImage;
     }
@@ -49,6 +55,9 @@ public class Place {
     public boolean isOpenNow() {
         return openNow;
     }
+    public Point2D getCoordinates() {
+        return coordinates;
+    }
 
     public void setPlaceID(String placeID) {
         this.placeID = placeID;
@@ -58,6 +67,9 @@ public class Place {
     }
     public void setURL(String URL) {
         this.URL = URL;
+    }
+    public void setAPI(String API) {
+        this.API = API;
     }
     public void setRatingImage(String image) {
         this.ratingImage = image;
@@ -79,5 +91,8 @@ public class Place {
     }
     public void setOpenNow(boolean openNow) {
         this.openNow = openNow;
+    }
+    public void setCoordinates(Point2D coordinates) {
+        this.coordinates = coordinates;
     }
 }

@@ -26,24 +26,97 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `trip_planner_db_simple`.`preference`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`preference` (
+  `ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `minimumRating` FLOAT NOT NULL,
+  `priceCategory` VARCHAR(25) NOT NULL,
+  `maxDistance` INT(11) NOT NULL,
+  `foodType` VARCHAR(45) NULL DEFAULT NULL,
+  `attractionType` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 9
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `trip_planner_db_simple`.`user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`user` (
+  `ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `firstName` VARCHAR(25) NOT NULL,
+  `lastName` VARCHAR(25) NOT NULL,
+  `userName` VARCHAR(25) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `userRole` INT(11) NULL DEFAULT NULL,
+  `preferenceID` INT(11) NULL DEFAULT NULL,
+  `email` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `preferenceID_idx` (`preferenceID` ASC),
+  CONSTRAINT `preferenceID`
+    FOREIGN KEY (`preferenceID`)
+    REFERENCES `trip_planner_db_simple`.`preference` (`ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 43
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `trip_planner_db_simple`.`itinerary`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`itinerary` (
+  `ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(25) NOT NULL,
+  `userID` INT(11) NULL DEFAULT NULL,
+  `address` VARCHAR(45) NOT NULL,
+  `latitude` DECIMAL(10,7) NOT NULL,
+  `longitude` DECIMAL(10,7) NOT NULL,
+  `transportation` VARCHAR(45) NOT NULL,
+  `creationDate` VARCHAR(45) NULL DEFAULT NULL,
+  `preferenceID` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `tripID_itinerary_idx` (`userID` ASC),
+  CONSTRAINT `userID`
+    FOREIGN KEY (`userID`)
+    REFERENCES `trip_planner_db_simple`.`user` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 15
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `trip_planner_db_simple`.`place`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`place` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
-  `placeType` TINYINT(4) NOT NULL,
+  `itineraryID` INT(11) NULL DEFAULT NULL,
+  `placeType` VARCHAR(9) NOT NULL,
   `name` VARCHAR(25) NOT NULL,
-  `description` VARCHAR(500) NULL DEFAULT NULL,
-  `addressID` INT(11) NOT NULL,
-  `openTime` TIME NULL DEFAULT NULL,
-  `closeTime` TIME NULL DEFAULT NULL,
+  `address` VARCHAR(100) NOT NULL,
+  `phoneNumber` VARCHAR(20) NULL DEFAULT NULL,
+  `apiID` VARCHAR(200) NULL DEFAULT NULL,
+  `priceLevel` INT(1) NULL DEFAULT NULL,
+  `rating` DECIMAL(2,1) NULL DEFAULT NULL,
+  `latitude` DECIMAL(10,7) NULL DEFAULT NULL,
+  `longitude` DECIMAL(10,7) NULL DEFAULT NULL,
+  `url` VARCHAR(70) NULL DEFAULT NULL,
   PRIMARY KEY (`ID`),
-  INDEX `addressID_place_idx` (`addressID` ASC),
-  CONSTRAINT `addressID_place`
-    FOREIGN KEY (`addressID`)
-    REFERENCES `trip_planner_db_simple`.`address` (`ID`)
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC),
+  UNIQUE INDEX `phoneNumber_UNIQUE` (`phoneNumber` ASC),
+  INDEX `itineraryID_fk_idx` (`itineraryID` ASC),
+  CONSTRAINT `itineraryID_fk`
+    FOREIGN KEY (`itineraryID`)
+    REFERENCES `trip_planner_db_simple`.`itinerary` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 13
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -63,22 +136,6 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`attraction` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `trip_planner_db_simple`.`preference`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`preference` (
-  `ID` INT(11) NOT NULL AUTO_INCREMENT,
-  `minimumRating` FLOAT NOT NULL,
-  `priceCategory` VARCHAR(25) NOT NULL,
-  `maxDistance` INT(11) NOT NULL,
-  `foodType` VARCHAR(45) NULL DEFAULT NULL,
-  `attractionType` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`ID`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -107,37 +164,8 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`lodging` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(25) NOT NULL,
   `addressID` INT(11) NOT NULL,
-  PRIMARY KEY (`ID`),
-  INDEX `addressID_lodging_idx` (`addressID` ASC),
-  CONSTRAINT `addressID_lodging`
-    FOREIGN KEY (`addressID`)
-    REFERENCES `trip_planner_db_simple`.`address` (`ID`)
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`ID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `trip_planner_db_simple`.`user`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`user` (
-  `ID` INT(11) NOT NULL AUTO_INCREMENT,
-  `firstName` VARCHAR(25) NOT NULL,
-  `lastName` VARCHAR(25) NOT NULL,
-  `userName` VARCHAR(25) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
-  `userRole` INT(11) NULL DEFAULT NULL,
-  `preferenceID` INT(11) NULL DEFAULT NULL,
-  `email` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  INDEX `preferenceID_idx` (`preferenceID` ASC),
-  CONSTRAINT `preferenceID`
-    FOREIGN KEY (`preferenceID`)
-    REFERENCES `trip_planner_db_simple`.`preference` (`ID`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB
-AUTO_INCREMENT = 42
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -209,31 +237,6 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`customer_feedback` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `trip_planner_db_simple`.`itinerary`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`itinerary` (
-  `ID` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(25) NOT NULL,
-  `userID` INT(11) NULL DEFAULT NULL,
-  `address` VARCHAR(45) NOT NULL,
-  `latitude` DECIMAL(10,0) NOT NULL,
-  `longitude` DECIMAL(10,0) NOT NULL,
-  `transportation` VARCHAR(45) NOT NULL,
-  `creationDate` VARCHAR(45) NULL DEFAULT NULL,
-  `preferenceID` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  INDEX `tripID_itinerary_idx` (`userID` ASC),
-  CONSTRAINT `userID`
-    FOREIGN KEY (`userID`)
-    REFERENCES `trip_planner_db_simple`.`user` (`ID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8;
 
 

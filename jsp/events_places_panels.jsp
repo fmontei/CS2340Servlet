@@ -74,8 +74,7 @@
     }
 %>
 
-
-<%  List<Event> events = (List<Event>) session.getAttribute("events");
+<%  List<Place> events = (List<Place>) session.getAttribute("events");
     int numberOfEvents = 0;
     if (events != null) {
         numberOfEvents = events.size();
@@ -83,7 +82,7 @@
     String errorMessage = "";
     for (int curEventID = 0; curEventID < numberOfEvents; curEventID++) {
     String eventPanelColor = (curEventID % 2 == 0) ? "info" : "success";
-    Event event = events.get(curEventID); %>
+    Place event = events.get(curEventID); %>
     <div id="event-no-<%=curEventID%>">
         <div class="panel panel-<%=eventPanelColor%>">
             <div class="panel-heading">
@@ -145,7 +144,7 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <%  String apiIcon = (event.getApi() != null) ? event.getApi() : "google";
+                                        <%  String apiIcon = (event.getAPI() != null) ? event.getAPI() : "google";
                                             String apiWidth = apiIcon.equals("google") ? "90px" : "50px";
                                             String apiHeight = apiIcon.equals("google") ? "25px" : "40px"; %>
                                         <img src="../images/<%=apiIcon%>.png" width="<%=apiWidth%>" height="<%=apiHeight%>" />&nbsp;&nbsp;Results
@@ -199,7 +198,7 @@
                 </form>
             </div>
             <% } else { %>
-            <div class="panel-body" style="max-height: 220px">
+            <div class="panel-body" style="max-height: 250px">
                 <form class="form-inline" role="form" action="/CS2340Servlet/itinerary?event_id=<%=curEventID%>" method="POST">
                     <table class="table table-striped">
                         <thead>
@@ -219,12 +218,20 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class=input-group-md" style="float: left; padding-left: 10px">
-                        Start:&nbsp;&nbsp;&nbsp;<input type="date" style="height: 30px; width: 150px;" />&nbsp;&nbsp;&nbsp;
-                        End:&nbsp;&nbsp;&nbsp;<input type="date" style="height: 30px; width: 150px;" />&nbsp;&nbsp;&nbsp;
-                        <input type="submit" value="Update" style="height: 30px;" />
-                    </div><br />
-                    <ol class="breadcrumb" style="background-color: white; float: right; padding-top: 40px">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="alert alert-<%=eventPanelColor%> pull-left" style="width: 90%">
+                                <label>Start:</label><input type="date" name="eventStartTime" style="margin-left: 20px" />
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="alert alert-<%=eventPanelColor%> pull-left" style="width: 74%">
+                                <label>End:</label><input type="date" name="eventEndTime" style="margin-left: 20px" />
+                                <input type="submit" value="Save" name="eventDateSubmit" style="margin-left: 30px" />
+                            </div>
+                        </div>
+                    </div>
+                    <ol class="breadcrumb" style="background-color: white; float: right;">
                         <li><a href="#">Website</a></li>
                         <li><a href="#">Reviews</a></li>
                         <li><a href="#">Find On Map</a></li>

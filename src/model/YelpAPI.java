@@ -33,7 +33,7 @@ public class YelpAPI {
     private static final String API_HOST = "api.yelp.com";
 
     private String term;
-    private String location;
+    private String coordinates;
     private int radius_filter;
     private int offset = 0;
     private int limit = 10;
@@ -61,12 +61,12 @@ public class YelpAPI {
         this.accessToken = new Token(TOKEN, TOKEN_SECRET);
     }
 
-    public List<Place> queryAPI(final String term, final String location,
+    public List<Place> queryAPI(final String term, final String coordinates,
                                 final int radiusInMiles, final int limit,
                                 final int offset)
             throws SQLException, JSONException {
         this.term = term;
-        this.location = location;
+        this.coordinates = coordinates;
         this.limit = limit;
         this.offset = offset;
         this.radius_filter = convertMilesToMeters(radiusInMiles);
@@ -159,7 +159,7 @@ public class YelpAPI {
     public String searchForBusinessesByLocation() {
         OAuthRequest request = createOAuthRequest(SEARCH_PATH);
         request.addQuerystringParameter("term", term);
-        request.addQuerystringParameter("location", location);
+        request.addQuerystringParameter("ll", coordinates);
         request.addQuerystringParameter("limit", String.valueOf(limit));
         request.addQuerystringParameter("offset", String.valueOf(offset));
         request.addQuerystringParameter("sort", "0");

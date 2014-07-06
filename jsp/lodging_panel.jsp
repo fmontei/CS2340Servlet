@@ -91,7 +91,7 @@
                                     <th>Address</th>
                                     <th>Phone</th>
                                     <th>Rating</th>
-                                    <th>See More</th>
+                                    <th>    </th>
                                 </tr>
                             </thead>
                     <% } %>
@@ -131,17 +131,30 @@
                     </table>
                     <% if (selection == null && lodgingResults.size() > 0) { %>
                         <form action="/CS2340Servlet/itinerary" method="GET">
-                                <div class="row">
-                                    <div class="col-md-8" style="padding-left: 15px">
-                                        <input type="submit" class="form-control btn-primary" value="More Results"
-                                            name="lodgingGetMoreResults" style="width: 150px;" />
-                                    </div>
-                                    <div style="float: right; padding-right: 35px; padding-top: 10px">
-                                        <b><%=numberOfLodgingsFound%></b> Results
-                                    </div>
+                            <div class="row">
+                                <div class="col-md-8" style="padding-left: 15px">
+                                    <input type="submit" class="form-control btn-primary" value="More Results"
+                                        name="lodgingGetMoreResults" style="width: 150px;" />
                                 </div>
+                                <div style="float: right; padding-right: 35px; padding-top: 10px">
+                                    <b><%=numberOfLodgingsFound%></b> Results
+                                </div>
+                            </div>
                         </form>
-
+                    <% } else { %>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="alert alert-danger pull-left" style="width: 90%">
+                                    <label>Check in:</label><input type="date" name="lodgingCheckIn" style="margin-left: 20px" />
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="alert alert-danger pull-left" style="width: 82%">
+                                    <label>Check out:</label><input type="date" name="lodgingCheckOut" style="margin-left: 20px" />
+                                    <input type="submit" value="Save" name="lodgingDateSubmit" style="margin-left: 30px" />
+                                </div>
+                            </div>
+                        </div>
                     <% } %>
                 </div>
             </div>

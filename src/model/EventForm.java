@@ -1,7 +1,7 @@
 package model;
 
 import controller.BrowserErrorHandling;
-import database.Event;
+import database.DataManager;
 import database.Itinerary;
 import database.Place;
 import org.json.JSONException;
@@ -32,13 +32,12 @@ public class EventForm {
         final String queryString = request.getQueryString();
         final int startIndex = queryString.indexOf("=") + 1;
         final String numberOfEvents = queryString.substring(startIndex);
-
-        List<Event> events = new ArrayList<Event>();
+        List<Place> events = new ArrayList<Place>();
         if (session.getAttribute("events") != null) {
-            events = (ArrayList<Event>) session.getAttribute("events");
+            events = (List<Place>) session.getAttribute("events");
         }
         for (int i = 0; i < Integer.parseInt(numberOfEvents); i++) {
-            events.add(new Event());
+            events.add(new Place());
         }
         session.setAttribute("events", events);
         response.sendRedirect("jsp/index.jsp");
@@ -50,18 +49,23 @@ public class EventForm {
         final String businessID = parseBusinessIDFromQueryString();
         eventNum = Integer.parseInt(eventID);
         businessNum = Integer.parseInt(businessID);
-        List<Event> events = (List) session.getAttribute("events");
+        List<Place> events = (List) session.getAttribute("events");
         List<Place> businesses =
                 (List) session.getAttribute("businesses" + eventNum);
-        Event eventToBeUpdated = events.get(eventNum);
+        Place eventToBeUpdated = events.get(eventNum);
         Place businessToBeSaved = businesses.get(businessNum);
         setEventParameters(eventToBeUpdated, businessToBeSaved);
         events.set(eventNum, eventToBeUpdated);
-        session.setAttribute("events", events);
-        response.sendRedirect("jsp/index.jsp");
+        try {
+            DataManager.createEvent(businessToBeSaved, activeItinerary.getID());
+            session.setAttribute("events", events);
+            response.sendRedirect("jsp/index.jsp");
+        } catch (SQLException ex) {
+            BrowserErrorHandling.printErrorToBrowser(request, response, ex);
+        }
     }
 
-    private void setEventParameters(Event event, Place business) {
+    private void setEventParameters(Place event, Place business) {
         event.setName(business.getName());
         event.setFormattedAddress(business.getFormattedAddress());
         event.setPhoneNumber(business.getPhoneNumber());
@@ -134,26 +138,29 @@ public class EventForm {
                                                    String eventType,
                                                    int radius)
         throws IOException, JSONException {
-        final String coordinates = activeItinerary.getCoordinates().toString();
+        final String coordinates = parseAndReformatCoordinates();
         GooglePlaceAPI googleSearch = new GooglePlaceAPI();
         List<Place> eventResults = googleSearch.getByPlaceSearch
                 (coordinates, radius, eventType, eventName);
         return eventResults;
     }
 
-    private void updateImageIcon(final String eventID, final String API) {
-        final int eventNum = Integer.parseInt(eventID);
-        List<Event> events = (List) session.getAttribute("events");
-        events.get(eventNum).setApi(API);
-    }
-
-    private List<Place> queryYelpForEvents(final String term, int radius)
+    private List<Place> queryYelpForEvents(final String term, final int radius)
             throws SQLException, JSONException {
         List<Place> results;
-        final String location = activeItinerary.getAddress();
+        final String coordinates = parseAndReformatCoordinates();
         YelpAPI yelpAPI = new YelpAPI(request, response);
-        results = yelpAPI.queryAPI(term, location, radius, 20, 0);
+        results = yelpAPI.queryAPI(term, coordinates, radius, 20, 0);
         return results;
+    }
+
+    private String parseAndReformatCoordinates() {
+        final String coords = activeItinerary.getCoordinates().toString();
+        int begin = coords.indexOf("[") + 1;
+        int end = coords.length() - 1;
+        String formattedCoords = coords.substring(begin, end);
+        formattedCoords = formattedCoords.replaceAll("\\s+", "");
+        return formattedCoords;
     }
 
     private void populateSessionWithEventResults(String eventID,
@@ -188,6 +195,12 @@ public class EventForm {
         session.removeAttribute("apiSearchError" + eventID);
         response.sendRedirect("jsp/index.jsp?search=" + API +
                 "&event-no=" + eventID);
+    }
+
+    private void updateImageIcon(final String eventID, final String API) {
+        final int eventNum = Integer.parseInt(eventID);
+        List<Place> events = (List) session.getAttribute("events");
+        events.get(eventNum).setAPI(API);
     }
 
     private void redirectUserToRequestedURL(String eventID, Place place)

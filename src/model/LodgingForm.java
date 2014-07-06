@@ -1,13 +1,17 @@
 package model;
 
+import controller.BrowserErrorHandling;
+import database.DataManager;
 import database.Itinerary;
 import database.Place;
+import database.SQLPlaceQuery;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,11 +27,12 @@ public class LodgingForm {
         this.request = request;
         this.response = response;
         this.session = request.getSession();
+        this.activeItinerary =
+                (Itinerary) session.getAttribute("activeItinerary");
     }
 
     public void getLodgingsAroundLocation() {
         session = request.getSession();
-        activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
         final String name = parseName();
         final String formattedCoords = parseAndReformatCoordinates();
         final int radius = parseRadius();
@@ -35,7 +40,7 @@ public class LodgingForm {
         List<Place> lodgings;
         try {
             YelpAPI yelpAPI = new YelpAPI();
-            lodgings = yelpAPI.queryAPI(name, "atlanta, ga", radius, limit, 0);
+            lodgings = yelpAPI.queryAPI(name, formattedCoords, radius, limit, 0);
             session.setAttribute("lodgingResults", lodgings);
             session.setAttribute("lastLodgingName", name);
             session.setAttribute("lastLodgingRadius", radius);
@@ -58,7 +63,7 @@ public class LodgingForm {
         List<Place> previousResults = (List) session.getAttribute("lodgingResults");
         try {
             YelpAPI yelpAPI = new YelpAPI();
-            currentResults = yelpAPI.queryAPI(name, "atlanta, ga",
+            currentResults = yelpAPI.queryAPI(name, parseAndReformatCoordinates(),
                     radiusInt, limitInt, limitInt);
             List<Place> mergedResults = mergeResults(previousResults, currentResults);
             session.setAttribute("lodgingResults", mergedResults);
@@ -115,7 +120,12 @@ public class LodgingForm {
         List<Place> results =
                 (List<Place>) session.getAttribute("lodgingResults");
         final Place selection = results.get(lodgingID);
-        session.setAttribute("lodgingSelection", selection);
-        response.sendRedirect("jsp/index.jsp");
+        try {
+            DataManager.createLodging(selection, activeItinerary.getID());
+            session.setAttribute("lodgingSelection", selection);
+            response.sendRedirect("jsp/index.jsp");
+        } catch (SQLException ex) {
+            BrowserErrorHandling.printErrorToBrowser(request, response, ex);
+        }
     }
 }

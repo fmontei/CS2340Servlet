@@ -1,4 +1,3 @@
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="database.*" %>
 
@@ -83,11 +82,6 @@
 <%@ include file="footer-centered.jsp" %>
 
 <% } else { %>
-
-<%
-    User account = (User) session.getAttribute("currentUser");
-%>
-
 
 <div class="row-offcanvas row-offcanvas-left">
     <div id="sidebar" class="sidebar">
@@ -250,7 +244,7 @@
                             <ul class="nav nav-pills">
                                 <li>
                                     <a href="#" style="color: rgb(66, 139, 202); font-weight: bold">
-                                        Currently Viewing: ${ITINERARY_NAME}
+                                        Currently Viewing: <%=activeItinerary.getName()%>
                                     </a>
                                 </li>
                                 <li>

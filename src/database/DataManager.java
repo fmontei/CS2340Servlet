@@ -33,7 +33,15 @@ public class DataManager {
     }
 
     public static void deleteItinerary(String itineraryID) throws SQLException {
-        new SQLItineraryQuery().deleteItineraryQuery(itineraryID);
+        DataManager.deleteAllPlacesAssociatedWithItinerary(itineraryID);
+        final SQLItineraryQuery itineraryQuery = new SQLItineraryQuery();
+        itineraryQuery.deleteItineraryQuery(itineraryID);
+    }
+
+    private static void deleteAllPlacesAssociatedWithItinerary(
+            final String itineraryID) throws SQLException {
+        SQLPlaceQuery sqlQuery = new SQLPlaceQuery();
+        sqlQuery.deletePlaceByItineraryID(itineraryID);
     }
 
     public static List<Itinerary> getItineraryByUserID(int userID)
@@ -51,5 +59,31 @@ public class DataManager {
             e.printStackTrace();
         }
         return lastID;
+    }
+
+    public static void createLodging(final Place lodging, final int itineraryID)
+            throws SQLException {
+        SQLPlaceQuery sqlQuery = new SQLPlaceQuery();
+        sqlQuery.createLodgingQuery(lodging, "lodging", itineraryID);
+    }
+
+    public static Place getLodgingByItineraryID(final String itineraryID)
+        throws SQLException {
+        SQLPlaceQuery sqlQuery = new SQLPlaceQuery();
+        final Place lodging = sqlQuery.getLodgingByItineraryID(itineraryID);
+        return lodging;
+    }
+
+    public static void createEvent(final Place event, final int itineraryID)
+        throws SQLException {
+        SQLPlaceQuery sqlQuery = new SQLPlaceQuery();
+        sqlQuery.createEventQuery(event, "event", itineraryID);
+    }
+
+    public static List<Place> getEventsByItineraryID(final String itineraryID)
+            throws SQLException {
+        SQLPlaceQuery sqlQuery = new SQLPlaceQuery();
+        final List<Place> events = sqlQuery.getEventsByItineraryID(itineraryID);
+        return events;
     }
 }
