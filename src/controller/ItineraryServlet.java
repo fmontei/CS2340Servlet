@@ -31,13 +31,10 @@ public class ItineraryServlet extends HttpServlet {
             new LodgingForm(request, response).saveLodgingSelection();
         } else if (detailedGoogleSearchRequested(request)) {
             EventForm eventForm = new EventForm(request, response);
-            eventForm.getDetailedInformationForPlace();
-            eventForm.redirect();
+            eventForm.getDetailedInformationForPlace(true);
         } else if (eventSelectionMade(request)) {
             EventForm eventForm = new EventForm(request, response);
-            eventForm.getDetailedInformationForPlace();
             eventForm.saveSelection();
-            eventForm.redirect();
         } else {
             response.sendRedirect("jsp/itinerary_overview.jsp");
         }

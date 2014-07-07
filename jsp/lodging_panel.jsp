@@ -111,9 +111,9 @@
                                             <%=lodgingResults.get(i).getName()%>
                                         </a>
                                     </td>
-                                    <td class="lodging-address"><%=lodgingResults.get(i).getFormattedAddress()%></td>
-                                    <td class="lodging-rating"><%=lodgingResults.get(i).getRating()%></td>
-                                    <td class="lodging-open-closed" style="color: <%=lodgingIsOpenColor%>"><%=openClose%></td>
+                                    <td class="tableg-address"><%=lodgingResults.get(i).getFormattedAddress()%></td>
+                                    <td><%=lodgingResults.get(i).getRating()%></td>
+                                    <td style="color: <%=lodgingIsOpenColor%>"><%=openClose%></td>
                                     <td><a href="/CS2340Servlet/itinerary?lodging_id=<%=i%>">Select</a></td>
                                     <td><a href='<%=lodgingResults.get(i).getURL()%>' target="_blank">See More</a></td>
                                 </tr>
@@ -121,9 +121,9 @@
                             </tbody>
                     <% } else { %>
                                 <tr>
-                                    <td class="lodging-address"><%=selection.getFormattedAddress()%></td>
-                                    <td class="lodging-name"><%=selection.getPhoneNumber()%></td>
-                                    <td class="lodging-rating"><%=selection.getRating()%></td>
+                                    <td class="table-address"><%=selection.getFormattedAddress()%></td>
+                                    <td class="table-name"><%=selection.getPhoneNumber()%></td>
+                                    <td><%=selection.getRating()%></td>
                                     <td><a href='<%=selection.getURL()%>' target="_blank">See More</a></td>
                                 </tr>
                             </tbody>
@@ -132,25 +132,27 @@
                     <% if (selection == null && lodgingResults.size() > 0) { %>
                         <form action="/CS2340Servlet/itinerary" method="GET">
                             <div class="row">
-                                <div class="col-md-8" style="padding-left: 15px">
+                                <div class="col-md-8" style="padding-left: 20px">
                                     <input type="submit" class="form-control btn-primary" value="More Results"
                                         name="lodgingGetMoreResults" style="width: 150px;" />
                                 </div>
-                                <div style="float: right; padding-right: 35px; padding-top: 10px">
+                                <div style="float: right; padding-right: 40px; padding-top: 10px">
                                     <b><%=numberOfLodgingsFound%></b> Results
                                 </div>
                             </div>
                         </form>
-                    <% } else { %>
+                    <% } else if (selection != null) { %>
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="alert alert-danger pull-left" style="width: 90%">
-                                    <label>Check in:</label><input type="date" name="lodgingCheckIn" style="margin-left: 20px" />
+                                    <label>Check in:</label>
+                                    <input type="date" name="lodgingCheckIn" style="margin-left: 20px" />
                                 </div>
                             </div>
                             <div class="col-md-7">
                                 <div class="alert alert-danger pull-left" style="width: 82%">
-                                    <label>Check out:</label><input type="date" name="lodgingCheckOut" style="margin-left: 20px" />
+                                    <label>Check out:</label>
+                                    <input type="date" name="lodgingCheckOut" style="margin-left: 20px" />
                                     <input type="submit" value="Save" name="lodgingDateSubmit" style="margin-left: 30px" />
                                 </div>
                             </div>

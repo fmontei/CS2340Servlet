@@ -122,6 +122,7 @@ public class YelpAPI {
             business.setRatingImage(imageRating);
             business.setSnippetText(snippetText);
             business.setOpenNow(isOpen);
+            business.setAPI("yelp");
             businessResults.add(business);
         }
         return businessResults;

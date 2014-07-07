@@ -31,18 +31,18 @@ public class GooglePlaceAPI {
         return results;
     }
 
-    public List<Place> getByPlaceSearch(final String coords,
-                                        final int radius,
-                                        final String type,
-                                        final String name)
+    public List<Place> getByNearbyPlaceSearch(final String coords,
+                                              final int radius,
+                                              final String type,
+                                              final String name)
             throws IOException, JSONException {
         String reformattedCoords = reformatCoordinatesForQueryCompliance(coords);
         String reformattedName = reformateNameForQueryCompliance(name);
-        GooglePlaceNearbySearch placeNearbySearch = new GooglePlaceNearbySearch
+        GooglePlaceNearbySearch nearbyPlaceSearch = new GooglePlaceNearbySearch
                 (reformattedCoords, radius, type, reformattedName);
-        final String urlQuery = placeNearbySearch.getSearchURL();
+        final String urlQuery = nearbyPlaceSearch.getSearchURL();
         final StringBuilder jsonResults = queryGoogle(urlQuery);
-        List<Place> results = placeNearbySearch.parseJsonResults(jsonResults);
+        List<Place> results = nearbyPlaceSearch.parseJsonResults(jsonResults);
         return results;
     }
 

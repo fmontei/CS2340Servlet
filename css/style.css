@@ -9,6 +9,19 @@ body, html {
     height: 100%;
 }
 
+th, td {
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.table-name {
+    max-width: 150px;
+}
+
+.table-address {
+    max-width: 250px;
+}
+
 /* Floating Navigation Styling */
 ul.nav-tabs {
     width: 140px;

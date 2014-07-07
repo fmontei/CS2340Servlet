@@ -88,7 +88,7 @@
             <div class="panel-heading">
                 <%  if (event.getName() != null) { %>
                 <p>
-                    <b><%= event.getName() %></b><span style="float: right"><i>Place no. <%=curEventID + 1%></i></span>
+                    <b><%= event.getName() %></b><span style="float: right"><i>Event no. <%=curEventID + 1%></i></span>
                 </p>
                 <% } else { %>
                 <form action="/CS2340Servlet/itinerary?remove_place_id=<%=curEventID%>" method="POST">
@@ -165,11 +165,11 @@
                                     String businessURL = businesses.get(j).getURL();
                                     businessURL = (businessURL != null) ? businessURL :
                                             "/CS2340Servlet/itinerary?detail_search&place_id=" + j + "&event_id=" + curEventID;%>
-                                    <tr>
-                                        <td class="lodging-name"><%=businesses.get(j).getName()%></td>
-                                        <td class="lodging-address"><%=businesses.get(j).getFormattedAddress()%></td>
-                                        <td class="lodging-rating"><%=businesses.get(j).getRating()%></td>
-                                        <td class="lodging-open-closed" style="color: <%=openOrClosedColor%>"><%=openOrClosed%></td>
+                                    <tr >
+                                        <td class="table-name" style="max-width: 150px;"><%=businesses.get(j).getName()%></td>
+                                        <td class="table-address" style="max-width: 250px;"><%=businesses.get(j).getFormattedAddress()%></td>
+                                        <td><%=businesses.get(j).getRating()%></td>
+                                        <td style="color: <%=openOrClosedColor%>"><%=openOrClosed%></td>
                                         <td><a href="/CS2340Servlet/itinerary?select_business&place_id=<%=j%>&event_id=<%=curEventID%>">Select</a></td>
                                         <td><a href='<%=businessURL%>' target="_blank">See More</a></td>
                                     </tr>
@@ -203,7 +203,7 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th style="width: 400px">Address</th>
+                                <th>Address</th>
                                 <th>Phone Number</th>
                                 <th>Price Level</th>
                                 <th>Rating</th>
@@ -211,7 +211,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><%=event.getFormattedAddress()%></td>
+                                <td class="table-address"><%=event.getFormattedAddress()%></td>
                                 <td><%=event.getPhoneNumber()%></td>
                                 <td><%=event.getPriceLevel()%></td>
                                 <td><%=event.getRating()%></td>
@@ -232,7 +232,7 @@
                         </div>
                     </div>
                     <ol class="breadcrumb" style="background-color: white; float: right;">
-                        <li><a href="<%=event.getURL()%>">Website</a></li>
+                        <li><a href="<%=event.getURL()%>" target="_blank">Website</a></li>
                         <li><a href="#">Reviews</a></li>
                         <li><a href="#">Find On Map</a></li>
                         <li><a href="#">Edit</a></li>

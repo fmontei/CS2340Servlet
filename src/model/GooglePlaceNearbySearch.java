@@ -85,6 +85,7 @@ public class GooglePlaceNearbySearch extends GooglePlaceAPI {
             parsedObject.setPriceLevel(priceLevel);
             parsedObject.setRating(rating);
             parsedObject.setOpenNow(openNow);
+            parsedObject.setAPI("google");
             results.add(parsedObject);
         }
         return results;
