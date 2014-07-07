@@ -62,9 +62,10 @@ public class GooglePlaceAPI {
         return reformattedName;
     }
 
-    public void getByDetailSearch(final Place place)
+    public void getByDetailSearch(final Place place, final Place event)
             throws IOException, JSONException {
-        GooglePlaceDetailSearch detailSearch = new GooglePlaceDetailSearch(place);
+        final GooglePlaceDetailSearch detailSearch =
+                new GooglePlaceDetailSearch(place, event);
         final String urlQuery = detailSearch.getSearchURL();
         final StringBuilder jsonResults = queryGoogle(urlQuery);
         detailSearch.parseJsonResults(jsonResults);

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventForm {
+    private static String REDIRECT_URL = "jsp/index.jsp";
+
     private HttpServletRequest request;
     private HttpServletResponse response;
     private HttpSession session;
@@ -44,22 +46,22 @@ public class EventForm {
     }
 
     public void saveSelection() throws IOException {
-        int businessNum, eventNum;
+        int placeNum, eventNum;
         final String eventID = parseEventIDFromQueryString();
-        final String businessID = parseBusinessIDFromQueryString();
+        final String placeID = parsePlaceIDFromQueryString();
         eventNum = Integer.parseInt(eventID);
-        businessNum = Integer.parseInt(businessID);
+        placeNum = Integer.parseInt(placeID);
         List<Place> events = (List) session.getAttribute("events");
         List<Place> businesses =
                 (List) session.getAttribute("businesses" + eventNum);
         Place eventToBeUpdated = events.get(eventNum);
-        Place businessToBeSaved = businesses.get(businessNum);
-        setEventParameters(eventToBeUpdated, businessToBeSaved);
+        Place placeToBeSaved = businesses.get(placeNum);
+        setEventParameters(eventToBeUpdated, placeToBeSaved);
         events.set(eventNum, eventToBeUpdated);
         try {
-            DataManager.createEvent(businessToBeSaved, activeItinerary.getID());
+            DataManager.createEvent(placeToBeSaved, activeItinerary.getID());
             session.setAttribute("events", events);
-            response.sendRedirect("jsp/index.jsp");
+            REDIRECT_URL = "jsp/index.jsp";
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
@@ -79,10 +81,10 @@ public class EventForm {
         return eventID;
     }
 
-    private String parseBusinessIDFromQueryString() {
+    private String parsePlaceIDFromQueryString() {
         final String queryString = request.getQueryString();
         final int startIndex = queryString.indexOf("=") + 1;
-        final int endIndex = queryString.indexOf("&");
+        final int endIndex = queryString.lastIndexOf("&");
         final String businessID = queryString.substring(startIndex, endIndex);
         return businessID;
     }
@@ -169,18 +171,18 @@ public class EventForm {
     }
 
     public void getDetailedInformationForPlace() throws IOException {
-        final String queryString = request.getQueryString();
-        final int placeBeginIndex = queryString.indexOf("=") + 1;
-        final int placeEndIndex = queryString.lastIndexOf("&");
-        final String placeID = queryString.substring(placeBeginIndex, placeEndIndex);
+        final String eventID = parseEventIDFromQueryString();
+        final String placeID = parsePlaceIDFromQueryString();
         final int placeNum = Integer.parseInt(placeID);
-        final int eventBeginIndex = queryString.lastIndexOf("=") + 1;
-        final String eventID = queryString.substring(eventBeginIndex);
-        final List<Place> places = (List) session.getAttribute("businesses" + eventID);
+        final int eventNum = Integer.parseInt(eventID);
+        final List<Place> places =
+                (List) session.getAttribute("businesses" + eventID);
+        final List<Place> events = (List) session.getAttribute("events");
         final Place placeToBeUpdated = places.get(placeNum);
-        GooglePlaceAPI googlePlaceAPI = new GooglePlaceAPI();
+        final Place eventToBeUpdated = events.get(eventNum);
+        final GooglePlaceAPI googlePlaceAPI = new GooglePlaceAPI();
         try {
-            googlePlaceAPI.getByDetailSearch(placeToBeUpdated);
+            googlePlaceAPI.getByDetailSearch(placeToBeUpdated, eventToBeUpdated);
             redirectUserToRequestedURL(eventID, placeToBeUpdated);
         } catch (JSONException ex) {
             returnSearchError(eventID, ex);
@@ -206,7 +208,7 @@ public class EventForm {
     private void redirectUserToRequestedURL(String eventID, Place place)
         throws IOException {
         session.removeAttribute("apiSearchError" + eventID);
-        response.sendRedirect(place.getURL());
+        REDIRECT_URL = place.getURL();
     }
 
     private void returnSearchError(String eventID, JSONException ex)
@@ -214,5 +216,9 @@ public class EventForm {
         session.removeAttribute("businesses" + eventID);
         session.setAttribute("apiSearchError" + eventID, ex.getMessage());
         response.sendRedirect("jsp/index.jsp?search=google&event-no=" + eventID);
+    }
+
+    public void redirect() throws  IOException {
+        response.sendRedirect(REDIRECT_URL);
     }
 }

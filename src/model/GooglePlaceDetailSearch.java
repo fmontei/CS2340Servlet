@@ -8,11 +8,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 public class GooglePlaceDetailSearch extends GooglePlaceAPI {
-    private Place place;
+    private Place place, event;
     private String placeID;
 
-    public GooglePlaceDetailSearch(Place place) {
+    public GooglePlaceDetailSearch(Place place, Place event) {
         this.place = place;
+        this.event = event;
         this.placeID = place.getPlaceID();
     }
 
@@ -40,6 +41,7 @@ public class GooglePlaceDetailSearch extends GooglePlaceAPI {
         if (result.has("url")) {
             url = result.getString("url");
             place.setURL(url);
+            event.setURL(url);
         }
     }
 }

@@ -40,7 +40,7 @@ public class TestGoogleSearch {
         for (Place p : results) {
             System.out.println(p.getPriceLevel());
         }
-        googleSearch.getByDetailSearch(results.get(0));
+        googleSearch.getByDetailSearch(results.get(0), new Place());
         System.out.println(results.get(0).getURL());
     }
 }

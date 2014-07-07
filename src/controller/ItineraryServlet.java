@@ -32,9 +32,12 @@ public class ItineraryServlet extends HttpServlet {
         } else if (detailedGoogleSearchRequested(request)) {
             EventForm eventForm = new EventForm(request, response);
             eventForm.getDetailedInformationForPlace();
+            eventForm.redirect();
         } else if (eventSelectionMade(request)) {
             EventForm eventForm = new EventForm(request, response);
+            eventForm.getDetailedInformationForPlace();
             eventForm.saveSelection();
+            eventForm.redirect();
         } else {
             response.sendRedirect("jsp/itinerary_overview.jsp");
         }
@@ -131,7 +134,7 @@ public class ItineraryServlet extends HttpServlet {
     }
 
     private boolean eventSelectionMade(HttpServletRequest request) {
-        return request.getQueryString().contains("select_business_id=");
+        return request.getQueryString().contains("select_business");
     }
 
     private boolean textSearchRequest(HttpServletRequest request) {

@@ -170,7 +170,7 @@
                                         <td class="lodging-address"><%=businesses.get(j).getFormattedAddress()%></td>
                                         <td class="lodging-rating"><%=businesses.get(j).getRating()%></td>
                                         <td class="lodging-open-closed" style="color: <%=openOrClosedColor%>"><%=openOrClosed%></td>
-                                        <td><a href="/CS2340Servlet/itinerary?select_business_id=<%=j%>&event_id=<%=curEventID%>">Select</a></td>
+                                        <td><a href="/CS2340Servlet/itinerary?select_business&place_id=<%=j%>&event_id=<%=curEventID%>">Select</a></td>
                                         <td><a href='<%=businessURL%>' target="_blank">See More</a></td>
                                     </tr>
                                 <% } %>
@@ -232,7 +232,7 @@
                         </div>
                     </div>
                     <ol class="breadcrumb" style="background-color: white; float: right;">
-                        <li><a href="#">Website</a></li>
+                        <li><a href="<%=event.getURL()%>">Website</a></li>
                         <li><a href="#">Reviews</a></li>
                         <li><a href="#">Find On Map</a></li>
                         <li><a href="#">Edit</a></li>

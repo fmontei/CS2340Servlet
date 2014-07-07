@@ -9,7 +9,8 @@ public class TestDB {
     public static void main(String... args)  {
         try {
             TestDB testDB = new TestDB();
-            testDB.testGetEventsByItineraryID("14");
+            //testDB.testGetEventsByItineraryID("14");
+            testDB.testCreateLodging("name");
         } catch (SQLException ex) {
             System.out.println("CAUGHT EXCEPTION");
             ex.printStackTrace();
@@ -37,7 +38,7 @@ public class TestDB {
         Place lodging = new Place();
         lodging.setName(name);
         lodging.setFormattedAddress(name);
-        DataManager.createLodging(lodging, 10);
+        DataManager.createLodging(lodging, 14);
     }
 
     public void testGetPlaceByItineraryID(final String ID) throws SQLException {
