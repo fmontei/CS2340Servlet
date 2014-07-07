@@ -1,4 +1,3 @@
-<%@ page import="database.Event" %>
 <%@ page import="java.util.List" %>
 <%@ page import="database.Place" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -166,8 +165,16 @@
                                     businessURL = (businessURL != null) ? businessURL :
                                             "/CS2340Servlet/itinerary?detail_search&place_id=" + j + "&event_id=" + curEventID;%>
                                     <tr >
-                                        <td class="table-name" style="max-width: 150px;"><%=businesses.get(j).getName()%></td>
-                                        <td class="table-address" style="max-width: 250px;"><%=businesses.get(j).getFormattedAddress()%></td>
+                                        <td style="max-width: 150px;">
+                                            <a  rel="popover"
+                                                data-html="true"
+                                                data-content="<img src='<%=businesses.get(j).getRatingImage()%>'>
+                                                    <br /><%=businesses.get(j).getSnippet()%>"
+                                                data-title="<%=businesses.get(j).getName()%>">
+                                                <%=businesses.get(j).getName()%>
+                                            </a>
+                                        </td>
+                                        <td style="max-width: 250px;"><%=businesses.get(j).getFormattedAddress()%></td>
                                         <td><%=businesses.get(j).getRating()%></td>
                                         <td style="color: <%=openOrClosedColor%>"><%=openOrClosed%></td>
                                         <td><a href="/CS2340Servlet/itinerary?select_business&place_id=<%=j%>&event_id=<%=curEventID%>">Select</a></td>
@@ -205,16 +212,16 @@
                             <tr>
                                 <th>Address</th>
                                 <th>Phone Number</th>
-                                <th>Price Level</th>
                                 <th>Rating</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td class="table-address"><%=event.getFormattedAddress()%></td>
                                 <td><%=event.getPhoneNumber()%></td>
-                                <td><%=event.getPriceLevel()%></td>
                                 <td><%=event.getRating()%></td>
+                                <td><a href='<%=event.getURL()%>' target="_blank">See More</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -246,3 +253,8 @@
 
     <% } %>
 
+    <script>
+        $(document).ready(function() {
+            $('[rel=popover]').popover({trigger: 'click', placement: 'left'})
+        });
+    </script>

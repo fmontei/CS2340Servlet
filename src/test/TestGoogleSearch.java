@@ -2,6 +2,7 @@ import database.Place;
 import model.GooglePlaceAPI;
 import model.YelpAPI;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -12,8 +13,8 @@ public class TestGoogleSearch {
     public static void main(String... args) {
         TestGoogleSearch test = new TestGoogleSearch();
         try {
-            test.testYelpAPI();
-            //test.testGoogleNearbySearch();
+            //test.testYelpAPI();
+            test.testGoogleNearbySearch();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -34,13 +35,12 @@ public class TestGoogleSearch {
     }
 
     private void testGoogleNearbySearch() throws IOException, JSONException {
-        GooglePlaceAPI googleSearch
-                = new GooglePlaceAPI();
-        List<Place> results = googleSearch.getByNearbyPlaceSearch("-33.870943,151.190311", 15, "gas_station", "bp");
+        GooglePlaceAPI googleSearch = new GooglePlaceAPI();
+        List<Place> results = googleSearch.getByNearbyPlaceSearch("33.7550,-84.3900", 15, "lodging", "");
         for (Place p : results) {
-            System.out.println(p.getPriceLevel());
+            System.out.println(p.getRating() + "\t" + p.getName());
         }
         googleSearch.getByDetailSearch(results.get(0), new Place());
-        System.out.println(results.get(0).getURL());
+        System.out.println(results.get(0).getRating());
     }
 }

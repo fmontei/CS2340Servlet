@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +61,7 @@ public class GooglePlaceNearbySearch extends GooglePlaceAPI {
             final JSONObject jsonObject = jsonArray.getJSONObject(i);
             String name = "", placeID = "", formattedAddress = "";
             int priceLevel = 0;
-            double rating = 0;
+            double rating = 0, latitude = 0, longitude = 0;
             boolean openNow = false;
             if (jsonObject.has("name"))
                 name = jsonObject.getString("name");
@@ -70,12 +71,21 @@ public class GooglePlaceNearbySearch extends GooglePlaceAPI {
                 formattedAddress = jsonObject.getString("vicinity");
             if (jsonObject.has("price_level"))
                 priceLevel = jsonObject.getInt("price_level");
-            if (jsonObject.has("rating"))
+            if (jsonObject.has("rating")) {
                 rating = jsonObject.getDouble("rating");
+            }
             if (jsonObject.has("opening_hours")) {
                 JSONObject hours = jsonObject.getJSONObject("opening_hours");
                 if (hours.has("open_now")) {
                     openNow = hours.getBoolean("open_now");
+                }
+            }
+            if (jsonObject.has("geometry")) {
+                JSONObject geometry = jsonObject.getJSONObject("geometry");
+                if (geometry.has("location")) {
+                    JSONObject location = geometry.getJSONObject("location");
+                    latitude = location.getDouble("lat");
+                    longitude = location.getDouble("lng");
                 }
             }
             final Place parsedObject = new Place();
@@ -86,6 +96,7 @@ public class GooglePlaceNearbySearch extends GooglePlaceAPI {
             parsedObject.setRating(rating);
             parsedObject.setOpenNow(openNow);
             parsedObject.setAPI("google");
+            parsedObject.setCoordinates(new Point2D.Double(latitude, longitude));
             results.add(parsedObject);
         }
         return results;

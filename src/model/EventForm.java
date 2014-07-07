@@ -82,12 +82,13 @@ public class EventForm {
         return placeID;
     }
 
-    private void setEventParameters(Place event, Place business) {
-        event.setName(business.getName());
-        event.setFormattedAddress(business.getFormattedAddress());
-        event.setPhoneNumber(business.getPhoneNumber());
-        event.setRating(business.getRating());
-        event.setURL(business.getURL());
+    private void setEventParameters(Place event, Place searchResult) {
+        event.setName(searchResult.getName());
+        event.setFormattedAddress(searchResult.getFormattedAddress());
+        event.setPhoneNumber(searchResult.getPhoneNumber());
+        event.setRating(searchResult.getRating());
+        event.setURL(searchResult.getURL());
+        event.setCoordinates(searchResult.getCoordinates());
     }
 
     public void getDetailedInformationForPlace(boolean foreignPageRequested)
