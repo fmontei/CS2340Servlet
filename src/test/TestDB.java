@@ -2,6 +2,8 @@ import database.*;
 
 import java.awt.geom.Point2D;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class TestDB {
@@ -10,7 +12,29 @@ public class TestDB {
             TestDB testDB = new TestDB();
             testDB.testGetPlaceByItineraryID("15");
 
-        } catch (SQLException ex) {
+            String pattern = "yyyy-MM-dd-hh.mm.ss";
+            SimpleDateFormat format = new SimpleDateFormat(pattern);
+            System.out.println(format.format(new Date()));
+            String d1 = format.format(new Date());
+            Date newDate1 = new Date();
+
+            Thread.sleep(1000);
+
+            System.out.println(format.format(new Date()));
+            String d2 = format.format(new Date());
+            Date newDate2 = new Date();
+
+            if (d1.compareTo(d2) < 0)
+                System.out.println("D1 is before D2");
+            if (newDate1.before(newDate2))
+                System.out.println("Date1 is before Date2");
+
+            Date newDate3 = new Date();
+            Date newDate4 = new Date();
+            if (newDate3.before(newDate4))
+                System.out.println("Date3 is before Date4");
+
+        } catch (Exception ex) {
             System.out.println("CAUGHT EXCEPTION");
             ex.printStackTrace();
         }

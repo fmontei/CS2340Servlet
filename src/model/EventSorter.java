@@ -31,7 +31,7 @@ public class EventSorter {
             sortByCreationDate(events);
         }
         session.setAttribute("events", events);
-        response.sendRedirect("jsp/index.jsp");
+        response.sendRedirect("jsp/index.jsp?sort=" + sortType);
     }
 
     private String determineSortType() {
@@ -53,6 +53,7 @@ public class EventSorter {
                     new EventNameComparator()));
         }
         nameSortCount++;
+        creationDateSortCount = 0;
     }
 
     private boolean nameSortRequestedOnce() {
@@ -71,6 +72,7 @@ public class EventSorter {
                     new EventCreationDateComparator()));
         }
         creationDateSortCount++;
+        nameSortCount = 0;
     }
 
     private boolean creationDateSortRequestedOnce() {

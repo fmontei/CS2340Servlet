@@ -102,6 +102,7 @@ public class SQLPlaceQuery extends SQLQuery {
             double latitude = result.getDouble("latitude");
             double longitude = result.getDouble("longitude");
             Coordinates coordinates = new Coordinates(latitude, longitude);
+            String creationDate = result.getString("creationDate");
             String url = result.getString("url");
             Place event = new Place();
             event.setName(name);
@@ -111,6 +112,7 @@ public class SQLPlaceQuery extends SQLQuery {
             event.setRating(rating);
             event.setCoordinates(coordinates);
             event.setURL(url);
+            event.setCreationDate(creationDate);
             events.add(event);
         }
         return events;

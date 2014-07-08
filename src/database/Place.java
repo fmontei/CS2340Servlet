@@ -6,15 +6,15 @@ import java.util.Date;
 
 public class Place {
     private String name, placeID, formattedAddress, phoneNumber, URL, API,
-            ratingImage, snippetText;
+            ratingImage, snippetText, creationDate;
     private int priceLevel;
     private double rating;
     private boolean openNow;
     private Coordinates coordinates = new Coordinates();
-    private Date creationDate;
 
     public Place() {
-        this.creationDate = new Date();
+        Date newDate = new Date();
+        creationDate = newDate.toString();
     }
 
     public Place(String name, String placeID, String formattedAddress,
@@ -25,7 +25,8 @@ public class Place {
         this.priceLevel = priceLevel;
         this.rating = rating;
         this.openNow = openNow;
-        this.creationDate = new Date();
+        Date newDate = new Date();
+        creationDate = newDate.toString();
     }
 
     public String getName() {
@@ -64,7 +65,7 @@ public class Place {
     public Coordinates getCoordinates() {
         return coordinates;
     }
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
@@ -103,5 +104,8 @@ public class Place {
     }
     public void setCoordinates(final Coordinates coordinates) {
         this.coordinates = coordinates;
+    }
+    public void setCreationDate(final String creationDate) {
+        this.creationDate = creationDate;
     }
 }

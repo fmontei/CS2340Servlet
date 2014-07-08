@@ -89,9 +89,9 @@
                             <thead>
                                 <tr>
                                     <th>Address</th>
-                                    <th>Phone</th>
+                                    <th>Phone Number</th>
                                     <th>Rating</th>
-                                    <th>    </th>
+                                    <th></th>
                                 </tr>
                             </thead>
                     <% } %>
@@ -122,7 +122,7 @@
                     <% } else { %>
                                 <tr>
                                     <td class="table-address"><%=selection.getFormattedAddress()%></td>
-                                    <td class="table-name"><%=selection.getPhoneNumber()%></td>
+                                    <td><%=selection.getPhoneNumber()%></td>
                                     <td><%=selection.getRating()%></td>
                                     <td><a href='<%=selection.getURL()%>' target="_blank">See More</a></td>
                                 </tr>
