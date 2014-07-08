@@ -14,6 +14,11 @@ th, td {
     white-space: nowrap;
 }
 
+.breadcrumb > .api-breadcrumb + li:before {
+    content: "";
+    margin-right: 330px;
+}
+
 .table-name {
     width: 150px;
 }

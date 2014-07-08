@@ -1,6 +1,5 @@
 package model;
 
-import controller.BrowserErrorHandling;
 import database.*;
 import org.json.JSONException;
 import org.json.simple.JSONArray;
@@ -76,7 +75,6 @@ public class YelpAPI {
         try {
             jsonResponse = (JSONObject) parser.parse(searchResponseJSON);
             parsePotentialError(jsonResponse);
-            System.out.println(jsonResponse);
         } catch (ParseException ignore) {}
         List<Place> businessResults = getParametersFromResponse(jsonResponse);
         return businessResults;
@@ -94,6 +92,7 @@ public class YelpAPI {
 
     private List<Place> getParametersFromResponse(final JSONObject jsonResponse) {
         List<Place> businessResults = new ArrayList<Place>();
+        System.out.println(jsonResponse);
         JSONArray businesses = (JSONArray) jsonResponse.get("businesses");
         for (int j = 0; j < businesses.size(); j++) {
             String businessName, businessURL, snippetText = "", imageRating = "",
@@ -103,6 +102,7 @@ public class YelpAPI {
             JSONObject jsonObject = (JSONObject) businesses.get(j);
             businessName = jsonObject.get("name").toString();
             displayAddress = getDisplayAddress(jsonObject);
+            Coordinates coordinates = getCoordinates(jsonObject);
             if (jsonObject.get("display_phone") != null)
                 displayPhone = jsonObject.get("display_phone").toString();
             ratingAsString = jsonObject.get("rating").toString();
@@ -116,6 +116,7 @@ public class YelpAPI {
             Place business = new Place();
             business.setName(businessName);
             business.setFormattedAddress(displayAddress);
+            business.setCoordinates(coordinates);
             business.setPhoneNumber(displayPhone);
             business.setRating(ratingAsDouble);
             business.setURL(businessURL);
@@ -143,6 +144,32 @@ public class YelpAPI {
             }
         }
         return displayAddress.toString();
+    }
+
+    private Coordinates getCoordinates(final JSONObject jsonObject) {
+        double latitude = parseLatitudeFromString();
+        double longitude = parseLongitudeFromString();
+        JSONObject location = (JSONObject) jsonObject.get("location");
+        if (location != null) {
+            JSONObject coordinate = (JSONObject) location.get("coordinate");
+            if (coordinate != null) {
+                latitude = (Double) coordinate.get("latitude");
+                longitude = (Double) coordinate.get("longitude");
+            }
+        }
+        return new Coordinates(latitude, longitude);
+    }
+
+    private double parseLatitudeFromString() {
+        final int endIndex = coordinates.indexOf(",");
+        final String latitude = coordinates.substring(0, endIndex);
+        return Double.parseDouble(latitude);
+    }
+
+    private double parseLongitudeFromString() {
+        final int beginIndex = coordinates.indexOf(",") + 1;
+        final String longitude = coordinates.substring(beginIndex);
+        return Double.parseDouble(longitude);
     }
 
     private boolean getIsOpen(final JSONObject jsonObject) {

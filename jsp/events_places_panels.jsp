@@ -263,9 +263,15 @@
                             </div>
                         </div>
                     </div>
-                    <ol class="breadcrumb" style="background-color: white; float: right;">
+
+                    <ol class="breadcrumb" style="background-color: white;">
+                        <%  String apiResult = "";
+                            if (event.getAPI() != null) {
+                                apiResult = event.getAPI().equals("google") ? "Google result" : "Yelp result";
+                        } %>
+                        <li class="api-breadcrumb"><%=apiResult%></li>
                         <li><a href="<%=event.getURL()%>" target="_blank">Website</a></li>
-                        <li><a href="#">Reviews</a></li>
+                        <li><a href="#">Statistics</a></li>
                         <li><a href="<%=event.getCoordinates().format()%>">Find On Map</a></li>
                         <li><a href="#">Edit</a></li>
                         <li><a href="/CS2340Servlet/itinerary?delete_event&event_id=<%=curEventID%>">Delete</a></li>

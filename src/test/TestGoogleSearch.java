@@ -13,8 +13,8 @@ public class TestGoogleSearch {
     public static void main(String... args) {
         TestGoogleSearch test = new TestGoogleSearch();
         try {
-            //test.testYelpAPI();
-            test.testGoogleNearbySearch();
+            test.testYelpAPI();
+            //test.testGoogleNearbySearch();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
