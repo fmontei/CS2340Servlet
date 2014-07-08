@@ -41,7 +41,7 @@ public class DataManager {
     private static void deleteAllPlacesAssociatedWithItinerary(
             final String itineraryID) throws SQLException {
         SQLPlaceQuery sqlQuery = new SQLPlaceQuery();
-        sqlQuery.deletePlaceByItineraryID(itineraryID);
+        sqlQuery.deleteAllPlacesByItineraryID(itineraryID);
     }
 
     public static List<Itinerary> getItineraryByUserID(int userID)
@@ -85,5 +85,11 @@ public class DataManager {
         SQLPlaceQuery sqlQuery = new SQLPlaceQuery();
         final List<Place> events = sqlQuery.getEventsByItineraryID(itineraryID);
         return events;
+    }
+
+    public static void deleteEventByEventAttributes(final Place place)
+            throws SQLException {
+        SQLPlaceQuery sqlQuery = new SQLPlaceQuery();
+        sqlQuery.deletePlaceByAttributes(place);
     }
 }

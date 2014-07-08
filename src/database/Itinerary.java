@@ -1,7 +1,7 @@
 package database;
 
-import java.awt.*;
-import java.awt.geom.Point2D;
+import model.Coordinates;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -11,15 +11,14 @@ public class Itinerary {
     private int preferenceID;
     private String name;
     private String address, transportationMode, creationDate;
-    private Point2D coordinates;
+    private Coordinates coordinates;
 
     public Itinerary() {
         this.userID = this.preferenceID = this.ID = 0;
         this.name = this.address = this.transportationMode = this.address = "";
-        this.coordinates = new Point();
     }
 
-    public Itinerary(String name, String address, Point2D coordinates,
+    public Itinerary(String name, String address, Coordinates coordinates,
                      String transportationMode, int userID,
                      int preferenceID) {
         this.userID = userID;
@@ -31,7 +30,7 @@ public class Itinerary {
         this.preferenceID = preferenceID;
     }
 
-    public Itinerary(String name, String address, Point2D coordinates,
+    public Itinerary(String name, String address, Coordinates coordinates,
                      String transportationMode, String creationDate, int ID,
                      int userID, int preferenceID) {
         this.ID = ID;
@@ -56,7 +55,7 @@ public class Itinerary {
     public String getAddress() {
         return address;
     }
-    public Point2D getCoordinates() {
+    public Coordinates getCoordinates() {
         return coordinates;
     }
     public String getTransportationMode() {

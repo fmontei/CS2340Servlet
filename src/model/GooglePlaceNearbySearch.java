@@ -96,7 +96,7 @@ public class GooglePlaceNearbySearch extends GooglePlaceAPI {
             parsedObject.setRating(rating);
             parsedObject.setOpenNow(openNow);
             parsedObject.setAPI("google");
-            parsedObject.setCoordinates(new Point2D.Double(latitude, longitude));
+            parsedObject.setCoordinates(new Coordinates(latitude, longitude));
             results.add(parsedObject);
         }
         return results;

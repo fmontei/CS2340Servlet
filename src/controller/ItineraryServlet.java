@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,6 +36,8 @@ public class ItineraryServlet extends HttpServlet {
         } else if (eventSelectionMade(request)) {
             EventForm eventForm = new EventForm(request, response);
             eventForm.saveSelection();
+        } else if (deleteEventRequested(request)) {
+            doEventDeleteRequest(request, response);
         } else {
             response.sendRedirect("jsp/itinerary_overview.jsp");
         }
@@ -47,12 +50,12 @@ public class ItineraryServlet extends HttpServlet {
             new CreateItineraryForm(request);
             response.sendRedirect("jsp/itinerary_overview.jsp");
         } else if (itineraryDeleteRequested(request)) {
-            doDeleteRequest(request);
+            doDeleteItineraryRequest(request);
             response.sendRedirect("jsp/itinerary_overview.jsp");
         } else if (userRequestedEventSearch(request)) {
             EventForm eventForm = new EventForm(request, response);
             eventForm.getEventsAroundCentralLocation();
-        } else if (textSearchRequest(request)) {
+        } else if (textSearchRequested(request)) {
             doSearchRequest(request, response);
         } else if (removeTemporaryPlaceRequested(request)) {
             doRemovePlaceRequest(request, response);
@@ -97,7 +100,7 @@ public class ItineraryServlet extends HttpServlet {
         return request.getParameter("deleteItinerary") != null;
     }
 
-    private void doDeleteRequest(HttpServletRequest request) {
+    private void doDeleteItineraryRequest(HttpServletRequest request) {
         try {
             String itineraryID = request.getParameter("deleteItinerary");
             DataManager.deleteItinerary(itineraryID);
@@ -134,7 +137,18 @@ public class ItineraryServlet extends HttpServlet {
         return request.getQueryString().contains("select_business");
     }
 
-    private boolean textSearchRequest(HttpServletRequest request) {
+    private boolean deleteEventRequested(final HttpServletRequest request) {
+        return request.getQueryString().contains("delete_event");
+    }
+
+    private void doEventDeleteRequest(final HttpServletRequest request,
+                                      final HttpServletResponse response)
+        throws IOException {
+        final EventForm eventForm = new EventForm(request, response);
+        eventForm.deleteRequestedEvent();
+    }
+
+    private boolean textSearchRequested(HttpServletRequest request) {
         return request.getParameter("google-textsearch-submit") != null ||
                 request.getParameter("collapse-textsearch-submit") != null;
     }

@@ -241,9 +241,9 @@
                     <ol class="breadcrumb" style="background-color: white; float: right;">
                         <li><a href="<%=event.getURL()%>" target="_blank">Website</a></li>
                         <li><a href="#">Reviews</a></li>
-                        <li><a href="#">Find On Map</a></li>
+                        <li><a href="<%=event.getCoordinates().format()%>">Find On Map</a></li>
                         <li><a href="#">Edit</a></li>
-                        <li><a href="#">Delete</a></li>
+                        <li><a href="/CS2340Servlet/itinerary?delete_event&event_id=<%=curEventID%>">Delete</a></li>
                     </ol>
                 </form>
             </div>

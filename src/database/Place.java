@@ -1,6 +1,6 @@
 package database;
 
-import java.awt.geom.Point2D;
+import model.Coordinates;
 
 public class Place {
     private String name, placeID, formattedAddress, phoneNumber, URL, API,
@@ -8,7 +8,7 @@ public class Place {
     private int priceLevel;
     private double rating;
     private boolean openNow;
-    private Point2D coordinates = new Point2D.Double();
+    private Coordinates coordinates = new Coordinates();
 
     public Place() {}
 
@@ -55,7 +55,7 @@ public class Place {
     public boolean isOpenNow() {
         return openNow;
     }
-    public Point2D getCoordinates() {
+    public Coordinates getCoordinates() {
         return coordinates;
     }
 
@@ -92,7 +92,7 @@ public class Place {
     public void setOpenNow(boolean openNow) {
         this.openNow = openNow;
     }
-    public void setCoordinates(Point2D coordinates) {
+    public void setCoordinates(final Coordinates coordinates) {
         this.coordinates = coordinates;
     }
 }

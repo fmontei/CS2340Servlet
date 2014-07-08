@@ -1,5 +1,7 @@
 package database;
 
+import model.Coordinates;
+
 import java.awt.geom.Point2D;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,8 +23,8 @@ public class SQLItineraryQuery extends SQLQuery {
         preparedStatement.setInt(1, itinerary.getUserID());
         preparedStatement.setString(2, itinerary.getName());
         preparedStatement.setString(3, itinerary.getAddress());
-        preparedStatement.setDouble(4, itinerary.getCoordinates().getX());
-        preparedStatement.setDouble(5, itinerary.getCoordinates().getY());
+        preparedStatement.setDouble(4, itinerary.getCoordinates().getLat());
+        preparedStatement.setDouble(5, itinerary.getCoordinates().getLng());
         preparedStatement.setString(6, itinerary.getTransportationMode());
         preparedStatement.setString(7, itinerary.getCreationDate());
         preparedStatement.setInt(8, itinerary.getPreferenceID());
@@ -54,7 +56,7 @@ public class SQLItineraryQuery extends SQLQuery {
             int preferenceID = results.getInt("preferenceID");
             float latitude = results.getFloat("latitude");
             float longitude = results.getFloat("longitude");
-            Point2D coordinates = new Point2D.Float(latitude, longitude);
+            Coordinates coordinates = new Coordinates(latitude, longitude);
             itinerary = new Itinerary(name, address, coordinates,
                     transportationMode, creationDate, intID, userID,
                     preferenceID);
@@ -81,7 +83,7 @@ public class SQLItineraryQuery extends SQLQuery {
             String creationDate = results.getString("creationDate");
             float latitude = results.getFloat("latitude");
             float longitude = results.getFloat("longitude");
-            Point2D coordinates = new Point2D.Float(latitude, longitude);
+            Coordinates coordinates = new Coordinates(latitude, longitude);
             Itinerary itinerary = new Itinerary(name, address, coordinates,
                     transportationMode, creationDate, ID, userID, preferenceID);
             itineraries.add(itinerary);

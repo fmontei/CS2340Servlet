@@ -7,7 +7,6 @@ import database.Preference;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.awt.geom.Point2D;
 import java.sql.SQLException;
 
 public class CreateItineraryForm {
@@ -23,7 +22,7 @@ public class CreateItineraryForm {
     private void gatherNewItineraryInfo() {
         String name = request.getParameter("itineraryName");
         String address = request.getParameter("itineraryAddress");
-        Point2D coordinates = getCoordinates();
+        Coordinates coordinates = getCoordinates();
         String transportation = request.getParameter("itineraryTransportation");
         float minRating = Float.parseFloat(request.getParameter("minRating").trim());
         String priceCategory = request.getParameter("priceCategory");
@@ -40,7 +39,7 @@ public class CreateItineraryForm {
         saveItinerary(newItinerary);
     }
 
-    private Point2D getCoordinates() {
+    private Coordinates getCoordinates() {
         String coordinates = request.getParameter("coordinates");
         int latBeginIndex = coordinates.indexOf("(") + 1;
         int lngBeginIndex = coordinates.indexOf(",") + 1;
@@ -50,7 +49,7 @@ public class CreateItineraryForm {
                 coordinates.length() - 1);
         float lat = Float.parseFloat(latitude);
         float lng = Float.parseFloat(longitude);
-        return new Point2D.Double(lat, lng);
+        return new Coordinates(lat, lng);
     }
 
     private int savePreference(Preference preference){

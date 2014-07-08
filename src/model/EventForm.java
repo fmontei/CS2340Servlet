@@ -175,7 +175,7 @@ public class EventForm {
                                                    String eventType,
                                                    int radius)
         throws IOException, JSONException {
-        final String coordinates = parseAndReformatCoordinates();
+        final String coordinates = activeItinerary.getCoordinates().format();
         GooglePlaceAPI googleSearch = new GooglePlaceAPI();
         List<Place> eventResults = googleSearch.getByNearbyPlaceSearch
                 (coordinates, radius, eventType, eventName);
@@ -185,19 +185,10 @@ public class EventForm {
     private List<Place> queryYelpForEvents(final String term, final int radius)
             throws SQLException, JSONException {
         List<Place> results;
-        final String coordinates = parseAndReformatCoordinates();
+        final String coordinates = activeItinerary.getCoordinates().format();
         YelpAPI yelpAPI = new YelpAPI(request, response);
         results = yelpAPI.queryAPI(term, coordinates, radius, 20, 0);
         return results;
-    }
-
-    private String parseAndReformatCoordinates() {
-        final String coords = activeItinerary.getCoordinates().toString();
-        int begin = coords.indexOf("[") + 1;
-        int end = coords.length() - 1;
-        String formattedCoords = coords.substring(begin, end);
-        formattedCoords = formattedCoords.replaceAll("\\s+", "");
-        return formattedCoords;
     }
 
     private void populateSessionWithEventResults(String eventID,
@@ -224,5 +215,19 @@ public class EventForm {
         session.removeAttribute("businesses" + eventID);
         session.setAttribute("apiSearchError" + eventID, ex.getMessage());
         response.sendRedirect("jsp/index.jsp?search=google&event-no=" + eventID);
+    }
+
+    public void deleteRequestedEvent() throws IOException {
+        try {
+            List<Place> events = (List) session.getAttribute("events");
+            final String eventID = parseEventIDFromQueryString();
+            final int eventNum = Integer.parseInt(eventID);
+            DataManager.deleteEventByEventAttributes(events.get(eventNum));
+            events.remove(eventNum);
+            session.setAttribute("events", events);
+            reloadPage();
+        } catch (SQLException ex) {
+            BrowserErrorHandling.printErrorToBrowser(request, response, ex);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package database;
 
-import java.awt.geom.Point2D;
+import model.Coordinates;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,8 +41,8 @@ public class SQLPlaceQuery extends SQLQuery {
         preparedStatement.setString(6, null);
         preparedStatement.setInt(7, place.getPriceLevel());
         preparedStatement.setDouble(8, place.getRating());
-        preparedStatement.setDouble(9, place.getCoordinates().getX());
-        preparedStatement.setDouble(10, place.getCoordinates().getY());
+        preparedStatement.setDouble(9, place.getCoordinates().getLat());
+        preparedStatement.setDouble(10, place.getCoordinates().getLng());
         preparedStatement.setString(11, place.getURL());
         preparedStatement.executeUpdate();
     }
@@ -65,7 +66,7 @@ public class SQLPlaceQuery extends SQLQuery {
             double rating = result.getDouble("rating");
             double latitude = result.getDouble("latitude");
             double longitude = result.getDouble("longitude");
-            Point2D coordinates = new Point2D.Double(latitude, longitude);
+            Coordinates coordinates = new Coordinates(latitude, longitude);
             String url = result.getString("url");
             lodging.setName(name);
             lodging.setFormattedAddress(address);
@@ -82,8 +83,8 @@ public class SQLPlaceQuery extends SQLQuery {
     public List<Place> getEventsByItineraryID(final String ID)
             throws SQLException {
         final String query =
-                "SELECT * FROM place, itinerary WHERE itinerary.ID = ? AND " +
-                        "place.placeType = ?;";
+                "SELECT * FROM PLACE WHERE PLACE.itineraryID = ? AND " +
+                        "PLACE.placeType = ?;";
         PreparedStatement preparedStatement =
                 super.dbConnection.prepareStatement(query);
         preparedStatement.setString(1, ID);
@@ -98,7 +99,7 @@ public class SQLPlaceQuery extends SQLQuery {
             double rating = result.getDouble("rating");
             double latitude = result.getDouble("latitude");
             double longitude = result.getDouble("longitude");
-            Point2D coordinates = new Point2D.Double(latitude, longitude);
+            Coordinates coordinates = new Coordinates(latitude, longitude);
             String url = result.getString("url");
             Place event = new Place();
             event.setName(name);
@@ -113,12 +114,24 @@ public class SQLPlaceQuery extends SQLQuery {
         return events;
     }
 
-    public void deletePlaceByItineraryID(final String itineraryID)
+    public void deleteAllPlacesByItineraryID(final String itineraryID)
             throws SQLException {
         final String query = "DELETE FROM PLACE WHERE PLACE.itineraryID = ?";
         PreparedStatement preparedStatement =
                 super.dbConnection.prepareStatement(query);
         preparedStatement.setString(1, itineraryID);
+        preparedStatement.executeUpdate();
+    }
+
+    public void deletePlaceByAttributes(final Place place)
+        throws SQLException {
+        final String query = "DELETE FROM PLACE WHERE PLACE.name = ? " +
+                "AND PLACE.address = ? AND PLACE.phoneNumber = ?";
+        PreparedStatement preparedStatement =
+                super.dbConnection.prepareStatement(query);
+        preparedStatement.setString(1, place.getName());
+        preparedStatement.setString(2, place.getFormattedAddress());
+        preparedStatement.setString(3, place.getPhoneNumber());
         preparedStatement.executeUpdate();
     }
 }

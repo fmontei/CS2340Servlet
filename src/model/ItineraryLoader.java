@@ -29,7 +29,7 @@ public class ItineraryLoader {
         final HttpSession session = request.getSession();
         final String queryString = request.getQueryString();
         final int startIndex = queryString.indexOf("=") + 1;
-        String itineraryID = queryString.substring(startIndex);
+        final String itineraryID = queryString.substring(startIndex);
         SQLItineraryQuery query = new SQLItineraryQuery();
         Itinerary activeItinerary = query.getItineraryByID(itineraryID);
         session.setAttribute("activeItinerary", activeItinerary);

@@ -34,7 +34,7 @@ public class LodgingForm {
     public void getLodgingsAroundLocation() {
         session = request.getSession();
         final String name = parseName();
-        final String formattedCoords = parseAndReformatCoordinates();
+        final String formattedCoords = activeItinerary.getCoordinates().format();
         final int radius = parseRadius();
         final int limit = parseLimit();
         List<Place> lodgings;
@@ -59,11 +59,12 @@ public class LodgingForm {
         final String limit = session.getAttribute("lastLodgingLimit").toString();
         final int radiusInt = Integer.parseInt(radius);
         final int limitInt = Integer.parseInt(limit);
+        final String formattedCoords = activeItinerary.getCoordinates().format();
         List<Place> currentResults;
         List<Place> previousResults = (List) session.getAttribute("lodgingResults");
         try {
             YelpAPI yelpAPI = new YelpAPI();
-            currentResults = yelpAPI.queryAPI(name, parseAndReformatCoordinates(),
+            currentResults = yelpAPI.queryAPI(name, formattedCoords,
                     radiusInt, limitInt, limitInt);
             List<Place> mergedResults = mergeResults(previousResults, currentResults);
             session.setAttribute("lodgingResults", mergedResults);
@@ -79,15 +80,6 @@ public class LodgingForm {
         currentResults.removeAll(previousResults);
         previousResults.addAll(currentResults);
         return previousResults;
-    }
-
-    private String parseAndReformatCoordinates() {
-        final String coords = activeItinerary.getCoordinates().toString();
-        int begin = coords.indexOf("[") + 1;
-        int end = coords.length() - 1;
-        String formattedCoords = coords.substring(begin, end);
-        formattedCoords = formattedCoords.replaceAll("\\s+", "");
-        return formattedCoords;
     }
 
     private String parseName() {

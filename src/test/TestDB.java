@@ -1,5 +1,4 @@
 import database.*;
-import model.AccountCreateForm;
 
 import java.awt.geom.Point2D;
 import java.sql.SQLException;
@@ -9,8 +8,8 @@ public class TestDB {
     public static void main(String... args)  {
         try {
             TestDB testDB = new TestDB();
-            //testDB.testGetEventsByItineraryID("14");
-            testDB.testCreateLodging("name");
+            testDB.testGetPlaceByItineraryID("15");
+
         } catch (SQLException ex) {
             System.out.println("CAUGHT EXCEPTION");
             ex.printStackTrace();
@@ -52,9 +51,15 @@ public class TestDB {
 
     public void testGetEventsByItineraryID(final String ID) throws SQLException {
         List<Place> events = DataManager.getEventsByItineraryID(ID);
+        System.out.println("Itinerary ID: " + ID);
         System.out.println("Number of events: " + events.size());
         for (Place p : events) {
             System.out.println(p.getName());
         }
+    }
+
+    public void testDeleteEventByEventID(final Place place)
+            throws SQLException {
+        DataManager.deleteEventByEventAttributes(place);
     }
 }

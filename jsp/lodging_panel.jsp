@@ -173,5 +173,4 @@
     $(document).ready(function() {
         $('[rel=popover]').popover({trigger: 'click', placement: 'left'})
     });
-
 </script>

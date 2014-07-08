@@ -208,7 +208,7 @@
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        Itineraries
+                        Your Itinerary
                     </div>
                     <div class="panel-body" id="itinerary-panel-body">
 
@@ -248,7 +248,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <%  List<Event> userEvents = (List<Event>) session.getAttribute("events");
+                                    <%  List<Place> userEvents = (List<Place>) session.getAttribute("events");
                                         int numEvents = 0;
                                         if (userEvents != null) {
                                             numEvents = userEvents.size();
