@@ -30,7 +30,8 @@ public class SQLPlaceQuery extends SQLQuery {
         throws SQLException {
         String query = "INSERT INTO PLACE (itineraryID, placeType, name, " +
                 "address, phoneNumber, apiID, priceLevel, rating, latitude," +
-                "longitude, url) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "longitude, url, creationDate) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement =
                 super.dbConnection.prepareStatement(query);
         preparedStatement.setInt(1, itineraryID);
@@ -44,6 +45,7 @@ public class SQLPlaceQuery extends SQLQuery {
         preparedStatement.setDouble(9, place.getCoordinates().getLat());
         preparedStatement.setDouble(10, place.getCoordinates().getLng());
         preparedStatement.setString(11, place.getURL());
+        preparedStatement.setString(12, place.getCreationDate().toString());
         preparedStatement.executeUpdate();
     }
 

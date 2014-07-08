@@ -38,6 +38,8 @@ public class ItineraryServlet extends HttpServlet {
             eventForm.saveSelection();
         } else if (deleteEventRequested(request)) {
             doEventDeleteRequest(request, response);
+        } else if (sortEventsRequested(request)) {
+            doSortEventsRequest(request, response);
         } else {
             response.sendRedirect("jsp/itinerary_overview.jsp");
         }
@@ -146,6 +148,17 @@ public class ItineraryServlet extends HttpServlet {
         throws IOException {
         final EventForm eventForm = new EventForm(request, response);
         eventForm.deleteRequestedEvent();
+    }
+
+    private boolean sortEventsRequested(final HttpServletRequest request) {
+        return request.getQueryString().contains("sort");
+    }
+
+    private void doSortEventsRequest(final HttpServletRequest request,
+                                        final HttpServletResponse response)
+        throws IOException {
+        final EventSorter eventSorter = new EventSorter(request, response);
+        eventSorter.sort();
     }
 
     private boolean textSearchRequested(HttpServletRequest request) {

@@ -4,15 +4,45 @@
 
 <div class="page-header">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-7">
             <h1><span class="glyphicon glyphicon-th"></span>Events & Places</h1>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-5">
             <ul class="nav nav-pills" style="padding-top: 20px">
-                <li class="dropdown alert-success" style="float: right;" id="create-event-pill">
+                <%  List<Place> events = (List<Place>) session.getAttribute("events");
+                    int numberOfEvents = 0;
+                    if (events != null) {
+                        numberOfEvents = events.size();
+                    }
+                    if (numberOfEvents > 0) { %>
+                <li class="dropdown alert-info" style="float: right;" id="create-event-pill">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                    <span class="glyphicon glyphicon-plus-sign"
-                                                          style="position: relative; top: 2px"></span>
+                        <span class="glyphicon glyphicon-sort-by-attributes" style="position: relative; top: 2px"></span>
+                        <b>Sort By</b>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu pull-left">
+                        <li role ="presentation" class="dropdown-header">
+                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?sort=name">
+                                Name
+                            </a>
+                        </li>
+                        <li role="presentation" class="dropdown-header">
+                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?sort=start_time">
+                                Start Time
+                            </a>
+                        </li>
+                        <li role="presentation" class="dropdown-header">
+                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?sort=creation_date">
+                                Creation Date
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <% } %>
+                <li class="dropdown alert-success" style="float: right; margin-right: 10px" id="create-event-pill">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-plus-sign" style="position: relative; top: 2px"></span>
                         <b>Add Event</b>
                         <span class="caret"></span>
                     </a>
@@ -73,12 +103,7 @@
     }
 %>
 
-<%  List<Place> events = (List<Place>) session.getAttribute("events");
-    int numberOfEvents = 0;
-    if (events != null) {
-        numberOfEvents = events.size();
-    }
-    String errorMessage = "";
+<%  String errorMessage = "";
     for (int curEventID = 0; curEventID < numberOfEvents; curEventID++) {
     String eventPanelColor = (curEventID % 2 == 0) ? "info" : "success";
     Place event = events.get(curEventID); %>

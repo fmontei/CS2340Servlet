@@ -2,6 +2,8 @@ package database;
 
 import model.Coordinates;
 
+import java.util.Date;
+
 public class Place {
     private String name, placeID, formattedAddress, phoneNumber, URL, API,
             ratingImage, snippetText;
@@ -9,8 +11,11 @@ public class Place {
     private double rating;
     private boolean openNow;
     private Coordinates coordinates = new Coordinates();
+    private Date creationDate;
 
-    public Place() {}
+    public Place() {
+        this.creationDate = new Date();
+    }
 
     public Place(String name, String placeID, String formattedAddress,
                  int priceLevel, double rating, boolean openNow) {
@@ -20,6 +25,7 @@ public class Place {
         this.priceLevel = priceLevel;
         this.rating = rating;
         this.openNow = openNow;
+        this.creationDate = new Date();
     }
 
     public String getName() {
@@ -57,6 +63,9 @@ public class Place {
     }
     public Coordinates getCoordinates() {
         return coordinates;
+    }
+    public Date getCreationDate() {
+        return creationDate;
     }
 
     public void setPlaceID(String placeID) {

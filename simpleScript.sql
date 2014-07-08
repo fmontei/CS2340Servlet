@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`preference` (
   `attractionType` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`ID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 10
+AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`itinerary` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 16
+AUTO_INCREMENT = 17
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -106,6 +106,7 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`place` (
   `latitude` DECIMAL(10,7) NULL DEFAULT NULL,
   `longitude` DECIMAL(10,7) NULL DEFAULT NULL,
   `url` VARCHAR(200) NULL DEFAULT NULL,
+  `creationDate` VARCHAR(80) NULL DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC),
   UNIQUE INDEX `phoneNumber_UNIQUE` (`phoneNumber` ASC),
@@ -116,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `trip_planner_db_simple`.`place` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 29
+AUTO_INCREMENT = 53
 DEFAULT CHARACTER SET = utf8;
 
 
