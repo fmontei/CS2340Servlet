@@ -87,6 +87,7 @@
     <div id="sidebar" class="sidebar">
         <div class="col-md-12">
             <ul class="list-unstyled">
+                <li class="nav-header"><a href="#"><h3>Toolbox</h3></a></li>
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">
                     <h4>User <i class="glyphicon glyphicon-chevron-down"></i></h4>
                 </a>
@@ -140,7 +141,6 @@
                     <a href="#" data-toggle="collapse" data-target="#google-search-menuitem">
                         <h4>Keyword Search<i class="glyphicon glyphicon-chevron-right"></i></h4>
                     </a>
-
                     <ul style="list-style: none; padding-left: 0" class="collapse" id="google-search-menuitem">
                         <li>
                             <div id="google-textsearch">
@@ -183,6 +183,14 @@
                         <%  }     %>
                     </ul>
                 </li>
+                <li class="nav-header" style="margin-top: 40px"><a href="#"><h3>Navigation</h3></a></li>
+                <ul class="nav nav-list navbar-navigation">
+                    <li><a href="#facebookLogin">Facebook Login<i class="glyphicon glyphicon-chevron-right"></i></a></li>
+                    <li><a href="#itineraryOverview">Overview<i class="glyphicon glyphicon-chevron-right"></i></a></li>
+                    <li><a href="#mapSection">Map<i class="glyphicon glyphicon-chevron-right"></i></a></li>
+                    <li><a href="#lodging">Lodging<i class="glyphicon glyphicon-chevron-right"></i></a></li>
+                    <li><a href="#eventsPlaces">Events & Places<i class="glyphicon glyphicon-chevron-right"></i></a></li>
+                </ul>
             </ul>
         </div>
     </div>
@@ -192,10 +200,10 @@
     <div class="row">
         <div class="col-md-10 col-md-push-2" style="padding-left: 80px">
             <div id="div-overview">
+                <section id="facebookLogin"></section>
                 <h1 class="page-header" id="page-header">
                     Welcome <%=request.getSession().getAttribute("welcomeName")%>!
                 </h1>
-
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         Facebook Login
@@ -205,13 +213,12 @@
                         </fb:login-button>
                     </div>
                 </div>
-
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         Your Itinerary
                     </div>
+                    <section id="itineraryOverview"></section>
                     <div class="panel-body" id="itinerary-panel-body">
-
                         <div class="page-header">
                             <h1><span class="glyphicon glyphicon-move"></span>Overview</h1>
                         </div>
@@ -271,11 +278,10 @@
                             </ul></div>
                         </div>
                         <br />
-
+                        <section id="mapSection"></section>
                         <div class="page-header">
                             <h1><span class="glyphicon glyphicon-globe"></span>Map</h1>
                         </div>
-
                         <div class="panel-group" id="accordion">
                             <div class="panel panel-warning">
                                 <div class="panel-heading">
@@ -353,6 +359,20 @@
             // Initial view
             $("#div-overview").show();
             $("#itinerary-side-bar").show();
+
+            // Navbar Navigation Color Change
+            $('.navbar-navigation li a').click(function(e) {
+                var $this = $(this);
+                if (!$this.hasClass('active')) {
+                    $('.navbar-navigation li a').removeClass('active');
+                    $this.addClass('active');
+                    var hash = $(this).attr("href");
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top - 10
+                    }, 0);
+                }
+                e.preventDefault();
+            });
 
             // Details button for new event location search
             $('.popover-dismiss').popover({

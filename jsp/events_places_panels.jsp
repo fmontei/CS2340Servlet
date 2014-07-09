@@ -2,6 +2,7 @@
 <%@ page import="database.Place" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<section id="eventsPlaces"></section>
 <div class="page-header">
     <div class="row">
         <div class="col-md-7">
@@ -189,7 +190,7 @@
                                     String businessURL = businesses.get(j).getURL();
                                     businessURL = (businessURL != null) ? businessURL :
                                             "/CS2340Servlet/itinerary?detail_search&place_id=" + j + "&event_id=" + curEventID;%>
-                                    <tr >
+                                    <tr>
                                         <td style="max-width: 150px;">
                                             <a  rel="popover"
                                                 data-html="true"
@@ -251,25 +252,27 @@
                         </tbody>
                     </table>
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <div class="alert alert-<%=eventPanelColor%> pull-left" style="width: 90%">
-                                <label>Start:</label><input type="date" name="eventStartTime" style="margin-left: 20px" />
+                                <label>Start:</label><input type="datetime-local" name="eventStartTime" style="margin-left: 20px" />
                             </div>
                         </div>
-                        <div class="col-md-7">
-                            <div class="alert alert-<%=eventPanelColor%> pull-left" style="width: 74%">
-                                <label>End:</label><input type="date" name="eventEndTime" style="margin-left: 20px" />
+                        <div class="col-md-6">
+                            <div class="alert alert-<%=eventPanelColor%> pull-left" style="width: 100%">
+                                <label>End:</label><input type="datetime-local" name="eventEndTime" style="margin-left: 20px" />
                                 <input type="submit" value="Save" name="eventDateSubmit" style="margin-left: 30px" />
                             </div>
                         </div>
                     </div>
 
                     <ol class="breadcrumb" style="background-color: white;">
-                        <%  String apiResult = "";
-                            if (event.getAPI() != null) {
-                                apiResult = event.getAPI().equals("google") ? "Google result" : "Yelp result";
-                        } %>
-                        <li class="api-breadcrumb"><%=apiResult%></li>
+                        <%  if (event.getAPI() != null) {
+                                if (event.getAPI().equals("google")) { %>
+                                <li class="api-breadcrumb">Google result</li>
+                            <%  } else if (event.getAPI().equals("yelp")) { %>
+                                <li class="api-breadcrumb">Yelp result&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                            <%  } %>
+                        <%  } %>
                         <li><a href="<%=event.getURL()%>" target="_blank">Website</a></li>
                         <li><a href="#">Statistics</a></li>
                         <li><a href="<%=event.getCoordinates().format()%>">Find On Map</a></li>

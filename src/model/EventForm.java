@@ -86,6 +86,7 @@ public class EventForm {
         event.setName(searchResult.getName());
         event.setFormattedAddress(searchResult.getFormattedAddress());
         event.setPhoneNumber(searchResult.getPhoneNumber());
+        event.setAPI(searchResult.getAPI());
         event.setRating(searchResult.getRating());
         event.setURL(searchResult.getURL());
         event.setCoordinates(searchResult.getCoordinates());

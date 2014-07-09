@@ -29,7 +29,7 @@ public class SQLPlaceQuery extends SQLQuery {
                                       final int itineraryID)
         throws SQLException {
         String query = "INSERT INTO PLACE (itineraryID, placeType, name, " +
-                "address, phoneNumber, apiID, priceLevel, rating, latitude," +
+                "address, phoneNumber, apiType, priceLevel, rating, latitude," +
                 "longitude, url, creationDate) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement =
@@ -39,7 +39,7 @@ public class SQLPlaceQuery extends SQLQuery {
         preparedStatement.setString(3, place.getName());
         preparedStatement.setString(4, place.getFormattedAddress());
         preparedStatement.setString(5, place.getPhoneNumber());
-        preparedStatement.setString(6, null);
+        preparedStatement.setString(6, place.getAPI());
         preparedStatement.setInt(7, place.getPriceLevel());
         preparedStatement.setDouble(8, place.getRating());
         preparedStatement.setDouble(9, place.getCoordinates().getLat());
@@ -97,6 +97,7 @@ public class SQLPlaceQuery extends SQLQuery {
             String name = result.getString("name");
             String address = result.getString("address");
             String phoneNumber = result.getString("phoneNumber");
+            String apiType = result.getString("apiType");
             int priceLevel = result.getInt("priceLevel");
             double rating = result.getDouble("rating");
             double latitude = result.getDouble("latitude");
@@ -108,6 +109,7 @@ public class SQLPlaceQuery extends SQLQuery {
             event.setName(name);
             event.setFormattedAddress(address);
             event.setPhoneNumber(phoneNumber);
+            event.setAPI(apiType);
             event.setPriceLevel(priceLevel);
             event.setRating(rating);
             event.setCoordinates(coordinates);
