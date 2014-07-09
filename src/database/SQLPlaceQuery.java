@@ -49,18 +49,19 @@ public class SQLPlaceQuery extends SQLQuery {
         preparedStatement.executeUpdate();
     }
 
-    public Place getLodgingByItineraryID(final String ID)
+    public Place getLodgingByItineraryID(final String itineraryID)
             throws SQLException {
         final String query =
                 "SELECT * FROM place, itinerary WHERE itinerary.ID = ? AND " +
                         "place.placeType = ?;";
         PreparedStatement preparedStatement =
                 super.dbConnection.prepareStatement(query);
-        preparedStatement.setString(1, ID);
+        preparedStatement.setString(1, itineraryID);
         preparedStatement.setString(2, "lodging");
         ResultSet result = preparedStatement.executeQuery();
         Place lodging = new Place();
         while (result.next()) {
+            int ID = result.getInt("ID");
             String name = result.getString("name");
             String address = result.getString("address");
             String phoneNumber = result.getString("phoneNumber");
@@ -70,6 +71,10 @@ public class SQLPlaceQuery extends SQLQuery {
             double longitude = result.getDouble("longitude");
             Coordinates coordinates = new Coordinates(latitude, longitude);
             String url = result.getString("url");
+            String creationDate = result.getString("creationDate");
+            String checkIn = result.getString("checkIn");
+            String checkOut = result.getString("checkOut");
+            lodging.setID(ID);
             lodging.setName(name);
             lodging.setFormattedAddress(address);
             lodging.setPhoneNumber(phoneNumber);
@@ -77,9 +82,27 @@ public class SQLPlaceQuery extends SQLQuery {
             lodging.setRating(rating);
             lodging.setCoordinates(coordinates);
             lodging.setURL(url);
+            lodging.setCreationDate(creationDate);
+            lodging.setCheckIn(checkIn);
+            lodging.setCheckOut(checkOut);
             break;
         }
         return lodging;
+    }
+
+    public void updateLodgingTimeByID(final int ID,
+                                      final String checkIn,
+                                      final String checkOut)
+        throws SQLException {
+        final String query = "UPDATE PLACE SET checkIn = ?, checkOut = ? " +
+                "WHERE ID = ? AND placeType = ?";
+        PreparedStatement preparedStatement =
+                super.dbConnection.prepareStatement(query);
+        preparedStatement.setString(1, checkIn);
+        preparedStatement.setString(2, checkOut);
+        preparedStatement.setInt(3, ID);
+        preparedStatement.setString(4, "lodging");
+        preparedStatement.executeUpdate();
     }
 
     public List<Place> getEventsByItineraryID(final String ID)

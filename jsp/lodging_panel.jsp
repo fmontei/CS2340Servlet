@@ -146,37 +146,81 @@
                                 </div>
                             </div>
                         </form>
-                    <% } else if (selection != null) { %>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="alert alert-danger" style="width: 90%">
-                                    <label style="margin-left: 20px">Check in:</label><br />
-                                    <input type="datetime-local" name="lodgingCheckIn" style="margin-left: 20px;" />
+                    <% } else if (selection != null) {
+                            final String checkIn = selection.getCheckIn();
+                            final String checkOut = selection.getCheckOut();
+                            if (checkIn != null && checkOut != null) { %>
+                                <div class="alert alert-danger" style="display: inline-block; padding-right: 5px">
+                                    <label>Check in:&nbsp;&nbsp;</label><%=checkIn%>
+                                    <span style="margin-left: 10px; margin-right: 10px;"><b>|</b></span>
+                                    <label>Check out:&nbsp;&nbsp;</label><%=checkOut%>
+                                    <button id="updateLodgingDateTime" class="btn btn-danger" style="margin-left: 5px; margin-right: 5px">Update</button>
                                 </div>
-                            </div>
-
-                            <div class="col-md-6" >
-                                <div class="alert alert-danger" style="margin-right: 20px">
-                                    <label style="margin-left: 20px">Check out:</label><br />
-                                    <input type="datetime-local" name="lodgingCheckOut" style="margin-left: 20px" />
-                                    <input type="submit" value="Save" name="lodgingDateSubmit" style="margin-left: 30px" />
+                                <div class="row" id="updateLodgingDateTimePanel" style="position: absolute; left: -5000px; visibility: hidden">
+                                    <form action="/CS2340Servlet/itinerary" method="POST">
+                                        <div class="col-md-12">
+                                            <h6>Edit your Lodging Time below then click 'Submit'. To cancel, click 'Cancel'.</h6>
+                                            <div class="alert alert-danger" style="display: inline-block">
+                                                <label >Check in:</label><br />
+                                                <input type="datetime-local" name="lodgingCheckIn" />
+                                            </div>
+                                            <div class="alert alert-danger" style="display: inline-block; margin-right: 20px">
+                                                <label>Check out:</label><br />
+                                                <input type="datetime-local" name="lodgingCheckOut" />
+                                                <input type="submit" name="lodgingDateTimeSubmit" style="margin-left: 10px; margin-right: 5px" />
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
+                        <%  } else { %>
+                            <div class="row">
+                                <form action="/CS2340Servlet/itinerary" method="POST">
+                                    <div class="col-md-6">
+                                        <div class="alert alert-danger" style="display: inline-block">
+                                            <label style="margin-left: 20px">Check in:</label><br />
+                                            <input type="datetime-local" name="lodgingCheckIn" style="margin-left: 20px;" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="alert alert-danger" style="margin-right: 20px">
+                                            <label style="margin-left: 20px">Check out:</label><br />
+                                            <input type="datetime-local" name="lodgingCheckOut" style="margin-left: 20px" />
+                                            <input type="submit" value="Save" name="lodgingDateTimeSubmit" style="margin-left: 30px" />
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                        </div>
+                        <%  } %>
                     <% } %>
                 </div>
             </div>
         </div>
     </div>
 
-<script>
-    // Lodging functionality
-    var lodging_selection = '<%=session.getAttribute("lodgingSelection")%>';
-    if (lodging_selection !== "null") {
-        $('#create-lodging-pill').hide();
-    }
+    <script>
+        // Lodging functionality
+        var lodging_selection = '<%=session.getAttribute("lodgingSelection")%>';
+        if (lodging_selection !== "null") {
+            $('#create-lodging-pill').hide();
+        }
 
-    $(document).ready(function() {
-        $('[rel=popover]').popover({trigger: 'click', placement: 'left'})
-    });
-</script>
+        $(document).ready(function() {
+            $('[rel=popover]').popover({trigger: 'click', placement: 'left'});
+
+            $("#updateLodgingDateTime").click(function() {
+                var buttonValue = $(this).text();
+                if (buttonValue === "Update") {
+                    $(this).text("Cancel");
+                    $("#updateLodgingDateTimePanel").css("visibility", "visible");
+                    $("#updateLodgingDateTimePanel").css("position", "");
+                    $("#updateLodgingDateTimePanel").css("left", "");
+                } else if (buttonValue === "Cancel") {
+                    $(this).text("Update");
+                    $("#updateLodgingDateTimePanel").css("visibility", "hidden");
+                    $("#updateLodgingDateTimePanel").css("position", "absolute");
+                    $("#updateLodgingDateTimePanel").css("left", "-5000");
+                }
+            });
+
+        });
+    </script>

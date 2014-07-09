@@ -12,10 +12,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class LodgingForm {
     private HttpServletRequest request;
@@ -27,8 +26,7 @@ public class LodgingForm {
         this.request = request;
         this.response = response;
         this.session = request.getSession();
-        this.activeItinerary =
-                (Itinerary) session.getAttribute("activeItinerary");
+        this.activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
     }
 
     public void getLodgingsAroundLocation() {
@@ -119,5 +117,45 @@ public class LodgingForm {
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
+    }
+
+    public void setLodgingTime() throws IOException {
+        final String checkIn = request.getParameter("lodgingCheckIn");
+        final String checkOut = request.getParameter("lodgingCheckOut");
+        final String reformattedCheckIn = reformatHTMLDateTime(checkIn);
+        final String reformattedCheckOut = reformatHTMLDateTime(checkOut);
+        final SQLPlaceQuery sqlQuery = new SQLPlaceQuery();
+        final Integer itineraryID = activeItinerary.getID();
+        try {
+            Place lodging = sqlQuery.getLodgingByItineraryID(itineraryID.toString());
+            lodging.setCheckIn(checkIn);
+            lodging.setCheckOut(checkOut);
+            sqlQuery.updateLodgingTimeByID(lodging.getID(), reformattedCheckIn,
+                    reformattedCheckOut);
+            updateLodgingSession(reformattedCheckIn, reformattedCheckOut);
+            response.sendRedirect("jsp/index.jsp");
+        } catch (SQLException ex) {
+            BrowserErrorHandling.printErrorToBrowser(request, response, ex);
+        }
+    }
+
+    private String reformatHTMLDateTime(final String unformatted) {
+        String formattedDate = unformatted;
+        try {
+            SimpleDateFormat oldFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+            Date parsed = oldFormat.parse(unformatted);
+            SimpleDateFormat newFormat = new SimpleDateFormat("MM/dd/YYY @ hh:mm a");
+            formattedDate = newFormat.format(parsed);
+        } catch (ParseException ignore) {
+        } finally {
+            return formattedDate;
+        }
+    }
+
+    private void updateLodgingSession(final String checkIn, final String checkOut) {
+        Place lodging = (Place) session.getAttribute("lodgingSelection");
+        lodging.setCheckIn(checkIn);
+        lodging.setCheckOut(checkOut);
+        session.setAttribute("lodgingSelection", lodging);
     }
 }

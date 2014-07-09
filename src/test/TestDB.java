@@ -1,4 +1,5 @@
 import database.*;
+import model.LodgingForm;
 
 import java.awt.geom.Point2D;
 import java.sql.SQLException;
@@ -12,27 +13,18 @@ public class TestDB {
             TestDB testDB = new TestDB();
             testDB.testGetPlaceByItineraryID("15");
 
-            String pattern = "yyyy-MM-dd-hh.mm.ss";
-            SimpleDateFormat format = new SimpleDateFormat(pattern);
-            System.out.println(format.format(new Date()));
-            String d1 = format.format(new Date());
-            Date newDate1 = new Date();
+            SQLPlaceQuery placeQuery = new SQLPlaceQuery();
+            Place lodging = placeQuery.getLodgingByItineraryID("16");
+            final String checkOut = lodging.getCheckOut();
+            System.out.println(checkOut);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+            Date parsed = sdf.parse(checkOut);
+            System.out.println(parsed.toString());
 
-            Thread.sleep(1000);
-
-            System.out.println(format.format(new Date()));
-            String d2 = format.format(new Date());
-            Date newDate2 = new Date();
-
-            if (d1.compareTo(d2) < 0)
-                System.out.println("D1 is before D2");
-            if (newDate1.before(newDate2))
-                System.out.println("Date1 is before Date2");
-
-            Date newDate3 = new Date();
-            Date newDate4 = new Date();
-            if (newDate3.before(newDate4))
-                System.out.println("Date3 is before Date4");
+            SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/YYY @ hh:mm a");
+            sdf1.setTimeZone(sdf.getTimeZone());
+            String newDate = sdf1.format(parsed);
+            System.out.println(newDate);
 
         } catch (Exception ex) {
             System.out.println("CAUGHT EXCEPTION");

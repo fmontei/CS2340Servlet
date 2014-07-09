@@ -61,6 +61,9 @@ public class ItineraryServlet extends HttpServlet {
             doSearchRequest(request, response);
         } else if (removeTemporaryPlaceRequested(request)) {
             doRemovePlaceRequest(request, response);
+        } else if (setLodgingTimeRequested(request)) {
+            LodgingForm lodgingForm = new LodgingForm(request, response);
+            lodgingForm.setLodgingTime();
         }
     }
 
@@ -112,7 +115,8 @@ public class ItineraryServlet extends HttpServlet {
     }
 
     private boolean removeTemporaryPlaceRequested(HttpServletRequest request) {
-        return request.getQueryString().contains("remove_place_id");
+        return request.getQueryString() != null &&
+                request.getQueryString().contains("remove_place_id");
     }
 
     private void doRemovePlaceRequest(HttpServletRequest request,
@@ -159,6 +163,10 @@ public class ItineraryServlet extends HttpServlet {
         throws IOException {
         final EventSorter eventSorter = new EventSorter(request, response);
         eventSorter.sort();
+    }
+
+    private boolean setLodgingTimeRequested(final HttpServletRequest request) {
+        return request.getParameter("lodgingDateTimeSubmit") != null;
     }
 
     private boolean textSearchRequested(HttpServletRequest request) {
