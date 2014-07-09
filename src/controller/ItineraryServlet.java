@@ -21,7 +21,7 @@ public class ItineraryServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        if (request.getQueryString().contains("create_event=")) {
+        if (createEventRequested(request)) {
             EventForm eventForm = new EventForm(request, response);
             eventForm.createNewEvents();
         } else if (lodgingSearchRequested(request)) {
@@ -70,6 +70,11 @@ public class ItineraryServlet extends HttpServlet {
         }
     }
 
+    private boolean createEventRequested(final HttpServletRequest request) {
+        return request.getQueryString() != null &&
+                request.getQueryString().contains("create_event=");
+    }
+
     private boolean lodgingSearchRequested(HttpServletRequest request) {
         return request.getParameter("lodgingSubmitButton") != null;
     }
@@ -93,7 +98,8 @@ public class ItineraryServlet extends HttpServlet {
     }
 
     private boolean lodgingSelectionMade(HttpServletRequest request) {
-        return request.getQueryString().contains("lodging_id=");
+        return request.getQueryString() != null &&
+                request.getQueryString().contains("lodging_id=");
     }
 
     private boolean detailedGoogleSearchRequested(HttpServletRequest request) {
