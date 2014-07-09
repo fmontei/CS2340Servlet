@@ -167,7 +167,7 @@
                                             <div class="alert alert-danger" style="display: inline-block; margin-right: 20px">
                                                 <label>Check out:</label><br />
                                                 <input type="datetime-local" name="lodgingCheckOut" />
-                                                <input type="submit" name="lodgingDateTimeSubmit" style="margin-left: 10px; margin-right: 5px" />
+                                                <input type="submit" name="lodgingDateTimeSubmit" style="margin-left: 12px; margin-right: 5px" />
                                             </div>
                                         </div>
                                     </form>

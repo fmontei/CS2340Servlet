@@ -140,11 +140,13 @@ public class ItineraryServlet extends HttpServlet {
     }
 
     private boolean eventSelectionMade(HttpServletRequest request) {
-        return request.getQueryString().contains("select_business");
+        return request.getQueryString() != null &&
+                request.getQueryString().contains("select_business");
     }
 
     private boolean deleteEventRequested(final HttpServletRequest request) {
-        return request.getQueryString().contains("delete_event");
+        return request.getQueryString() != null &&
+                request.getQueryString().contains("delete_event");
     }
 
     private void doEventDeleteRequest(final HttpServletRequest request,
@@ -155,7 +157,8 @@ public class ItineraryServlet extends HttpServlet {
     }
 
     private boolean sortEventsRequested(final HttpServletRequest request) {
-        return request.getQueryString().contains("sort");
+        return request.getQueryString() != null &&
+                request.getQueryString().contains("sort");
     }
 
     private void doSortEventsRequest(final HttpServletRequest request,
@@ -197,7 +200,8 @@ public class ItineraryServlet extends HttpServlet {
     }
 
     private boolean textSearchIssuedFromMainConsole(HttpServletRequest request) {
-        return request.getQueryString().contains("event_id");
+        return request.getQueryString() != null &&
+                request.getQueryString().contains("event_id");
     }
 
     private List<Place> tryGoogleTextSearch(HttpServletRequest request,
