@@ -124,38 +124,24 @@ public class LodgingForm {
         final String checkOut = request.getParameter("lodgingCheckOut");
         final String reformattedCheckIn = reformatHTMLDateTime(checkIn);
         final String reformattedCheckOut = reformatHTMLDateTime(checkOut);
-        final SQLPlaceQuery sqlQuery = new SQLPlaceQuery();
-        final Integer itineraryID = activeItinerary.getID();
         try {
-            Place lodging = sqlQuery.getLodgingByItineraryID(itineraryID.toString());
-            lodging.setCheckIn(checkIn);
-            lodging.setCheckOut(checkOut);
-            sqlQuery.updateLodgingTimeByID(lodging.getID(), reformattedCheckIn,
-                    reformattedCheckOut);
-            updateLodgingSession(reformattedCheckIn, reformattedCheckOut);
+            Place lodging = (Place) session.getAttribute("lodgingSelection");
+            lodging.setCheckIn(reformattedCheckIn);
+            lodging.setCheckOut(reformattedCheckOut);
+            DataManager.updatePlaceTimeByID(lodging, "lodging");
+            updateLodgingSession(lodging);
             response.sendRedirect("jsp/index.jsp");
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
     }
 
-    private String reformatHTMLDateTime(final String unformatted) {
-        String formattedDate = unformatted;
-        try {
-            SimpleDateFormat oldFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
-            Date parsed = oldFormat.parse(unformatted);
-            SimpleDateFormat newFormat = new SimpleDateFormat("MM/dd/YYY @ hh:mm a");
-            formattedDate = newFormat.format(parsed);
-        } catch (ParseException ignore) {
-        } finally {
-            return formattedDate;
-        }
+    private String reformatHTMLDateTime(final String htmlFormat) {
+        final HtmlDateConverter dateConverter = new HtmlDateConverter();
+        return dateConverter.convert(htmlFormat);
     }
 
-    private void updateLodgingSession(final String checkIn, final String checkOut) {
-        Place lodging = (Place) session.getAttribute("lodgingSelection");
-        lodging.setCheckIn(checkIn);
-        lodging.setCheckOut(checkOut);
+    private void updateLodgingSession(final Place lodging) {
         session.setAttribute("lodgingSelection", lodging);
     }
 }

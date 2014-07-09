@@ -207,6 +207,7 @@
         $(document).ready(function() {
             $('[rel=popover]').popover({trigger: 'click', placement: 'left'});
 
+            // Controls update/cancel functionality for lodging time
             $("#updateLodgingDateTime").click(function() {
                 var buttonValue = $(this).text();
                 if (buttonValue === "Update") {
@@ -221,6 +222,5 @@
                     $("#updateLodgingDateTimePanel").css("left", "-5000");
                 }
             });
-
         });
     </script>

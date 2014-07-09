@@ -64,6 +64,9 @@ public class ItineraryServlet extends HttpServlet {
         } else if (setLodgingTimeRequested(request)) {
             LodgingForm lodgingForm = new LodgingForm(request, response);
             lodgingForm.setLodgingTime();
+        } else if (setEventTimeRequested(request)) {
+            EventForm eventForm = new EventForm(request, response);
+            eventForm.setEventTime();
         }
     }
 
@@ -94,7 +97,8 @@ public class ItineraryServlet extends HttpServlet {
     }
 
     private boolean detailedGoogleSearchRequested(HttpServletRequest request) {
-        return request.getQueryString().contains("detail_search");
+        return request.getQueryString() != null &&
+                request.getQueryString().contains("detail_search");
     }
 
     private boolean newItineraryCreationRequested(HttpServletRequest request) {
@@ -170,6 +174,10 @@ public class ItineraryServlet extends HttpServlet {
 
     private boolean setLodgingTimeRequested(final HttpServletRequest request) {
         return request.getParameter("lodgingDateTimeSubmit") != null;
+    }
+
+    private boolean setEventTimeRequested(final HttpServletRequest request) {
+        return request.getParameter("eventDateTimeSubmit") != null;
     }
 
     private boolean textSearchRequested(HttpServletRequest request) {
