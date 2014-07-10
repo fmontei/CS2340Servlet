@@ -16,7 +16,6 @@ th, td {
 
 .breadcrumb > .api-breadcrumb + li:before {
     content: "";
-    margin-right: 330px;
 }
 
 .table-name {

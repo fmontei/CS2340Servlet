@@ -23,15 +23,16 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="tomcat 8.0" level="project" />
     <orderEntry type="library" name="tomcat 8.0" level="application" />
     <orderEntry type="library" name="scribe-1.3.5" level="application" />
     <orderEntry type="library" name="json-simple-1.1.1" level="application" />
     <orderEntry type="library" name="tomcat" level="application" />
-    <orderEntry type="library" name="jcommander-1.5" level="project" />
     <orderEntry type="library" name="mysql-connector-java-5.0.8-bin" level="project" />
     <orderEntry type="library" name="mysql-connector-java-5.0.8-bin1" level="project" />
     <orderEntry type="library" name="org.json-20120521" level="project" />
     <orderEntry type="library" name="servlet-api" level="project" />
+    <orderEntry type="library" name="jcommander-1.5" level="project" />
   </component>
 </module>
 
