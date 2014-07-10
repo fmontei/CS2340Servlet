@@ -92,4 +92,11 @@ public class DataManager {
         SQLPlaceQuery sqlQuery = new SQLPlaceQuery();
         sqlQuery.deletePlaceByAttributes(place);
     }
+
+    public static void updatePlaceTimeByID(final Place place,
+                                           final String placeType)
+        throws SQLException {
+        final SQLPlaceQuery placeQuery = new SQLPlaceQuery();
+        placeQuery.updatePlaceTimeByID(place, placeType);
+    }
 }

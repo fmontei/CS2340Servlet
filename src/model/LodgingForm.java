@@ -12,10 +12,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class LodgingForm {
     private HttpServletRequest request;
@@ -27,8 +26,7 @@ public class LodgingForm {
         this.request = request;
         this.response = response;
         this.session = request.getSession();
-        this.activeItinerary =
-                (Itinerary) session.getAttribute("activeItinerary");
+        this.activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
     }
 
     public void getLodgingsAroundLocation() {
@@ -119,5 +117,31 @@ public class LodgingForm {
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
+    }
+
+    public void setLodgingTime() throws IOException {
+        final String checkIn = request.getParameter("lodgingCheckIn");
+        final String checkOut = request.getParameter("lodgingCheckOut");
+        final String reformattedCheckIn = reformatHTMLDateTime(checkIn);
+        final String reformattedCheckOut = reformatHTMLDateTime(checkOut);
+        try {
+            Place lodging = (Place) session.getAttribute("lodgingSelection");
+            lodging.setCheckIn(reformattedCheckIn);
+            lodging.setCheckOut(reformattedCheckOut);
+            DataManager.updatePlaceTimeByID(lodging, "lodging");
+            updateLodgingSession(lodging);
+            response.sendRedirect("jsp/index.jsp");
+        } catch (SQLException ex) {
+            BrowserErrorHandling.printErrorToBrowser(request, response, ex);
+        }
+    }
+
+    private String reformatHTMLDateTime(final String htmlFormat) {
+        final HtmlDateConverter dateConverter = new HtmlDateConverter();
+        return dateConverter.convert(htmlFormat);
+    }
+
+    private void updateLodgingSession(final Place lodging) {
+        session.setAttribute("lodgingSelection", lodging);
     }
 }

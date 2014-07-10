@@ -15,12 +15,17 @@ public class IndexServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
-        if (request.getQueryString().contains("itinerary_id=")) {
+        if (itinerarySelected(request)) {
             ItineraryLoader loader = new ItineraryLoader();
             loader.loadItineraryAndAllDependencies(request, response);
         } else {
-            response.sendRedirect("jsp/createLoginSession.jsp");
+            response.sendRedirect("jsp/index.jsp");
         }
+    }
+
+    private boolean itinerarySelected(final HttpServletRequest request) {
+        return request.getQueryString() != null &&
+                request.getQueryString().contains("itinerary_id=");
     }
 
     @Override

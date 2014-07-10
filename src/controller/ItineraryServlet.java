@@ -21,7 +21,7 @@ public class ItineraryServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        if (request.getQueryString().contains("create_event=")) {
+        if (createEventRequested(request)) {
             EventForm eventForm = new EventForm(request, response);
             eventForm.createNewEvents();
         } else if (lodgingSearchRequested(request)) {
@@ -61,7 +61,18 @@ public class ItineraryServlet extends HttpServlet {
             doSearchRequest(request, response);
         } else if (removeTemporaryPlaceRequested(request)) {
             doRemovePlaceRequest(request, response);
+        } else if (setLodgingTimeRequested(request)) {
+            LodgingForm lodgingForm = new LodgingForm(request, response);
+            lodgingForm.setLodgingTime();
+        } else if (setEventTimeRequested(request)) {
+            EventForm eventForm = new EventForm(request, response);
+            eventForm.setEventTime();
         }
+    }
+
+    private boolean createEventRequested(final HttpServletRequest request) {
+        return request.getQueryString() != null &&
+                request.getQueryString().contains("create_event=");
     }
 
     private boolean lodgingSearchRequested(HttpServletRequest request) {
@@ -87,11 +98,13 @@ public class ItineraryServlet extends HttpServlet {
     }
 
     private boolean lodgingSelectionMade(HttpServletRequest request) {
-        return request.getQueryString().contains("lodging_id=");
+        return request.getQueryString() != null &&
+                request.getQueryString().contains("lodging_id=");
     }
 
     private boolean detailedGoogleSearchRequested(HttpServletRequest request) {
-        return request.getQueryString().contains("detail_search");
+        return request.getQueryString() != null &&
+                request.getQueryString().contains("detail_search");
     }
 
     private boolean newItineraryCreationRequested(HttpServletRequest request) {
@@ -112,7 +125,8 @@ public class ItineraryServlet extends HttpServlet {
     }
 
     private boolean removeTemporaryPlaceRequested(HttpServletRequest request) {
-        return request.getQueryString().contains("remove_place_id");
+        return request.getQueryString() != null &&
+                request.getQueryString().contains("remove_place_id");
     }
 
     private void doRemovePlaceRequest(HttpServletRequest request,
@@ -136,11 +150,13 @@ public class ItineraryServlet extends HttpServlet {
     }
 
     private boolean eventSelectionMade(HttpServletRequest request) {
-        return request.getQueryString().contains("select_business");
+        return request.getQueryString() != null &&
+                request.getQueryString().contains("select_business");
     }
 
     private boolean deleteEventRequested(final HttpServletRequest request) {
-        return request.getQueryString().contains("delete_event");
+        return request.getQueryString() != null &&
+                request.getQueryString().contains("delete_event");
     }
 
     private void doEventDeleteRequest(final HttpServletRequest request,
@@ -151,7 +167,8 @@ public class ItineraryServlet extends HttpServlet {
     }
 
     private boolean sortEventsRequested(final HttpServletRequest request) {
-        return request.getQueryString().contains("sort");
+        return request.getQueryString() != null &&
+                request.getQueryString().contains("sort");
     }
 
     private void doSortEventsRequest(final HttpServletRequest request,
@@ -159,6 +176,14 @@ public class ItineraryServlet extends HttpServlet {
         throws IOException {
         final EventSorter eventSorter = new EventSorter(request, response);
         eventSorter.sort();
+    }
+
+    private boolean setLodgingTimeRequested(final HttpServletRequest request) {
+        return request.getParameter("lodgingDateTimeSubmit") != null;
+    }
+
+    private boolean setEventTimeRequested(final HttpServletRequest request) {
+        return request.getParameter("eventDateTimeSubmit") != null;
     }
 
     private boolean textSearchRequested(HttpServletRequest request) {
@@ -189,7 +214,8 @@ public class ItineraryServlet extends HttpServlet {
     }
 
     private boolean textSearchIssuedFromMainConsole(HttpServletRequest request) {
-        return request.getQueryString().contains("event_id");
+        return request.getQueryString() != null &&
+                request.getQueryString().contains("event_id");
     }
 
     private List<Place> tryGoogleTextSearch(HttpServletRequest request,

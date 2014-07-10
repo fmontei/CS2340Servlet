@@ -4,6 +4,7 @@ import controller.BrowserErrorHandling;
 import database.DataManager;
 import database.Itinerary;
 import database.Place;
+import database.SQLPlaceQuery;
 import org.json.JSONException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -86,6 +87,7 @@ public class EventForm {
         event.setName(searchResult.getName());
         event.setFormattedAddress(searchResult.getFormattedAddress());
         event.setPhoneNumber(searchResult.getPhoneNumber());
+        event.setAPI(searchResult.getAPI());
         event.setRating(searchResult.getRating());
         event.setURL(searchResult.getURL());
         event.setCoordinates(searchResult.getCoordinates());
@@ -229,5 +231,37 @@ public class EventForm {
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
+    }
+
+    public void setEventTime() throws IOException {
+        final String startTime = request.getParameter("eventStartTime");
+        final String endTime = request.getParameter("eventEndTime");
+        final String reformattedStart = reformatHTMLDateTime(startTime);
+        final String reformattedEnd = reformatHTMLDateTime(endTime);
+        final String eventID = parseEventIDFromQueryString();
+        final int eventNum = Integer.parseInt(eventID);
+        try {
+            List<Place> events = (List<Place>) session.getAttribute("events");
+            Place event = events.get(eventNum);
+            event.setCheckIn(reformattedStart);
+            event.setCheckOut(reformattedEnd);
+            DataManager.updatePlaceTimeByID(event, "event");
+            updateLodgingSession(events, event, eventNum);
+            response.sendRedirect("jsp/index.jsp?start=" + reformattedStart + "&end=" + reformattedEnd);
+        } catch (SQLException ex) {
+            BrowserErrorHandling.printErrorToBrowser(request, response, ex);
+        }
+    }
+
+    private String reformatHTMLDateTime(final String htmlFormat) {
+        final HtmlDateConverter dateConverter = new HtmlDateConverter();
+        return dateConverter.convert(htmlFormat);
+    }
+
+    private void updateLodgingSession(final List<Place> events,
+                                      final Place event,
+                                      final int eventNum) {
+        events.set(eventNum, event);
+        session.setAttribute("events", events);
     }
 }

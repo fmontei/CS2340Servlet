@@ -26,8 +26,8 @@ public class LoginAccountOperation implements Validation {
     }
 
     private boolean passwordMatches() {
-        String realPassword = account.getPassword();
-        return realPassword.equals(password);
+        final int realPassword = account.getPassword();
+        return realPassword == password.hashCode();
     }
 
     private boolean usernameExists() throws SQLException {
