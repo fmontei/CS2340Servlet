@@ -150,21 +150,21 @@
                             final String checkIn = selection.getCheckIn();
                             final String checkOut = selection.getCheckOut();
                             if (checkIn != null && checkOut != null) { %>
-                                <div class="alert alert-danger" style="display: inline-block; padding-right: 5px">
+                                <div class="alert alert-danger" style="display: block; margin-left: auto; margin-right: auto; width: 75%">
                                     <label>Check in:&nbsp;&nbsp;</label><%=checkIn%>
                                     <span style="margin-left: 10px; margin-right: 10px;"><b>|</b></span>
                                     <label>Check out:&nbsp;&nbsp;</label><%=checkOut%>
                                     <button id="updateLodgingDateTime" class="btn btn-danger" style="margin-left: 5px; margin-right: 5px">Update</button>
                                 </div>
-                                <div class="row" id="updateLodgingDateTimePanel" style="position: absolute; left: -5000px; visibility: hidden">
+                                <div id="updateLodgingDateTimePanel" align="center" style="position: absolute; left: -5000px; visibility: hidden">
                                     <form action="/CS2340Servlet/itinerary" method="POST">
-                                        <div class="col-md-12">
+                                        <div class="popin">
                                             <h6>Edit your Lodging Time below then click 'Submit'. To cancel, click 'Cancel'.</h6>
                                             <div class="alert alert-danger" style="display: inline-block">
                                                 <label >Check in:</label><br />
                                                 <input type="datetime-local" name="lodgingCheckIn" />
                                             </div>
-                                            <div class="alert alert-danger" style="display: inline-block; margin-right: 20px">
+                                            <div class="alert alert-danger" style="display: inline-block;">
                                                 <label>Check out:</label><br />
                                                 <input type="datetime-local" name="lodgingCheckOut" />
                                                 <input type="submit" name="lodgingDateTimeSubmit" style="margin-left: 12px; margin-right: 5px" />

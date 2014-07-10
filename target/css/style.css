@@ -261,3 +261,16 @@ th, td {
     color: white !important;
     opacity: 1;
 }
+
+.popin {
+    margin: 0 auto;
+    display: inline-block;
+    background:#fff;
+    padding:15px;
+    box-shadow: 0 0 20px #999;
+    border-radius:2px;
+}
+
+.modal-dialog-center {
+    margin-top: 15% !important;
+}

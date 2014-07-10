@@ -253,18 +253,18 @@
                 <% final String checkIn = event.getCheckIn();
                     final String checkOut = event.getCheckOut();
                     if (checkIn != null && checkOut != null) { %>
-                    <div class="alert alert-<%=eventPanelColor%>" style="display: inline-block; padding-right: 5px">
+                    <div class="alert alert-<%=eventPanelColor%>" style="display: block; margin-left: auto; margin-right: auto; width: 68%">
                         <label>Start:&nbsp;&nbsp;</label><%=checkIn%>
                         <span style="margin-left: 10px; margin-right: 10px;"><b>|</b></span>
                         <label>End:&nbsp;&nbsp;</label><%=checkOut%>
                         <button id="updateEventDateTimeBtn<%=curEventID%>"
                                 onclick="updateEventDateTime('<%=curEventID%>');"
                                 class="btn btn-<%=eventPanelColor%>"
-                                style="margin-left: 5px; margin-right: 5px">Update</button>
+                                style="margin-left: 20px;">Update</button>
                     </div>
-                    <div class="row" id="updateEventDateTimePanel<%=curEventID%>" style="position: absolute; left: -5000px; visibility: hidden">
+                    <div id="updateEventDateTimePanel<%=curEventID%>" align="center" style="position: absolute; left: -5000px; visibility: hidden">
                         <form action="/CS2340Servlet/itinerary?update_event_time&event_id=<%=curEventID%>" method="POST">
-                            <div class="col-md-12">
+                            <div class="popin">
                                 <h6>Edit your Event Time below then click 'Submit'. To cancel, click 'Cancel'.</h6>
                                 <div class="alert alert-<%=eventPanelColor%>" style="display: inline-block">
                                     <label >Start:</label><br />

@@ -294,12 +294,11 @@
                                 </div>
                                 <div id="collapseOne" class="panel-collapse collapse in">
                                     <div class="panel-body">
-                                        <div class="center-block" id="accordion-map" style="width: 520px; height: 300px;"></div>
+                                        <div class="center-block popin" id="accordion-map" style="width: 520px; height: 300px;"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         <%@ include file="lodging_panel.jsp" %>
                         <%@ include file="events_places_panels.jsp" %>
                     </div> <!-- Locations Panel Body -->

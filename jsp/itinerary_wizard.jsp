@@ -1,7 +1,7 @@
 
 
 <div id="itineraryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="itineraryModal" aria-hidden="true">
-    <div class="modal-dialog" >
+    <div class="modal-dialog modal-dialog-center">
         <div class="modal-content">
             <form id="itinerary_form" action="/CS2340Servlet/itinerary" method="POST" class="form-inline" role="form">
 
