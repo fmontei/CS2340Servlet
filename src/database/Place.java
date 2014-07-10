@@ -6,8 +6,8 @@ import java.util.Date;
 
 public class Place {
     private String name, placeID, formattedAddress, phoneNumber, URL, API,
-            ratingImage, snippetText, creationDate;
-    private int priceLevel;
+            ratingImage, snippetText, creationDate, checkIn, checkOut;
+    private int ID, priceLevel;
     private double rating;
     private boolean openNow;
     private Coordinates coordinates = new Coordinates();
@@ -68,6 +68,9 @@ public class Place {
     public String getCreationDate() {
         return creationDate;
     }
+    public String getCheckIn() { return checkIn; }
+    public String getCheckOut() { return  checkOut; }
+    public int getID() { return this.ID; }
 
     public void setPlaceID(String placeID) {
         this.placeID = placeID;
@@ -108,4 +111,11 @@ public class Place {
     public void setCreationDate(final String creationDate) {
         this.creationDate = creationDate;
     }
+    public void setCheckIn(final String checkIn) {
+        this.checkIn = checkIn;
+    }
+    public void setCheckOut(final String checkOut) {
+        this.checkOut = checkOut;
+    }
+    public void setID(final int ID) { this.ID = ID; }
 }

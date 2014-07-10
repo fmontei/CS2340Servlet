@@ -8,7 +8,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String userName;
-    private String password;
+    private int password;
     private String email;
     private List<Itinerary> itineraries;
 
@@ -17,7 +17,7 @@ public class User {
     }
 
     public User(String firstName, String lastName, String userName,
-                String password) {
+                int password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
@@ -26,7 +26,7 @@ public class User {
     }
 
     public User(int userID, String firstName, String lastName, String userName,
-                String password) {
+                int password) {
         this.ID = userID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -50,7 +50,7 @@ public class User {
     public String getUsername(){
         return this.userName;
     }
-    public String getPassword(){
+    public int getPassword(){
         return this.password;
     }
     public String getEmail() {
@@ -72,7 +72,7 @@ public class User {
     public void setUserName(String userName){
         this.userName = userName;
     }
-    public void setPassword(String password){
+    public void setPassword(int password){
         this.password = password;
     }
     public void setEmail(String email){

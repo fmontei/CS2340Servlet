@@ -134,11 +134,18 @@ public class YelpAPI {
         JSONObject locationArray = (JSONObject) jsonObject.get("location");
         final JSONArray address = (JSONArray) locationArray.get("display_address");
         for (int i = 0; i < address.size(); i++) {
+
             final String jsonPiece = address.get(i).toString();
-            if (i != 1 && i != 2) {
+            if (address.size() == 2) {
                 if (i == 0) {
                     displayAddress.append(jsonPiece + " ");
                 } else {
+                    displayAddress.append(jsonPiece);
+                }
+            } else if (address.size() == 3) {
+                if (i == 0) {
+                    displayAddress.append(jsonPiece + " ");
+                } else if (i == 2) {
                     displayAddress.append(jsonPiece);
                 }
             }

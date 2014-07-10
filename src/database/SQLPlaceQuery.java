@@ -29,7 +29,7 @@ public class SQLPlaceQuery extends SQLQuery {
                                       final int itineraryID)
         throws SQLException {
         String query = "INSERT INTO PLACE (itineraryID, placeType, name, " +
-                "address, phoneNumber, apiID, priceLevel, rating, latitude," +
+                "address, phoneNumber, apiType, priceLevel, rating, latitude," +
                 "longitude, url, creationDate) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement =
@@ -39,7 +39,7 @@ public class SQLPlaceQuery extends SQLQuery {
         preparedStatement.setString(3, place.getName());
         preparedStatement.setString(4, place.getFormattedAddress());
         preparedStatement.setString(5, place.getPhoneNumber());
-        preparedStatement.setString(6, null);
+        preparedStatement.setString(6, place.getAPI());
         preparedStatement.setInt(7, place.getPriceLevel());
         preparedStatement.setDouble(8, place.getRating());
         preparedStatement.setDouble(9, place.getCoordinates().getLat());
@@ -49,18 +49,19 @@ public class SQLPlaceQuery extends SQLQuery {
         preparedStatement.executeUpdate();
     }
 
-    public Place getLodgingByItineraryID(final String ID)
+    public Place getLodgingByItineraryID(final String itineraryID)
             throws SQLException {
         final String query =
-                "SELECT * FROM place, itinerary WHERE itinerary.ID = ? AND " +
-                        "place.placeType = ?;";
+                "SELECT * FROM PLACE WHERE PLACE.itineraryID = ? AND " +
+                        "PLACE.placeType = ?;";
         PreparedStatement preparedStatement =
                 super.dbConnection.prepareStatement(query);
-        preparedStatement.setString(1, ID);
+        preparedStatement.setString(1, itineraryID);
         preparedStatement.setString(2, "lodging");
         ResultSet result = preparedStatement.executeQuery();
         Place lodging = new Place();
         while (result.next()) {
+            int ID = result.getInt("ID");
             String name = result.getString("name");
             String address = result.getString("address");
             String phoneNumber = result.getString("phoneNumber");
@@ -70,6 +71,10 @@ public class SQLPlaceQuery extends SQLQuery {
             double longitude = result.getDouble("longitude");
             Coordinates coordinates = new Coordinates(latitude, longitude);
             String url = result.getString("url");
+            String creationDate = result.getString("creationDate");
+            String checkIn = result.getString("checkIn");
+            String checkOut = result.getString("checkOut");
+            lodging.setID(ID);
             lodging.setName(name);
             lodging.setFormattedAddress(address);
             lodging.setPhoneNumber(phoneNumber);
@@ -77,42 +82,88 @@ public class SQLPlaceQuery extends SQLQuery {
             lodging.setRating(rating);
             lodging.setCoordinates(coordinates);
             lodging.setURL(url);
+            lodging.setCreationDate(creationDate);
+            lodging.setCheckIn(checkIn);
+            lodging.setCheckOut(checkOut);
             break;
         }
         return lodging;
     }
 
-    public List<Place> getEventsByItineraryID(final String ID)
+    protected void updatePlaceTimeByID(final Place place, final String placeType)
+        throws SQLException {
+        if (placeType.equals("lodging")) {
+            updateLodgingTimeByID(place);
+        } else if (placeType.equals("event")) {
+            updateEventTimeByID(place);
+        }
+    }
+
+    private void updateLodgingTimeByID(final Place lodging)
+        throws SQLException {
+        final String query = "UPDATE PLACE SET checkIn = ?, checkOut = ? " +
+                "WHERE ID = ? AND placeType = ?";
+        PreparedStatement preparedStatement =
+                super.dbConnection.prepareStatement(query);
+        preparedStatement.setString(1, lodging.getCheckIn());
+        preparedStatement.setString(2, lodging.getCheckOut());
+        preparedStatement.setInt(3, lodging.getID());
+        preparedStatement.setString(4, "lodging");
+        preparedStatement.executeUpdate();
+    }
+
+    private void updateEventTimeByID(final Place event)
+            throws SQLException {
+        final String query = "UPDATE PLACE SET checkIn = ?, checkOut = ? " +
+                "WHERE ID = ? AND placeType = ?";
+        PreparedStatement preparedStatement =
+                super.dbConnection.prepareStatement(query);
+        preparedStatement.setString(1, event.getCheckIn());
+        preparedStatement.setString(2, event.getCheckOut());
+        preparedStatement.setInt(3, event.getID());
+        preparedStatement.setString(4, "event");
+        preparedStatement.executeUpdate();
+    }
+
+    public List<Place> getEventsByItineraryID(final String itineraryID)
             throws SQLException {
         final String query =
                 "SELECT * FROM PLACE WHERE PLACE.itineraryID = ? AND " +
                         "PLACE.placeType = ?;";
         PreparedStatement preparedStatement =
                 super.dbConnection.prepareStatement(query);
-        preparedStatement.setString(1, ID);
+        preparedStatement.setString(1, itineraryID);
         preparedStatement.setString(2, "event");
         ResultSet result = preparedStatement.executeQuery();
         List<Place> events = new ArrayList<Place>();
         while (result.next()) {
+            int ID = result.getInt("ID");
             String name = result.getString("name");
             String address = result.getString("address");
             String phoneNumber = result.getString("phoneNumber");
+            String apiType = result.getString("apiType");
             int priceLevel = result.getInt("priceLevel");
             double rating = result.getDouble("rating");
             double latitude = result.getDouble("latitude");
             double longitude = result.getDouble("longitude");
             Coordinates coordinates = new Coordinates(latitude, longitude);
-            String creationDate = result.getString("creationDate");
             String url = result.getString("url");
+            String creationDate = result.getString("creationDate");
+            String checkIn = result.getString("checkIn");
+            String checkOut = result.getString("checkOut");
             Place event = new Place();
+            event.setID(ID);
             event.setName(name);
             event.setFormattedAddress(address);
             event.setPhoneNumber(phoneNumber);
+            event.setAPI(apiType);
             event.setPriceLevel(priceLevel);
             event.setRating(rating);
             event.setCoordinates(coordinates);
             event.setURL(url);
             event.setCreationDate(creationDate);
+            event.setCheckIn(checkIn);
+            event.setCheckOut(checkOut);
             events.add(event);
         }
         return events;

@@ -30,7 +30,7 @@ public class TestGoogleSearch {
             ex.printStackTrace();
         }
         for (Place p : results) {
-            System.out.println(p.getName());
+            System.out.println(p.getFormattedAddress());
         }
     }
 

@@ -42,7 +42,7 @@ public class AccountCreateForm {
         username = request.getParameter("newUsername");
         password = request.getParameter("newPassword");
         confirmPassword = request.getParameter("confirmPassword");
-        newAccount = new User(firstName, lastName, username, password);
+        newAccount = new User(firstName, lastName, username, password.hashCode());
     }
 
     private void saveAccountSettings() throws SQLException {
