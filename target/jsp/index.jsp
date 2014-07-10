@@ -294,7 +294,41 @@
                                 </div>
                                 <div id="collapseOne" class="panel-collapse collapse in">
                                     <div class="panel-body">
+                                        <b>Start: </b>
+                                        <%  Place lodgingSelect = (Place) session.getAttribute("lodgingSelection");%>
+                                        <select id="start" onchange="calcRoute();">
+                                          <option value= '<%=itineraryAddress%>'>Center </option>
+                                          <% if (lodgingSelect != null) { %>
+                                          <option value= '<%=lodgingSelect.getFormattedAddress()%>'>Lodging </option>
+                                          <% } %>
+                                          <% numEvents = 0;
+                                             if (userEvents != null) {
+                                               numEvents = userEvents.size();
+                                             }
+                                             for (int curEventID = 0; curEventID < numEvents; curEventID++) {
+                                               Place event = userEvents.get(curEventID); %>
+                                          <option value= '<%=event.getFormattedAddress()%>'>Event <%=curEventID + 1%></option><% } %>
+                                        </select>
+                                        <b>End: </b>
+                                        <select id="end" onchange="calcRoute();">
+                                          <option value= '<%=itineraryAddress%>'>Center </option>
+                                          <% if (lodgingSelect != null) { %>
+                                          <option value= '<%=lodgingSelect.getFormattedAddress()%>'>Lodging </option>
+                                          <% } %>
+                                          <% for (int curEventID = 0; curEventID < numEvents; curEventID++) {
+                                               Place event = userEvents.get(curEventID); %>
+                                          <option value= '<%=event.getFormattedAddress()%>'>Event <%=curEventID + 1%></option><% } %>
+                                        </select>
+                                        <b>Mode of Transit: </b>
+                                        <select id="transitMode" onchange="calcRoute()">
+                                          <option value= "DRIVING">Car </option>
+                                          <option value= "BICYCLING">Bicycle </option>
+                                          <option value= "TRANSIT">Public Transit </option>
+                                          <option value= "WALKING">Walking </option>
+                                        </select>
+                                        
                                         <div class="center-block popin" id="accordion-map" style="width: 520px; height: 300px;"></div>
+                                        <div id="directionsPanel"></div>
                                     </div>
                                 </div>
                             </div>
