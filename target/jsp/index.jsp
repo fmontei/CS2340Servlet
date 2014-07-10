@@ -327,7 +327,7 @@
                                           <option value= "WALKING">Walking </option>
                                         </select>
                                         </div>
-                                        <div class="center-block" id="accordion-map" style="width: 520px; height: 300px;"></div>
+                                        <div class="center-block popin" id="accordion-map" style="width: 520px; height: 300px;"></div>
                                         <div id="directionsPanel"></div>
                                     </div>
                                 </div>
