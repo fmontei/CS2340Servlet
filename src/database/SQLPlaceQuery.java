@@ -52,8 +52,8 @@ public class SQLPlaceQuery extends SQLQuery {
     public Place getLodgingByItineraryID(final String itineraryID)
             throws SQLException {
         final String query =
-                "SELECT * FROM place, itinerary WHERE itinerary.ID = ? AND " +
-                        "place.placeType = ?;";
+                "SELECT * FROM PLACE WHERE PLACE.itineraryID = ? AND " +
+                        "PLACE.placeType = ?;";
         PreparedStatement preparedStatement =
                 super.dbConnection.prepareStatement(query);
         preparedStatement.setString(1, itineraryID);

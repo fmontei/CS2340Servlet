@@ -43,7 +43,8 @@ public class AccountUpdateForm {
         lastName = request.getParameter("updateLastName");
         password = request.getParameter("oldPassword");
         confirmPassword = request.getParameter("confirmOldPassword");
-        currentAccount = new User(firstName, lastName, username, password);
+        currentAccount = new User(firstName, lastName, username,
+                password.hashCode());
     }
 
     private void updateSessionAttributes() {
@@ -68,8 +69,8 @@ public class AccountUpdateForm {
     }
 
     private void revertToOldPasswordAndUpdateAccount() throws SQLException {
-        User accountBeforeChange = DataManager.fetchUser(username);
-        String passwordBeforeChange = accountBeforeChange.getPassword();
+        final User accountBeforeChange = DataManager.fetchUser(username);
+        final int passwordBeforeChange = accountBeforeChange.getPassword();
         currentAccount.setPassword(passwordBeforeChange);
     }
 

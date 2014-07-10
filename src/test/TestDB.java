@@ -1,30 +1,14 @@
 import database.*;
-import model.LodgingForm;
 
 import java.awt.geom.Point2D;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class TestDB {
     public static void main(String... args)  {
         try {
             TestDB testDB = new TestDB();
-            testDB.testGetPlaceByItineraryID("15");
-
-            SQLPlaceQuery placeQuery = new SQLPlaceQuery();
-            Place lodging = placeQuery.getLodgingByItineraryID("16");
-            final String checkOut = lodging.getCheckOut();
-            System.out.println(checkOut);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
-            Date parsed = sdf.parse(checkOut);
-            System.out.println(parsed.toString());
-
-            SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/YYY @ hh:mm a");
-            sdf1.setTimeZone(sdf.getTimeZone());
-            String newDate = sdf1.format(parsed);
-            System.out.println(newDate);
+            testDB.testLodgingByItineraryID("16");
 
         } catch (Exception ex) {
             System.out.println("CAUGHT EXCEPTION");
@@ -33,8 +17,6 @@ public class TestDB {
     }
 
     public void testCoordinates() {
-        Point2D point = new Point2D.Double(3.333, 4.444);
-        System.out.println(point.getX() + " " + point.getY());
         SQLItineraryQuery query = new SQLItineraryQuery();
 
         String coordinates = "(33.7489954, -84.3879824)";
@@ -77,5 +59,12 @@ public class TestDB {
     public void testDeleteEventByEventID(final Place place)
             throws SQLException {
         DataManager.deleteEventByEventAttributes(place);
+    }
+
+    public void testLodgingByItineraryID(final String itineraryID)
+            throws SQLException  {
+        final SQLPlaceQuery placeQuery = new SQLPlaceQuery();
+        Place lodging = placeQuery.getLodgingByItineraryID(itineraryID);
+        System.out.println(lodging.getName());
     }
 }

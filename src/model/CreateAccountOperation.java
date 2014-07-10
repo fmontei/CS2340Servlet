@@ -5,7 +5,8 @@ import database.User;
 import java.sql.SQLException;
 
 public class CreateAccountOperation implements Validation {
-    private String password, confirmPassword;
+    private int password;
+    private String confirmPassword;
 
     public void init(User account, String username, String password) {
         this.password = account.getPassword();
@@ -13,7 +14,7 @@ public class CreateAccountOperation implements Validation {
     }
 
     public void validateCredentials() throws SQLException {
-        if (!password.equals(confirmPassword)) {
+        if (password != confirmPassword.hashCode()) {
             throw new SQLException("Passwords do not match. "
                 + "Please try again.");
         }

@@ -19,7 +19,7 @@ public class SQLUserQuery extends SQLQuery {
         preparedStatement.setString(1, user.getFirstName());
         preparedStatement.setString(2, user.getLastName());
         preparedStatement.setString(3, user.getUsername());
-        preparedStatement.setString(4, user.getPassword());
+        preparedStatement.setInt(4, user.getPassword());
         preparedStatement.setString(5, user.getEmail());
         preparedStatement.setString(6, null);
         preparedStatement.setString(7, null);
@@ -47,7 +47,7 @@ public class SQLUserQuery extends SQLQuery {
                 final String firstName = results.getString("firstName");
                 final String lastName = results.getString("lastName");
                 final String userName = results.getString("userName");
-                final String password = results.getString("password");
+                final int password = results.getInt("password");
                 fetchedUser.setID(userID);
                 fetchedUser.setFirstName(firstName);
                 fetchedUser.setLastName(lastName);
@@ -71,7 +71,7 @@ public class SQLUserQuery extends SQLQuery {
         preparedStatement.setString(1, user.getFirstName());
         preparedStatement.setString(2,user.getLastName());
         preparedStatement.setString(3, user.getUsername());
-        preparedStatement.setString(4, user.getPassword());
+        preparedStatement.setInt(4, user.getPassword());
         preparedStatement.setString(5, user.getEmail());
         preparedStatement.setString(6, user.getUsername());
         preparedStatement.executeUpdate();
