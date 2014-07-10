@@ -295,7 +295,7 @@
                         </form>
                     </div>
                 <%  } %>
-                <ol class="breadcrumb" style="background-color: white; margin-bottom: -10px">
+                <ol class="breadcrumb" style="background-color: white; margin-bottom: -10px;">
                     <%  if (event.getAPI() != null) {
                             if (event.getAPI().equals("google")) { %>
                             <li class="api-breadcrumb">Google result</li>

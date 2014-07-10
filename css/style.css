@@ -16,6 +16,7 @@ th, td {
 
 .breadcrumb > .api-breadcrumb + li:before {
     content: "";
+    margin-right: 330px;
 }
 
 .table-name {
@@ -262,12 +263,23 @@ th, td {
 }
 
 .popin {
-    margin: 0 auto;
-    display: inline-block;
-    background:#fff;
-    padding:15px;
-    box-shadow: 0 0 20px #999;
-    border-radius:2px;
+     margin: 0 auto;
+     display: inline-block;
+     background:#fff;
+     padding:15px;
+     box-shadow: 0 0 20px #999;
+     border-radius:2px;
+ }
+
+.new-city-message {
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    width: 80%;
+    background: rgb(247, 247, 249);
+    padding: 15px;
+    border-radius:4px;
+    font-size: 16px;
 }
 
 .modal-dialog-center {

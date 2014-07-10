@@ -213,6 +213,11 @@
                         </fb:login-button>
                     </div>
                 </div>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active"><a href="#">Your Cities</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Messages</a></li>
+                </ul>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         Your Itinerary
@@ -231,7 +236,7 @@
                                 <span style="float: right">Address:&nbsp;&nbsp;&nbsp;<%=itineraryAddress%></span>
                             </div>
                             <div class="panel-body">
-                            <ol class="breadcrumb" style="background-color: white">
+                            <ol class="pager" style="background-color: white">
                                 <li>
                                     <a href="itinerary_overview.jsp">Select Itinerary</a>
                                 </li>
@@ -241,14 +246,21 @@
                                        data-target="#itineraryModal">Create New Itinerary
                                     </a>
                                 </li>
-                                <li id="li-create-event-breadcrumb">
-                                    <a id="a-create-event" href="#"
-                                       id="a-create-event-breadcrumb">
+                                <li id="li-create-event">
+                                    <a id="a-create-event" href="/CS2340Servlet/itinerary?create_event=1">
                                         Create New Event</a>
                                 </li>
+                                <li id="li-create-city">
+                                    <a href="/CS2340Servlet/itinerary?create_city">
+                                        Add New City</a>
+                                </li>
                             </ol>
-
-                            <ul class="nav nav-pills">
+                            <div class="new-city-message">
+                                <h3>Want to travel to a another city?</h3>
+                                <p>No problem. Add a <strong>New City</strong> to your itinerary below:</p>
+                                <p><a class="btn btn-primary btn-lg" role="button">Add New City</a></p>
+                            </div>
+                            <ul class="nav nav-pills" style="float: right">
                                 <li>
                                     <a href="#" style="color: rgb(66, 139, 202); font-weight: bold">
                                         Currently Viewing: <%=activeItinerary.getName()%>
@@ -283,7 +295,7 @@
                             <h1><span class="glyphicon glyphicon-globe"></span>Map</h1>
                         </div>
                         <div class="panel-group" id="accordion">
-                            <div class="panel panel-warning">
+                            <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <a data-toggle="collapse"
                                        data-parent="#accordion"
@@ -296,10 +308,12 @@
                                     <div class="panel-body">
                                         <b>Start: </b>
                                         <%  Place lodgingSelect = (Place) session.getAttribute("lodgingSelection");%>
-                                        <select id="start" onchange="calcRoute();">
+                                        <select class="map-event-tooltips" id="start" onchange="calcRoute();">
                                           <option value= '<%=itineraryAddress%>'>Center </option>
                                           <% if (lodgingSelect != null) { %>
-                                          <option value= '<%=lodgingSelect.getFormattedAddress()%>'>Lodging </option>
+                                          <option value= '<%=lodgingSelect.getFormattedAddress()%>' title="<%=lodgingSelect.getName()%>">
+                                              Lodging
+                                          </option>
                                           <% } %>
                                           <% numEvents = 0;
                                              if (userEvents != null) {
@@ -307,7 +321,10 @@
                                              }
                                              for (int curEventID = 0; curEventID < numEvents; curEventID++) {
                                                Place event = userEvents.get(curEventID); %>
-                                          <option value= '<%=event.getFormattedAddress()%>'>Event <%=curEventID + 1%></option><% } %>
+                                          <option value= '<%=event.getFormattedAddress()%>' title="<%=event.getName()%>">
+                                              Event <%=curEventID + 1%>
+                                          </option>
+                                            <% } %>
                                         </select>
                                         <b>End: </b>
                                         <select id="end" onchange="calcRoute();">
@@ -317,7 +334,8 @@
                                           <% } %>
                                           <% for (int curEventID = 0; curEventID < numEvents; curEventID++) {
                                                Place event = userEvents.get(curEventID); %>
-                                          <option value= '<%=event.getFormattedAddress()%>'>Event <%=curEventID + 1%></option><% } %>
+                                          <option value= '<%=event.getFormattedAddress()%>' title="<%=event.getName()%>">Event <%=curEventID + 1%></option>
+                                          <% } %>
                                         </select>
                                         <b>Mode of Transit: </b>
                                         <select id="transitMode" onchange="calcRoute()">
@@ -326,8 +344,7 @@
                                           <option value= "TRANSIT">Public Transit </option>
                                           <option value= "WALKING">Walking </option>
                                         </select>
-                                        
-                                        <div class="center-block popin" id="accordion-map" style="width: 520px; height: 300px;"></div>
+                                        <div class="center-block popin" id="accordion-map" style="width: 520px; height: 300px; margin-top: 20px"></div>
                                         <div id="directionsPanel"></div>
                                     </div>
                                 </div>
@@ -335,10 +352,10 @@
                         </div>
                         <%@ include file="lodging_panel.jsp" %>
                         <%@ include file="events_places_panels.jsp" %>
-                    </div> <!-- Locations Panel Body -->
-                </div> <!-- Locations Panel -->
-            </div> <!-- Div Overview -->
-        </div> <!-- Div for central application panel -->
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 
@@ -438,5 +455,6 @@
             return elementID;
         }
     </script>
+
 
 <%}%>
