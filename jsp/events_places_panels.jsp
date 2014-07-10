@@ -270,7 +270,7 @@
                                     <label >Start:</label><br />
                                     <input type="datetime-local" name="eventStartTime" />
                                 </div>
-                                <div class="alert alert-<%=eventPanelColor%>" style="display: inline-block; margin-right: 20px">
+                                <div class="alert alert-<%=eventPanelColor%>" style="display: inline-block;">
                                     <label>End:</label><br />
                                     <input type="datetime-local" name="eventEndTime" />
                                     <input type="submit" name="eventDateTimeSubmit" style="margin-left: 12px; margin-right: 5px" />
