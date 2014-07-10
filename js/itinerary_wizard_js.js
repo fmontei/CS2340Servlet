@@ -50,7 +50,10 @@ function checkIfPreviousPageHasEmptyFields(pageNum) {
 
 var geocoder;
 var map, accordion_map;
+var directionsDisplay;
+var directionsService;
 function initialize() {
+    directionsDisplay = new google.maps.DirectionsRenderer();
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(-34.397, 150.644);
     var mapOptions = {
@@ -60,6 +63,8 @@ function initialize() {
     map = new google.maps.Map(document.getElementById("myMap"), mapOptions);
     accordion_map = new google.maps.Map(document.getElementById("accordion-map"),
         mapOptions);
+    directionsDisplay.setMap(accordion_map);
+    directionsDisplay.setPanel(document.getElementById('directionsPanel'));
 }
 
 function codeAddress() {
@@ -77,7 +82,24 @@ function codeAddress() {
             alert("Address could not be found for the following reason: " + status);
         }
     });
-};
+}
+
+function calcRoute() {
+  directionsService = new google.maps.DirectionsService();
+  var start = document.getElementById('start').value;
+  var end = document.getElementById('end').value;
+  var travelMode = document.getElementById('transitMode').value;
+  var request = {
+      origin:start,
+      destination:end,
+      travelMode: google.maps.TravelMode[travelMode]
+  };
+  directionsService.route(request, function(response, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(response);
+    }
+  });
+}
 
 function setFormattedAddress(formattedAddress) {
     $("#formattedAddress").text("Starting Address currently set to: " + formattedAddress);

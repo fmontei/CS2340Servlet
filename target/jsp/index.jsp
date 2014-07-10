@@ -288,7 +288,34 @@
                                 </div>
                                 <div id="collapseOne" class="panel-collapse collapse in">
                                     <div class="panel-body">
+                                    <b>Start: </b>
+                                        <select id="start" onchange="calcRoute();">
+                                          <option value= '<%=itineraryAddress%>'>Center </option>
+                                          <% numEvents = 0;
+                                             if (userEvents != null) {
+                                               numEvents = userEvents.size();
+                                             }
+                                             for (int curEventID = 0; curEventID < numEvents; curEventID++) {
+                                               Place event = userEvents.get(curEventID); %>
+                                          <option value= '<%=event.getFormattedAddress()%>'>Event <%=curEventID + 1%></option><% } %>
+                                        </select>
+                                        <b>End: </b>
+                                        <select id="end" onchange="calcRoute();">
+                                          <option value= '<%=itineraryAddress%>'>Center </option>
+                                          <% for (int curEventID = 0; curEventID < numEvents; curEventID++) {
+                                               Place event = userEvents.get(curEventID); %>
+                                          <option value= '<%=event.getFormattedAddress()%>'>Event <%=curEventID + 1%></option><% } %>
+                                        </select>
+                                        <b>Mode of Transit: </b>
+                                        <select id="transitMode" onchange="calcRoute()">
+                                          <option value= "DRIVING">Car </option>
+                                          <option value= "BICYCLING">Bicycle </option>
+                                          <option value= "TRANSIT">Public Transit </option>
+                                          <option value= "WALKING">Walking </option>
+                                        </select>
+                                        </div>
                                         <div class="center-block" id="accordion-map" style="width: 520px; height: 300px;"></div>
+                                        <div id="directionsPanel"></div>
                                     </div>
                                 </div>
                             </div>
