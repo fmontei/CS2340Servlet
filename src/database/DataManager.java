@@ -33,16 +33,23 @@ public class DataManager {
     }
 
     public static void deleteItinerary(String itineraryID) throws SQLException {
-        DataManager.deleteAllPlacesAssociatedWithItinerary(itineraryID);
+        //DataManager.deleteAllPlacesAssociatedWithItinerary(itineraryID);
         final SQLItineraryQuery itineraryQuery = new SQLItineraryQuery();
         itineraryQuery.deleteItineraryQuery(itineraryID);
     }
 
     private static void deleteAllPlacesAssociatedWithItinerary(
             final String itineraryID) throws SQLException {
-        SQLPlaceQuery sqlQuery = new SQLPlaceQuery();
-        sqlQuery.deleteAllPlacesByItineraryID(itineraryID);
+        SQLPlaceQuery placeQuery = new SQLPlaceQuery();
+        placeQuery.deleteAllPlacesByCityID(itineraryID);
     }
+
+    public static Itinerary getItineraryByName(final String itineraryName)
+            throws SQLException {
+        SQLItineraryQuery itineraryQuery = new SQLItineraryQuery();
+        return  itineraryQuery.getItineraryByName(itineraryName);
+    }
+
 
     public static List<Itinerary> getItineraryByUserID(int userID)
             throws SQLException {
@@ -61,30 +68,16 @@ public class DataManager {
         return lastID;
     }
 
-    public static void createLodging(final Place lodging, final int itineraryID)
+    public static void createLodging(final Place lodging, final int cityID)
             throws SQLException {
-        SQLPlaceQuery sqlQuery = new SQLPlaceQuery();
-        sqlQuery.createLodgingQuery(lodging, "lodging", itineraryID);
+        SQLPlaceQuery placeQuery = new SQLPlaceQuery();
+        placeQuery.createLodgingQuery(lodging, "lodging", cityID);
     }
 
-    public static Place getLodgingByItineraryID(final String itineraryID)
+    public static void createEvent(final Place event, final int cityID)
         throws SQLException {
-        SQLPlaceQuery sqlQuery = new SQLPlaceQuery();
-        final Place lodging = sqlQuery.getLodgingByItineraryID(itineraryID);
-        return lodging;
-    }
-
-    public static void createEvent(final Place event, final int itineraryID)
-        throws SQLException {
-        SQLPlaceQuery sqlQuery = new SQLPlaceQuery();
-        sqlQuery.createEventQuery(event, "event", itineraryID);
-    }
-
-    public static List<Place> getEventsByItineraryID(final String itineraryID)
-            throws SQLException {
-        SQLPlaceQuery sqlQuery = new SQLPlaceQuery();
-        final List<Place> events = sqlQuery.getEventsByItineraryID(itineraryID);
-        return events;
+        SQLPlaceQuery placeQuery = new SQLPlaceQuery();
+        placeQuery.createEventQuery(event, "event", cityID);
     }
 
     public static void deleteEventByEventAttributes(final Place place)
@@ -97,7 +90,7 @@ public class DataManager {
                                            final String placeType)
         throws SQLException {
         final SQLPlaceQuery placeQuery = new SQLPlaceQuery();
-        placeQuery.updatePlaceTimeByID(place, placeType);
+        placeQuery.updatePlaceTime(place, placeType);
     }
 
     public static void createCity(final City city) throws SQLException {
@@ -105,10 +98,43 @@ public class DataManager {
         cityQuery.createCityQuery(city);
     }
 
+    public static int getCityIDByName(final String cityName)
+            throws SQLException {
+        SQLCityQuery cityQuery = new SQLCityQuery();
+        return cityQuery.getCityIDByName(cityName);
+    }
+
     public static List<City> getCitiesByItineraryID(final int itineraryID)
         throws SQLException {
         SQLCityQuery cityQuery = new SQLCityQuery();
         final List<City> cities = cityQuery.getCitiesByItineraryID(itineraryID);
         return cities;
+    }
+
+    public static List<City> getCitiesAndPlacesByItineraryID(final int itineraryID)
+        throws SQLException {
+        List<City> cities = getCitiesByItineraryID(itineraryID);
+        for (City city : cities) {
+            final int cityID = city.getID();
+            final List<Place> events = getEventsByCityID(cityID);
+            final Place lodging = getLodgingByCityID(cityID);
+            city.setEvents(events);
+            city.setLodging(lodging);
+        }
+        return cities;
+    }
+
+    public static List<Place> getEventsByCityID(final int cityID)
+            throws SQLException {
+        SQLPlaceQuery placeQuery = new SQLPlaceQuery();
+        final List<Place> events = placeQuery.getEventsByCityID(cityID);
+        return events;
+    }
+
+    public static Place getLodgingByCityID(final int cityID)
+            throws SQLException {
+        SQLPlaceQuery sqlQuery = new SQLPlaceQuery();
+        final Place lodging = sqlQuery.getLodgingByCityID(cityID);
+        return lodging;
     }
 }

@@ -1,5 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="database.Place" %>
+<%@ page import="database.City" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <section id="eventsPlaces"></section>
@@ -10,7 +11,8 @@
         </div>
         <div class="col-md-5">
             <ul class="nav nav-pills" style="padding-top: 20px">
-                <%  List<Place> events = (List<Place>) session.getAttribute("events");
+                <%  final City eventsPanelCity = (City) session.getAttribute("activeCity");
+                    List<Place> events = (eventsPanelCity != null) ? eventsPanelCity.getEvents() : new ArrayList<Place>();
                     int numberOfEvents = 0;
                     if (events != null) {
                         numberOfEvents = events.size();

@@ -51,8 +51,8 @@
                     <button type="submit"
                             value="<%=itineraries.get(i).getID()%>"
                             name="deleteItinerary"
-                            class="badge pull-right btn btn-default"
-                            style="background-color: darkred; color: ghostwhite; border: none">
+                            class="badge pull-right btn btn-danger"
+                            style="border: none">
                         Delete
                     </button>
                 </form>

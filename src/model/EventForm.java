@@ -1,10 +1,7 @@
 package model;
 
 import controller.BrowserErrorHandling;
-import database.DataManager;
-import database.Itinerary;
-import database.Place;
-import database.SQLPlaceQuery;
+import database.*;
 import org.json.JSONException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,28 +16,28 @@ public class EventForm {
     private HttpServletRequest request;
     private HttpServletResponse response;
     private HttpSession session;
-    private Itinerary activeItinerary;
+    private City activeCity;
 
     public EventForm(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
         this.session = request.getSession();
-        activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
+        this.activeCity = (City) session.getAttribute("activeCity");
     }
 
     public void createNewEvents() throws IOException {
-        final HttpSession session = request.getSession();
         final String queryString = request.getQueryString();
         final int startIndex = queryString.indexOf("=") + 1;
         final String numberOfEvents = queryString.substring(startIndex);
         List<Place> events = new ArrayList<Place>();
-        if (session.getAttribute("events") != null) {
-            events = (List<Place>) session.getAttribute("events");
+        if (activeCity.getEvents() != null) {
+            events = activeCity.getEvents();
         }
         for (int i = 0; i < Integer.parseInt(numberOfEvents); i++) {
             events.add(new Place());
         }
-        session.setAttribute("events", events);
+        activeCity.setEvents(events);
+        session.setAttribute("activeCity", activeCity);
         response.sendRedirect("jsp/index.jsp");
     }
 
@@ -50,18 +47,17 @@ public class EventForm {
         final String placeID = parsePlaceIDFromQueryString();
         eventNum = Integer.parseInt(eventID);
         placeNum = Integer.parseInt(placeID);
-        List<Place> events = (List) session.getAttribute("events");
-        List<Place> businesses =
-                (List) session.getAttribute("businesses" + eventNum);
-        Place eventToBeUpdated = events.get(eventNum);
+        List<Place> events = activeCity.getEvents();
+        final String businessID = "businesses" + eventNum;
+        List<Place> businesses = (List) session.getAttribute(businessID);
         Place placeToBeSaved = businesses.get(placeNum);
-        setEventParameters(eventToBeUpdated, placeToBeSaved);
-        events.set(eventNum, eventToBeUpdated);
+        events.set(eventNum, placeToBeSaved);
         try {
-            if (eventToBeUpdated.getAPI().equals("google"))
+            if (placeToBeSaved.getAPI().equals("google"))
                 getDetailedInformationForPlace(false);
-            DataManager.createEvent(placeToBeSaved, activeItinerary.getID());
-            session.setAttribute("events", events);
+            DataManager.createEvent(placeToBeSaved, activeCity.getID());
+            activeCity.setEvents(events);
+            session.setAttribute("activeCity", activeCity);
             reloadPage();
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
@@ -99,9 +95,9 @@ public class EventForm {
         final String placeID = parsePlaceIDFromQueryString();
         final int placeNum = Integer.parseInt(placeID);
         final int eventNum = Integer.parseInt(eventID);
-        final List<Place> places =
-                (List) session.getAttribute("businesses" + eventID);
-        final List<Place> events = (List) session.getAttribute("events");
+        final String businessID = "businesses" + eventNum;
+        List<Place> places = (List) session.getAttribute(businessID);
+        final List<Place> events = activeCity.getEvents();
         final Place placeToBeUpdated = places.get(placeNum);
         final Place eventToBeUpdated = events.get(eventNum);
         final GooglePlaceAPI googlePlaceAPI = new GooglePlaceAPI();
@@ -177,7 +173,9 @@ public class EventForm {
                                                    String eventType,
                                                    int radius)
         throws IOException, JSONException {
-        final String coordinates = activeItinerary.getCoordinates().format();
+        final double latitude = activeCity.getLatitude();
+        final double longitude = activeCity.getLongitude();
+        final String coordinates = new Coordinates(latitude, longitude).format();
         GooglePlaceAPI googleSearch = new GooglePlaceAPI();
         List<Place> eventResults = googleSearch.getByNearbyPlaceSearch
                 (coordinates, radius, eventType, eventName);
@@ -187,7 +185,9 @@ public class EventForm {
     private List<Place> queryYelpForEvents(final String term, final int radius)
             throws SQLException, JSONException {
         List<Place> results;
-        final String coordinates = activeItinerary.getCoordinates().format();
+        final double latitude = activeCity.getLatitude();
+        final double longitude = activeCity.getLongitude();
+        final String coordinates = new Coordinates(latitude, longitude).format();
         YelpAPI yelpAPI = new YelpAPI(request, response);
         results = yelpAPI.queryAPI(term, coordinates, radius, 20, 0);
         return results;
@@ -208,7 +208,7 @@ public class EventForm {
 
     private void updateImageIcon(final String eventID, final String API) {
         final int eventNum = Integer.parseInt(eventID);
-        List<Place> events = (List) session.getAttribute("events");
+        List<Place> events = activeCity.getEvents();
         events.get(eventNum).setAPI(API);
     }
 
@@ -221,12 +221,15 @@ public class EventForm {
 
     public void deleteRequestedEvent() throws IOException {
         try {
-            List<Place> events = (List) session.getAttribute("events");
+            List<Place> events = activeCity.getEvents();
             final String eventID = parseEventIDFromQueryString();
             final int eventNum = Integer.parseInt(eventID);
             DataManager.deleteEventByEventAttributes(events.get(eventNum));
             events.remove(eventNum);
-            session.setAttribute("events", events);
+            activeCity.setEvents(events);
+            session.setAttribute("activeCity", activeCity);
+            session.removeAttribute("businesses" + eventID);
+            session.removeAttribute("eventQueryString" + eventID);
             reloadPage();
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
@@ -241,13 +244,13 @@ public class EventForm {
         final String eventID = parseEventIDFromQueryString();
         final int eventNum = Integer.parseInt(eventID);
         try {
-            List<Place> events = (List<Place>) session.getAttribute("events");
+            List<Place> events = activeCity.getEvents();
             Place event = events.get(eventNum);
             event.setCheckIn(reformattedStart);
             event.setCheckOut(reformattedEnd);
             DataManager.updatePlaceTimeByID(event, "event");
-            updateLodgingSession(events, event, eventNum);
-            response.sendRedirect("jsp/index.jsp?start=" + reformattedStart + "&end=" + reformattedEnd);
+            updateCurrentSession(events, event, eventNum);
+            response.sendRedirect("jsp/index.jsp");
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
@@ -258,10 +261,11 @@ public class EventForm {
         return dateConverter.convert(htmlFormat);
     }
 
-    private void updateLodgingSession(final List<Place> events,
+    private void updateCurrentSession(final List<Place> events,
                                       final Place event,
                                       final int eventNum) {
         events.set(eventNum, event);
-        session.setAttribute("events", events);
+        activeCity.setEvents(events);
+        session.setAttribute("activeCity", activeCity);
     }
 }

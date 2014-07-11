@@ -272,11 +272,13 @@ th, td {
  }
 
 .new-city-message {
+    height: 250px;
     margin-right: auto;
     margin-left: auto;
     display: block;
     width: 80%;
-    background: rgb(247, 247, 249);
+    background: url("../images/city.jpg");
+    background-size: contain;
     padding: 15px;
     border-radius:4px;
     font-size: 16px;

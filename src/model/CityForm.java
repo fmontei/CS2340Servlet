@@ -63,13 +63,35 @@ public class CityForm {
 
     private void saveCityDatabaseSession(final City city) throws SQLException {
         DataManager.createCity(city);
-        List<City> cities;
-        if (session.getAttribute("cities") != null) {
-            cities = (List<City>) session.getAttribute("cities");
-        } else {
-            cities = new ArrayList<City>();
-        }
+        int cityID = DataManager.getCityIDByName(city.getName());
+        if (cityID == -1) throw new SQLException("Failed to load new city");
+        city.setID(cityID);
+        List<City> cities = (List<City>) session.getAttribute("cities");
         cities.add(city);
         session.setAttribute("cities", cities);
+    }
+
+    public void changeCity() throws IOException {
+        HttpSession session = request.getSession();
+        List<City> cities = (List<City>) session.getAttribute("cities");
+        City changeCity = (City) session.getAttribute("activeCity");
+        final int cityNum = parseCityID(request);
+        for (City city : cities) {
+            if (city.getID() == cityNum) {
+                changeCity = city;
+                break;
+            }
+        }
+        session.setAttribute("activeCity", changeCity);
+
+        request.setAttribute("changeCityName", changeCity.getName());
+        ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
+    }
+
+    private int parseCityID(final HttpServletRequest request) {
+        final String queryString = request.getQueryString();
+        final int beginIndex = queryString.indexOf("=") + 1;
+        final String cityID = queryString.substring(beginIndex);
+        return Integer.parseInt(cityID);
     }
 }

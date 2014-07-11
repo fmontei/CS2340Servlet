@@ -42,6 +42,9 @@ public class ItineraryServlet extends HttpServlet {
             doSortEventsRequest(request, response);
         } else if (createNewCityRequested(request)) {
             doCreateCityRequest(request, response);
+        } else if (changeCityRequested(request)) {
+            CityForm cityForm = new CityForm(request, response);
+            cityForm.changeCity();
         } else {
             response.sendRedirect("jsp/itinerary_overview.jsp");
         }
@@ -85,7 +88,6 @@ public class ItineraryServlet extends HttpServlet {
                                         HttpServletResponse response)
         throws IOException {
         new LodgingForm(request, response).getLodgingsAroundLocation();
-        response.sendRedirect("jsp/index.jsp");
     }
 
     private boolean moreLodgingResultsRequested(HttpServletRequest request) {
@@ -189,6 +191,11 @@ public class ItineraryServlet extends HttpServlet {
         throws IOException {
         final CityForm cityForm = new CityForm(request, response);
         cityForm.createNewCity();
+    }
+
+    private boolean changeCityRequested(final HttpServletRequest request) {
+        return request.getQueryString() != null
+                && request.getQueryString().contains("city_id=");
     }
 
     private boolean setLodgingTimeRequested(final HttpServletRequest request) {

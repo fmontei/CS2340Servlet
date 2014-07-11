@@ -1,9 +1,6 @@
 package model;
 
-import database.DataManager;
-import database.Itinerary;
-import database.User;
-import database.Preference;
+import database.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -33,10 +30,13 @@ public class CreateItineraryForm {
                 foodType, attrType);
         int preferenceID = savePreference(preference);
         User user = (User) session.getAttribute("currentUser");
-        int userID = user.getID();
-        Itinerary newItinerary = new Itinerary(name, address, coordinates,
-                transportation, userID, preferenceID);
-        saveItinerary(newItinerary);
+        final int userID = user.getID();
+        final Itinerary newItinerary =
+                new Itinerary(name, transportation, userID, preferenceID);
+        final int newItineraryID = saveItinerary(newItinerary);
+        final City newCity = new City(address, address, coordinates.getLat(),
+                coordinates.getLng(), newItineraryID);
+        saveCity(newCity);
     }
 
     private Coordinates getCoordinates() {
@@ -62,9 +62,20 @@ public class CreateItineraryForm {
         return preferenceID;
     }
 
-    private void saveItinerary(Itinerary itinerary) {
+    private int saveItinerary(Itinerary itinerary) {
         try {
             DataManager.createItinerary(itinerary);
+            Itinerary loaded = DataManager.getItineraryByName(itinerary.getName());
+            return loaded.getID();
+        } catch (SQLException ex) {
+            request.setAttribute("error", ex.getMessage());
+            return -1;
+        }
+    }
+
+    private void saveCity(City city) {
+        try {
+            DataManager.createCity(city);
         } catch (SQLException ex) {
             request.setAttribute("error", ex.getMessage());
         }

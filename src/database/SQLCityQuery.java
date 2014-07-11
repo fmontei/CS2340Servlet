@@ -1,7 +1,5 @@
 package database;
 
-import model.Coordinates;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,6 +22,21 @@ public class SQLCityQuery extends SQLQuery {
         preparedStatement.setDouble(4, city.getLongitude());
         preparedStatement.setInt(5, city.getItineraryID());
         preparedStatement.executeUpdate();
+    }
+
+    public int getCityIDByName(final String cityName) throws SQLException {
+        final String query =
+                "SELECT ID FROM CITY WHERE CITY.name = ?";
+        PreparedStatement preparedStatement =
+                super.dbConnection.prepareStatement(query);
+        preparedStatement.setString(1, cityName);
+        ResultSet result = preparedStatement.executeQuery();
+        int cityID = -1;
+        while (result.next()) {
+            cityID  = result.getInt("ID");
+            break;
+        }
+        return cityID;
     }
 
     public List<City> getCitiesByItineraryID(final int itineraryID)

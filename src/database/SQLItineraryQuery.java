@@ -1,8 +1,5 @@
 package database;
 
-import model.Coordinates;
-
-import java.awt.geom.Point2D;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,19 +12,15 @@ public class SQLItineraryQuery extends SQLQuery {
     }
 
     public void createItineraryQuery(Itinerary itinerary) throws SQLException {
-        String query = "INSERT INTO ITINERARY (userID, name, address, " +
-                "latitude, longitude, transportation, creationDate," +
-                "preferenceID) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO ITINERARY (name, userID, transportation, " +
+                "creationDate, preferenceID) VALUES(?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement =
                 super.dbConnection.prepareStatement(query);
-        preparedStatement.setInt(1, itinerary.getUserID());
-        preparedStatement.setString(2, itinerary.getName());
-        preparedStatement.setString(3, itinerary.getAddress());
-        preparedStatement.setDouble(4, itinerary.getCoordinates().getLat());
-        preparedStatement.setDouble(5, itinerary.getCoordinates().getLng());
-        preparedStatement.setString(6, itinerary.getTransportationMode());
-        preparedStatement.setString(7, itinerary.getCreationDate());
-        preparedStatement.setInt(8, itinerary.getPreferenceID());
+        preparedStatement.setString(1, itinerary.getName());
+        preparedStatement.setInt(2, itinerary.getUserID());
+        preparedStatement.setString(3, itinerary.getTransportationMode());
+        preparedStatement.setString(4, itinerary.getCreationDate());
+        preparedStatement.setInt(5, itinerary.getPreferenceID());
         preparedStatement.executeUpdate();
     }
 
@@ -48,18 +41,36 @@ public class SQLItineraryQuery extends SQLQuery {
         Itinerary itinerary = new Itinerary();
         while (results.next()) {
             String name = results.getString("name");
-            String address = results.getString("address");
             String transportationMode = results.getString("transportation");
             String creationDate = results.getString("creationDate");
             int intID = Integer.parseInt(ID);
             int userID = results.getInt("userID");
             int preferenceID = results.getInt("preferenceID");
-            float latitude = results.getFloat("latitude");
-            float longitude = results.getFloat("longitude");
-            Coordinates coordinates = new Coordinates(latitude, longitude);
-            itinerary = new Itinerary(name, address, coordinates,
-                    transportationMode, creationDate, intID, userID,
-                    preferenceID);
+            itinerary = new Itinerary(name, transportationMode, creationDate,
+                    intID, userID, preferenceID);
+            break;
+        }
+        return itinerary;
+    }
+
+    public Itinerary getItineraryByName(final String itineraryName)
+            throws SQLException {
+        Itinerary itinerary = new Itinerary();
+        final String query = "SELECT * FROM itinerary " +
+                "WHERE name = ?;";
+        PreparedStatement preparedStatement =
+                super.dbConnection.prepareStatement(query);
+        preparedStatement.setString(1, itineraryName);
+        ResultSet results = preparedStatement.executeQuery();
+        while(results.next()) {
+            int ID = results.getInt("ID");
+            int userID = results.getInt("userID");
+            int preferenceID = results.getInt("preferenceID");
+            String name = results.getString("name");
+            String transportationMode = results.getString("transportation");
+            String creationDate = results.getString("creationDate");
+            itinerary = new Itinerary(name, transportationMode,
+                    creationDate, ID, userID, preferenceID);
             break;
         }
         return itinerary;
@@ -78,14 +89,10 @@ public class SQLItineraryQuery extends SQLQuery {
             int ID = results.getInt("ID");
             int preferenceID = results.getInt("preferenceID");
             String name = results.getString("name");
-            String address = results.getString("address");
             String transportationMode = results.getString("transportation");
             String creationDate = results.getString("creationDate");
-            float latitude = results.getFloat("latitude");
-            float longitude = results.getFloat("longitude");
-            Coordinates coordinates = new Coordinates(latitude, longitude);
-            Itinerary itinerary = new Itinerary(name, address, coordinates,
-                    transportationMode, creationDate, ID, userID, preferenceID);
+            Itinerary itinerary = new Itinerary(name, transportationMode,
+                    creationDate, ID, userID, preferenceID);
             itineraries.add(itinerary);
         }
         return itineraries;

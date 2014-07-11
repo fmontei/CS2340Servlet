@@ -1,53 +1,47 @@
 package model;
 
 import controller.BrowserErrorHandling;
-import database.DataManager;
-import database.Itinerary;
-import database.Place;
-import database.SQLPlaceQuery;
+import database.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class LodgingForm {
     private HttpServletRequest request;
     private HttpServletResponse response;
     private HttpSession session;
-    private Itinerary activeItinerary;
+    private City activeCity;
 
     public LodgingForm(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
         this.session = request.getSession();
-        this.activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
+        this.activeCity = (City) session.getAttribute("activeCity");
     }
 
-    public void getLodgingsAroundLocation() {
+    public void getLodgingsAroundLocation() throws IOException{
         session = request.getSession();
         final String name = parseName();
-        final String formattedCoords = activeItinerary.getCoordinates().format();
+        final double latitude = activeCity.getLatitude();
+        final double longitude = activeCity.getLongitude();
+        final String coordinates = new Coordinates(latitude, longitude).format();
         final int radius = parseRadius();
         final int limit = parseLimit();
         List<Place> lodgings;
         try {
             YelpAPI yelpAPI = new YelpAPI();
-            lodgings = yelpAPI.queryAPI(name, formattedCoords, radius, limit, 0);
+            lodgings = yelpAPI.queryAPI(name, coordinates, radius, limit, 0);
             session.setAttribute("lodgingResults", lodgings);
             session.setAttribute("lastLodgingName", name);
             session.setAttribute("lastLodgingRadius", radius);
             session.setAttribute("lastLodgingLimit", limit);
+            response.sendRedirect("jsp/index.jsp");
         } catch (Exception ex) {
-            try {
-                PrintWriter out = response.getWriter();
-                out.println("<html>ERROR: problem retrieving results.</html>");
-            } catch (IOException ignore) {}
+            BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
     }
 
@@ -57,20 +51,19 @@ public class LodgingForm {
         final String limit = session.getAttribute("lastLodgingLimit").toString();
         final int radiusInt = Integer.parseInt(radius);
         final int limitInt = Integer.parseInt(limit);
-        final String formattedCoords = activeItinerary.getCoordinates().format();
+        final double latitude = activeCity.getLatitude();
+        final double longitude = activeCity.getLongitude();
+        final String coordinates = new Coordinates(latitude, longitude).format();
         List<Place> currentResults;
         List<Place> previousResults = (List) session.getAttribute("lodgingResults");
         try {
             YelpAPI yelpAPI = new YelpAPI();
-            currentResults = yelpAPI.queryAPI(name, formattedCoords,
-                    radiusInt, limitInt, limitInt);
+            currentResults = yelpAPI.queryAPI(name, coordinates, radiusInt,
+                    limitInt, limitInt);
             List<Place> mergedResults = mergeResults(previousResults, currentResults);
             session.setAttribute("lodgingResults", mergedResults);
         } catch (Exception ex) {
-            try {
-                PrintWriter out = response.getWriter();
-                out.println("<html>ERROR: problem retrieving results.</html>");
-            } catch (IOException ignore) {}
+            BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
     }
 
@@ -104,15 +97,15 @@ public class LodgingForm {
 
     public void saveLodgingSelection() throws IOException {
         final String lodgingURI = request.getQueryString();
-        int begin = lodgingURI.indexOf("=") + 1;
-        String lodgingIDAsString = lodgingURI.substring(begin);
+        final int begin = lodgingURI.indexOf("=") + 1;
+        final String lodgingIDAsString = lodgingURI.substring(begin);
         final int lodgingID = Integer.parseInt(lodgingIDAsString);
-        List<Place> results =
-                (List<Place>) session.getAttribute("lodgingResults");
+        List<Place> results = (List<Place>) session.getAttribute("lodgingResults");
         final Place selection = results.get(lodgingID);
         try {
-            DataManager.createLodging(selection, activeItinerary.getID());
-            session.setAttribute("lodgingSelection", selection);
+            DataManager.createLodging(selection, activeCity.getID());
+            activeCity.setLodging(selection);
+            session.setAttribute("activeCity", activeCity);
             response.sendRedirect("jsp/index.jsp");
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
@@ -125,11 +118,11 @@ public class LodgingForm {
         final String reformattedCheckIn = reformatHTMLDateTime(checkIn);
         final String reformattedCheckOut = reformatHTMLDateTime(checkOut);
         try {
-            Place lodging = (Place) session.getAttribute("lodgingSelection");
+            Place lodging = activeCity.getLodging();
             lodging.setCheckIn(reformattedCheckIn);
             lodging.setCheckOut(reformattedCheckOut);
             DataManager.updatePlaceTimeByID(lodging, "lodging");
-            updateLodgingSession(lodging);
+            updateCurrentSession(lodging);
             response.sendRedirect("jsp/index.jsp");
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
@@ -141,7 +134,8 @@ public class LodgingForm {
         return dateConverter.convert(htmlFormat);
     }
 
-    private void updateLodgingSession(final Place lodging) {
-        session.setAttribute("lodgingSelection", lodging);
+    private void updateCurrentSession(final Place lodging) {
+        activeCity.setLodging(lodging);
+        session.setAttribute("activeCity", activeCity);
     }
 }

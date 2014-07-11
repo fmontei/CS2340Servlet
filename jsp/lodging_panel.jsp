@@ -1,3 +1,4 @@
+<%@ page import="database.City" %>
 <%@ page import="database.Place" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
@@ -25,7 +26,8 @@
     </div>
 </div>
 
-<%  Place selection = (Place) session.getAttribute("lodgingSelection");
+<%  final City lodgingPanelCity = (City) session.getAttribute("activeCity");
+    Place selection = (lodgingPanelCity != null) ? lodgingPanelCity.getLodging() : null;
     Object lodgingObject = session.getAttribute("lodgingResults");
     int numberOfLodgingsFound = 0;
     List<Place> lodgingResults = new ArrayList<Place>();
@@ -73,7 +75,7 @@
                         <% if (session.getAttribute("lodgingResults") != null) { %>
                             <p>Select a lodging below. This list has been created
                                 based on your Itinerary's address, which is:
-                                <b><%=((Itinerary) session.getAttribute("activeItinerary")).getAddress()%></b>
+                                <b><%=lodgingPanelCity.getAddress()%></b>
                             </p>
                             <thead id="lodging-table-head">
                                 <tr>

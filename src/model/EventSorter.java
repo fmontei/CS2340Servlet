@@ -1,5 +1,6 @@
 package model;
 
+import database.City;
 import database.Place;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,8 @@ public class EventSorter {
 
     public void sort() throws IOException {
         final String sortType = determineSortType();
-        List<Place> events = (List) session.getAttribute("events");
+        final City activeCity = (City) session.getAttribute("activeCity");
+        List<Place> events = activeCity.getEvents();
         if (nameSortRequested(sortType)) {
             sortByName(events);
         } else if (creationDateSortRequested(sortType)) {

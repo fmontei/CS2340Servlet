@@ -1,9 +1,13 @@
 package database;
 
+import java.util.List;
+
 public class City {
     private String name, address;
     private int ID, itineraryID;
     private double latitude, longitude;
+    private List<Place> events;
+    private Place lodging;
 
     public City(String name, String address, double latitude,
                 double longitude, int itineraryID) {
@@ -38,6 +42,14 @@ public class City {
         return this.longitude;
     }
 
+    public List<Place> getEvents() {
+        return events;
+    }
+
+    public Place getLodging() {
+        return this.lodging;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -60,5 +72,13 @@ public class City {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public void setEvents(List<Place> events) {
+        this.events = events;
+    }
+
+    public void setLodging(Place lodging) {
+        this.lodging = lodging;
     }
 }

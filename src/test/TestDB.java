@@ -9,10 +9,17 @@ public class TestDB {
         try {
             TestDB testDB = new TestDB();
             //testDB.testLodgingByItineraryID("16");
-            SQLCityQuery cityQuery = new SQLCityQuery();
-            List<City> cities = cityQuery.getCitiesByItineraryID(16);
-            for (City city : cities) {
-                System.out.println(city.getName());
+            City city = new City("another city", "another", 2, 2, 19);
+            Place place = new Place();
+            place.setID(110);
+            place.setCheckIn("hi");
+            place.setCheckOut("hiagain");
+            List<City> cities = DataManager.getCitiesAndPlacesByItineraryID(21);
+            for (City c : cities) {
+                List<Place> events = c.getEvents();
+                for (Place e : events) {
+                    System.out.println(e.getName());
+                }
             }
 
         } catch (Exception ex) {
@@ -43,8 +50,8 @@ public class TestDB {
         DataManager.createLodging(lodging, 14);
     }
 
-    public void testGetPlaceByItineraryID(final String ID) throws SQLException {
-        Place lodging = DataManager.getLodgingByItineraryID(ID);
+    public void testGetPlaceByItineraryID(final int ID) throws SQLException {
+        Place lodging = DataManager.getLodgingByCityID(ID);
         System.out.println(lodging.getName());
     }
 
@@ -52,8 +59,8 @@ public class TestDB {
         DataManager.deleteItinerary(ID);
     }
 
-    public void testGetEventsByItineraryID(final String ID) throws SQLException {
-        List<Place> events = DataManager.getEventsByItineraryID(ID);
+    public void testGetEventsByItineraryID(final int ID) throws SQLException {
+        List<Place> events = DataManager.getEventsByCityID(ID);
         System.out.println("Itinerary ID: " + ID);
         System.out.println("Number of events: " + events.size());
         for (Place p : events) {
@@ -66,10 +73,10 @@ public class TestDB {
         DataManager.deleteEventByEventAttributes(place);
     }
 
-    public void testLodgingByItineraryID(final String itineraryID)
+    public void testLodgingByItineraryID(final int itineraryID)
             throws SQLException  {
         final SQLPlaceQuery placeQuery = new SQLPlaceQuery();
-        Place lodging = placeQuery.getLodgingByItineraryID(itineraryID);
+        Place lodging = placeQuery.getLodgingByCityID(itineraryID);
         System.out.println(lodging.getName());
     }
 }

@@ -213,12 +213,18 @@
                         </fb:login-button>
                     </div>
                 </div>
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="active"><a href="#">Your Cities</a></li>
+                <ul class="nav nav-tabs" id="cityList" role="tablist">
+                    <li><a href="#">Your Cities</a></li>
                     <%  List<City> cities = (List<City>) session.getAttribute("cities");
+                        String cityAddress = "";
+                        City indexPanelCity = null;
                         if (cities != null) {
-                            for (City city : cities) { %>
-                            <li><a href="#"><%=city.getName()%></a></li>
+                            indexPanelCity = (City) session.getAttribute("activeCity");
+                            cityAddress = (indexPanelCity != null) ? indexPanelCity.getAddress() : "";
+                            if (cities != null) {
+                                for (City city : cities) { %>
+                                <li><a href="/CS2340Servlet/itinerary?city_id=<%=city.getID()%>"><%=city.getName()%></a></li>
+                            <%  } %>
                         <%  } %>
                     <%  } %>
                 </ul>
@@ -234,10 +240,9 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading" style="height: 40px">
                                 <%  Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
-                                    String itineraryName = activeItinerary.getName();
-                                    String itineraryAddress = activeItinerary.getAddress(); %>
+                                    String itineraryName = activeItinerary.getName();%>
                                 <span style="float: left">Itinerary Name:&nbsp;&nbsp;&nbsp;<%=itineraryName%></span>
-                                <span style="float: right">Address:&nbsp;&nbsp;&nbsp;<%=itineraryAddress%></span>
+                                <span style="float: right">Address:&nbsp;&nbsp;&nbsp;<%=cityAddress%></span>
                             </div>
                             <div class="panel-body">
                             <ol class="pager" style="background-color: white">
@@ -259,9 +264,10 @@
                                 </li>
                             </ol>
                             <div class="new-city-message">
+
                                 <h3>Want to travel to a another city?</h3>
                                 <p>No problem. Add a <strong>New City</strong> to your itinerary below:</p>
-                                <p><a class="btn btn-primary btn-lg" data-toggle="modal"
+                                <p style="margin-top: 73px; opacity: .9"><a class="btn btn-primary btn-lg" data-toggle="modal"
                                       data-target="#newCityModal" role="button">Add New City</a></p>
                             </div>
                             <ul class="nav nav-pills" style="float: right">
@@ -271,7 +277,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <%  List<Place> userEvents = (List<Place>) session.getAttribute("events");
+                                    <%  List<Place> userEvents = (indexPanelCity != null) ? indexPanelCity.getEvents() : null;
                                         int numEvents = 0;
                                         if (userEvents != null) {
                                             numEvents = userEvents.size();
@@ -311,9 +317,9 @@
                                 <div id="collapseOne" class="panel-collapse collapse in">
                                     <div class="panel-body">
                                         <b>Start: </b>
-                                        <%  Place lodgingSelect = (Place) session.getAttribute("lodgingSelection");%>
+                                        <%  Place lodgingSelect = (indexPanelCity != null) ? indexPanelCity.getLodging() : null; %>
                                         <select class="map-event-tooltips" id="start" onchange="calcRoute();">
-                                          <option value= '<%=itineraryAddress%>'>Center </option>
+                                          <option value= '<%=cityAddress%>'>Center </option>
                                           <% if (lodgingSelect != null) { %>
                                           <option value= '<%=lodgingSelect.getFormattedAddress()%>' title="<%=lodgingSelect.getName()%>">
                                               Lodging
@@ -332,7 +338,7 @@
                                         </select>
                                         <b>End: </b>
                                         <select id="end" onchange="calcRoute();">
-                                          <option value= '<%=itineraryAddress%>'>Center </option>
+                                          <option value= '<%=cityAddress%>'>Center </option>
                                           <% if (lodgingSelect != null) { %>
                                           <option value= '<%=lodgingSelect.getFormattedAddress()%>'>Lodging </option>
                                           <% } %>
@@ -443,6 +449,15 @@
             $("#collapseOne").collapse("hide");
             $("#parentCollapse").one("click", function(){
                 initialize();
+            });
+
+            // Change city tabs
+            var citySelection = "<%=request.getAttribute("changeCityName")%>";
+            var cityList = $("#cityList li");
+            cityList.each(function(i, li) {
+                if ($(li).text() === citySelection) {
+                    $(li).addClass("active");
+                }
             });
         });
 
