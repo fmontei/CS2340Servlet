@@ -67,8 +67,8 @@ function initialize() {
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
 }
 
-function codeAddress() {
-    var address = document.getElementById("itineraryAddress").value;
+function codeAddress(formAddress) {
+    var address = formAddress.value;
     geocoder.geocode( { 'address': address}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
             map.setCenter(results[0].geometry.location);
@@ -103,9 +103,11 @@ function calcRoute() {
 
 function setFormattedAddress(formattedAddress) {
     $("#formattedAddress").text("Starting Address currently set to: " + formattedAddress);
+    $("#cityAddress").val(formattedAddress);
 }
 
 function setCoordinates(coordinates) {
     $("#coordinates").text(coordinates);
     $("#coordinates-hidden").val(coordinates);
+    $("#cityCoordinates").val(coordinates);
 }

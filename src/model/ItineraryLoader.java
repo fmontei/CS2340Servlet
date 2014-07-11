@@ -41,6 +41,7 @@ public class ItineraryLoader {
                                   final String itineraryID) throws SQLException {
         loadLodging(session, itineraryID);
         loadEvents(session, itineraryID);
+        loadCities(session, itineraryID);
     }
 
     private void loadLodging(final HttpSession session,
@@ -95,5 +96,28 @@ public class ItineraryLoader {
         SQLPreferenceQuery query = new SQLPreferenceQuery();
         Preference activePreferences = query.getPreferencesByID(preferenceID);
         session.setAttribute("activePreferences", activePreferences);
+    }
+
+    private void loadCities(final HttpSession session,
+                            final String itineraryID) throws SQLException {
+        final int itineraryIntID = Integer.parseInt(itineraryID);
+        List<City> cities = DataManager.getCitiesByItineraryID(itineraryIntID);
+        if (citiesExist(cities)) {
+            storeCitiesIntoSession(session, cities);
+        } else {
+            removeCitiesFromSession(session);
+        }
+    }
+
+    private boolean citiesExist(List<City> cities) {
+        return cities != null && cities.size() > 0;
+    }
+
+    private void storeCitiesIntoSession(HttpSession session, List<City> cities) {
+        session.setAttribute("cities", cities);
+    }
+
+    private void removeCitiesFromSession(HttpSession session) {
+        session.removeAttribute("cities");
     }
 }

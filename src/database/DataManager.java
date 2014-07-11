@@ -99,4 +99,16 @@ public class DataManager {
         final SQLPlaceQuery placeQuery = new SQLPlaceQuery();
         placeQuery.updatePlaceTimeByID(place, placeType);
     }
+
+    public static void createCity(final City city) throws SQLException {
+        SQLCityQuery cityQuery = new SQLCityQuery();
+        cityQuery.createCityQuery(city);
+    }
+
+    public static List<City> getCitiesByItineraryID(final int itineraryID)
+        throws SQLException {
+        SQLCityQuery cityQuery = new SQLCityQuery();
+        final List<City> cities = cityQuery.getCitiesByItineraryID(itineraryID);
+        return cities;
+    }
 }

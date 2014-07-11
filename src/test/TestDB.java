@@ -8,7 +8,12 @@ public class TestDB {
     public static void main(String... args)  {
         try {
             TestDB testDB = new TestDB();
-            testDB.testLodgingByItineraryID("16");
+            //testDB.testLodgingByItineraryID("16");
+            SQLCityQuery cityQuery = new SQLCityQuery();
+            List<City> cities = cityQuery.getCitiesByItineraryID(16);
+            for (City city : cities) {
+                System.out.println(city.getName());
+            }
 
         } catch (Exception ex) {
             System.out.println("CAUGHT EXCEPTION");

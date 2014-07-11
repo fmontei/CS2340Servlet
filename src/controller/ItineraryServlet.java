@@ -40,6 +40,8 @@ public class ItineraryServlet extends HttpServlet {
             doEventDeleteRequest(request, response);
         } else if (sortEventsRequested(request)) {
             doSortEventsRequest(request, response);
+        } else if (createNewCityRequested(request)) {
+            doCreateCityRequest(request, response);
         } else {
             response.sendRedirect("jsp/itinerary_overview.jsp");
         }
@@ -176,6 +178,17 @@ public class ItineraryServlet extends HttpServlet {
         throws IOException {
         final EventSorter eventSorter = new EventSorter(request, response);
         eventSorter.sort();
+    }
+
+    private boolean createNewCityRequested(final HttpServletRequest request) {
+        return request.getParameter("createNewCityBtn") != null;
+    }
+
+    private void doCreateCityRequest(final HttpServletRequest request,
+                                     final HttpServletResponse response)
+        throws IOException {
+        final CityForm cityForm = new CityForm(request, response);
+        cityForm.createNewCity();
     }
 
     private boolean setLodgingTimeRequested(final HttpServletRequest request) {

@@ -215,8 +215,12 @@
                 </div>
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="active"><a href="#">Your Cities</a></li>
-                    <li><a href="#">Profile</a></li>
-                    <li><a href="#">Messages</a></li>
+                    <%  List<City> cities = (List<City>) session.getAttribute("cities");
+                        if (cities != null) {
+                            for (City city : cities) { %>
+                            <li><a href="#"><%=city.getName()%></a></li>
+                        <%  } %>
+                    <%  } %>
                 </ul>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -251,14 +255,14 @@
                                         Create New Event</a>
                                 </li>
                                 <li id="li-create-city">
-                                    <a href="/CS2340Servlet/itinerary?create_city">
-                                        Add New City</a>
+                                    <a href="#" data-toggle="modal" data-target="#newCityModal">Add New City</a>
                                 </li>
                             </ol>
                             <div class="new-city-message">
                                 <h3>Want to travel to a another city?</h3>
                                 <p>No problem. Add a <strong>New City</strong> to your itinerary below:</p>
-                                <p><a class="btn btn-primary btn-lg" role="button">Add New City</a></p>
+                                <p><a class="btn btn-primary btn-lg" data-toggle="modal"
+                                      data-target="#newCityModal" role="button">Add New City</a></p>
                             </div>
                             <ul class="nav nav-pills" style="float: right">
                                 <li>
@@ -359,6 +363,7 @@
         </div>
     </div>
 
+    <%@ include file="new_city.jsp" %>
     <%@ include file="footer.jsp" %>
 
     <!-- Error Message -->
@@ -455,6 +460,5 @@
             return elementID;
         }
     </script>
-
 
 <%}%>

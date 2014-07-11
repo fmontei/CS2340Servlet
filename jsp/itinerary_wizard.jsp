@@ -1,14 +1,12 @@
-
-
 <div id="itineraryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="itineraryModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-center">
+    <div class="modal-dialog">
         <div class="modal-content">
             <form id="itinerary_form" action="/CS2340Servlet/itinerary" method="POST" class="form-inline" role="form">
 
                 <div id="form_page_1">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Itinerary Creation (1/4)</h4>
+                        <h2 class="modal-title">Itinerary Creation (1/4)</h2>
                     </div>
                     <div class="modal-body">
                         <h4>First, let's create a name for your Itinerary</h4><br />
@@ -33,14 +31,14 @@
                 <div id="form_page_2">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Itinerary Creation (2/4)</h4>
+                        <h2 class="modal-title">Itinerary Creation (2/4)</h2>
                     </div>
                     <div class="modal-body">
                         <h4>Now, let's set your Preferences</h4><br />
                         <p>Enter your preferences:</p>
                         <label>Rating Preference *
                             <div class="input-group" style="width: 500px">
-                                <span class="input-group-addon">
+                                <span class="input-group-addon" style="width: 15%">
                                     <span class="glyphicon glyphicon-star"></span>
                                 </span>
                                 <input type="number" class="form-control" id="minRating" name="minRating"
@@ -63,7 +61,7 @@
                         </label><br /><br />
                         <label>Distance Preference *
                             <div class="input-group" style="width: 500px">
-                                <span class="input-group-addon">
+                                <span class="input-group-addon" style="width: 15%">
                                     <span class="glyphicon glyphicon-road"></span>
                                 </span>
                                 <input type="number" class="form-control" id="maxDistance" name="maxDistance"
@@ -104,12 +102,12 @@
                 <div id="form_page_3">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Itinerary Creation (3/4)</h4>
+                        <h2 class="modal-title">Itinerary Creation (3/4)</h2>
                     </div>
                     <div class="modal-body">
-                        <h4>Next, let's designate your Itinerary's Address</h4><br />
+                        <h4>Next, create a <b>City</b> for your Itinerary</h4><br />
 
-                        <p>Enter an address for the Itinerary's location:</p>
+                        <p>Enter an address for your first City's location:</p>
                         <label>Address *
                             <div class="input-group" style="width: 500px">
                                 <span class="input-group-addon">
@@ -119,7 +117,9 @@
                                        required="required"
                                        placeholder = "Address" />
                                 <span class="input-group-btn">
-                                    <button onclick="codeAddress()" class="btn btn-default" type="button">Find</button>
+                                    <button
+                                            onclick="codeAddress(document.getElementById('itineraryAddress'))"
+                                            class="btn btn-default" type="button">Find</button>
                                 </span>
                             </div>
                         </label><br /><hr />
@@ -139,7 +139,7 @@
                 <div id="form_page_4">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Itinerary Creation (4/4)</h4>
+                        <h2 class="modal-title">Itinerary Creation (4/4)</h2>
                     </div>
                     <div class="modal-body">
                         <h4>Finally, let's specify your Transportation Style</h4><br />

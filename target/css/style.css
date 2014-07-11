@@ -285,3 +285,7 @@ th, td {
 .modal-dialog-center {
     margin-top: 15% !important;
 }
+
+.being-dragged {
+    opacity: .4;
+}
