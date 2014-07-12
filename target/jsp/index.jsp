@@ -83,117 +83,196 @@
 
 <% } else { %>
 
-<div class="row-offcanvas row-offcanvas-left">
-    <div id="sidebar" class="sidebar">
-        <div class="col-md-12">
-            <ul class="list-unstyled">
-                <li class="nav-header"><a href="#"><h3>Toolbox</h3></a></li>
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#userMenu">
-                    <h4>User <i class="glyphicon glyphicon-chevron-down"></i></h4>
-                </a>
-                    <ul style="list-style: none;" class="collapse in" id="userMenu">
-                        <li class="active"><a href="#"><i class="glyphicon glyphicon-home"></i> Home</a>
-                        </li>
-                        <li><a href="#"><i class="glyphicon glyphicon-envelope"></i> Messages <span class="badge badge-info">4</span></a>
-                        </li>
-                        <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Settings</a>
-                        </li>
-                        <li><a href="#"><i class="glyphicon glyphicon-comment"></i> Shoutbox</a>
-                        </li>
-                        <li><a href="#"><i class="glyphicon glyphicon-user"></i> Staff List</a>
-                        </li>
-                        <li><a href="#"><i class="glyphicon glyphicon-flag"></i> Transactions</a>
-                        </li>
-                        <li><a href="#"><i class="glyphicon glyphicon-exclamation-sign"></i> Rules</a>
-                        </li>
-                        <li><a href="#"><i class="glyphicon glyphicon-off"></i> Logout</a>
-                        </li>
-                    </ul>
+<div class="itinerary-header">
+
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">DESTI</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            <fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();">
+                            </fb:login-button>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+</div>
+
+<div class="itinerary-overview">
+
+    <div id="overview-header">
+        <h1>YOUR ITINERARY</h1>
+
+        <p><span style="font-size: 20px"><b>Find Events for your First City:</b></span><br />
+            To add events for this city, Create a New Event<br /><br />
+            <span style="font-size: 20px"><b>Or travel to a New City:</b></span><br />
+            To go sightseeing in another city, Add a New City to your Itinerary
+        </p><br /><br />
+
+
+        <div class="container" style="width: 80% !important">
+            <ul class="nav nav-tabs" id="cityList" role="tablist">
+                <li><a href="#">Your Cities</a></li>
+                <%  List<City> cities = (List<City>) session.getAttribute("cities");
+                    String cityAddress = "";
+                    City indexPanelCity = null;
+                    if (cities != null) {
+                        indexPanelCity = (City) session.getAttribute("activeCity");
+                        cityAddress = (indexPanelCity != null) ? indexPanelCity.getAddress() : "";
+                        if (cities != null) {
+                            for (City city : cities) { %>
+                <li><a href="/CS2340Servlet/itinerary?city_id=<%=city.getID()%>"><%=city.getName()%></a></li>
+                <%  } %>
+                <%  } %>
+                <%  } %>
+            </ul>
+
+            <div style="height: 40px">
+                <%  Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
+                    String itineraryName = activeItinerary.getName();%>
+                <span style="float: left">Itinerary Name:&nbsp;&nbsp;&nbsp;<%=itineraryName%></span>
+                <span style="float: right">Address:&nbsp;&nbsp;&nbsp;<%=cityAddress%></span>
+            </div>
+        </div>
+    </div>
+
+    <div>
+
+        <div>
+            <ol class="pager">
+                <li>
+                    <a href="itinerary_overview.jsp">Select Itinerary</a>
                 </li>
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#preferences-menuitem">
-                    <h4>Preferences <i class="glyphicon glyphicon-chevron-right"></i></h4>
+                <li><a href="#"
+                       onclick="showPage1()"
+                       data-toggle="modal"
+                       data-target="#itineraryModal">Create New Itinerary
                 </a>
-                    <%  Preference preference = (Preference) session.getAttribute("activePreferences"); %>
-                    <%  int maxDistance;
-                        float minRating;
-                        String priceCategory, attractionType, foodType;
-                        maxDistance = 0;
-                        minRating = 0;
-                        priceCategory = attractionType = foodType = "";
-                        if (preference != null) {
-                            maxDistance = preference.getMaxDistance();
-                            minRating = preference.getMinimumRating();
-                            priceCategory = preference.getPriceCategory();
-                            attractionType = preference.getPreferredAttractionType();
-                            foodType = preference.getPreferredFoodType();
+                </li>
+                <li id="li-create-event">
+                    <a id="a-create-event" href="/CS2340Servlet/itinerary?create_event=1">
+                        Create New Event</a>
+                </li>
+                <li id="li-create-city">
+                    <a href="#" data-toggle="modal" data-target="#newCityModal">Add New City</a>
+                </li>
+            </ol>
+
+            <div class="row">
+
+                <div class="col col-md-6">
+                    <div class="new-city-message">
+
+                        <h3>Want to travel to a another city?</h3>
+                        <p>Add a <strong>New City</strong> to your Itinerary below:</p>
+                        <p style="margin-top: 73px; opacity: .9"><a class="btn btn-primary btn-lg" data-toggle="modal"
+                                                                    data-target="#newCityModal" role="button">Add New City</a></p>
+                    </div>
+                </div>
+
+                <div class="col col-md-6">
+                    <div class="new-event-message">
+
+                        <h3>Want to add places to your current City?</h3>
+                        <p>Add a <strong>New Event</strong> to your City below:</p>
+                        <p style="margin-top: 73px; opacity: .9"><a class="btn btn-primary btn-lg" data-toggle="modal"
+                                                                    data-target="#newCityModal" role="button">Add New Event</a></p>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <ul class="nav nav-pills" style="float: right">
+                <li>
+                    <a href="#" style="color: rgb(66, 139, 202); font-weight: bold">
+                        Currently Viewing: <%=activeItinerary.getName()%>
+                    </a>
+                </li>
+                <li>
+                    <%  List<Place> userEvents = (indexPanelCity != null) ? indexPanelCity.getEvents() : null;
+                        int numEvents = 0;
+                        if (userEvents != null) {
+                            numEvents = userEvents.size();
                         }
                     %>
-                    <ul style="list-style-type: square;" class="collapse" id="preferences-menuitem">
-                        <h4>Information &amp; Stats  <a href="#">edit</a></h4>
-                        <li><b>Max Distance:</b> <%=maxDistance%></li>
-                        <li><b>Rating:</b>  <%=minRating%></li>
-                        <li><b>Price</b> : <%=priceCategory%></li>
-                        <li><b>Attraction:</b>  <%=attractionType%></li>
-                        <li><b>Food:</b>  <%=foodType%></li>
-                    </ul>
-                </li>
-                <li class="nav-header">
-                    <a href="#" data-toggle="collapse" data-target="#google-search-menuitem">
-                        <h4>Keyword Search<i class="glyphicon glyphicon-chevron-right"></i></h4>
+                    <a href="#">
+                                        <span class="badge pull-right"
+                                              style="position: relative; top: 2px; background-color: rgb(66, 139, 202)">
+                                            <%=numEvents%>
+                                        </span>
+                        Events
                     </a>
-                    <ul style="list-style: none; padding-left: 0" class="collapse" id="google-search-menuitem">
-                        <li>
-                            <div id="google-textsearch">
-                                <form class="form-inline" role="form" action="/CS2340Servlet/itinerary" method="POST">
-                                    <div class="form-group">
-                                        <input name="google-textsearch-query" type="text"
-                                               class="form-control"
-                                               placeholder="Keyword Search"
-                                               style="width: 70%" />
-                                        <input name="google-textsearch-submit"
-                                               type="image"
-                                               value="trialSubmit"
-                                               src="../images/search.png"
-                                               class="form-control" />
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-                        <%  List<Place> places = (List<Place>) session.getAttribute("textSearchResults");
-                            if (places != null) {
-                                int i = 0;
-                                for (Place place : places) {
-                                    String placeName = place.getName();
-                                    String address = place.getFormattedAddress();
-                                    int priceLevel = place.getPriceLevel();
-                                    double rating = place.getRating();
-                                    boolean openNow = place.isOpenNow();
-                                    String openOrClosed = (openNow) ? "Open" : "Closed";
-                                    String color = (openNow) ? "rgb(0, 153, 0)" : "red";
-                        %>
-                        <li data-container="body"
-                            data-toggle="popover"
-                            data-placement="right"
-                            data-content="Price level: <%=priceLevel%> | Rating: <%=rating%>">
-                            <a class="popLink" href="javascript:void(0);" style="font-size: 10px;">
-                                <b><%=++i%>.<%=placeName%></b> | <%=address%> | <span style="color: <%=color%>"><%=openOrClosed%></span>
-                            </a>
-                        </li>
-                        <%      } %>
-                        <%  }     %>
-                    </ul>
                 </li>
-                <li class="nav-header" style="margin-top: 40px"><a href="#"><h3>Navigation</h3></a></li>
-                <ul class="nav nav-list navbar-navigation">
-                    <li><a href="#facebookLogin">Facebook Login<i class="glyphicon glyphicon-chevron-right"></i></a></li>
-                    <li><a href="#itineraryOverview">Overview<i class="glyphicon glyphicon-chevron-right"></i></a></li>
-                    <li><a href="#mapSection">Map<i class="glyphicon glyphicon-chevron-right"></i></a></li>
-                    <li><a href="#lodging">Lodging<i class="glyphicon glyphicon-chevron-right"></i></a></li>
-                    <li><a href="#eventsPlaces">Events & Places<i class="glyphicon glyphicon-chevron-right"></i></a></li>
-                </ul>
+
+                <li>
+                    <a href="#" id="preferences-trigger">
+                        Preferences
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
+
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Your Itinerary
+        </div>
+        <section id="itineraryOverview"></section>
+        <div class="panel-body" id="itinerary-panel-body">
+            <div class="page-header">
+                <h1><span class="glyphicon glyphicon-move"></span>Overview</h1>
+            </div>
+
+        </div>
+    </div>
+
 </div>
 
 <div class="container">
@@ -201,9 +280,7 @@
         <div class="col-md-10 col-md-push-2" style="padding-left: 80px">
             <div id="div-overview">
                 <section id="facebookLogin"></section>
-                <h1 class="page-header" id="page-header">
-                    Welcome <%=request.getSession().getAttribute("welcomeName")%>!
-                </h1>
+
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         Facebook Login
@@ -213,92 +290,9 @@
                         </fb:login-button>
                     </div>
                 </div>
-                <ul class="nav nav-tabs" id="cityList" role="tablist">
-                    <li><a href="#">Your Cities</a></li>
-                    <%  List<City> cities = (List<City>) session.getAttribute("cities");
-                        String cityAddress = "";
-                        City indexPanelCity = null;
-                        if (cities != null) {
-                            indexPanelCity = (City) session.getAttribute("activeCity");
-                            cityAddress = (indexPanelCity != null) ? indexPanelCity.getAddress() : "";
-                            if (cities != null) {
-                                for (City city : cities) { %>
-                                <li><a href="/CS2340Servlet/itinerary?city_id=<%=city.getID()%>"><%=city.getName()%></a></li>
-                            <%  } %>
-                        <%  } %>
-                    <%  } %>
-                </ul>
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        Your Itinerary
-                    </div>
-                    <section id="itineraryOverview"></section>
-                    <div class="panel-body" id="itinerary-panel-body">
-                        <div class="page-header">
-                            <h1><span class="glyphicon glyphicon-move"></span>Overview</h1>
-                        </div>
-                        <div class="panel panel-primary">
-                            <div class="panel-heading" style="height: 40px">
-                                <%  Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
-                                    String itineraryName = activeItinerary.getName();%>
-                                <span style="float: left">Itinerary Name:&nbsp;&nbsp;&nbsp;<%=itineraryName%></span>
-                                <span style="float: right">Address:&nbsp;&nbsp;&nbsp;<%=cityAddress%></span>
-                            </div>
-                            <div class="panel-body">
-                            <ol class="pager" style="background-color: white">
-                                <li>
-                                    <a href="itinerary_overview.jsp">Select Itinerary</a>
-                                </li>
-                                <li><a href="#"
-                                       onclick="showPage1()"
-                                       data-toggle="modal"
-                                       data-target="#itineraryModal">Create New Itinerary
-                                    </a>
-                                </li>
-                                <li id="li-create-event">
-                                    <a id="a-create-event" href="/CS2340Servlet/itinerary?create_event=1">
-                                        Create New Event</a>
-                                </li>
-                                <li id="li-create-city">
-                                    <a href="#" data-toggle="modal" data-target="#newCityModal">Add New City</a>
-                                </li>
-                            </ol>
-                            <div class="new-city-message">
 
-                                <h3>Want to travel to a another city?</h3>
-                                <p>No problem. Add a <strong>New City</strong> to your itinerary below:</p>
-                                <p style="margin-top: 73px; opacity: .9"><a class="btn btn-primary btn-lg" data-toggle="modal"
-                                      data-target="#newCityModal" role="button">Add New City</a></p>
-                            </div>
-                            <ul class="nav nav-pills" style="float: right">
-                                <li>
-                                    <a href="#" style="color: rgb(66, 139, 202); font-weight: bold">
-                                        Currently Viewing: <%=activeItinerary.getName()%>
-                                    </a>
-                                </li>
-                                <li>
-                                    <%  List<Place> userEvents = (indexPanelCity != null) ? indexPanelCity.getEvents() : null;
-                                        int numEvents = 0;
-                                        if (userEvents != null) {
-                                            numEvents = userEvents.size();
-                                        }
-                                    %>
-                                    <a href="#">
-                                        <span class="badge pull-right"
-                                              style="position: relative; top: 2px; background-color: rgb(66, 139, 202)">
-                                            <%=numEvents%>
-                                        </span>
-                                        Events
-                                    </a>
-                                </li>
 
-                                <li>
-                                    <a href="#" id="preferences-trigger">
-                                        Preferences
-                                    </a>
-                                </li>
-                            </ul></div>
-                        </div>
+
                         <br />
                         <section id="mapSection"></section>
                         <div class="page-header">
@@ -365,7 +359,6 @@
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
 
