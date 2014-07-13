@@ -243,6 +243,8 @@
 
             </div>
         </div>
+
+        <%@ include file="new_city.jsp" %>
     </div>
 </div>
 
@@ -349,7 +351,7 @@
     </div>
 </div>
 
-    <%@ include file="new_city.jsp" %>
+
     <%@ include file="footer.jsp" %>
 
     <!-- Error Message -->
@@ -376,8 +378,8 @@
     <script src="/CS2340Servlet/js/itinerary_wizard_js.js"></script>
 
     <!-- Event Search Bar Javascript -->
-    <script src="../js/typeahead.bundle.js"></script>
-    <script src="../js/event_autocomplete.js"></script>
+    <script src="/CS2340Servlet/js/typeahead.bundle.js"></script>
+    <script src="/CS2340Servlet/js/event_autocomplete.js"></script>
 
     <!-- Index Javascript -->
     <script type="text/javascript">
@@ -460,23 +462,7 @@
                     data: data,
                     success: function(json) {
                         console.log(json);
-                        var jsonData = JSON.parse(json);
-                        for (var i = 0; i < jsonData.length; i++) {
-                            var name, address, rating;
-                            for (var attr in jsonData[i]) {
-                                if (attr === 'name')
-                                    name = jsonData[i][attr];
-                                else if (attr === 'address')
-                                    address = jsonData[i][attr];
-                                else if (attr === 'rating')
-                                    rating = jsonData[i][attr];
-                            }
-                            $("#ajax-event-table").append(
-                                            '<tr><td>' + name +
-                                            '</td>' + '<td>' + address +
-                                            '</td>' + '<td>' + rating +
-                                            '</td></tr>');
-                        }
+                        $("#ajax-event-table").append(json);
                     }
                 });
 

@@ -48,13 +48,17 @@
                 <div class="ajax-event-form">
                     <h3>Create New Event</h3>
                     <p>Place Name is Optional. Examples include Walmart or Pizza Hut.</p>
+                    <select id="ajaxFormSelect" style="margin-left: 20px">
+                        <option id="googleAjaxOption">Google Search</option>
+                        <option id="yelpAjaxOption">Yelp Search</option>
+                    </select>
                     <div class="form-inline">
-                        <form action="/CS2340Servlet/itinerary?ajax_get_places" method="get" class="ajax">
+                        <form action="/CS2340Servlet/itinerary?ajax_get_places" method="get" class="ajax" id="ajaxGoogleForm">
                             <div class="form-group" style="padding-left: 20px">
                                 <input name="eventName" type="text" class="form-control" placeholder="Place Name"/>
                             </div>
                             <div class="form-group" style="padding-left: 15px">
-                                <input name="eventType" id="eventType" type="text"
+                                <input name="eventType" id="googleEventType" type="text"
                                        class="form-control typeahead" placeholder="Place Type" required="required" />
                             </div>
                             <div class="form-group" style="padding-left: 15px">
@@ -62,12 +66,28 @@
                                                         type="number" min="1" max="25" step="1" class="form-control" required="required"/>
                             </div><br />
                             <div class="form-group" style="float: left; padding-left: 20px; padding-top: 10px">
-                                <input name="getEventsWithGoogleButton" type="submit" class="form-control btn-primary" value="Google Search"
-                                       onclick="changeValueToGoogleCode(document.getElementById('eventType'))" />
-                                <input name="getEventsWithYelpButton" type="submit" class="form-control btn-danger" value="Yelp Search"
-                                       onclick="changeValueToGoogleCode(document.getElementById('eventType')); " />
+                                <input name="ajaxGoogleButton" type="submit" class="form-control btn-info" value="Google Search"
+                                       onclick="changeValueToGoogleCode(document.getElementById('googleEventType'));" />
                             </div>
-                        </form><br /><br /><br />
+                        </form>
+                        <form action="/CS2340Servlet/itinerary?ajax_get_places" method="get" class="ajax" id="ajaxYelpForm" style="visibility: hidden;">
+                            <div class="form-group" style="padding-left: 20px">
+                                <input name="eventName" type="text" class="form-control" placeholder="Place Name"/>
+                            </div>
+                            <div class="form-group" style="padding-left: 15px">
+                                <input name="eventType" id="yelpEventType" type="text"
+                                       class="form-control typeahead" placeholder="Place Type" required="required" />
+                            </div>
+                            <div class="form-group" style="padding-left: 15px">
+                                Radius (miles):  <input name="eventRadius"
+                                                        type="number" min="1" max="25" step="1" class="form-control" required="required"/>
+                            </div><br />
+                            <div class="form-group" style="float: left; padding-left: 20px; padding-top: 10px">
+                                <input name="ajaxYelpButton" type="submit" class="form-control btn-danger" value="Yelp Search"
+                                       onclick="changeValueToGoogleCode(document.getElementById('yelpEventType'));" />
+                            </div>
+                        </form>
+                        <br /><br /><br />
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -88,11 +108,25 @@
     </div>
 </div>
 
-<script src="../js/event_autocomplete.js"></script>
-
 <script>
     $('#newCityModal').on('shown.bs.modal', function (e) {
         initializeNewCityMap();
+    });
+
+    $('#ajaxFormSelect').change(function() {
+        var value = $(this).val();
+        if (value === "Google Search") {
+            $('#ajaxGoogleForm').removeClass("hideAway");
+            $('#ajaxYelpForm').addClass("hideAway");
+            $('#ajaxYelpForm').css('visibility', 'hidden');
+            $('#ajaxGoogleForm').css('visibility', 'visible');
+
+        } else if (value === "Yelp Search") {
+            $('#ajaxYelpForm').removeClass("hideAway");
+            $('#ajaxGoogleForm').addClass("hideAway");
+            $('#ajaxGoogleForm').css('visibility', 'hidden');
+            $('#ajaxYelpForm').css('visibility', 'visible');
+        }
     });
 
     var geocoder;

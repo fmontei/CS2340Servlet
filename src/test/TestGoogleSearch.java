@@ -1,4 +1,5 @@
 import database.Place;
+import model.AjaxEventForm;
 import model.GooglePlaceAPI;
 import model.YelpAPI;
 import org.json.JSONException;
@@ -13,8 +14,6 @@ public class TestGoogleSearch {
     public static void main(String... args) {
         TestGoogleSearch test = new TestGoogleSearch();
         try {
-            test.testYelpAPI();
-            //test.testGoogleNearbySearch();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

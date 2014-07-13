@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -35,13 +36,13 @@ public class AjaxEventForm {
         final String radiusAsString = request.getParameter("eventRadius");
         final int radiusInMiles = Integer.parseInt(radiusAsString);
         try {
-            final String googleButton = request.getParameter("getEventsWithGoogleButton");
-            if (googleButton != null) {
+            if (request.getQueryString().contains("ajaxGoogleButton=Google+Search")) {
                 eventResults = queryGoogleForEvents(eventName, eventType, radiusInMiles);
-            } else {
+                returnResultsToAjax(eventResults);
+            } else if (request.getQueryString().contains("ajaxYelpButton=Yelp+Search")) {
                 eventResults = queryYelpForEvents(eventType, radiusInMiles);
+                returnResultsToAjax(eventResults);
             }
-            returnResultsToAjax(eventResults);
         } catch (JSONException ex) {
 
         } catch (IOException ex) {
@@ -77,15 +78,19 @@ public class AjaxEventForm {
 
     private void returnResultsToAjax(final List<Place> results)
             throws IOException, JSONException {
-        JSONArray array = new JSONArray();
+        StringBuilder tableRows = new StringBuilder();
         for (Place result : results) {
-            JSONObject json = new JSONObject();
-            json.put("name", result.getName());
-            json.put("address", result.getFormattedAddress());
-            json.put("rating", result.getRating());
-            json.put("url", result.getURL());
-            array.add(json);
+            final String url = (result.getURL() != null) ? result.getURL() :
+                    "/CS2340Servlet/itinerary?detail_search&place_id=" + 0 +
+                            "&event_id=" + 0;
+            tableRows.append("<tr><td>" + result.getName() + "</td><td>" +
+                    result.getFormattedAddress() + "</td><td>" +
+                    result.getRating() + "</td>" + "<td>" +
+                    "<a href='" + url + "' target='_blank'>" +
+                    "See More</a></td></tr>");
         }
-        response.getWriter().write(array.toJSONString());
+        response.setContentType("text/html");
+        PrintWriter writer = response.getWriter();
+        writer.println(tableRows.toString());
     }
 }

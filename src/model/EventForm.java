@@ -79,16 +79,6 @@ public class EventForm {
         return placeID;
     }
 
-    private void setEventParameters(Place event, Place searchResult) {
-        event.setName(searchResult.getName());
-        event.setFormattedAddress(searchResult.getFormattedAddress());
-        event.setPhoneNumber(searchResult.getPhoneNumber());
-        event.setAPI(searchResult.getAPI());
-        event.setRating(searchResult.getRating());
-        event.setURL(searchResult.getURL());
-        event.setCoordinates(searchResult.getCoordinates());
-    }
-
     public void getDetailedInformationForPlace(boolean foreignPageRequested)
             throws IOException {
         final String eventID = parseEventIDFromQueryString();

@@ -46,7 +46,6 @@ public class GooglePlaceNearbySearch extends GooglePlaceAPI {
         queryBuilder.append("&types=" + type);
         queryBuilder.append("&name=" + name);
         queryBuilder.append("&key=" + API_KEY);
-        System.out.println(queryBuilder.toString());
         return queryBuilder.toString();
     }
 

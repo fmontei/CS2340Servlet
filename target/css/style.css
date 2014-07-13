@@ -396,4 +396,8 @@ hr.hr-title {
     font-size: 18px;
 }
 
+.hideAway {
+    position: absolute;
+    left: -5000px;
+}
 
