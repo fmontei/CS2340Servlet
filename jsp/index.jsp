@@ -83,7 +83,7 @@
 
 <% } else { %>
 
-<div class="itinerary-header">
+<div id="itinerary-header">
 
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
@@ -143,137 +143,122 @@
 
 </div>
 
-<div class="itinerary-overview">
+<%  Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
+    String itineraryName = activeItinerary.getName();
+    List<City> cities = (List<City>) session.getAttribute("cities");
+    String cityAddress = "";
+    City indexPanelCity = null;
+    List<Place> userEvents = (indexPanelCity != null) ? indexPanelCity.getEvents() : null;
+    int numEvents = 0;
+    if (userEvents != null) {
+        numEvents = userEvents.size();
+    }
+%>
 
-    <div id="overview-header">
+<div id="itinerary-overview">
+    <ul class="nav nav-pills" style="float: right">
+        <li>
+            <a href="#" style="color: rgb(66, 139, 202); font-weight: bold">
+                Active Itinerary: <%=activeItinerary.getName()%>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span class="badge pull-right"
+                      style="position: relative; top: 2px; background-color: rgb(66, 139, 202)">
+                    <%=numEvents%>
+                </span>
+                Events
+            </a>
+        </li>
+        <li>
+            <a href="#" id="preferences-trigger">
+                Preferences
+            </a>
+        </li>
+    </ul>
+    <div class="page-divider-header">
         <h1>YOUR ITINERARY</h1>
-
         <p><span style="font-size: 20px"><b>Find Events for your First City:</b></span><br />
             To add events for this city, Create a New Event<br /><br />
             <span style="font-size: 20px"><b>Or travel to a New City:</b></span><br />
             To go sightseeing in another city, Add a New City to your Itinerary
         </p><br /><br />
-
-
         <div class="container" style="width: 80% !important">
             <ul class="nav nav-tabs" id="cityList" role="tablist">
                 <li><a href="#">Your Cities</a></li>
-                <%  List<City> cities = (List<City>) session.getAttribute("cities");
-                    String cityAddress = "";
-                    City indexPanelCity = null;
-                    if (cities != null) {
+                <%  if (cities != null) {
                         indexPanelCity = (City) session.getAttribute("activeCity");
                         cityAddress = (indexPanelCity != null) ? indexPanelCity.getAddress() : "";
                         if (cities != null) {
                             for (City city : cities) { %>
                 <li><a href="/CS2340Servlet/itinerary?city_id=<%=city.getID()%>"><%=city.getName()%></a></li>
-                <%  } %>
-                <%  } %>
+                        <%  } %>
+                    <%  } %>
                 <%  } %>
             </ul>
-
             <div style="height: 40px">
-                <%  Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
-                    String itineraryName = activeItinerary.getName();%>
-                <span style="float: left">Itinerary Name:&nbsp;&nbsp;&nbsp;<%=itineraryName%></span>
+                <span style="float: left">Active City:&nbsp;&nbsp;&nbsp;<%=indexPanelCity.getName()%></span>
                 <span style="float: right">Address:&nbsp;&nbsp;&nbsp;<%=cityAddress%></span>
             </div>
         </div>
     </div>
-
     <div>
+        <ol class="pager">
+            <li>
+                <a href="itinerary_overview.jsp">Select Itinerary</a>
+            </li>
+            <li><a href="#"
+                   onclick="showPage1()"
+                   data-toggle="modal"
+                   data-target="#itineraryModal">Create New Itinerary
+            </a>
+            </li>
+            <li id="li-create-event">
+                <a id="a-create-event" href="/CS2340Servlet/itinerary?create_event=1">
+                    Create New Event</a>
+            </li>
+            <li id="li-create-city">
+                <a href="#" data-toggle="modal" data-target="#newCityModal">Add New City</a>
+            </li>
+        </ol><br /><br />
+        <div class="row">
+            <div class="col col-md-6">
+                <div class="new-city-message">
 
-        <div>
-            <ol class="pager">
-                <li>
-                    <a href="itinerary_overview.jsp">Select Itinerary</a>
-                </li>
-                <li><a href="#"
-                       onclick="showPage1()"
-                       data-toggle="modal"
-                       data-target="#itineraryModal">Create New Itinerary
-                </a>
-                </li>
-                <li id="li-create-event">
-                    <a id="a-create-event" href="/CS2340Servlet/itinerary?create_event=1">
-                        Create New Event</a>
-                </li>
-                <li id="li-create-city">
-                    <a href="#" data-toggle="modal" data-target="#newCityModal">Add New City</a>
-                </li>
-            </ol>
-
-            <div class="row">
-
-                <div class="col col-md-6">
-                    <div class="new-city-message">
-
-                        <h3>Want to travel to a another city?</h3>
-                        <p>Add a <strong>New City</strong> to your Itinerary below:</p>
-                        <p style="margin-top: 73px; opacity: .9"><a class="btn btn-primary btn-lg" data-toggle="modal"
-                                                                    data-target="#newCityModal" role="button">Add New City</a></p>
-                    </div>
+                    <h3>Want to travel to a another city?</h3>
+                    <p>Add a <strong>New City</strong> to your Itinerary below:</p>
+                    <p style="margin-top: 73px; opacity: .9"><a class="btn btn-primary btn-lg" data-toggle="modal"
+                                                                data-target="#newCityModal" role="button">Add New City</a></p>
                 </div>
-
-                <div class="col col-md-6">
-                    <div class="new-event-message">
-
-                        <h3>Want to add places to your current City?</h3>
-                        <p>Add a <strong>New Event</strong> to your City below:</p>
-                        <p style="margin-top: 73px; opacity: .9"><a class="btn btn-primary btn-lg" data-toggle="modal"
-                                                                    data-target="#newCityModal" role="button">Add New Event</a></p>
-                    </div>
-                </div>
-
             </div>
+            <div class="col col-md-6">
+                <div class="new-event-message">
 
-
-            <ul class="nav nav-pills" style="float: right">
-                <li>
-                    <a href="#" style="color: rgb(66, 139, 202); font-weight: bold">
-                        Currently Viewing: <%=activeItinerary.getName()%>
-                    </a>
-                </li>
-                <li>
-                    <%  List<Place> userEvents = (indexPanelCity != null) ? indexPanelCity.getEvents() : null;
-                        int numEvents = 0;
-                        if (userEvents != null) {
-                            numEvents = userEvents.size();
-                        }
-                    %>
-                    <a href="#">
-                                        <span class="badge pull-right"
-                                              style="position: relative; top: 2px; background-color: rgb(66, 139, 202)">
-                                            <%=numEvents%>
-                                        </span>
-                        Events
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" id="preferences-trigger">
-                        Preferences
-                    </a>
-                </li>
-            </ul>
+                    <h3>Want to add places to your current City?</h3>
+                    <p>Add a <strong>New Event</strong> to your City below:</p>
+                    <p style="margin-top: 73px; opacity: .9"><a class="btn btn-primary btn-lg" data-toggle="modal"
+                                                                data-target="#newCityModal" role="button">Add New Event</a></p>
+                </div>
+            </div>
         </div>
     </div>
-
-
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            Your Itinerary
-        </div>
-        <section id="itineraryOverview"></section>
-        <div class="panel-body" id="itinerary-panel-body">
-            <div class="page-header">
-                <h1><span class="glyphicon glyphicon-move"></span>Overview</h1>
-            </div>
-
-        </div>
-    </div>
-
 </div>
+
+<div id="event-places-page">
+    <div class="page-divider-header">
+        <h1><span class="glyphicon glyphicon-th"></span> EVENTS & PLACES</h1>
+        <p><span style="font-size: 20px"><b>Find Events for your First City:</b></span><br />
+            To add events for this city, Create a New Event<br /><br />
+            <span style="font-size: 20px"><b>Or travel to a New City:</b></span><br />
+            To go sightseeing in another city, Add a New City to your Itinerary
+        </p><br /><br />
+    </div>
+
+    <%@ include file="events_places_panels.jsp" %>
+</div>
+
+
 
 <div class="container">
     <div class="row">
@@ -293,74 +278,73 @@
 
 
 
-                        <br />
-                        <section id="mapSection"></section>
-                        <div class="page-header">
-                            <h1><span class="glyphicon glyphicon-globe"></span>Map</h1>
-                        </div>
-                        <div class="panel-group" id="accordion">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <a data-toggle="collapse"
-                                       data-parent="#accordion"
-                                       href="#collapseOne"
-                                       id="parentCollapse">
-                                        View Map
-                                    </a>
-                                </div>
-                                <div id="collapseOne" class="panel-collapse collapse in">
-                                    <div class="panel-body">
-                                        <b>Start: </b>
-                                        <%  Place lodgingSelect = (indexPanelCity != null) ? indexPanelCity.getLodging() : null; %>
-                                        <select class="map-event-tooltips" id="start" onchange="calcRoute();">
-                                          <option value= '<%=cityAddress%>'>Center </option>
-                                          <% if (lodgingSelect != null) { %>
-                                          <option value= '<%=lodgingSelect.getFormattedAddress()%>' title="<%=lodgingSelect.getName()%>">
-                                              Lodging
-                                          </option>
-                                          <% } %>
-                                          <% numEvents = 0;
-                                             if (userEvents != null) {
-                                               numEvents = userEvents.size();
-                                             }
-                                             for (int curEventID = 0; curEventID < numEvents; curEventID++) {
-                                               Place event = userEvents.get(curEventID); %>
-                                          <option value= '<%=event.getFormattedAddress()%>' title="<%=event.getName()%>">
-                                              Event <%=curEventID + 1%>
-                                          </option>
-                                            <% } %>
-                                        </select>
-                                        <b>End: </b>
-                                        <select id="end" onchange="calcRoute();">
-                                          <option value= '<%=cityAddress%>'>Center </option>
-                                          <% if (lodgingSelect != null) { %>
-                                          <option value= '<%=lodgingSelect.getFormattedAddress()%>'>Lodging </option>
-                                          <% } %>
-                                          <% for (int curEventID = 0; curEventID < numEvents; curEventID++) {
-                                               Place event = userEvents.get(curEventID); %>
-                                          <option value= '<%=event.getFormattedAddress()%>' title="<%=event.getName()%>">Event <%=curEventID + 1%></option>
-                                          <% } %>
-                                        </select>
-                                        <b>Mode of Transit: </b>
-                                        <select id="transitMode" onchange="calcRoute()">
-                                          <option value= "DRIVING">Car </option>
-                                          <option value= "BICYCLING">Bicycle </option>
-                                          <option value= "TRANSIT">Public Transit </option>
-                                          <option value= "WALKING">Walking </option>
-                                        </select>
-                                        <div class="center-block popin" id="accordion-map" style="width: 520px; height: 300px; margin-top: 20px"></div>
-                                        <div id="directionsPanel"></div>
-                                    </div>
+
+                    <section id="mapSection"></section>
+                    <div class="page-header">
+                        <h1><span class="glyphicon glyphicon-globe"></span>Map</h1>
+                    </div>
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a data-toggle="collapse"
+                                   data-parent="#accordion"
+                                   href="#collapseOne"
+                                   id="parentCollapse">
+                                    View Map
+                                </a>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    <b>Start: </b>
+                                    <%  Place lodgingSelect = (indexPanelCity != null) ? indexPanelCity.getLodging() : null; %>
+                                    <select class="map-event-tooltips" id="start" onchange="calcRoute();">
+                                      <option value= '<%=cityAddress%>'>Center </option>
+                                      <% if (lodgingSelect != null) { %>
+                                      <option value= '<%=lodgingSelect.getFormattedAddress()%>' title="<%=lodgingSelect.getName()%>">
+                                          Lodging
+                                      </option>
+                                      <% } %>
+                                      <% numEvents = 0;
+                                         if (userEvents != null) {
+                                           numEvents = userEvents.size();
+                                         }
+                                         for (int curEventID = 0; curEventID < numEvents; curEventID++) {
+                                           Place event = userEvents.get(curEventID); %>
+                                      <option value= '<%=event.getFormattedAddress()%>' title="<%=event.getName()%>">
+                                          Event <%=curEventID + 1%>
+                                      </option>
+                                        <% } %>
+                                    </select>
+                                    <b>End: </b>
+                                    <select id="end" onchange="calcRoute();">
+                                      <option value= '<%=cityAddress%>'>Center </option>
+                                      <% if (lodgingSelect != null) { %>
+                                      <option value= '<%=lodgingSelect.getFormattedAddress()%>'>Lodging </option>
+                                      <% } %>
+                                      <% for (int curEventID = 0; curEventID < numEvents; curEventID++) {
+                                           Place event = userEvents.get(curEventID); %>
+                                      <option value= '<%=event.getFormattedAddress()%>' title="<%=event.getName()%>">Event <%=curEventID + 1%></option>
+                                      <% } %>
+                                    </select>
+                                    <b>Mode of Transit: </b>
+                                    <select id="transitMode" onchange="calcRoute()">
+                                      <option value= "DRIVING">Car </option>
+                                      <option value= "BICYCLING">Bicycle </option>
+                                      <option value= "TRANSIT">Public Transit </option>
+                                      <option value= "WALKING">Walking </option>
+                                    </select>
+                                    <div class="center-block popin" id="accordion-map" style="width: 520px; height: 300px; margin-top: 20px"></div>
+                                    <div id="directionsPanel"></div>
                                 </div>
                             </div>
                         </div>
-                        <%@ include file="lodging_panel.jsp" %>
-                        <%@ include file="events_places_panels.jsp" %>
                     </div>
-                </div>
+                    <%@ include file="lodging_panel.jsp" %>
+
             </div>
         </div>
     </div>
+</div>
 
     <%@ include file="new_city.jsp" %>
     <%@ include file="footer.jsp" %>

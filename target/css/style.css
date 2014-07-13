@@ -272,6 +272,48 @@ th, td {
      border-radius:2px;
  }
 
+
+.modal-dialog-center {
+    margin-top: 15% !important;
+}
+
+.being-dragged {
+    opacity: .4;
+}
+
+/* Main Application Styling */
+.page-divider-header {
+    text-align: center;
+    padding-top: 50px;
+    color: white;
+}
+
+.page-divider-header h1 {
+    font-size: 60px;
+    font-family: 'Francois One', sans-serif;
+}
+
+#itinerary-header {
+    margin-top: -50px;
+    height: 700px;
+    width: 100%;
+    background: url("../images/mountain.jpg") no-repeat;
+    background-size: 100% 700px;
+}
+
+#itinerary-header nav {
+    position: absolute;
+    top: 150px;
+    right: 10%;
+    left: 10%;
+}
+
+#itinerary-overview {
+    background-color: rgb(4, 71, 137) !important;
+    margin-top: -70px;
+    padding-bottom: 70px;
+}
+
 .new-city-message {
     height: 250px;
     margin-right: auto;
@@ -291,51 +333,16 @@ th, td {
     margin-left: auto;
     display: block;
     width: 80%;
-    background: url("../images/places.png");
+    background: url("../images/city.jpg");
     background-size: contain;
     padding: 15px;
     border-radius:4px;
     font-size: 16px;
 }
 
-
-.modal-dialog-center {
-    margin-top: 15% !important;
-}
-
-.being-dragged {
-    opacity: .4;
-}
-
-.itinerary-header {
-    margin-top: -50px;
-    height: 700px;
-    width: 100%;
-    background: url("../images/mountain.jpg") no-repeat;
-    background-size: 100% 700px;
-}
-
-.itinerary-header nav {
-    position: absolute;
-    top: 150px;
-    right: 10%;
-    left: 10%;
-}
-
-.itinerary-overview {
-    background-color: rgb(4, 71, 137) !important;
-    margin-top: -70px;
-}
-
-#overview-header {
-    text-align: center;
-    padding-top: 50px;
-    color: white;
+#event-places-page {
+    background-color: rgb(26, 188, 156) !important;
 
 }
 
-#overview-header h1 {
-    font-size: 60px;
-    font-family: 'Francois One', sans-serif;
-}
 

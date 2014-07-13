@@ -3,6 +3,14 @@
 <%@ page import="database.City" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<%  final City eventsPanelCity = (City) session.getAttribute("activeCity");
+    List<Place> events = (eventsPanelCity != null) ? eventsPanelCity.getEvents() : new ArrayList<Place>();
+    int numberOfEvents = 0;
+    if (events != null) {
+        numberOfEvents = events.size();
+    }
+%>
+
 <section id="eventsPlaces"></section>
 <div class="page-header">
     <div class="row">
@@ -11,13 +19,8 @@
         </div>
         <div class="col-md-5">
             <ul class="nav nav-pills" style="padding-top: 20px">
-                <%  final City eventsPanelCity = (City) session.getAttribute("activeCity");
-                    List<Place> events = (eventsPanelCity != null) ? eventsPanelCity.getEvents() : new ArrayList<Place>();
-                    int numberOfEvents = 0;
-                    if (events != null) {
-                        numberOfEvents = events.size();
-                    }
-                    if (numberOfEvents > 0) { %>
+
+                    <% if (numberOfEvents > 0) { %>
                 <li class="dropdown alert-info" style="float: right;" id="create-event-pill">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <span class="glyphicon glyphicon-sort-by-attributes" style="position: relative; top: 2px"></span>
@@ -108,10 +111,23 @@
 
 <ul id="draggablePanelList" class="list-unstyled">
 <%  String errorMessage = "";
+    boolean colorChange[] = {false, true, true, false, false, true};
     for (int curEventID = 0; curEventID < numberOfEvents; curEventID++) {
-    String eventPanelColor = (curEventID % 2 == 0) ? "info" : "success";
-    Place event = events.get(curEventID); %>
-    <li class="panel panel-<%=eventPanelColor%>" id="event-no-<%=curEventID%>">
+        if (curEventID % 6 == 0) {
+            for (int i = 0; i < colorChange.length; i++) {
+                colorChange[i] = !colorChange[i];
+            }
+        }
+        String eventPanelColor = (colorChange[curEventID % colorChange.length]) ? "info" : "primary";
+        String floatDirection = (curEventID % 2 == 0) ? "left" : "right";
+        String marginDirection = (curEventID % 2 == 0) ? "margin-left: 30px" : "margin-right: 30px";
+        Place event = events.get(curEventID); %>
+
+    <% if (curEventID % 2 == 0) { %>
+        <div class="row">
+        <div span="5">
+    <% } %>
+    <li class="panel panel-<%=eventPanelColor%>" id="event-no-<%=curEventID%>" style="width: 47%; float: <%=floatDirection%>; <%=marginDirection%>; ">
         <div class="panel-heading" style="cursor: move">
             <%  if (event.getName() != null) { %>
             <p>
@@ -314,6 +330,10 @@
         </div>
         <% } %>
     </li>
+        <% if (curEventID % 2 != 0) { %>
+                </div>
+            </div>
+        <% } %>
     <% } %>
 </ul>
 
