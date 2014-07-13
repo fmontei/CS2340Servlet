@@ -206,7 +206,7 @@
     <div>
         <ol class="pager">
             <li>
-                <a href="itinerary_overview.jsp">Select Itinerary</a>
+                <a href="jsp/itinerary_overview.jsp">Select Itinerary</a>
             </li>
             <li><a href="#"
                    onclick="showPage1()"
@@ -226,7 +226,7 @@
             <div class="col col-md-6">
                 <div class="new-city-message">
 
-                    <h3>Want to travel to a another city?</h3>
+                    <h3>Want to travel to another <b>City?</b></h3>
                     <p>Add a <strong>New City</strong> to your Itinerary below:</p>
                     <p style="margin-top: 73px; opacity: .9"><a class="btn btn-primary btn-lg" data-toggle="modal"
                                                                 data-target="#newCityModal" role="button">Add New City</a></p>
@@ -235,19 +235,22 @@
             <div class="col col-md-6">
                 <div class="new-event-message">
 
-                    <h3>Want to add places to your current City?</h3>
+                    <h3>Need to find a <b>Place</b> to eat or somewhere to go sightseeing?</h3>
                     <p>Add a <strong>New Event</strong> to your City below:</p>
                     <p style="margin-top: 73px; opacity: .9"><a class="btn btn-primary btn-lg" data-toggle="modal"
-                                                                data-target="#newCityModal" role="button">Add New Event</a></p>
+                                                                data-target="#eventAjaxModal" role="button">Add New Event</a></p>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
 
+
 <div id="event-places-page">
     <div class="page-divider-header">
         <h1><span class="glyphicon glyphicon-th"></span> EVENTS & PLACES</h1>
+        <hr class="hr-title" />
         <p><span style="font-size: 20px"><b>Find Events for your First City:</b></span><br />
             To add events for this city, Create a New Event<br /><br />
             <span style="font-size: 20px"><b>Or travel to a New City:</b></span><br />
@@ -435,6 +438,49 @@
                 if ($(li).text() === citySelection) {
                     $(li).addClass("active");
                 }
+            });
+
+            $('form.ajax').on('submit', function() {
+                var that = $(this),
+                    url = that.attr('action'),
+                    method = that.attr('method'),
+                    data = {};
+
+                that.find('[name]').each(function(index, value) {
+                    var that = $(this),
+                        name = that.attr('name'),
+                        value = that.val();
+
+                    data[name] = value;
+                });
+
+                $.ajax({
+                    url: url,
+                    type: method,
+                    data: data,
+                    success: function(json) {
+                        console.log(json);
+                        var jsonData = JSON.parse(json);
+                        for (var i = 0; i < jsonData.length; i++) {
+                            var name, address, rating;
+                            for (var attr in jsonData[i]) {
+                                if (attr === 'name')
+                                    name = jsonData[i][attr];
+                                else if (attr === 'address')
+                                    address = jsonData[i][attr];
+                                else if (attr === 'rating')
+                                    rating = jsonData[i][attr];
+                            }
+                            $("#ajax-event-table").append(
+                                            '<tr><td>' + name +
+                                            '</td>' + '<td>' + address +
+                                            '</td>' + '<td>' + rating +
+                                            '</td></tr>');
+                        }
+                    }
+                });
+
+                return false;
             });
         });
 

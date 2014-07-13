@@ -45,6 +45,9 @@ public class ItineraryServlet extends HttpServlet {
         } else if (changeCityRequested(request)) {
             CityForm cityForm = new CityForm(request, response);
             cityForm.changeCity();
+        } else if (request.getQueryString() != null && request.getQueryString().contains("ajax_get_places")) {
+            AjaxEventForm ajaxEventForm = new AjaxEventForm(request, response);
+            ajaxEventForm.getEventsAndRedirectToAjax();
         } else {
             response.sendRedirect("jsp/itinerary_overview.jsp");
         }

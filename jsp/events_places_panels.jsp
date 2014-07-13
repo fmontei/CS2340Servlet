@@ -11,42 +11,10 @@
     }
 %>
 
-<section id="eventsPlaces"></section>
-<div class="page-header">
-    <div class="row">
-        <div class="col-md-7">
-            <h1><span class="glyphicon glyphicon-th"></span>Events & Places</h1>
-        </div>
-        <div class="col-md-5">
-            <ul class="nav nav-pills" style="padding-top: 20px">
-
-                    <% if (numberOfEvents > 0) { %>
-                <li class="dropdown alert-info" style="float: right;" id="create-event-pill">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-sort-by-attributes" style="position: relative; top: 2px"></span>
-                        <b>Sort By</b>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu pull-left">
-                        <li role ="presentation" class="dropdown-header">
-                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?sort=name">
-                                Name
-                            </a>
-                        </li>
-                        <li role="presentation" class="dropdown-header">
-                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?sort=start_time">
-                                Start Time
-                            </a>
-                        </li>
-                        <li role="presentation" class="dropdown-header">
-                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?sort=creation_date">
-                                Creation Date
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <% } %>
-                <li class="dropdown alert-success" style="float: right; margin-right: 10px" id="create-event-pill">
+        <section id="eventsPlaces"></section>
+        <div>
+            <ul class="nav nav-pills" style="margin: 0 auto; padding: 0; width: 15%;">
+                <li class="dropdown alert-success" id="create-event-pill">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <span class="glyphicon glyphicon-plus-sign" style="position: relative; top: 2px"></span>
                         <b>Add Event</b>
@@ -85,10 +53,34 @@
                         </li>
                     </ul>
                 </li>
+                <% if (numberOfEvents > 0) { %>
+                <li class="dropdown alert-info" id="create-event-pill">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-sort-by-attributes" style="position: relative; top: 2px"></span>
+                        <b>Sort By</b>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu pull-left">
+                        <li role ="presentation" class="dropdown-header">
+                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?sort=name">
+                                Name
+                            </a>
+                        </li>
+                        <li role="presentation" class="dropdown-header">
+                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?sort=start_time">
+                                Start Time
+                            </a>
+                        </li>
+                        <li role="presentation" class="dropdown-header">
+                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?sort=creation_date">
+                                Creation Date
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <% } %>
             </ul>
         </div>
-    </div>
-</div>
 
 <!-- Java functions for this page -->
 <%! private boolean apiErrorReturned(HttpSession session, int curEventID) {
@@ -109,7 +101,7 @@
     }
 %>
 
-<ul id="draggablePanelList" class="list-unstyled">
+<ul id="draggablePanelList" class="list-unstyled" style="margin-top: 40px">
 <%  String errorMessage = "";
     boolean colorChange[] = {false, true, true, false, false, true};
     for (int curEventID = 0; curEventID < numberOfEvents; curEventID++) {
@@ -118,7 +110,7 @@
                 colorChange[i] = !colorChange[i];
             }
         }
-        String eventPanelColor = (colorChange[curEventID % colorChange.length]) ? "info" : "primary";
+        String eventPanelColor = (colorChange[curEventID % colorChange.length]) ? "success" : "primary";
         String floatDirection = (curEventID % 2 == 0) ? "left" : "right";
         String marginDirection = (curEventID % 2 == 0) ? "margin-left: 30px" : "margin-right: 30px";
         Place event = events.get(curEventID); %>
@@ -270,8 +262,9 @@
             </table>
             <% final String checkIn = event.getCheckIn();
                 final String checkOut = event.getCheckOut();
-                if (checkIn != null && checkOut != null) { %>
-                <div class="alert alert-<%=eventPanelColor%>" style="display: block; margin-left: auto; margin-right: auto; width: 68%">
+                if (checkIn != null && checkOut != null) {
+                    String alertColor = eventPanelColor == "primary" ? "info" : eventPanelColor; %>
+                <div class="alert alert-<%=alertColor%>" style="display: block; margin-left: auto; margin-right: auto; width: 68%">
                     <label>Start:&nbsp;&nbsp;</label><%=checkIn%>
                     <span style="margin-left: 10px; margin-right: 10px;"><b>|</b></span>
                     <label>End:&nbsp;&nbsp;</label><%=checkOut%>

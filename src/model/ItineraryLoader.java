@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ItineraryLoader {
-    private String redirectQuery = "jsp/index.jsp?";
 
     public void loadItineraryAndAllDependencies(HttpServletRequest request,
                                                 HttpServletResponse response)
@@ -19,7 +18,7 @@ public class ItineraryLoader {
         try {
             Itinerary activeItinerary = loadActiveItinerary(request);
             loadActivePreferences(activeItinerary, request);
-            response.sendRedirect(redirectQuery);
+            ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
@@ -35,15 +34,17 @@ public class ItineraryLoader {
         SQLItineraryQuery query = new SQLItineraryQuery();
         Itinerary activeItinerary = query.getItineraryByID(itineraryID);
         session.setAttribute("activeItinerary", activeItinerary);
-        loadCities(session, itineraryIntID);
+        loadCities(request, itineraryIntID);
         return activeItinerary;
     }
 
-    private void loadCities(final HttpSession session,
+    private void loadCities(final HttpServletRequest request,
                             final int itineraryID) throws SQLException {
+        final HttpSession session = request.getSession();
         List<City> cities = DataManager.getCitiesAndPlacesByItineraryID(itineraryID);
+
         if (citiesExist(cities)) {
-            storeCitiesIntoSession(session, cities);
+            storeCitiesIntoSession(request, cities);
         } else {
             removeCitiesFromSession(session);
         }
@@ -53,10 +54,12 @@ public class ItineraryLoader {
         return cities != null && cities.size() > 0;
     }
 
-    private void storeCitiesIntoSession(HttpSession session, List<City> cities) {
+    private void storeCitiesIntoSession(HttpServletRequest request, List<City> cities) {
+        final HttpSession session = request.getSession();
         session.setAttribute("cities", cities);
         session.setAttribute("activeCity", cities.get(0));
-        redirectQuery += cities.get(0).getName();
+        final String firstCityName = cities.get(0).getName().trim();
+        request.setAttribute("changeCityName", firstCityName);
     }
 
     private void removeCitiesFromSession(HttpSession session) {
