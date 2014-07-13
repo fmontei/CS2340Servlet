@@ -5,25 +5,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <section id="lodging"></section>
-<div class="page-header">
-    <div class="row">
-        <div class="col-md-8">
-            <h1><span class="glyphicon glyphicon-home"></span> Lodging</h1>
-        </div>
-        <div class="col-md-4">
-            <ul class="nav nav-pills" style="padding-top: 20px">
-                <li style="float: right">
-                    <a class="alert-danger" href="#main-lodging" id="create-lodging-pill"
-                       data-toggle="collapse" data-parent="#accordion">
-                        <span class="glyphicon glyphicon-plus-sign"
-                              style="position: relative; top: 2px">
-                        </span>
-                        <b>Add Lodging</b>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
+<div class="centered-pills">
+    <ul class="nav nav-pills" style="padding-top: 20px">
+        <li style="float: right">
+            <a class="alert-danger" href="#main-lodging" id="create-lodging-pill"
+               data-toggle="collapse" data-parent="#accordion">
+                <span class="glyphicon glyphicon-plus-sign"
+                      style="position: relative; top: 2px">
+                </span>
+                <b>Add Lodging</b>
+            </a>
+        </li>
+    </ul>
 </div>
 
 <%  final City lodgingPanelCity = (City) session.getAttribute("activeCity");

@@ -140,8 +140,10 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-
 </div>
+
+<fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>
 
 <%  Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
     String itineraryName = activeItinerary.getName();
@@ -178,8 +180,13 @@
         </li>
     </ul>
     <div class="page-divider-header">
-        <h1>YOUR ITINERARY</h1>
-        <p><span style="font-size: 20px"><b>Find Events for your First City:</b></span><br />
+        <div style="display: inline-block">
+            <h1><span class="glyphicon glyphicon-tags"></span> YOUR ITINERARY</h1>
+            <hr class="hr-title" />
+        </div>
+        <p><span style="font-size: 20px"><b>Find a place to stay:</b></span><br />
+            Add a new Lodging below<br /><br />
+            <span style="font-size: 20px"><b>Find Events for your First City:</b></span><br />
             To add events for this city, Create a New Event<br /><br />
             <span style="font-size: 20px"><b>Or travel to a New City:</b></span><br />
             To go sightseeing in another city, Add a New City to your Itinerary
@@ -237,8 +244,10 @@
 
                     <h3>Need to find a <b>Place</b> to eat or somewhere to go sightseeing?</h3>
                     <p>Add a <strong>New Event</strong> to your City below:</p>
-                    <p style="margin-top: 73px; opacity: .9"><a class="btn btn-primary btn-lg" data-toggle="modal"
-                                                                data-target="#eventAjaxModal" role="button">Add New Event</a></p>
+                    <a class="btn btn-primary btn-lg" data-toggle="modal"
+                       data-target="#eventAjaxModal" role="button">
+                        Add New Event
+                    </a>
                 </div>
 
             </div>
@@ -248,106 +257,84 @@
     </div>
 </div>
 
+<div id="lodging-page">
+    <div class="page-divider-header">
+        <div style="display: inline-block">
+            <h1><span class="glyphicon glyphicon-home"></span> LODGING</h1>
+            <hr class="hr-title" />
+        </div>
+        <p><span style="font-size: 20px"><b>Find a place to stay:</b></span><br />
+            Add a new Lodging below
+            <span style="font-size: 20px"><b>Find Events for your First City:</b></span><br />
+            To add events for this City, Create a New Event<br /><br />
+            <span style="font-size: 20px"><b>Or travel to a New City:</b></span><br />
+            To go sightseeing in another city, Add a New City to your Itinerary
+        </p><br /><br />
+    </div>
+    <%@ include file="lodging_panel.jsp" %>
+</div>
 
 <div id="event-places-page">
     <div class="page-divider-header">
-        <h1><span class="glyphicon glyphicon-th"></span> EVENTS & PLACES</h1>
-        <hr class="hr-title" />
+        <div style="display: inline-block">
+            <h1><span class="glyphicon glyphicon-th"></span> EVENTS & PLACES</h1>
+            <hr class="hr-title" />
+        </div>
         <p><span style="font-size: 20px"><b>Find Events for your First City:</b></span><br />
             To add events for this city, Create a New Event<br /><br />
             <span style="font-size: 20px"><b>Or travel to a New City:</b></span><br />
             To go sightseeing in another city, Add a New City to your Itinerary
         </p><br /><br />
     </div>
-
     <%@ include file="events_places_panels.jsp" %>
 </div>
 
-
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-push-2" style="padding-left: 80px">
-            <div id="div-overview">
-                <section id="facebookLogin"></section>
-
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        Facebook Login
-                    </div>
-                    <div class="panel-body">
-                        <fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();">
-                        </fb:login-button>
-                    </div>
-                </div>
-
-
-
-
-                    <section id="mapSection"></section>
-                    <div class="page-header">
-                        <h1><span class="glyphicon glyphicon-globe"></span>Map</h1>
-                    </div>
-                    <div class="panel-group" id="accordion">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <a data-toggle="collapse"
-                                   data-parent="#accordion"
-                                   href="#collapseOne"
-                                   id="parentCollapse">
-                                    View Map
-                                </a>
-                            </div>
-                            <div id="collapseOne" class="panel-collapse collapse in">
-                                <div class="panel-body">
-                                    <b>Start: </b>
-                                    <%  Place lodgingSelect = (indexPanelCity != null) ? indexPanelCity.getLodging() : null; %>
-                                    <select class="map-event-tooltips" id="start" onchange="calcRoute();">
-                                      <option value= '<%=cityAddress%>'>Center </option>
-                                      <% if (lodgingSelect != null) { %>
-                                      <option value= '<%=lodgingSelect.getFormattedAddress()%>' title="<%=lodgingSelect.getName()%>">
-                                          Lodging
-                                      </option>
-                                      <% } %>
-                                      <% numEvents = 0;
-                                         if (userEvents != null) {
-                                           numEvents = userEvents.size();
-                                         }
-                                         for (int curEventID = 0; curEventID < numEvents; curEventID++) {
-                                           Place event = userEvents.get(curEventID); %>
-                                      <option value= '<%=event.getFormattedAddress()%>' title="<%=event.getName()%>">
-                                          Event <%=curEventID + 1%>
-                                      </option>
-                                        <% } %>
-                                    </select>
-                                    <b>End: </b>
-                                    <select id="end" onchange="calcRoute();">
-                                      <option value= '<%=cityAddress%>'>Center </option>
-                                      <% if (lodgingSelect != null) { %>
-                                      <option value= '<%=lodgingSelect.getFormattedAddress()%>'>Lodging </option>
-                                      <% } %>
-                                      <% for (int curEventID = 0; curEventID < numEvents; curEventID++) {
-                                           Place event = userEvents.get(curEventID); %>
-                                      <option value= '<%=event.getFormattedAddress()%>' title="<%=event.getName()%>">Event <%=curEventID + 1%></option>
-                                      <% } %>
-                                    </select>
-                                    <b>Mode of Transit: </b>
-                                    <select id="transitMode" onchange="calcRoute()">
-                                      <option value= "DRIVING">Car </option>
-                                      <option value= "BICYCLING">Bicycle </option>
-                                      <option value= "TRANSIT">Public Transit </option>
-                                      <option value= "WALKING">Walking </option>
-                                    </select>
-                                    <div class="center-block popin" id="accordion-map" style="width: 520px; height: 300px; margin-top: 20px"></div>
-                                    <div id="directionsPanel"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <%@ include file="lodging_panel.jsp" %>
-
-            </div>
-        </div>
+<div id="map-page">
+    <div class="page-divider-header">
+        <div style="display: inline-block">
+            <h1><span class="glyphicon glyphicon-globe"></span> MAP</h1>
+            <hr class="hr-title" />
+        </div><br />
+        <b>Start: </b>
+        <%  Place lodgingSelect = (indexPanelCity != null) ? indexPanelCity.getLodging() : null; %>
+        <select class="map-event-tooltips" id="start" onchange="calcRoute();">
+          <option value= '<%=cityAddress%>'>Center </option>
+          <% if (lodgingSelect != null) { %>
+          <option value= '<%=lodgingSelect.getFormattedAddress()%>' title="<%=lodgingSelect.getName()%>">
+              Lodging
+          </option>
+          <% } %>
+          <% numEvents = 0;
+             if (userEvents != null) {
+               numEvents = userEvents.size();
+             }
+             for (int curEventID = 0; curEventID < numEvents; curEventID++) {
+               Place event = userEvents.get(curEventID); %>
+          <option value= '<%=event.getFormattedAddress()%>' title="<%=event.getName()%>">
+              Event <%=curEventID + 1%>
+          </option>
+            <% } %>
+        </select>
+        <b>End: </b>
+        <select id="end" onchange="calcRoute();">
+          <option value= '<%=cityAddress%>'>Center </option>
+          <% if (lodgingSelect != null) { %>
+          <option value= '<%=lodgingSelect.getFormattedAddress()%>'>Lodging </option>
+          <% } %>
+          <% for (int curEventID = 0; curEventID < numEvents; curEventID++) {
+               Place event = userEvents.get(curEventID); %>
+          <option value= '<%=event.getFormattedAddress()%>' title="<%=event.getName()%>">Event <%=curEventID + 1%></option>
+          <% } %>
+        </select>
+        <b>Mode of Transit: </b>
+        <select id="transitMode" onchange="calcRoute()">
+          <option value= "DRIVING">Car </option>
+          <option value= "BICYCLING">Bicycle </option>
+          <option value= "TRANSIT">Public Transit </option>
+          <option value= "WALKING">Walking </option>
+        </select>
+        <div class="center-block popin" id="accordion-map" style="width: 520px; height: 300px; margin-top: 20px"></div>
+        <div id="directionsPanel"></div>
     </div>
 </div>
 
@@ -403,6 +390,8 @@
             $("#div-overview").show();
             $("#itinerary-side-bar").show();
 
+            initialize();
+
             // Navbar Navigation Color Change
             $('.navbar-navigation li a').click(function(e) {
                 var $this = $(this);
@@ -426,12 +415,6 @@
             if (error != 'null') {
                 $("#errorMessage").modal("show");
             }
-
-            // Automatically collapse the accordion-map
-            $("#collapseOne").collapse("hide");
-            $("#parentCollapse").one("click", function(){
-                initialize();
-            });
 
             // Change city tabs
             var citySelection = "<%=request.getAttribute("changeCityName")%>";

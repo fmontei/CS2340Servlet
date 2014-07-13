@@ -17,7 +17,6 @@ th, td {
 
 .breadcrumb > .api-breadcrumb + li:before {
     content: "";
-    margin-right: 330px;
 }
 
 .table-name {
@@ -265,9 +264,8 @@ th, td {
 
 .popin {
      margin: 0 auto;
-     display: inline-block;
      background:#fff;
-     padding:15px;
+     padding: 15px;
      box-shadow: 0 0 20px #999;
      border-radius:2px;
  }
@@ -344,6 +342,13 @@ th, td {
     font-size: 16px;
 }
 
+.new-event-message a {
+    position: absolute;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    opacity: .9;
+}
+
 .new-event-message h3 {
     margin-left: 20px;
 }
@@ -370,14 +375,22 @@ th, td {
 #event-places-page {
     background-color: rgb(26, 188, 156) !important;
     padding-bottom: 40px;
+}
 
+#map-page {
+    background-color: #ffff00 !important;
+    padding-bottom: 40px;
+}
+
+#lodging-page {
+    background-color: darkred !important;
+    padding-bottom: 40px;
 }
 
 hr.hr-title {
     border: none;
     height: 4px;
     background-color: rgb(49, 126, 172);
-    width: 27%;
 }
 
 .panel {
@@ -396,8 +409,11 @@ hr.hr-title {
     font-size: 18px;
 }
 
+.centered-pills { text-align: center !important; }
+.centered-pills ul.nav-pills { display: inline-block !important; }
+.centered-pills li { display: inline !important; }
+
 .hideAway {
     position: absolute;
     left: -5000px;
 }
-

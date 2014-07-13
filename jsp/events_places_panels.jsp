@@ -12,8 +12,8 @@
 %>
 
         <section id="eventsPlaces"></section>
-        <div>
-            <ul class="nav nav-pills" style="margin: 0 auto; padding: 0; width: 15%;">
+        <div class="centered-pills">
+            <ul class="nav nav-pills">
                 <li class="dropdown alert-success" id="create-event-pill">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <span class="glyphicon glyphicon-plus-sign" style="position: relative; top: 2px"></span>
@@ -111,6 +111,7 @@
             }
         }
         String eventPanelColor = (colorChange[curEventID % colorChange.length]) ? "success" : "primary";
+        String alertColor = eventPanelColor == "primary" ? "info" : eventPanelColor;
         String floatDirection = (curEventID % 2 == 0) ? "left" : "right";
         String marginDirection = (curEventID % 2 == 0) ? "margin-left: 30px" : "margin-right: 30px";
         Place event = events.get(curEventID); %>
@@ -262,9 +263,8 @@
             </table>
             <% final String checkIn = event.getCheckIn();
                 final String checkOut = event.getCheckOut();
-                if (checkIn != null && checkOut != null) {
-                    String alertColor = eventPanelColor == "primary" ? "info" : eventPanelColor; %>
-                <div class="alert alert-<%=alertColor%>" style="display: block; margin-left: auto; margin-right: auto; width: 68%">
+                if (checkIn != null && checkOut != null) { %>
+                <div class="alert alert-<%=alertColor%>">
                     <label>Start:&nbsp;&nbsp;</label><%=checkIn%>
                     <span style="margin-left: 10px; margin-right: 10px;"><b>|</b></span>
                     <label>End:&nbsp;&nbsp;</label><%=checkOut%>
@@ -277,11 +277,11 @@
                     <form action="/CS2340Servlet/itinerary?update_event_time&event_id=<%=curEventID%>" method="POST">
                         <div class="popin">
                             <h6>Edit your Event Time below then click 'Submit'. To cancel, click 'Cancel'.</h6>
-                            <div class="alert alert-<%=eventPanelColor%>" style="display: inline-block">
+                            <div class="alert alert-<%=alertColor%>" style="display: inline-block">
                                 <label >Start:</label><br />
                                 <input type="datetime-local" name="eventStartTime" />
                             </div>
-                            <div class="alert alert-<%=eventPanelColor%>" style="display: inline-block;">
+                            <div class="alert alert-<%=alertColor%>" style="display: inline-block;">
                                 <label>End:</label><br />
                                 <input type="datetime-local" name="eventEndTime" />
                                 <input type="submit" name="eventDateTimeSubmit" style="margin-left: 12px; margin-right: 5px" />
@@ -290,36 +290,38 @@
                     </form>
                 </div>
             <%  } else { %>
-                <div class="row">
                     <form action="/CS2340Servlet/itinerary?save_event_time&event_id=<%=curEventID%>" method="POST">
-                        <div class="col-md-6">
-                            <div class="alert alert-<%=eventPanelColor%> pull-left" style="width: 90%">
+                        <div class="row" style="margin-left: 10px; margin-right: 10px">
+                            <div class="alert alert-<%=alertColor%>">
                                 <label>Start:</label><input type="datetime-local" name="eventStartTime" style="margin-left: 20px" />
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="alert alert-<%=eventPanelColor%> pull-left" style="width: 100%">
-                                <label>End:</label><input type="datetime-local" name="eventEndTime" style="margin-left: 20px" />
+                        <div class="row" style="margin-left: 10px; margin-right: 10px">
+                            <div class="alert alert-<%=alertColor%>">
+                                <label>End:&nbsp;&nbsp;</label><input type="datetime-local" name="eventEndTime" style="margin-left: 20px" />
                                 <input type="submit" value="Save" name="eventDateTimeSubmit" style="margin-left: 30px" />
                             </div>
                         </div>
                     </form>
-                </div>
             <%  } %>
-            <ol class="breadcrumb" style="background-color: white; margin-bottom: -10px;">
-                <%  if (event.getAPI() != null) {
-                        if (event.getAPI().equals("google")) { %>
-                        <li class="api-breadcrumb">Google result</li>
-                    <%  } else if (event.getAPI().equals("yelp")) { %>
-                        <li class="api-breadcrumb">Yelp result&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+            <div style="display: inline-block; margin-bottom: -20px; width: 100%">
+                <ol class="breadcrumb pull-left" style="background-color: white;">
+                    <%  if (event.getAPI() != null) {
+                            if (event.getAPI().equals("google")) { %>
+                            <li class="api-breadcrumb">Google result</li>
+                        <%  } else if (event.getAPI().equals("yelp")) { %>
+                            <li class="api-breadcrumb">Yelp result&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                        <%  } %>
                     <%  } %>
-                <%  } %>
-                <li><a href="<%=event.getURL()%>" target="_blank">Website</a></li>
-                <li><a href="#">Statistics</a></li>
-                <li><a href="<%=event.getCoordinates().format()%>">Find On Map</a></li>
-                <li><a href="#">Edit</a></li>
-                <li><a href="/CS2340Servlet/itinerary?delete_event&event_id=<%=curEventID%>">Delete</a></li>
-            </ol>
+                </ol>
+                <ol class="breadcrumb pull-right" style="background-color: white;">
+                    <li><a href="<%=event.getURL()%>" target="_blank">Website</a></li>
+                    <li><a href="#">Statistics</a></li>
+                    <li><a href="<%=event.getCoordinates().format()%>">Find On Map</a></li>
+                    <li><a href="#">Edit</a></li>
+                    <li><a href="/CS2340Servlet/itinerary?delete_event&event_id=<%=curEventID%>">Delete</a></li>
+                </ol>
+            </div>
         </div>
         <% } %>
     </li>
