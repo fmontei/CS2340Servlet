@@ -1,15 +1,8 @@
     <footer id="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-push-2" style="padding-left: 80px">
-                    <div id="footerTopBorder"></div>
-
-                    <p style="text-align: center">
-                        &copy; 2014 Georgia Tech Summer 2014 CS2340 Team 3. All Rights Reserved.
-                    </p>
-                </div>
-            </div>
-        </div>
+        <div id="footerTopBorder"></div>
+        <p style="text-align: center">
+            &copy; 2014 Georgia Tech Summer 2014 CS2340 Team 3. All Rights Reserved.
+        </p>
     </footer>
 
     <!-- Itinerary Wizard -->

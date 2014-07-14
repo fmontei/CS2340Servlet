@@ -5,7 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <section id="lodging"></section>
-<div class="centered-pills">
+<div class="centered-pills" style="margin-bottom: 20px">
     <ul class="nav nav-pills" style="padding-top: 20px">
         <li style="float: right">
             <a class="alert-danger" href="#main-lodging" id="create-lodging-pill"
@@ -19,6 +19,7 @@
     </ul>
 </div>
 
+<div align="center">
 <%  final City lodgingPanelCity = (City) session.getAttribute("activeCity");
     Place selection = (lodgingPanelCity != null) ? lodgingPanelCity.getLodging() : null;
     Object lodgingObject = session.getAttribute("lodgingResults");
@@ -191,6 +192,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <script>
         // Lodging functionality

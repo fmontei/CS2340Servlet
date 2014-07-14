@@ -11,76 +11,76 @@
     }
 %>
 
-        <section id="eventsPlaces"></section>
-        <div class="centered-pills">
-            <ul class="nav nav-pills">
-                <li class="dropdown alert-success" id="create-event-pill">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-plus-sign" style="position: relative; top: 2px"></span>
-                        <b>Add Event</b>
-                        <span class="caret"></span>
+<section id="eventsPlaces"></section>
+<div class="centered-pills">
+    <ul class="nav nav-pills">
+        <li class="dropdown alert-success" id="create-event-pill">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-plus-sign" style="position: relative; top: 2px"></span>
+                <b>Add Event</b>
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu pull-left">
+                <li role ="presentation" class="dropdown-header">
+                    <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=1">
+                        Create <b>ONE</b>
                     </a>
-                    <ul class="dropdown-menu pull-left">
-                        <li role ="presentation" class="dropdown-header">
-                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=1">
-                                Create <b>ONE</b>
-                            </a>
-                        </li>
-                        <li role="presentation" class="dropdown-header">
-                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=2">
-                                Create <b>TWO</b>
-                            </a>
-                        </li>
-                        <li role="presentation" class="dropdown-header">
-                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=3">
-                                Create <b>THREE</b>
-                            </a>
-                        </li>
-                        <li role="presentation" class="dropdown-header">
-                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=5">
-                                Create <b>FIVE</b>
-                            </a>
-                        </li>
-                        <li role="presentation" class="dropdown-header">
-                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=10">
-                                Create <b>TEN</b>
-                            </a>
-                        </li>
-                        <li role="presentation" class="dropdown-header">
-                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=20">
-                                Create <b>TWENTY</b>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
-                <% if (numberOfEvents > 0) { %>
-                <li class="dropdown alert-info" id="create-event-pill">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-sort-by-attributes" style="position: relative; top: 2px"></span>
-                        <b>Sort By</b>
-                        <span class="caret"></span>
+                <li role="presentation" class="dropdown-header">
+                    <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=2">
+                        Create <b>TWO</b>
                     </a>
-                    <ul class="dropdown-menu pull-left">
-                        <li role ="presentation" class="dropdown-header">
-                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?sort=name">
-                                Name
-                            </a>
-                        </li>
-                        <li role="presentation" class="dropdown-header">
-                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?sort=start_time">
-                                Start Time
-                            </a>
-                        </li>
-                        <li role="presentation" class="dropdown-header">
-                            <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?sort=creation_date">
-                                Creation Date
-                            </a>
-                        </li>
-                    </ul>
                 </li>
-                <% } %>
+                <li role="presentation" class="dropdown-header">
+                    <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=3">
+                        Create <b>THREE</b>
+                    </a>
+                </li>
+                <li role="presentation" class="dropdown-header">
+                    <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=5">
+                        Create <b>FIVE</b>
+                    </a>
+                </li>
+                <li role="presentation" class="dropdown-header">
+                    <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=10">
+                        Create <b>TEN</b>
+                    </a>
+                </li>
+                <li role="presentation" class="dropdown-header">
+                    <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?create_event=20">
+                        Create <b>TWENTY</b>
+                    </a>
+                </li>
             </ul>
-        </div>
+        </li>
+        <% if (numberOfEvents > 0) { %>
+        <li class="dropdown alert-info" id="create-event-pill">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-sort-by-attributes" style="position: relative; top: 2px"></span>
+                <b>Sort By</b>
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu pull-left">
+                <li role ="presentation" class="dropdown-header">
+                    <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?sort=name">
+                        Name
+                    </a>
+                </li>
+                <li role="presentation" class="dropdown-header">
+                    <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?sort=start_time">
+                        Start Time
+                    </a>
+                </li>
+                <li role="presentation" class="dropdown-header">
+                    <a role="menuitem" tabindex="-1" href="/CS2340Servlet/itinerary?sort=creation_date">
+                        Creation Date
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <% } %>
+    </ul>
+</div>
 
 <!-- Java functions for this page -->
 <%! private boolean apiErrorReturned(HttpSession session, int curEventID) {

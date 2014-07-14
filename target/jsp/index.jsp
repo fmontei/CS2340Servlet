@@ -84,7 +84,6 @@
 <% } else { %>
 
 <div id="itinerary-header">
-
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -97,7 +96,6 @@
                 </button>
                 <a class="navbar-brand" href="#">DESTI</a>
             </div>
-
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
@@ -132,24 +130,21 @@
                             <li><a href="#">Something else here</a></li>
                             <li class="divider"></li>
                             <li><a href="#">Separated link</a></li>
-                            <fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();">
-                            </fb:login-button>
+                            <li id="fbLoginButton" scope="public_profile,email" onclick="fb_login();"><a href="#">Facebook Login</a></li>
                         </ul>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
+    <h1 style="z-index: 10; padding-top: 200px; font-size: 64px; font-family: 'Audiowide', cursive;" align="center">
+        DESTI<span style="position: relative; top: -8px">&#9679;</span>NATION</h1>
 </div>
 
-<fb:login-button id="fbLoginButton" scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
-
 <%  Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
-    String itineraryName = activeItinerary.getName();
     List<City> cities = (List<City>) session.getAttribute("cities");
     String cityAddress = "";
-    City indexPanelCity = null;
+    City indexPanelCity = (City) session.getAttribute("activeCity");
     List<Place> userEvents = (indexPanelCity != null) ? indexPanelCity.getEvents() : null;
     int numEvents = 0;
     if (userEvents != null) {
@@ -232,24 +227,25 @@
         <div class="row">
             <div class="col col-md-6">
                 <div class="new-city-message">
-
                     <h3>Want to travel to another <b>City?</b></h3>
                     <p>Add a <strong>New City</strong> to your Itinerary below:</p>
-                    <p style="margin-top: 73px; opacity: .9"><a class="btn btn-primary btn-lg" data-toggle="modal"
-                                                                data-target="#newCityModal" role="button">Add New City</a></p>
+                    <div>
+                        <div style="margin-bottom: 10%; margin-top: 10%; opacity: .9;">
+                            <a class="btn btn-primary btn-lg" data-toggle="modal"
+                               data-target="#eventAjaxModal" role="button">Add New City</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col col-md-6">
                 <div class="new-event-message">
-
-                    <h3>Need to find a <b>Place</b> to eat or somewhere to go sightseeing?</h3>
+                    <h3>Need a <b>Place</b> to eat or to go sightseeing?</h3>
                     <p>Add a <strong>New Event</strong> to your City below:</p>
-                    <a class="btn btn-primary btn-lg" data-toggle="modal"
-                       data-target="#eventAjaxModal" role="button">
-                        Add New Event
-                    </a>
-                </div>
 
+                    <div style="margin-bottom: 10%; margin-top: 10%; opacity: .9;"><a class="btn btn-primary btn-lg" data-toggle="modal"
+                       data-target="#eventAjaxModal" role="button">Add New Event</a>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -289,17 +285,17 @@
     <%@ include file="events_places_panels.jsp" %>
 </div>
 
-
-
 <div id="map-page">
     <div class="page-divider-header">
         <div style="display: inline-block">
             <h1><span class="glyphicon glyphicon-globe"></span> MAP</h1>
             <hr class="hr-title" />
         </div><br />
+    </div>
+    <div align="center">
         <b>Start: </b>
         <%  Place lodgingSelect = (indexPanelCity != null) ? indexPanelCity.getLodging() : null; %>
-        <select class="map-event-tooltips" id="start" onchange="calcRoute();">
+        <select class="map-event-tooltips" id="start" onchange="calcRoute();" style="margin-bottom: 40px">
           <option value= '<%=cityAddress%>'>Center </option>
           <% if (lodgingSelect != null) { %>
           <option value= '<%=lodgingSelect.getFormattedAddress()%>' title="<%=lodgingSelect.getName()%>">
@@ -335,8 +331,10 @@
           <option value= "TRANSIT">Public Transit </option>
           <option value= "WALKING">Walking </option>
         </select>
-        <div class="center-block popin" id="accordion-map" style="width: 520px; height: 300px; margin-top: 20px"></div>
-        <div id="directionsPanel"></div>
+        <div class="popin" style="max-width: 60%; min-height: 500px">
+                <div id="main-map" style="width: 100%; height: 500px"></div>
+                <div id="directionsPanel"></div>
+        </div>
     </div>
 </div>
 
@@ -362,6 +360,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Facebook Login -->
+    <script src="/CS2340Servlet/js/facebookSDK.js"></script>
 
     <!-- Includes Google Maps Javascript functionality needed by this page -->
     <script src="/CS2340Servlet/js/itinerary_wizard_js.js"></script>

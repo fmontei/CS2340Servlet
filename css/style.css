@@ -134,14 +134,24 @@ th, td {
     min-height: 100%;
 }
 
-#footer {
-    position:relative;
-    height: 60px;
-}
-
+/* Footer for Main Body */
 #footerTopBorder {    height: 1px;
     margin-bottom: 20px;
     border-top: 1px solid #eee;
+}
+
+#footer {
+    position:relative;
+    height: 100px;
+    background-color: rgb(47, 47, 47);
+    color: white;
+}
+
+#footer p {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
 }
 
 .visibilityOn {
@@ -292,10 +302,10 @@ th, td {
 }
 
 #itinerary-header {
-    margin-top: -50px;
+    margin-top: 200px;
     height: 700px;
     width: 100%;
-    background: url("../images/mountain.jpg") no-repeat;
+    background: url("../images/main_city.jpg") no-repeat;
     background-size: 100% 700px;
 }
 
@@ -342,12 +352,7 @@ th, td {
     font-size: 16px;
 }
 
-.new-event-message a {
-    position: absolute;
-    margin-top: 40px;
-    margin-bottom: 20px;
-    opacity: .9;
-}
+
 
 .new-event-message h3 {
     margin-left: 20px;
@@ -357,6 +362,10 @@ th, td {
     width: 800px;
     height: 600px;
     overflow: scroll;
+}
+
+#main-lodging {
+    max-width: 60%;
 }
 
 .ajax-event-form {
@@ -378,7 +387,7 @@ th, td {
 }
 
 #map-page {
-    background-color: #ffff00 !important;
+    background-color: rgb(243, 156, 18) !important;
     padding-bottom: 40px;
 }
 

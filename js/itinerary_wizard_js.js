@@ -49,7 +49,7 @@ function checkIfPreviousPageHasEmptyFields(pageNum) {
 }
 
 var geocoder;
-var map, accordion_map;
+var map, main_map;
 var directionsDisplay;
 var directionsService;
 function initialize() {
@@ -61,9 +61,9 @@ function initialize() {
         center: latlng
     };
     map = new google.maps.Map(document.getElementById("myMap"), mapOptions);
-    accordion_map = new google.maps.Map(document.getElementById("accordion-map"),
+    main_map = new google.maps.Map(document.getElementById("main-map"),
         mapOptions);
-    directionsDisplay.setMap(accordion_map);
+    directionsDisplay.setMap(main_map);
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
 }
 
