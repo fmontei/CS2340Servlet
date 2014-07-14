@@ -176,7 +176,7 @@
                         <p>Search Parameters: <%=session.getAttribute("eventQueryString" + curEventID)%><br />
                             The results of your search are listed below.</p>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" style="overflow: scroll">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
