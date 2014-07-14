@@ -158,7 +158,7 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
 
 <% } else { %>
 
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-inverse navbar-fixed-top" id="fixed-nav" role="navigation">
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
@@ -301,4 +301,5 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
             </div>
         </div>
     </div>
+
 <% } %>

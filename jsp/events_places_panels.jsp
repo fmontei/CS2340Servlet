@@ -273,7 +273,8 @@
                             class="btn btn-<%=eventPanelColor%>"
                             style="margin-left: 20px;">Update</button>
                 </div>
-                <div id="updateEventDateTimePanel<%=curEventID%>" align="center" style="position: absolute; left: -5000px; visibility: hidden">
+                <div id="updateEventDateTimePanel<%=curEventID%>" align="center"
+                     style="position: absolute; left: -5000px; visibility: hidden; margin-bottom: 10px">
                     <form action="/CS2340Servlet/itinerary?update_event_time&event_id=<%=curEventID%>" method="POST">
                         <div class="popin">
                             <h6>Edit your Event Time below then click 'Submit'. To cancel, click 'Cancel'.</h6>
@@ -291,12 +292,12 @@
                 </div>
             <%  } else { %>
                     <form action="/CS2340Servlet/itinerary?save_event_time&event_id=<%=curEventID%>" method="POST">
-                        <div class="row" style="margin-left: 10px; margin-right: 10px">
+                        <div class="row" style="margin-left: 2px; margin-right: 2px">
                             <div class="alert alert-<%=alertColor%>">
                                 <label>Start:</label><input type="datetime-local" name="eventStartTime" style="margin-left: 20px" />
                             </div>
                         </div>
-                        <div class="row" style="margin-left: 10px; margin-right: 10px">
+                        <div class="row" style="margin-left: 2px; margin-right: 2px">
                             <div class="alert alert-<%=alertColor%>">
                                 <label>End:&nbsp;&nbsp;</label><input type="datetime-local" name="eventEndTime" style="margin-left: 20px" />
                                 <input type="submit" value="Save" name="eventDateTimeSubmit" style="margin-left: 30px" />

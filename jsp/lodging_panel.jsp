@@ -6,7 +6,7 @@
 
 <section id="lodging"></section>
 <div class="centered-pills" style="margin-bottom: 20px">
-    <ul class="nav nav-pills" style="padding-top: 20px">
+    <ul class="nav nav-pills" style="padding-bottom: 20px">
         <li style="float: right">
             <a class="alert-danger" href="#main-lodging" id="create-lodging-pill"
                data-toggle="collapse" data-parent="#accordion">
@@ -154,7 +154,7 @@
                                 </div>
                                 <div id="updateLodgingDateTimePanel" align="center" style="position: absolute; left: -5000px; visibility: hidden">
                                     <form action="/CS2340Servlet/itinerary" method="POST">
-                                        <div class="popin">
+                                        <div class="popin" style="margin-right: 20px">
                                             <h6>Edit your Lodging Time below then click 'Submit'. To cancel, click 'Cancel'.</h6>
                                             <div class="alert alert-danger" style="display: inline-block">
                                                 <label >Check in:</label><br />

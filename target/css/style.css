@@ -303,10 +303,10 @@ th, td {
 
 #itinerary-header {
     margin-top: -50px;
-    height: 800px;
+    height: 1000px;
     width: 100%;
-    background: url("../images/main_city.jpg") no-repeat;
-    background-size: 100% 800px;
+    background: url("../images/main_city_2.jpg") no-repeat;
+    background-size: 100% 1000px;
 }
 
 #itinerary-header nav {
@@ -423,4 +423,22 @@ hr.hr-title {
 .hideAway {
     position: absolute;
     left: -5000px;
+}
+
+.navbar-custom {
+    background-color: #229922;
+    color: white;
+    border-radius:0;
+}
+
+.navbar-custom .navbar-nav > li > a {
+    color: white;
+}
+
+.navbar-custom a:hover, a:focus {
+    color: rgb(39, 107, 39);
+    background-color: transparent;
+}
+.navbar-custom .navbar-brand {
+    color: white;
 }

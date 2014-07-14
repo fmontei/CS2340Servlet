@@ -1,3 +1,4 @@
+<%@ page errorPage="errorHandler.jsp" %>
 <%@ page import="java.util.List" %>
 <%@ page import="database.*" %>
 
@@ -248,7 +249,6 @@
                 </div>
             </div>
         </div>
-
         <%@ include file="new_city.jsp" %>
     </div>
 </div>
@@ -393,6 +393,7 @@
             $("#div-overview").show();
             $("#itinerary-side-bar").show();
 
+            // Initialize map
             initialize();
 
             // Navbar Navigation Color Change
@@ -469,6 +470,31 @@
             var elementID = "#event-no-" + eventID;
             return elementID;
         }
+    </script>
+
+    <script>
+        $(document).ready (function () {
+            $(window).scroll (function () {
+                var sT = $(this).scrollTop();
+                var $overview = $("#itinerary-overview");
+                var $overview_offset = $overview.offset().top - 50;
+                var $lodging = $("#lodging-page");
+                var $lodging_offset = $lodging.offset().top - 50;
+                if (sT < $overview_offset && sT < $lodging_offset) {
+                    $('#fixed-nav').removeClass('navbar-default');
+                    $('#fixed-nav').addClass('navbar-inverse');
+                } else if (sT >= $overview_offset && sT < $lodging_offset) {
+                    $('#fixed-nav').removeClass('navbar-inverse');
+                    $('#fixed-nav').addClass('navbar-default');
+                } else if (sT >= $lodging_offset) {
+                    $('#fixed-nav').removeClass('navbar-default');
+                    $('#fixed-nav').removeClass('navbar');
+                    $('#fixed-nav').addClass('navbar-custom');
+                } else {
+
+                }
+            });
+        });
     </script>
 
 <%}%>
