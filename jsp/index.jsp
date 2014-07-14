@@ -137,7 +137,7 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    <h1 style="z-index: 10; padding-top: 200px; font-size: 64px; font-family: 'Audiowide', cursive;" align="center">
+    <h1 style="z-index: 10; padding-top: 350px; font-size: 64px; font-family: 'Audiowide', cursive; color: white !important;" align="center">
         DESTI<span style="position: relative; top: -8px">&#9679;</span>NATION</h1>
 </div>
 
@@ -208,7 +208,7 @@
     <div>
         <ol class="pager">
             <li>
-                <a href="jsp/itinerary_overview.jsp">Select Itinerary</a>
+                <a href="../jsp/itinerary_overview.jsp">Select Itinerary</a>
             </li>
             <li><a href="#"
                    onclick="showPage1()"
@@ -230,7 +230,7 @@
                     <h3>Want to travel to another <b>City?</b></h3>
                     <p>Add a <strong>New City</strong> to your Itinerary below:</p>
                     <div>
-                        <div style="margin-bottom: 10%; margin-top: 10%; opacity: .9;">
+                        <div style="margin-bottom: 10%; margin-top: 10%; margin-left: 20px; opacity: .9;">
                             <a class="btn btn-primary btn-lg" data-toggle="modal"
                                data-target="#eventAjaxModal" role="button">Add New City</a>
                         </div>
@@ -242,7 +242,7 @@
                     <h3>Need a <b>Place</b> to eat or to go sightseeing?</h3>
                     <p>Add a <strong>New Event</strong> to your City below:</p>
 
-                    <div style="margin-bottom: 10%; margin-top: 10%; opacity: .9;"><a class="btn btn-primary btn-lg" data-toggle="modal"
+                    <div style="margin-bottom: 10%; margin-top: 10%; margin-left: 20px; opacity: .9;"><a class="btn btn-primary btn-lg" data-toggle="modal"
                        data-target="#eventAjaxModal" role="button">Add New Event</a>
                     </div>
                 </div>

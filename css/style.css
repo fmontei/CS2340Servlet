@@ -302,11 +302,11 @@ th, td {
 }
 
 #itinerary-header {
-    margin-top: 200px;
-    height: 700px;
+    margin-top: -50px;
+    height: 800px;
     width: 100%;
     background: url("../images/main_city.jpg") no-repeat;
-    background-size: 100% 700px;
+    background-size: 100% 800px;
 }
 
 #itinerary-header nav {
@@ -351,8 +351,6 @@ th, td {
     border-radius: 4px;
     font-size: 16px;
 }
-
-
 
 .new-event-message h3 {
     margin-left: 20px;
