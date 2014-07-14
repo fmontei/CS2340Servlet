@@ -59,7 +59,7 @@ public class ItineraryLoader {
         session.setAttribute("cities", cities);
         session.setAttribute("activeCity", cities.get(0));
         final String firstCityName = cities.get(0).getName().trim();
-        request.setAttribute("changeCityName", firstCityName);
+        session.setAttribute("changeCityName", firstCityName);
     }
 
     private void removeCitiesFromSession(HttpSession session) {

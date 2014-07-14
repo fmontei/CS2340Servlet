@@ -83,9 +83,8 @@ public class CityForm {
             }
         }
         session.setAttribute("activeCity", changeCity);
-
-        request.setAttribute("changeCityName", changeCity.getName());
-        ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
+        session.setAttribute("changeCityName", changeCity.getName());
+        response.sendRedirect("jsp/index.jsp");
     }
 
     private int parseCityID(final HttpServletRequest request) {

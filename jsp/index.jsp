@@ -421,7 +421,7 @@
             }
 
             // Change city tabs
-            var citySelection = "<%=request.getAttribute("changeCityName")%>";
+            var citySelection = "<%=session.getAttribute("changeCityName")%>";
             var cityList = $("#cityList li");
             cityList.each(function(i, li) {
                 if ($(li).text() === citySelection) {
