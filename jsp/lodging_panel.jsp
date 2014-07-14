@@ -45,12 +45,12 @@
                 <% } %>
             </div>
             <div class="panel-body">
-                <div class="row" style="padding-left: 20px">
+                <div class="row">
                     <table class="table table-striped" style="width: 98%">
                     <% if (selection == null) { %>
-                        <div class="row">
-                            <form action="/CS2340Servlet/itinerary" method="GET">
-                                <div class="form-inline" style="padding-left: 20px; padding-right: 20px">
+                        <form action="/CS2340Servlet/itinerary" method="GET">
+                            <div class="row">
+                                <div class="form-inline" style="float: left; padding-left: 50px">
                                     <input name="lodgingName" type="text"
                                            class="form-control" placeholder="Lodging Name (optional)" />
                                     &nbsp;&nbsp;&nbsp;Radius (miles):&nbsp;&nbsp;&nbsp;
@@ -59,18 +59,23 @@
                                     &nbsp;&nbsp;&nbsp;No. Results:&nbsp;&nbsp;&nbsp;
                                     <input name="lodgingFilter" type="number" min="1" max="20"
                                            class="form-control" />
-                                </div><br />
-                                <div style="padding-left: 20px;">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div style="float: left; padding-left: 50px; padding-top: 20px">
                                     <input type="submit" class="form-control btn-primary" value="Search"
                                         name="lodgingSubmitButton" style="width: 150px;" />
                                 </div>
-                            </form>
-                        </div><br />
+                            </div>
+                        </form><br />
                         <% if (session.getAttribute("lodgingResults") != null) { %>
-                            <p>Select a lodging below. This list has been created
-                                based on your Itinerary's address, which is:
-                                <b><%=lodgingPanelCity.getAddress()%></b>
-                            </p>
+                            <div class="row">
+                                <div style="text-align: center; max-width: 90%">
+                                    Select a lodging below. This list has been created
+                                    based on your Itinerary's address, which is:
+                                    <b><%=lodgingPanelCity.getAddress()%></b>
+                                </div>
+                            </div><br/><br/>
                             <thead id="lodging-table-head">
                                 <tr>
                                     <th>Name</th>
@@ -133,7 +138,7 @@
                     <% if (selection == null && lodgingResults.size() > 0) { %>
                         <form action="/CS2340Servlet/itinerary" method="GET">
                             <div class="row">
-                                <div class="col-md-8" style="padding-left: 20px">
+                                <div style="float: left; padding-left: 50px">
                                     <input type="submit" class="form-control btn-primary" value="More Results"
                                         name="lodgingGetMoreResults" style="width: 150px;" />
                                 </div>
@@ -154,7 +159,7 @@
                                 </div>
                                 <div id="updateLodgingDateTimePanel" align="center" style="position: absolute; left: -5000px; visibility: hidden">
                                     <form action="/CS2340Servlet/itinerary" method="POST">
-                                        <div class="popin" style="margin-right: 20px">
+                                        <div class="popin" style="width: 90%">
                                             <h6>Edit your Lodging Time below then click 'Submit'. To cancel, click 'Cancel'.</h6>
                                             <div class="alert alert-danger" style="display: inline-block">
                                                 <label >Check in:</label><br />
@@ -169,23 +174,25 @@
                                     </form>
                                 </div>
                         <%  } else { %>
-                            <div class="row">
-                                <form action="/CS2340Servlet/itinerary" method="POST">
-                                    <div class="col-md-6">
-                                        <div class="alert alert-danger" style="display: inline-block">
-                                            <label style="margin-left: 20px">Check in:</label><br />
+                            <form action="/CS2340Servlet/itinerary" method="POST">
+                                <div class="row">
+                                    <div class="alert alert-danger" style="width: 90%; height: 80px">
+                                        <div class="pull-left">
+                                            <label style="margin-left: 20px">Check in:</label>
                                             <input type="datetime-local" name="lodgingCheckIn" style="margin-left: 20px;" />
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="alert alert-danger" style="margin-right: 20px">
-                                            <label style="margin-left: 20px">Check out:</label><br />
-                                            <input type="datetime-local" name="lodgingCheckOut" style="margin-left: 20px" />
+                                </div>
+                                <div class="row">
+                                    <div class="alert alert-danger" style="width: 90%; height: 80px">
+                                        <div class="pull-left">
+                                            <label style="margin-left: 20px">Check out:</label>
+                                            <input type="datetime-local" name="lodgingCheckOut" style="margin-left: 10px" />
                                             <input type="submit" value="Save" name="lodgingDateTimeSubmit" style="margin-left: 30px" />
                                         </div>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         <%  } %>
                     <% } %>
                 </div>
