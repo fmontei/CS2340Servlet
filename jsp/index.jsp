@@ -209,7 +209,7 @@
     <div>
         <ol class="pager">
             <li>
-                <a href="../jsp/itinerary_overview.jsp">Select Itinerary</a>
+                <a href="/CS2340Servlet/jsp/itinerary_overview.jsp">Select Itinerary</a>
             </li>
             <li><a href="#"
                    onclick="showPage1()"
@@ -225,35 +225,49 @@
                 <a href="#" data-toggle="modal" data-target="#newCityModal">Add New City</a>
             </li>
         </ol><br /><br />
-        <div class="row">
-            <div class="col col-md-6">
-                <div class="new-city-message">
-                    <h3>Want to travel to another <b>City?</b></h3>
-                    <p>Add a <strong>New City</strong> to your Itinerary below:</p>
-                    <div>
-                        <div style="margin-bottom: 10%; margin-top: 10%; margin-left: 20px; opacity: .9;">
-                            <a class="btn btn-primary btn-lg" data-toggle="modal"
-                               data-target="#eventAjaxModal" role="button">Add New City</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col col-md-6">
-                <div class="new-event-message">
-                    <h3>Need a <b>Place</b> to eat or to go sightseeing?</h3>
-                    <p>Add a <strong>New Event</strong> to your City below:</p>
 
-                    <div style="margin-bottom: 10%; margin-top: 10%; margin-left: 20px; opacity: .9;"><a class="btn btn-primary btn-lg" data-toggle="modal"
-                       data-target="#eventAjaxModal" role="button">Add New Event</a>
-                    </div>
-                </div>
-            </div>
+        <div class="table" >
+            <table style="table-layout: fixed; width: 100%">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <div class="new-city-message" data-toggle="modal"
+                             data-target="#newCityModal" role="button">
+                            <h3>Add new <b>City</b></h3>
+                            <p>Add a <strong>New City</strong> to your Itinerary</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="new-lodging-message" data-toggle="modal"
+                             data-target="#eventAjaxModal" role="button">
+                            <h3>Find a <b>Lodging</b></h3>
+                            <p>Add a <strong>New Lodging</strong> to your City</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="new-event-message" data-toggle="modal"
+                             data-target="#eventAjaxModal" role="button">
+                            <h3>Add New <strong>Event</strong></h3>
+                            <p>Add a <strong>New Event</strong> to your City</p>
+                        </div>
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+
         <%@ include file="new_city.jsp" %>
     </div>
 </div>
 
-<div id="lodging-page">
+<div class="row" id="lodging-page">
     <div class="page-divider-header">
         <div style="display: inline-block">
             <h1><span class="glyphicon glyphicon-home"></span> LODGING</h1>
@@ -287,7 +301,7 @@
 
 <div id="map-page">
     <div class="page-divider-header">
-        <div style="display: inline-block">
+        <div style="display: inline-block; margin-bottom: 20px">
             <h1><span class="glyphicon glyphicon-globe"></span> MAP</h1>
             <hr class="hr-title" />
         </div><br />

@@ -1,5 +1,6 @@
 package controller;
 
+import database.City;
 import database.DataManager;
 import database.Place;
 import model.*;
@@ -141,7 +142,8 @@ public class ItineraryServlet extends HttpServlet {
                                       HttpServletResponse response)
             throws IOException {
         final HttpSession session = request.getSession();
-        List<Place> events = (List) session.getAttribute("events");
+        final City activeCity = (City) session.getAttribute("activeCity");
+        List<Place> events = activeCity.getEvents();
         final String queryString = request.getQueryString();
         final int beginIndex = queryString.lastIndexOf("=") + 1;
         final int eventID = Integer.parseInt(queryString.substring(beginIndex));

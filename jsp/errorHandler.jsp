@@ -8,5 +8,9 @@
     <%
         out.println(exception.toString());
     %>
+    <br/>
+    Stack trace:
+    <br/>
+    <%=exception.printStackTrace()%>
 </body>
 </html>

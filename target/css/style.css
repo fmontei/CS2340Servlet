@@ -320,6 +320,8 @@ th, td {
     background-color: rgb(4, 71, 137) !important;
     margin-top: -70px;
     padding-bottom: 70px;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .new-city-message {
@@ -327,16 +329,62 @@ th, td {
     margin-right: auto;
     margin-left: auto;
     display: block;
-    width: 80%;
+    width: 100%;
     background: url("../images/city.jpg");
     background-size: contain;
     padding: 15px;
-    border-radius: 4px;
     font-size: 16px;
+    cursor: pointer;
+}
+
+.new-city-message:hover {
+    opacity: .6;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
 }
 
 .new-city-message h3 {
+    color: black;
+    margin-left: 40px;
+    font-family: 'Audiowide', cursive;
+}
+
+.new-city-message p {
+    color: black;
     margin-left: 20px;
+    font-family: 'Audiowide', cursive;
+}
+
+.new-lodging-message {
+    height: 250px;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    width: 100%;
+    background: url("../images/lodging.jpg");
+    background-size: 100% 150%;
+    padding: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: 'Audiowide', cursive;
+}
+
+.new-lodging-message:hover {
+    opacity: .6;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+}
+
+.new-lodging-message h3 {
+    color: white;
+    margin-left: 40px;
+    font-family: 'Audiowide', cursive;
+}
+
+.new-lodging-message p {
+    color: white;
+    margin-left: 20px;
+    font-family: 'Audiowide', cursive;
 }
 
 .new-event-message {
@@ -344,16 +392,31 @@ th, td {
     margin-right: auto;
     margin-left: auto;
     display: block;
-    width: 80%;
-    background: url("../images/city.jpg");
-    background-size: contain;
+    width: 100%;
+    background: url("../images/event.jpg");
+    background-size: 100% 110%;
     padding: 15px;
-    border-radius: 4px;
     font-size: 16px;
+    cursor: pointer;
+    font-family: 'Audiowide', cursive;
+}
+
+.new-event-message:hover {
+    opacity: .6;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
 }
 
 .new-event-message h3 {
+    color: white;
+    margin-left: 40px;
+    font-family: 'Audiowide', cursive;
+}
+
+.new-event-message p {
+    color: white;
     margin-left: 20px;
+    font-family: 'Audiowide', cursive;
 }
 
 #eventAjaxModal .modal-content {

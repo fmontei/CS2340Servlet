@@ -112,15 +112,13 @@
         }
         String eventPanelColor = (colorChange[curEventID % colorChange.length]) ? "success" : "primary";
         String alertColor = eventPanelColor == "primary" ? "info" : eventPanelColor;
-        String floatDirection = (curEventID % 2 == 0) ? "left" : "right";
-        String marginDirection = (curEventID % 2 == 0) ? "margin-left: 30px" : "margin-right: 30px";
         Place event = events.get(curEventID); %>
 
     <% if (curEventID % 2 == 0) { %>
         <div class="row">
         <div span="5">
     <% } %>
-    <li class="panel panel-<%=eventPanelColor%>" id="event-no-<%=curEventID%>" style="width: 47%; float: <%=floatDirection%>; <%=marginDirection%>; ">
+    <li class="panel panel-<%=eventPanelColor%>" id="event-no-<%=curEventID%>" style="width: 47%; float: left; margin-left: 2%">
         <div class="panel-heading" style="cursor: move">
             <%  if (event.getName() != null) { %>
             <p>
