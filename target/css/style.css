@@ -479,7 +479,7 @@ hr.hr-title {
     font-size: 18px;
 }
 
-.centered-pills { text-align: center !important; }
+.centered-pills { text-align: center !important; max-width: 100%; }
 .centered-pills ul.nav-pills { display: inline-block !important; }
 .centered-pills li { display: inline !important; }
 
