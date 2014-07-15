@@ -263,7 +263,7 @@
             </table>
         </div>
 
-        <%@ include file="new_city.jsp" %>
+        <%@ include file="eventAndLodgingModals.jsp" %>
     </div>
 </div>
 

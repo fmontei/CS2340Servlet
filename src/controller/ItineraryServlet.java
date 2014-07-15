@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -50,6 +49,14 @@ public class ItineraryServlet extends HttpServlet {
                 && request.getQueryString().contains("ajax_get_places")) {
             AjaxEventForm ajaxEventForm = new AjaxEventForm(request, response);
             ajaxEventForm.getEventsAndRedirectToAjax();
+        } else if (request.getQueryString() != null
+                && request.getQueryString().contains("ajax_get_url")) {
+            AjaxEventForm ajaxEventForm = new AjaxEventForm(request, response);
+            ajaxEventForm.getGoogleURLThenRedirectToURL();
+        } else if (request.getQueryString() != null
+                && request.getQueryString().contains("ajax_event_selected")) {
+            AjaxEventForm ajaxEventForm = new AjaxEventForm(request, response);
+            ajaxEventForm.makeSelection();
         } else {
             response.sendRedirect("jsp/itinerary_overview.jsp");
         }
