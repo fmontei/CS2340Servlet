@@ -2,10 +2,9 @@ package model;
 
 import controller.BrowserErrorHandling;
 import database.City;
+import database.DataManager;
 import database.Place;
 import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.simple.JSONArray;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +19,7 @@ public class AjaxEventForm {
     private HttpServletResponse response;
     private HttpSession session;
     private City activeCity;
+    private static int formerLength = 0;
 
     public AjaxEventForm(HttpServletRequest request,
                          HttpServletResponse response) {
@@ -30,18 +30,20 @@ public class AjaxEventForm {
     }
 
     public void getEventsAndRedirectToAjax() throws IOException {
-        List<Place> eventResults;
+        List<Place> ajaxEvents;
         final String eventName = request.getParameter("eventName");
         final String eventType = request.getParameter("eventType");
         final String radiusAsString = request.getParameter("eventRadius");
         final int radiusInMiles = Integer.parseInt(radiusAsString);
         try {
             if (request.getQueryString().contains("ajaxGoogleButton=Google+Search")) {
-                eventResults = queryGoogleForEvents(eventName, eventType, radiusInMiles);
-                returnResultsToAjax(eventResults);
+                ajaxEvents = queryGoogleForEvents(eventName, eventType, radiusInMiles);
+                updateResultsInSession(ajaxEvents);
+                returnResultsToAjax(ajaxEvents);
             } else if (request.getQueryString().contains("ajaxYelpButton=Yelp+Search")) {
-                eventResults = queryYelpForEvents(eventType, radiusInMiles);
-                returnResultsToAjax(eventResults);
+                ajaxEvents = queryYelpForEvents(eventType, radiusInMiles);
+                updateResultsInSession(ajaxEvents);
+                returnResultsToAjax(ajaxEvents);
             }
         } catch (JSONException ex) {
 
@@ -79,18 +81,109 @@ public class AjaxEventForm {
     private void returnResultsToAjax(final List<Place> results)
             throws IOException, JSONException {
         StringBuilder tableRows = new StringBuilder();
-        for (Place result : results) {
+        for (int j = 0, i = formerLength; j < results.size(); j++, i++) {
+            final Place result = results.get(j);
             final String url = (result.getURL() != null) ? result.getURL() :
-                    "/CS2340Servlet/itinerary?detail_search&place_id=" + 0 +
-                            "&event_id=" + 0;
-            tableRows.append("<tr><td>" + result.getName() + "</td><td>" +
+                    "/CS2340Servlet/itinerary?ajax_get_url&place_id=" + i;
+            tableRows.append("<tr><td class='table-name'>" + result.getName() +
+                    "</td><td class='table-address'>" +
                     result.getFormattedAddress() + "</td><td>" +
                     result.getRating() + "</td>" + "<td>" +
                     "<a href='" + url + "' target='_blank'>" +
-                    "See More</a></td></tr>");
+                    "See More</a></td>" +
+                    "<td><a href='/CS2340Servlet/itinerary?" +
+                    "ajax_event_selected&place_id=" + i +
+                    "'>Select</a></td></tr>");
         }
+        memorizeAjaxEvents(tableRows.toString());
         response.setContentType("text/html");
         PrintWriter writer = response.getWriter();
         writer.println(tableRows.toString());
+    }
+
+    private void memorizeAjaxEvents(final String currentTableRows) {
+        if (eventsAlreadyMemorized()) {
+            String formerTableRows = "";
+            formerTableRows = (String) session.getAttribute("ajaxEventMemory");
+            formerTableRows += currentTableRows;
+            session.setAttribute("ajaxEventMemory", formerTableRows);
+        } else {
+            session.setAttribute("ajaxEventMemory", currentTableRows);
+        }
+    }
+
+    private boolean eventsAlreadyMemorized() {
+        return session.getAttribute("ajaxEventMemory") != null;
+    }
+
+    private void updateResultsInSession(List<Place> ajaxEvents) {
+        if (ajaxEventResultsNotExist()) {
+            createAjaxEventsInSession(ajaxEvents);
+        } else {
+            updateAjaxEventsInSession(ajaxEvents);
+        }
+    }
+
+    private boolean ajaxEventResultsNotExist() {
+        return session.getAttribute("ajaxEvents") == null;
+    }
+
+    private void createAjaxEventsInSession(List<Place> ajaxEvents) {
+        session.setAttribute("ajaxEvents", ajaxEvents);
+    }
+
+    private void updateAjaxEventsInSession(List<Place> ajaxEvents) {
+        List<Place> formerResults;
+        formerResults = (List<Place>) session.getAttribute("ajaxEvents");
+        formerLength = formerResults.size();
+        formerResults.addAll(ajaxEvents);
+        session.setAttribute("ajaxEvents", formerResults);
+    }
+
+    public void getGoogleURLThenRedirectToURL() throws IOException {
+        Place ajaxResult = getEventFromSessionByPlaceID(), dummy = new Place();
+        final GooglePlaceAPI googlePlaceAPI = new GooglePlaceAPI();
+        try {
+            googlePlaceAPI.getByDetailSearch(ajaxResult, dummy);
+        } catch (JSONException ignore) {}
+        redirectUserToRequestedURL(ajaxResult.getURL());
+    }
+
+    private void redirectUserToRequestedURL(String url)
+            throws IOException {
+        response.sendRedirect(url);
+    }
+
+    public void makeSelection() throws IOException {
+        City activeCity = (City) session.getAttribute("activeCity");
+        final Place chosenEvent = getEventFromSessionByPlaceID();
+        try {
+            DataManager.createEvent(chosenEvent, activeCity.getID());
+            List<Place> chosenEvents = activeCity.getEvents();
+            chosenEvents.add(chosenEvent);
+            session.setAttribute("activeCity", activeCity);
+            clearEventsFromSession();
+            response.sendRedirect("jsp/index.jsp");
+        } catch (SQLException ex) {
+            BrowserErrorHandling.printErrorToBrowser(request, response, ex);
+        }
+    }
+
+    private void clearEventsFromSession() {
+        session.removeAttribute("ajaxEvents");
+        formerLength = 0;
+    }
+
+    private Place getEventFromSessionByPlaceID() {
+        List<Place> ajaxEvents;
+        Place chosenEvent = new Place();
+        final String queryString = request.getQueryString();
+        final int beginIndex = queryString.indexOf("=") + 1;
+        final int placeID = Integer.parseInt(queryString.substring(beginIndex));
+        ajaxEvents = (List<Place>) session.getAttribute("ajaxEvents");
+        if (ajaxEvents != null) {
+            chosenEvent = ajaxEvents.get(placeID);
+        }
+        return chosenEvent;
     }
 }
