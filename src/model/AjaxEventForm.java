@@ -85,7 +85,8 @@ public class AjaxEventForm {
             final Place result = results.get(j);
             final String url = (result.getURL() != null) ? result.getURL() :
                     "/CS2340Servlet/itinerary?ajax_get_url&place_id=" + i;
-            tableRows.append("<tr><td>" + result.getName() + "</td><td>" +
+            tableRows.append("<tr><td class='table-name'>" + result.getName() +
+                    "</td><td class='table-address'>" +
                     result.getFormattedAddress() + "</td><td>" +
                     result.getRating() + "</td>" + "<td>" +
                     "<a href='" + url + "' target='_blank'>" +
@@ -94,10 +95,25 @@ public class AjaxEventForm {
                     "ajax_event_selected&place_id=" + i +
                     "'>Select</a></td></tr>");
         }
+        memorizeAjaxEvents(tableRows.toString());
         response.setContentType("text/html");
         PrintWriter writer = response.getWriter();
-        session.setAttribute("ajaxEventMemory", tableRows.toString());
         writer.println(tableRows.toString());
+    }
+
+    private void memorizeAjaxEvents(final String currentTableRows) {
+        if (eventsAlreadyMemorized()) {
+            String formerTableRows = "";
+            formerTableRows = (String) session.getAttribute("ajaxEventMemory");
+            formerTableRows += currentTableRows;
+            session.setAttribute("ajaxEventMemory", formerTableRows);
+        } else {
+            session.setAttribute("ajaxEventMemory", currentTableRows);
+        }
+    }
+
+    private boolean eventsAlreadyMemorized() {
+        return session.getAttribute("ajaxEventMemory") != null;
     }
 
     private void updateResultsInSession(List<Place> ajaxEvents) {

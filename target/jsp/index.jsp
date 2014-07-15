@@ -345,9 +345,13 @@
           <option value= "TRANSIT">Public Transit </option>
           <option value= "WALKING">Walking </option>
         </select>
-        <div class="popin" style="max-width: 60%; min-height: 500px">
-                <div id="main-map" style="width: 100%; height: 500px"></div>
+        <div class="row popin" style="max-width: 90%; min-height: 500px">
+            <div class="col-md-12" id="mainMapWrapper">
+                <div id="main-map" style="height: 500px"></div>
+            </div>
+            <div class="hideAway" id="directionsPanelWrapper" style="overflow: auto">
                 <div id="directionsPanel"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -408,7 +412,8 @@
             $("#itinerary-side-bar").show();
 
             // Initialize map
-            initialize();
+            initialize(<%=indexPanelCity.getLatitude()%>,
+                <%=indexPanelCity.getLongitude()%>);
 
             // Navbar Navigation Color Change
             $('.navbar-navigation li a').click(function(e) {

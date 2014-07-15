@@ -90,20 +90,22 @@
                         <br /><br /><br />
                         <%  String ajaxEventMemory = (String) session.getAttribute("ajaxEventMemory");
                             if (ajaxEventMemory == null) ajaxEventMemory = ""; %>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Address</th>
-                                    <th>Rating</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody id="ajax-event-table">
-                                <%=ajaxEventMemory%>
-                            </tbody>
-                        </table>
+                        <div class="table-wrapper">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                        <th>Rating</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ajax-event-table">
+                                    <%=ajaxEventMemory%>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

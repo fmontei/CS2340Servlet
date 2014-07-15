@@ -21,10 +21,12 @@ th, td {
 
 .table-name {
     width: 150px;
+    overflow-x: auto;
 }
 
 .table-address {
-    width: 350px;
+    width: 40%;
+    overflow-x: auto;
 }
 
 /* Opening Carousel Styling */
@@ -419,10 +421,26 @@ th, td {
     font-family: 'Audiowide', cursive;
 }
 
+/* Custom Modals for Events, Cities and Lodging Creation */
+
 #eventAjaxModal .modal-content {
-    width: 800px;
+    width: 900px;
+    margin-left: -150px;
     height: 600px;
     overflow: scroll;
+}
+
+#eventAjaxModal .modal-title {
+    font-family: 'Audiowide', cursive;
+}
+
+#newCityModal .modal-title {
+    font-family: 'Audiowide', cursive;
+}
+
+.table-wrapper {
+    overflow: auto;
+    width: 100%;
 }
 
 #main-lodging {

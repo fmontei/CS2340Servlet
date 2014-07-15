@@ -52,10 +52,12 @@ var geocoder;
 var map, main_map;
 var directionsDisplay;
 var directionsService;
-function initialize() {
+function initialize(centralLat, centralLng) {
     directionsDisplay = new google.maps.DirectionsRenderer();
     geocoder = new google.maps.Geocoder();
-    var latlng = new google.maps.LatLng(-34.397, 150.644);
+    centralLat = centralLat != null ? centralLat : 34.397;
+    centralLng = centralLng != null ? centralLng : 150.644;
+    var latlng = new google.maps.LatLng(centralLat, centralLng);
     var mapOptions = {
         zoom: 8,
         center: latlng
@@ -85,6 +87,13 @@ function codeAddress(formAddress) {
 }
 
 function calcRoute() {
+  var mainMainWrapper = $("#mainMapWrapper");
+  mainMainWrapper.removeClass("col-md-12");
+  mainMainWrapper.addClass("col-md-8");
+  var directionsPanelWrapper = $("#directionsPanelWrapper");
+  directionsPanelWrapper.hide();
+  directionsPanelWrapper.removeClass("hideAway");
+  directionsPanelWrapper.fadeIn("slow");
   directionsService = new google.maps.DirectionsService();
   var start = document.getElementById('start').value;
   var end = document.getElementById('end').value;
