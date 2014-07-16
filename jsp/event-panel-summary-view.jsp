@@ -4,25 +4,20 @@
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%  final City currCity = (City) session.getAttribute("activeCity");
-    List<Place> cityEvents = (currCity != null) ? currCity.getEvents() : new ArrayList<Place>();
-    int eventCount = 0;
-    if (cityEvents != null) {
-        eventCount = cityEvents.size();
-    }
-%>
-
-<div class="container">
+<div style="width: 20%; text-align: center; margin: 0 auto">
+    <h1 style="text-align: center; font-family: 'Lobster', cursive; border: solid">
+        Summary View
+    </h1>
+</div>
+<div class="container" style="padding-top: 50px">
     <div class="col-md-12">
-        <h1 style="text-align: center; font-family: 'Lobster">Summary View</h1>
-
         <div class="well">
             <div id="myCarousel" class="carousel slide">
                 <!-- Carousel items -->
                 <div class="carousel-inner">
 
                     <div class="item active">
-                        <div class="row">
+                        <div class="row" style="height: 250px !important;">
                             <div class="col-sm-3"><a href="#x"><img src="../images/event.png" alt="Image" class="img-responsive"></a>
                             </div>
                             <div class="col-sm-3"><a href="#x"><img src="../images/lodging.jpg" alt="Image" class="img-responsive"></a>
@@ -46,7 +41,7 @@
                             <div class="row">
                         <% } %>
                                 <div class="col-md-6">
-                                    <div class="panel-body <%=panelColor%>">
+                                    <div class="panel-body <%=panelColor%>" style="height: 250px !important;">
                                         <h3 style="font-family: 'Monda'">
                                             <a href="<%=event.getURL()%>" target="_blank"><%=curEventID + 1%>. <%=event.getName()%>
                                             </a>

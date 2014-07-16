@@ -6,6 +6,7 @@ import database.DataManager;
 import database.Place;
 import org.json.JSONException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -187,13 +188,13 @@ public class AjaxEventForm {
         return chosenEvent;
     }
 
-    public void changeEventPanelView() throws IOException {
+    public void changeEventPanelView() throws IOException, ServletException {
         final String queryString = request.getQueryString();
         if (queryString.contains("grid"))
             request.getSession().setAttribute("eventPanelView", "Grid");
         else if (queryString.contains("summary"))
             request.getSession().setAttribute("eventPanelView", "Summary");
-        request.getSession().setAttribute("currentSection", "eventsPlaces");
-        response.sendRedirect("jsp/index.jsp");
+        request.setAttribute("currentSection", "event-places-page");
+        request.getRequestDispatcher("jsp/index.jsp").forward(request, response);
     }
 }

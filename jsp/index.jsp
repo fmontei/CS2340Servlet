@@ -478,16 +478,17 @@
         /* Scrolls to the event from which event search request was issued
             following page reload */
         $('html, body').animate({
-            scrollTop: $(getCurrentSection()).offset().top
+            scrollTop: $(getCurrentPageSection()).offset().top
         }, 'fast');
 
-        function getCurrentSection() {
-            var elementID = "#";
-            var section = '<%=session.getAttribute("currentSection")%>';
-            if (section === "eventsPlaces") {
-                elementID += section;
+        function getCurrentPageSection() {
+            var element = '<%=request.getAttribute("currentSection")%>';
+            if (element != null) {
+                var elementID = "#" + element;
+                return elementID;
+            } else {
+                return "#" + "itinerary-header";
             }
-            return elementID;
         }
     </script>
 

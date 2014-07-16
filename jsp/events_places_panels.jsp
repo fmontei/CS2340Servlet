@@ -16,7 +16,6 @@
     <form action="/CS2340Servlet/itinerary?change_event_view" method="get" id="ajaxChangeViewForm">
         <div class="custom-centered-pills center-left">
             <h1>Views</h1>
-            <hr class="hr-title" />
             <ul class="nav nav-pills">
                 <li class="alert-success"><a href="/CS2340Servlet/itinerary?change_event_view=grid">Grid</a></li>
                 <li class="alert-info"><a href="/CS2340Servlet/itinerary?change_event_view=summary">Summary</a></li>
@@ -25,7 +24,6 @@
     </form>
     <div class="custom-centered-pills center-right">
         <h1>Actions</h1>
-        <hr class="hr-title" />
         <ul class="nav nav-pills">
             <li class="dropdown alert-success" id="create-event-pill">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">

@@ -59,7 +59,6 @@ public class ItineraryServlet extends HttpServlet {
             ajaxEventForm.makeSelection();
         } else if (request.getQueryString() != null
                 && request.getQueryString().contains("change_event_view")) {
-            final String queryString = request.getQueryString();
             AjaxEventForm ajaxEventForm = new AjaxEventForm(request, response);
             ajaxEventForm.changeEventPanelView();
         } else {
