@@ -186,4 +186,14 @@ public class AjaxEventForm {
         }
         return chosenEvent;
     }
+
+    public void changeEventPanelView() throws IOException {
+        final String queryString = request.getQueryString();
+        if (queryString.contains("grid"))
+            request.getSession().setAttribute("eventPanelView", "Grid");
+        else if (queryString.contains("summary"))
+            request.getSession().setAttribute("eventPanelView", "Summary");
+        request.getSession().setAttribute("currentSection", "eventsPlaces");
+        response.sendRedirect("jsp/index.jsp");
+    }
 }

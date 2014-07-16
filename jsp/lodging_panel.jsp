@@ -5,7 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <section id="lodging"></section>
-<div class="centered-pills" style="margin-bottom: 20px">
+<div class="custom-centered-pills" style="margin-bottom: 20px">
     <ul class="nav nav-pills" style="padding-bottom: 20px">
         <li style="float: right">
             <a class="alert-danger" href="#main-lodging" id="create-lodging-pill"

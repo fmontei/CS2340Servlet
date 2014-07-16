@@ -59,7 +59,7 @@ function initialize(centralLat, centralLng) {
     centralLng = centralLng != null ? centralLng : 150.644;
     var latlng = new google.maps.LatLng(centralLat, centralLng);
     var mapOptions = {
-        zoom: 8,
+        zoom: 12,
         center: latlng
     };
     map = new google.maps.Map(document.getElementById("myMap"), mapOptions);
