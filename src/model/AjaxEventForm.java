@@ -6,6 +6,7 @@ import database.DataManager;
 import database.Place;
 import org.json.JSONException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -36,17 +37,16 @@ public class AjaxEventForm {
         final String radiusAsString = request.getParameter("eventRadius");
         final int radiusInMiles = Integer.parseInt(radiusAsString);
         try {
-            if (request.getQueryString().contains("ajaxGoogleButton=Google+Search")) {
+            if (request.getParameter("ajaxGoogleButton") != null) {
                 ajaxEvents = queryGoogleForEvents(eventName, eventType, radiusInMiles);
                 updateResultsInSession(ajaxEvents);
                 returnResultsToAjax(ajaxEvents);
-            } else if (request.getQueryString().contains("ajaxYelpButton=Yelp+Search")) {
+            } else if (request.getParameter("ajaxYelpButton") != null) {
                 ajaxEvents = queryYelpForEvents(eventType, radiusInMiles);
                 updateResultsInSession(ajaxEvents);
                 returnResultsToAjax(ajaxEvents);
             }
         } catch (JSONException ex) {
-
         } catch (IOException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         } catch (SQLException ex) {
@@ -171,6 +171,7 @@ public class AjaxEventForm {
 
     private void clearEventsFromSession() {
         session.removeAttribute("ajaxEvents");
+        session.removeAttribute("ajaxEventMemory");
         formerLength = 0;
     }
 
@@ -185,5 +186,15 @@ public class AjaxEventForm {
             chosenEvent = ajaxEvents.get(placeID);
         }
         return chosenEvent;
+    }
+
+    public void changeEventPanelView() throws IOException, ServletException {
+        final String queryString = request.getQueryString();
+        if (queryString.contains("grid"))
+            request.getSession().setAttribute("eventPanelView", "Grid");
+        else if (queryString.contains("summary"))
+            request.getSession().setAttribute("eventPanelView", "Summary");
+        request.setAttribute("currentSection", "event-places-page");
+        request.getRequestDispatcher("jsp/index.jsp").forward(request, response);
     }
 }

@@ -11,6 +11,7 @@
     <link href='http://fonts.googleapis.com/css?family=Monda' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Monda|Francois+One' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
@@ -19,7 +20,7 @@
     <link href="/CS2340Servlet/css/jquery.raty.css" rel="stylesheet" type="text/css">
 
     <!-- Jquery Javascript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     <!-- DateTime picker CSS -->
     <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/jquery.datetimepicker.css">

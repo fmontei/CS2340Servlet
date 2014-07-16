@@ -30,18 +30,18 @@ th, td {
 }
 
 /* Opening Carousel Styling */
-.customCarousel {
+.indexCarousel {
     position: relative;
     width: 100%; /* for IE 6 */
 }
 
-.customCarousel img {
+.indexCarousel img {
     width: 1000px;
     max-height: 100%;
     vertical-align: middle;
 }
 
-.customCarousel h2 {
+.indexCarousel h2 {
     left: 0;
     position:absolute;
     text-align:center;
@@ -49,7 +49,7 @@ th, td {
     width: 100%
 }
 
-.customCarousel h2 span {
+.indexCarousel h2 span {
     color: white;
     font: bold 24px/45px Helvetica, Sans-Serif;
     letter-spacing: -1px;
@@ -97,6 +97,10 @@ th, td {
     font-weight: bold;
     font-size: 18px;
 }
+
+.carousel-control { padding-top:10%; width: 5% !important; }
+.carousel-control.left { margin-left: -25px !important; background-image: none !important; color: black; }
+.carousel-control.right { margin-right: -25px !important; background-image: none !important; color: black; }
 
 #overviewMessage {
 	position: fixed;
@@ -497,9 +501,13 @@ hr.hr-title {
     font-size: 18px;
 }
 
-.centered-pills { text-align: center !important; }
-.centered-pills ul.nav-pills { display: inline-block !important; }
-.centered-pills li { display: inline !important; }
+/* Events and Places Pills */
+.custom-centered-pills { text-align: center; }
+.custom-centered-pills ul.nav-pills { display: inline-block; }
+.custom-centered-pills li { display: inline;  font-weight: bold;}
+.custom-centered-pills h1 { font-family: 'Lobster', cursive; }
+.center-left { margin-left: 10%; float: left; }
+.center-right { margin-right: 10%; float: right; }
 
 .hideAway {
     position: absolute;

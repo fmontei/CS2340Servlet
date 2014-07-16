@@ -45,8 +45,8 @@ public class ItineraryServlet extends HttpServlet {
         } else if (changeCityRequested(request)) {
             CityForm cityForm = new CityForm(request, response);
             cityForm.changeCity();
-        } else if (request.getQueryString() != null
-                && request.getQueryString().contains("ajax_get_places")) {
+        } else if (request.getParameter("ajaxGoogleButton") != null ||
+                request.getParameter("ajaxYelpButton") != null) {
             AjaxEventForm ajaxEventForm = new AjaxEventForm(request, response);
             ajaxEventForm.getEventsAndRedirectToAjax();
         } else if (request.getQueryString() != null
@@ -57,6 +57,10 @@ public class ItineraryServlet extends HttpServlet {
                 && request.getQueryString().contains("ajax_event_selected")) {
             AjaxEventForm ajaxEventForm = new AjaxEventForm(request, response);
             ajaxEventForm.makeSelection();
+        } else if (request.getQueryString() != null
+                && request.getQueryString().contains("change_event_view")) {
+            AjaxEventForm ajaxEventForm = new AjaxEventForm(request, response);
+            ajaxEventForm.changeEventPanelView();
         } else {
             response.sendRedirect("jsp/itinerary_overview.jsp");
         }

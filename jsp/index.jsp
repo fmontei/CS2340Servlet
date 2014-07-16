@@ -1,7 +1,5 @@
 <%@ page errorPage="errorHandler.jsp" %>
 <%@ page import="java.util.List" %>
-<%@ page import="database.*" %>
-
 <%@ include file="header.jsp" %>
 
 <%if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {%>
@@ -22,7 +20,7 @@
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner">
                     <div class="item active">
-                        <div class="customCarousel">
+                        <div class="indexCarousel">
                             <img src="http://www.listofimages.com/wp-content/uploads/2013/07/city-urban-photography-effects-landscape.jpg"
                                  alt="" />
                             <h2>
@@ -38,7 +36,7 @@
                     </div>
 
                     <div class="item">
-                        <div class="customCarousel">
+                        <div class="indexCarousel">
                             <img src="http://3.bp.blogspot.com/-bj_PsFI4lDA/UEOyL6Tab0I/AAAAAAAAALM/lNAotGu8b9U/s1600/Ariel-New-York-City.jpg" alt="" />
                             <h2>
                                 <span>Welcome to Trip Planner!</span>
@@ -53,7 +51,7 @@
                     </div>
 
                     <div class="item">
-                        <div class="customCarousel">
+                        <div class="indexCarousel">
                             <img src="http://sumsphere.files.wordpress.com/2012/09/2652009650_2c14a9cf7d_b.jpg?w=848" alt="" />
                             <h2>
                                 <span>Welcome to Trip Planner!</span>
@@ -262,7 +260,6 @@
                 </tbody>
             </table>
         </div>
-
         <%@ include file="eventAndLodgingModals.jsp" %>
     </div>
 </div>
@@ -460,47 +457,22 @@
                     $(li).addClass("active");
                 }
             });
-
-            $('form.ajax').on('submit', function() {
-                var that = $(this),
-                    url = that.attr('action'),
-                    method = that.attr('method'),
-                    data = {};
-
-                that.find('[name]').each(function(index, value) {
-                    var that = $(this),
-                        name = that.attr('name'),
-                        value = that.val();
-
-                    data[name] = value;
-                });
-
-                $.ajax({
-                    url: url,
-                    type: method,
-                    data: data,
-                    success: function(json) {
-                        console.log(json);
-                        $("#ajax-event-table").append(json);
-                    }
-                });
-
-                return false;
-            });
         });
 
         /* Scrolls to the event from which event search request was issued
             following page reload */
         $('html, body').animate({
-            scrollTop: $(parseEventIDFromQueryString()).offset().top
-        }, 'slow');
+            scrollTop: $(getCurrentPageSection()).offset().top
+        }, 'fast');
 
-        function parseEventIDFromQueryString() {
-            var queryString = '<%=request.getQueryString()%>';
-            var beginIndex = queryString.lastIndexOf("=") + 1;
-            var eventID = queryString.substring(beginIndex);
-            var elementID = "#event-no-" + eventID;
-            return elementID;
+        function getCurrentPageSection() {
+            var element = '<%=request.getAttribute("currentSection")%>';
+            if (element != null) {
+                var elementID = "#" + element;
+                return elementID;
+            } else {
+                return "#" + "itinerary-header";
+            }
         }
     </script>
 
@@ -528,5 +500,4 @@
             });
         });
     </script>
-
 <%}%>
