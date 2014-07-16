@@ -485,7 +485,7 @@
 
         function parseEventIDFromQueryString() {
             var queryString = '<%=request.getQueryString()%>';
-            if (queryString != undefined && queryString.contains("event_id=")) {
+            if (queryString != null && queryString.contains("event_id=")) {
                 var beginIndex = queryString.lastIndexOf("=") + 1;
                 var eventID = queryString.substring(beginIndex);
                 var elementID = "#event-no-" + eventID;
