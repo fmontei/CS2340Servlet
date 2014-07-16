@@ -24,6 +24,15 @@ public class SQLItineraryQuery extends SQLQuery {
         preparedStatement.executeUpdate();
     }
 
+    public void updateItineraryBudgetQuery(int itineraryID, int budgetID) throws SQLException {
+        final String query = "UPDATE itinerary SET budgetID = ? WHERE itinerary.ID = ?";
+        PreparedStatement preparedStatement =
+                super.dbConnection.prepareStatement(query);
+        preparedStatement.setInt(1, budgetID);
+        preparedStatement.setInt(2, itineraryID);
+        preparedStatement.executeUpdate();
+    }
+
     public void deleteItineraryQuery(String itineraryID) throws SQLException {
         String query = "DELETE FROM ITINERARY WHERE ITINERARY.ID = ?";
         PreparedStatement preparedStatement =
@@ -46,8 +55,10 @@ public class SQLItineraryQuery extends SQLQuery {
             int intID = Integer.parseInt(ID);
             int userID = results.getInt("userID");
             int preferenceID = results.getInt("preferenceID");
+            int budgetID = results.getInt("budgetID");
             itinerary = new Itinerary(name, transportationMode, creationDate,
                     intID, userID, preferenceID);
+            itinerary.setBudgetID(budgetID);
             break;
         }
         return itinerary;
@@ -66,11 +77,13 @@ public class SQLItineraryQuery extends SQLQuery {
             int ID = results.getInt("ID");
             int userID = results.getInt("userID");
             int preferenceID = results.getInt("preferenceID");
+            int budgetID = results.getInt("budgetID");
             String name = results.getString("name");
             String transportationMode = results.getString("transportation");
             String creationDate = results.getString("creationDate");
             itinerary = new Itinerary(name, transportationMode,
                     creationDate, ID, userID, preferenceID);
+            itinerary.setBudgetID(budgetID);
             break;
         }
         return itinerary;
@@ -88,11 +101,13 @@ public class SQLItineraryQuery extends SQLQuery {
         while(results.next()) {
             int ID = results.getInt("ID");
             int preferenceID = results.getInt("preferenceID");
+            int budgetID = results.getInt("budgetID");
             String name = results.getString("name");
             String transportationMode = results.getString("transportation");
             String creationDate = results.getString("creationDate");
             Itinerary itinerary = new Itinerary(name, transportationMode,
                     creationDate, ID, userID, preferenceID);
+            itinerary.setBudgetID(budgetID);
             itineraries.add(itinerary);
         }
         return itineraries;
