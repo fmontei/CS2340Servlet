@@ -152,6 +152,10 @@
 %>
 
 <div id="itinerary-overview">
+    <button id="lodging-tab-btn">Lodging</button>
+    <button id="events-tab-btn">Events and Places</button>
+    <button id="map-tab-btn">Map and Directions</button>
+    <button id="budget-tab-btn">Manage Budget</button>
     <ul class="nav nav-pills" style="float: right">
         <li>
             <a href="#" style="color: rgb(66, 139, 202); font-weight: bold">
@@ -264,7 +268,7 @@
     </div>
 </div>
 
-<div class="row" id="lodging-page">
+<div class="row" id="lodging-page" style="display:none">
     <div class="page-divider-header">
         <div style="display: inline-block">
             <h1><span class="glyphicon glyphicon-home"></span> LODGING</h1>
@@ -296,7 +300,7 @@
     <%@ include file="events_places_panels.jsp" %>
 </div>
 
-<div id="map-page">
+<div id="map-page" style="display:none;">
     <div class="page-divider-header">
         <div style="display: inline-block; margin-bottom: 20px">
             <h1><span class="glyphicon glyphicon-globe"></span> MAP</h1>
@@ -353,7 +357,7 @@
     </div>
 </div>
 
-<div class="row" id="budget-page">
+<div id="budget-page" style="display:none;">
     <div class="page-divider-header">
         <div style="display: inline-block">
             <h1><span class="glyphicon glyphicon-usd"></span> BUDGET</h1>
@@ -461,18 +465,49 @@
 
         /* Scrolls to the event from which event search request was issued
             following page reload */
+
+        $(getCurrentPageSection()).show();
+
         $('html, body').animate({
             scrollTop: $(getCurrentPageSection()).offset().top
         }, 'fast');
 
+        $('#lodging-tab-btn').on("click", function(){
+            hideAllTabs();
+            $('#lodging-page').show();
+        });
+
+        $('#events-tab-btn').on("click", function(){
+            hideAllTabs();
+            $('#events-places-page').show();
+        });
+
+        $('#map-tab-btn').on("click", function(){
+            hideAllTabs();
+            $('#map-page').show();
+        });
+
+        $('#budget-tab-btn').on("click", function(){
+            hideAllTabs();
+            $('#budget-page').show();
+        });
+
         function getCurrentPageSection() {
             var element = '<%=request.getAttribute("currentSection")%>';
             if (element != null) {
+                hideAllTabs();
                 var elementID = "#" + element;
                 return elementID;
             } else {
                 return "#" + "itinerary-header";
             }
+        }
+
+        function hideAllTabs() {
+            $('#budget-page').hide();
+            $('#map-page').hide();
+            $('#event-places-page').hide();
+            $('#lodging-page').hide();
         }
     </script>
 
