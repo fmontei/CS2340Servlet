@@ -22,6 +22,9 @@
     <!-- Jquery Javascript -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
+    <!-- DateTime picker CSS -->
+    <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/jquery.datetimepicker.css">
+
 </head>
 <body>
 

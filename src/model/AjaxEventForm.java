@@ -37,17 +37,16 @@ public class AjaxEventForm {
         final String radiusAsString = request.getParameter("eventRadius");
         final int radiusInMiles = Integer.parseInt(radiusAsString);
         try {
-            if (request.getQueryString().contains("ajaxGoogleButton=Google+Search")) {
+            if (request.getParameter("ajaxGoogleButton") != null) {
                 ajaxEvents = queryGoogleForEvents(eventName, eventType, radiusInMiles);
                 updateResultsInSession(ajaxEvents);
                 returnResultsToAjax(ajaxEvents);
-            } else if (request.getQueryString().contains("ajaxYelpButton=Yelp+Search")) {
+            } else if (request.getParameter("ajaxYelpButton") != null) {
                 ajaxEvents = queryYelpForEvents(eventType, radiusInMiles);
                 updateResultsInSession(ajaxEvents);
                 returnResultsToAjax(ajaxEvents);
             }
         } catch (JSONException ex) {
-
         } catch (IOException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         } catch (SQLException ex) {
@@ -172,6 +171,7 @@ public class AjaxEventForm {
 
     private void clearEventsFromSession() {
         session.removeAttribute("ajaxEvents");
+        session.removeAttribute("ajaxEventMemory");
         formerLength = 0;
     }
 

@@ -114,6 +114,34 @@
 </div>
 
 <script>
+    $('form.ajax').on('submit', function() {
+        var that = $(this),
+                url = that.attr('action'),
+                method = that.attr('method'),
+                data = {};
+
+        that.find('[name]').each(function(index, value) {
+            var that = $(this),
+                    name = that.attr('name'),
+                    value = that.val();
+
+            data[name] = value;
+        });
+
+        $.ajax({
+            url: url,
+            type: method,
+            data: data,
+            success: function(json) {
+                console.log(json);
+                $("#ajax-event-table").append(json);
+                $("#ajax-event-table").append(json);
+            }
+        });
+
+        return false;
+    });
+
     $('#newCityModal').on('shown.bs.modal', function (e) {
         initializeNewCityMap();
     });

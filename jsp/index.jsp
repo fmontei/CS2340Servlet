@@ -1,7 +1,5 @@
 <%@ page errorPage="errorHandler.jsp" %>
 <%@ page import="java.util.List" %>
-<%@ page import="database.*" %>
-
 <%@ include file="header.jsp" %>
 
 <%if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {%>
@@ -355,6 +353,19 @@
     </div>
 </div>
 
+<div class="row" id="budget-page">
+    <div class="page-divider-header">
+        <div style="display: inline-block">
+            <h1><span class="glyphicon glyphicon-barcode"></span> BUDGET</h1>
+            <hr class="hr-title" />
+        </div>
+        <p><span style="font-size: 20px"><b>Create and Manage a Budget for this Trip:</b></span><br />
+            Create a Budget below.
+        </p><br /><br />
+    </div>
+    <%@ include file="budget_panel.jsp" %>
+</div>
+
 
     <%@ include file="footer.jsp" %>
 
@@ -446,33 +457,6 @@
                     $(li).addClass("active");
                 }
             });
-
-            $('form.ajax').on('submit', function() {
-                var that = $(this),
-                    url = that.attr('action'),
-                    method = that.attr('method'),
-                    data = {};
-
-                that.find('[name]').each(function(index, value) {
-                    var that = $(this),
-                        name = that.attr('name'),
-                        value = that.val();
-
-                    data[name] = value;
-                });
-
-                $.ajax({
-                    url: url,
-                    type: method,
-                    data: data,
-                    success: function(json) {
-                        console.log(json);
-                        $("#ajax-event-table").append(json);
-                    }
-                });
-
-                return false;
-            });
         });
 
         /* Scrolls to the event from which event search request was issued
@@ -516,5 +500,4 @@
             });
         });
     </script>
-
 <%}%>

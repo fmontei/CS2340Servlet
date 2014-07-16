@@ -45,15 +45,18 @@
                     <img class="image-responsive"
                          src="http://placehold.it/500/<%=imageBgColor%>/fff&amp;text=<%=curEventID+1%>" width="50" height="30">
                 </a>
-                <%  if (event.getName() != null) { %>
+                <%  if (event.getName() != null) {
+                    String address = event.getFormattedAddress() != null ? event.getFormattedAddress() : "N/A";
+                    String phone = event.getPhoneNumber() != null ? event.getPhoneNumber() : "N/A";
+                %>
                     <div class="media-body">
                         <h4 class="media-heading"><%=event.getName()%></h4>
                         <p>
                             <span style="overflow: hidden">
-                                <span style="text-decoration: underline">Address:</span> <%=event.getFormattedAddress()%>
+                                <span style="text-decoration: underline">Address:</span> <%=address%>
                             </span><br/>
                             <span style="overflow: hidden">
-                                <span style="text-decoration: underline">Phone:</span> <%=event.getPhoneNumber()%>
+                                <span style="text-decoration: underline">Phone:</span> <%=phone%>
                             </span><br/>
                             <span style="overflow: hidden">
                                 <a href='<%=event.getURL()%>'>Website</a>

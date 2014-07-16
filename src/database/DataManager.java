@@ -5,6 +5,21 @@ import java.util.List;
 
 public class DataManager {
 
+    public static Budget fetchBudget(int budgetID) throws SQLException {
+        Budget fetchedBudget = new SQLBudgetQuery().getBudgetByID(budgetID);
+        return fetchedBudget;
+    }
+
+    public static int saveBudget(Budget budget) throws SQLException {
+        int budgetID = 0;
+        try {
+            budgetID = new SQLBudgetQuery().saveBudget(budget);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return budgetID;
+    }
+
     public static void createUser(User user) throws SQLException {
         try {
             new SQLUserQuery().createUserQuery(user);
@@ -30,6 +45,10 @@ public class DataManager {
 
     public static void createItinerary(Itinerary itinerary) throws SQLException {
         new SQLItineraryQuery().createItineraryQuery(itinerary);
+    }
+
+    public static void updateItineraryBudget(int itineraryID, int budgetID) throws SQLException {
+        new SQLItineraryQuery().updateItineraryBudgetQuery(itineraryID, budgetID);
     }
 
     public static void deleteItinerary(String itineraryID) throws SQLException {
