@@ -1,3 +1,5 @@
+package test;
+
 import database.*;
 
 import java.awt.geom.Point2D;
@@ -7,6 +9,11 @@ import java.util.List;
 public class TestDB {
     public static void main(String... args)  {
         try {
+            testBudgetSave();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        /*try {
             TestDB testDB = new TestDB();
             //testDB.testLodgingByItineraryID("16");
             City city = new City("another city", "another", 2, 2, 19);
@@ -25,7 +32,13 @@ public class TestDB {
         } catch (Exception ex) {
             System.out.println("CAUGHT EXCEPTION");
             ex.printStackTrace();
-        }
+        }*/
+    }
+
+    public static int testBudgetSave() throws SQLException {
+        Budget budget = new Budget(2500.00);
+        int budgetID = DataManager.saveBudget(budget);
+        return budgetID;
     }
 
     public void testCoordinates() {

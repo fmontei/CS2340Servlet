@@ -7,11 +7,12 @@ public class Itinerary {
     private int ID;
     private int userID;
     private int preferenceID;
+    private int budgetID;
     private String name;
     private String transportationMode, creationDate;
 
     public Itinerary() {
-        this.userID = this.preferenceID = this.ID = 0;
+        this.budgetID = this.userID = this.preferenceID = this.ID = 0;
         this.name = this.transportationMode = "";
     }
 
@@ -56,5 +57,8 @@ public class Itinerary {
         return userID;
     }
     public int getPreferenceID() { return preferenceID; }
+    public int getBudgetID() { return budgetID; }
+
+    public void setBudgetID(int budgetID) { this.budgetID = budgetID; }
 }
 

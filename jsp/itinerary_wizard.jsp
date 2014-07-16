@@ -54,9 +54,12 @@
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-usd"></span>
                                 </span>
-                                <input type="text" class="form-control" id="priceCategory" name="priceCategory"
-                                       required="required"
-                                       placeholder = "Enter value between $ and $$$$" />
+                                <select class="form-control" id="priceCategory" name="priceCategory">
+                                    <option value="$" selected>$: 10 - 20 dollar range</option>
+                                    <option value="$$">$$: 20 - 30 dollar range</option>
+                                    <option value="$$$">$$$: 30 - 40 dollar range</option>
+                                    <option value="$$$$">$$$$: 40 dollars and up</option>
+                                </select>
                             </div>
                         </label><br /><br />
                         <label>Distance Preference *
@@ -132,7 +135,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                         <button onclick="showPage2()" type="button" class="btn btn-primary">Previous</button>
-                        <button onclick="showPage4()" type="submit" class="btn btn-primary">Next</button>
+                        <button onclick="showPage4()" type="button" class="btn btn-primary">Next</button>
                     </div>
                 </div>
 
@@ -148,9 +151,12 @@
                                 <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-plane"></span>
                                 </span>
-                                <input type="text" class="form-control" id="itineraryTransportation" name="itineraryTransportation"
-                                       required="required"
-                                       placeholder = "Transportation Style" />
+                                <select class="form-control" id="itineraryTransportation" name="itineraryTransportation">
+                                    <option value="On Foot" selected>On Foot</option>
+                                    <option value="Bicycle">Bicycle</option>
+                                    <option value="Car">Car</option>
+                                    <option value="Public Transit">Public Transit</option>
+                                </select>
                             </div>
                         </label><br /><br />
                     </div>
