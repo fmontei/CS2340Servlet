@@ -21,10 +21,6 @@
     <div id="fb-root"></div>
     <script type="text/javascript" src="/CS2340Servlet/js/facebookSDK.js"></script>
 
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="/CS2340Servlet/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/CS2340Servlet/js/docs.min.js"></script>
-
     <!-- Password color change confirmation Javascript -->
     <script src="/CS2340Servlet/js/password_check.js"></script>
 

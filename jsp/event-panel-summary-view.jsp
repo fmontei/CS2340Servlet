@@ -4,6 +4,15 @@
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+
+<script>
+    $(document).ready(function() {
+        $('#event-carousel').carousel({
+            //options here
+        });
+    });
+</script>
+
 <div style="width: 20%; text-align: center; margin: 0 auto">
     <h1 style="text-align: center; font-family: 'Lobster', cursive; border: solid">
         Summary View
@@ -12,17 +21,16 @@
 <div class="container" style="padding-top: 50px">
     <div class="col-md-12">
         <div class="well">
-            <div id="myCarousel" class="carousel slide">
+            <div id="event-carousel" class="carousel slide" data-ride="carousel">
                 <!-- Carousel items -->
                 <div class="carousel-inner">
-
                     <div class="item active">
                         <div class="row" style="height: 250px !important;">
-                            <div class="col-sm-3"><a href="#x"><img src="../images/event.png" alt="Image" class="img-responsive"></a>
+                            <div class="col-sm-3"><a href="#x"><img src="http://placehold.it/500x500" alt="Image" class="img-responsive"></a>
                             </div>
-                            <div class="col-sm-3"><a href="#x"><img src="../images/lodging.jpg" alt="Image" class="img-responsive"></a>
+                            <div class="col-sm-3"><a href="#x"><img src="http://placehold.it/500x500" alt="Image" class="img-responsive"></a>
                             </div>
-                            <div class="col-sm-3"><a href="#x"><img src="../images/city.jpg" alt="Image" class="img-responsive"></a>
+                            <div class="col-sm-3"><a href="#x"><img src="http://placehold.it/500x500" alt="Image" class="img-responsive"></a>
                             </div>
                             <div class="col-sm-3"><a href="#x"><img src="http://placehold.it/500x500" alt="Image" class="img-responsive"></a>
                             </div>
@@ -84,25 +92,9 @@
                         <% } %>
                     <% } %>
                 </div>
-                <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
-                <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+                <a class="left carousel-control" href="#event-carousel" data-slide="prev">‹</a>
+                <a class="right carousel-control" href="#event-carousel" data-slide="next">›</a>
             </div>
-            <!--/myCarousel-->
         </div>
-        <!--/well-->
     </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-        $('#myCarousel').carousel({
-            interval: 10000
-        });
-
-        $('#myCarousel').on('slid.bs.carousel', function() {
-            //alert("slid");
-        });
-
-
-    });
-</script>
