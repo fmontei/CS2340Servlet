@@ -4,6 +4,7 @@ import database.Itinerary;
 
 import model.BudgetForm;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class BudgetServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws IOException, ServletException {
         if (createBudgetRequested(request)) {
             BudgetForm budgetForm = new BudgetForm(request);
             budgetForm.createBudget();
@@ -47,11 +48,13 @@ public class BudgetServlet extends HttpServlet {
     }
 
     private void returnToActiveItineraryIndex(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws IOException, ServletException {
         HttpSession session = request.getSession();
         Itinerary itinerary = (Itinerary) session.getAttribute("activeItinerary");
         String itineraryID = Integer.toString(itinerary.getID());
-        String redirectLink = "/CS2340Servlet/index?itinerary_id=" + itineraryID;
-        response.sendRedirect(redirectLink);
+        //String redirectLink = "/CS2340Servlet/index?itinerary_id=" + itineraryID;
+        //response.sendRedirect(redirectLink);
+        request.setAttribute("currentSection", "budget-page");
+        request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
     }
 }

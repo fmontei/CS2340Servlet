@@ -72,7 +72,7 @@ public class ItineraryLoader {
             throws SQLException {
         HttpSession session = request.getSession();
         final int preferenceID = activeItinerary.getPreferenceID();
-        SqlPreferenceQuery query = new SqlPreferenceQuery();
+        SQLPreferenceQuery query = new SQLPreferenceQuery();
         Preference activePreferences = query.getPreferencesByID(preferenceID);
         session.setAttribute("activePreferences", activePreferences);
     }

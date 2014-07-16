@@ -487,26 +487,31 @@
 
                 return false;
             });
+
+
         });
 
         /* Scrolls to the event from which event search request was issued
             following page reload */
+        /* Scrolls to the event from which event search request was issued
+         following page reload */
         $('html, body').animate({
-            scrollTop: parseEventIDFromQueryString() == null ? 0 :
-                    (parseEventIDFromQueryString()).offset.top
-        }, 'slow');
+            scrollTop: $(getCurrentPageSection()).offset().top
+        }, 'fast');
 
-        function parseEventIDFromQueryString() {
-            var queryString = '<%=request.getQueryString()%>';
-            if (queryString != null && queryString.contains("event_id=")) {
-                var beginIndex = queryString.lastIndexOf("=") + 1;
-                var eventID = queryString.substring(beginIndex);
-                var elementID = "#event-no-" + eventID;
+        function getCurrentPageSection() {
+            var element = '<%=request.getAttribute("currentSection")%>';
+            if (element != null) {
+                var elementID = "#" + element;
+                alert(elementID);
                 return elementID;
             } else {
-                return null;
+                return "#" + "itinerary-header";
             }
         }
+
+
+
     </script>
 
     <script>
