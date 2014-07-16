@@ -479,15 +479,20 @@
         /* Scrolls to the event from which event search request was issued
             following page reload */
         $('html, body').animate({
-            scrollTop: $(parseEventIDFromQueryString()).offset().top
+            scrollTop: parseEventIDFromQueryString() == null ? 0 :
+                    (parseEventIDFromQueryString()).offset.top
         }, 'slow');
 
         function parseEventIDFromQueryString() {
             var queryString = '<%=request.getQueryString()%>';
-            var beginIndex = queryString.lastIndexOf("=") + 1;
-            var eventID = queryString.substring(beginIndex);
-            var elementID = "#event-no-" + eventID;
-            return elementID;
+            if (queryString != undefined && queryString.contains("event_id=")) {
+                var beginIndex = queryString.lastIndexOf("=") + 1;
+                var eventID = queryString.substring(beginIndex);
+                var elementID = "#event-no-" + eventID;
+                return elementID;
+            } else {
+                return null;
+            }
         }
     </script>
 
