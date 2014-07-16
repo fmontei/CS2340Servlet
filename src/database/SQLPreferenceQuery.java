@@ -4,8 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class SqlPreferenceQuery extends SQLQuery {
-    public SqlPreferenceQuery() { super(); }
+public class SQLPreferenceQuery extends SQLQuery {
+    public SQLPreferenceQuery() { super(); }
 
     public int createPreferenceQuery(Preference preference) throws SQLException {
         String query = "INSERT INTO preference (minimumRating, priceCategory, maxDistance, "

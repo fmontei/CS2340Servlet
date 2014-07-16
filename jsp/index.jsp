@@ -359,7 +359,7 @@
 <div class="row" id="budget-page">
     <div class="page-divider-header">
         <div style="display: inline-block">
-            <h1><span class="glyphicon glyphicon-barcode"></span> BUDGET</h1>
+            <h1><span class="glyphicon glyphicon-usd"></span> BUDGET</h1>
             <hr class="hr-title" />
         </div>
         <p><span style="font-size: 20px"><b>Create and Manage a Budget for this Trip:</b></span><br />
