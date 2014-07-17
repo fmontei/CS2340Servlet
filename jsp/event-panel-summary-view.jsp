@@ -4,15 +4,6 @@
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-
-<script>
-    $(document).ready(function() {
-        $('#event-carousel').carousel({
-            //options here
-        });
-    });
-</script>
-
 <div style="width: 20%; text-align: center; margin: 0 auto">
     <h1 style="text-align: center; font-family: 'Lobster', cursive; border: solid">
         Summary View
@@ -98,3 +89,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#event-carousel').carousel({
+            //options here
+        });
+    });
+</script>

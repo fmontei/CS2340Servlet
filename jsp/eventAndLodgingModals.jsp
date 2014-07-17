@@ -114,6 +114,10 @@
 </div>
 
 <script>
+    $('#newCityModal').draggable({
+        handle: ".modal-header"
+    });
+
     $('form.ajax').on('submit', function() {
         var that = $(this),
                 url = that.attr('action'),

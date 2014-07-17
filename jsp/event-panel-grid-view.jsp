@@ -41,7 +41,8 @@
         <div class="well" style="height: 150px !important" data-toggle="modal"
              data-target="#eventModal<%=curEventID%>" role="button">
             <div class="media">
-                <a class="pull-left" href="#">
+                <a class="pull-left" data-toggle="modal"
+                   data-target="#eventModal<%=curEventID%>" role="button">
                     <img class="image-responsive"
                          src="http://placehold.it/500/<%=imageBgColor%>/fff&amp;text=<%=curEventID+1%>" width="50" height="30">
                 </a>
@@ -84,9 +85,10 @@
         String alertColor = eventPanelColor == "primary" ? "info" : eventPanelColor;
         Place event = events.get(curEventID); %>
 
-    <div id="eventModal<%=curEventID%>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="eventAjaxModel" aria-hidden="true">
+    <div id="eventModal<%=curEventID%>" class="modal fade" tabindex="-1" role="dialog"
+         aria-labelledby="eventModal<%=curEventID%>" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content" style="width: 700px">
+            <div class="modal-content draggable-modal" style="max-width: 800px; max-height: 700px; overflow: auto">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h2 class="modal-title" style="font-family: 'Lobster', cursive">
@@ -137,7 +139,7 @@
                                     <p>Search Parameters: <%=session.getAttribute("eventQueryString" + curEventID)%><br />
                                         The results of your search are listed below.</p>
                                 </div>
-                                <div class="panel-body" style="overflow: scroll">
+                                <div class="panel-body">
                                     <table class="table table-striped">
                                         <thead>
                                         <tr>
@@ -292,3 +294,11 @@
     </div>
     <% } %>
 </div>
+
+<script type="text/javascript">
+
+        $(".draggable-modal").draggable({
+            handle: ".modal-header"
+        });
+
+</script>

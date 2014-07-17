@@ -138,7 +138,4 @@
             $panel.css("left", "-5000");
         }
     }
-
 </script>
-
-<script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>

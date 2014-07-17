@@ -209,11 +209,12 @@
             <li>
                 <a href="/CS2340Servlet/jsp/itinerary_overview.jsp">Select Itinerary</a>
             </li>
-            <li><a href="#"
+            <li>
+                <a href="#itineraryModal"
                    onclick="showPage1()"
                    data-toggle="modal"
                    data-target="#itineraryModal">Create New Itinerary
-            </a>
+                </a>
             </li>
             <li id="li-create-event">
                 <a id="a-create-event" href="/CS2340Servlet/itinerary?create_event=1">
