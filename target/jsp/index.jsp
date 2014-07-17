@@ -152,10 +152,6 @@
 %>
 
 <div id="itinerary-overview">
-    <button id="lodging-tab-btn">Lodging</button>
-    <button id="events-tab-btn">Events and Places</button>
-    <button id="map-tab-btn">Map and Directions</button>
-    <button id="budget-tab-btn">Manage Budget</button>
     <ul class="nav nav-pills" style="float: right">
         <li>
             <a href="#" style="color: rgb(66, 139, 202); font-weight: bold">
@@ -268,7 +264,12 @@
     </div>
 </div>
 
-<div class="row" id="lodging-page" style="display:none">
+<button id="lodging-tab-btn" onclick='showLodging()'>Lodging</button>
+<button id="events-tab-btn" onclick='showEvents()'>Events and Places</button>
+<button id="map-tab-btn" onclick='showMap()'>Map and Directions</button>
+<button id="budget-tab-btn" onclick='showBudget()'>Manage Budget</button>
+
+<div id="lodging-page" style="display:none">
     <div class="page-divider-header">
         <div style="display: inline-block">
             <h1><span class="glyphicon glyphicon-home"></span> LODGING</h1>
@@ -465,36 +466,43 @@
 
         /* Scrolls to the event from which event search request was issued
             following page reload */
-        /*$('html, body').animate({
+        $('html, body').animate({
             scrollTop: $(getCurrentPageSection()).offset().top
-        }, 'fast');*/
+        }, 'fast');
 
-        $('#lodging-tab-btn').on("click", function(){
+        function hideAllTabs() {
+            document.getElementById("budget-page").style.display="none";
+            document.getElementById("map-page").style.display="none";
+            document.getElementById("event-places-page").style.display="none";
+            document.getElementById("lodging-page").style.display="none";
+        }
+
+        function showBudget() {
             hideAllTabs();
-            $('#lodging-page').show();
-        });
+            document.getElementById('budget-page').style.display='block';
+        }
 
-        $('#events-tab-btn').on("click", function(){
+        function showMap() {
             hideAllTabs();
-            $('#events-places-page').show();
-        });
+            document.getElementById('map-page').style.display='block';
+        }
 
-        $('#map-tab-btn').on("click", function(){
+        function showEvents() {
             hideAllTabs();
-            $('#map-page').show();
-        });
+            document.getElementById('event-places-page').style.display='block';
+        }
 
-        $('#budget-tab-btn').on("click", function(){
+        function showLodging() {
             hideAllTabs();
-            $('#budget-page').show();
-        });
-
+            document.getElementById('lodging-page').style.display='block';
+        }
+        /*
         function hideAllTabs() {
             $('#budget-page').hide();
             $('#map-page').hide();
             $('#event-places-page').hide();
             $('#lodging-page').hide();
-        }
+        }*/
 
         function getCurrentPageSection() {
             var element = '<%=request.getAttribute("currentSection")%>';
