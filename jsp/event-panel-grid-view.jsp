@@ -101,7 +101,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h2 class="modal-title" style="font-family: 'Lobster', cursive">
-                        <%=!event.getName().isEmpty() ? event.getName() : "New Event no. " + curEventID%>
+                        <%=!event.getName().isEmpty() ? event.getName() : "New Event no. " + (curEventID + 1)%>
                     </h2>
                 </div>
                 <div class="panel panel-<%=eventPanelColor%>" id="event-no-<%=curEventID%>" style="width: 98%; margin-left: 10px">

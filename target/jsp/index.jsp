@@ -81,6 +81,17 @@
 <%@ include file="footer-centered.jsp" %>
 
 <% } else { %>
+<%  Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
+    List<City> cities = (List<City>) session.getAttribute("cities");
+    String cityAddress = "";
+    City indexPanelCity = (City) session.getAttribute("activeCity");
+    List<Place> userEvents = (indexPanelCity != null) ? indexPanelCity.getEvents() : null;
+    int numEvents = 0;
+    if (userEvents != null) {
+        numEvents = userEvents.size();
+    }
+%>
+
 <body style="overflow-x: hidden">
     <div id="itinerary-header">
         <nav class="navbar navbar-default" role="navigation">
@@ -146,42 +157,58 @@
                 <div class="col-md-3">
                     <span class="landing-card-subtitle" style="margin-left: 27%; margin-top: -1%">Map</span>
                     <div class="landing-card" style="height: 200px; background-color: rgb(243, 156, 18); color: rgb(243, 156, 18);">
+                        <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
+                        </span>
                     </div>
                 </div>
                 <div class="col-md-2" >
                     <span class="landing-card-subtitle">Lodging</span>
                     <div class="landing-card" style="height: 200px; background-color: rgb(139, 0, 0); color: rgb(139, 0, 0)">
+                        <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
+                            From the Lodging panel:<br /><br />
+                            <ul>
+                                <li>Find a lodging using Yelp or Google.</li>
+                                <li>Add what you find to your Itinerary.</li>
+                                <li>Set check-in and check-out times for your lodging.</li>
+                            <%  if (indexPanelCity.getLodging() == null) { %>
+                            <br />You currently have no lodging for your Itinerary. Click here to create one.
+                            <%  } %>
+                            </ul>
+                        </span>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <span class="landing-card-subtitle">Itinerary</span>
                     <div class="landing-card" style="height: 200px; background-color: rgb(4, 75, 144); color: rgb(4, 75, 144)">
+                        <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
+                            From the Itinerary panel:<br /><br />
+                            <ul>
+                                <li><b>Discover</b><br /> Search for Places using Yelp or Google</li>
+                                <li><b>Stay informed</b><br /> Browse reviews, ratings and more</li>
+                                <li><b>Spread out</b><br /> Add another City to your Itinerary</li>
+                                <li><b>Interact</b><br /> Send messages to your friends via Facebook</li>
+                                <br />Your current City is:<br /><%=indexPanelCity.getName()%>.
+                            </ul>
+                        </span>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <span class="landing-card-subtitle">Events & Places</span>
                     <div class="landing-card" style="height: 200px; background-color: rgb(26, 188, 156); color: rgb(26, 188, 156)">
+                        <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
+                        </span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <span class="landing-card-subtitle" style="margin-top: -1%">About</span>
                     <div class="landing-card" style="height: 200px; background-color: rgb(47, 47, 47); color: rgb(47, 47, 47)">
+                        <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <%  Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
-        List<City> cities = (List<City>) session.getAttribute("cities");
-        String cityAddress = "";
-        City indexPanelCity = (City) session.getAttribute("activeCity");
-        List<Place> userEvents = (indexPanelCity != null) ? indexPanelCity.getEvents() : null;
-        int numEvents = 0;
-        if (userEvents != null) {
-            numEvents = userEvents.size();
-        }
-    %>
 
     <div id="itinerary-overview">
         <ul class="nav nav-pills" style="float: right">
@@ -441,18 +468,30 @@
         // Landing page title functionality
         var landingTitle = document.getElementById("landing-title-h1");
         var landingCard = document.getElementsByClassName("landing-card");
-        for (var i = 0;i < landingCard.length; i++) {
+        for (var i = 0; i < landingCard.length; i++) {
             landingCard[i].addEventListener("mouseover", function () {
                 landingTitle.style.opacity = 1;
                 landingTitle.style.textShadow = "4px 4px #000000";
+                $(landingTitle).slideDown('slow');
                 this.style.opacity = 0.95;
                 this.style.backgroundColor = "black";
+                $(this).stop().animate({
+                    height: '+500px'
+                }, 1000, function() {
+                    var hiddenText = this.getElementsByTagName("span")[0];
+                    hiddenText.style.display = "";
+                });
             }, true);
             landingCard[i].addEventListener("mouseout", function () {
                 landingTitle.style.opacity = 0.8;
                 landingTitle.style.textShadow = "";
                 this.style.opacity = 0.9;
                 this.style.backgroundColor = this.style.color;
+                var hiddenText = this.getElementsByTagName("span")[0];
+                hiddenText.style.display = "none";
+                $(this).stop().animate({
+                    height: '200px'
+                }, 1000);
             }, true);
         }
 
