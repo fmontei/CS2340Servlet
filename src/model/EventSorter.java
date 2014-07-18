@@ -33,7 +33,9 @@ public class EventSorter {
             sortByCreationDate(events);
         }
         session.setAttribute("events", events);
-        response.sendRedirect("jsp/index.jsp?sort=" + sortType);
+        request.setAttribute("currentSection", "event-places-page");
+        final String returnQueryString = "jsp/index.jsp?sort=" + sortType;
+        ServletUtilities.forwardRequest(request, response, returnQueryString);
     }
 
     private String determineSortType() {

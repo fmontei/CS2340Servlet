@@ -15,6 +15,48 @@ th, td {
     white-space: nowrap;
 }
 
+#landing-title {
+    position: absolute;
+    left: 50%;
+}
+
+#landing-title h1 {
+   z-index: 10;
+    position: relative;
+    left: -45%;
+    top: 410px;
+    font-size: 74px;
+    font-family: 'Audiowide', cursive;
+    color: white;
+    opacity: 0.8;
+    letter-spacing: 20px;
+}
+
+#landing-cards {
+    width: 120%;
+    position: absolute;
+    top: 390px;
+    left: 50%;
+}
+
+#landing-cards .row {
+    position: relative;
+    left: -50%;
+}
+
+#landing-cards .row .landing-card {
+    opacity: .9;
+}
+
+.landing-card-subtitle {
+    color: white;
+    position: absolute;
+    z-index: 10;
+    padding: 3% 0 0 3%;
+    font-family: 'Monda', cursive;
+    font-size: 16px;
+}
+
 .breadcrumb > .api-breadcrumb + li:before {
     content: "";
 }
@@ -304,7 +346,7 @@ th, td {
 
 .page-divider-header h1 {
     font-size: 60px;
-    font-family: 'Francois One', sans-serif;
+    font-family: 'Audiowide', sans-serif;
 }
 
 #itinerary-header {
@@ -505,7 +547,7 @@ hr.hr-title {
 .custom-centered-pills { text-align: center; }
 .custom-centered-pills ul.nav-pills { display: inline-block; }
 .custom-centered-pills li { display: inline;  font-weight: bold;}
-.custom-centered-pills h1 { font-family: 'Lobster', cursive; }
+.custom-centered-pills h1 { font-family: 'Audiowide', cursive; }
 .center-left { margin-left: 10%; float: left; }
 .center-right { margin-right: 10%; float: right; }
 

@@ -19,10 +19,6 @@
     <link href="/CS2340Servlet/css/dashboard.css" rel="stylesheet">
     <link href="/CS2340Servlet/css/jquery.raty.css" rel="stylesheet" type="text/css">
 
-    <!-- Jquery Javascript -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-
     <!-- DateTime picker CSS -->
     <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/jquery.datetimepicker.css">
 

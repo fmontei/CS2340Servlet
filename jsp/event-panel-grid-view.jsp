@@ -24,7 +24,7 @@
 %>
 
 <div style="width: 20%; text-align: center; margin: 0 auto">
-    <h1 style="text-align: center; font-family: 'Lobster'; border: solid">Grid View</h1>
+    <h1 style="text-align: center; font-family: 'Audiowide'; border: solid">Grid View</h1>
 </div>
 <div class="container-fluid" style="padding-top: 50px">
     <%  boolean colorChange[] = {true, false, true, false};
@@ -38,19 +38,25 @@
             String imageBgColor = (colorChange[curEventID % colorChange.length]) ? "26a0e6" : "73a839";
     %>
     <div class="col-md-3" >
-        <div class="well" style="height: 150px !important" data-toggle="modal"
-             data-target="#eventModal<%=curEventID%>" role="button">
+        <div class="well" style="height: 150px !important;">
             <div class="media">
                 <a class="pull-left" href="#">
                     <img class="image-responsive"
-                         src="http://placehold.it/500/<%=imageBgColor%>/fff&amp;text=<%=curEventID+1%>" width="50" height="30">
+                         src="http://placehold.it/500/<%=imageBgColor%>/fff&amp;text=<%=curEventID+1%>"
+                         data-toggle="modal"
+                         data-target="#eventModal<%=curEventID%>"
+                         width="50" height="30">
                 </a>
-                <%  if (event.getName() != null) {
+                <%  if (event.getName() != null && !event.getName().isEmpty()) {
                     String address = event.getFormattedAddress() != null ? event.getFormattedAddress() : "N/A";
                     String phone = event.getPhoneNumber() != null ? event.getPhoneNumber() : "N/A";
                 %>
                     <div class="media-body">
-                        <h4 class="media-heading"><%=event.getName()%></h4>
+                        <h4 class="media-heading">
+                            <a href="#" data-toggle="modal" data-target="#eventModal<%=curEventID%>">
+                                <%=event.getName()%>
+                            </a>
+                        </h4>
                         <p>
                             <span style="overflow: hidden">
                                 <span style="text-decoration: underline">Address:</span> <%=address%>
@@ -64,10 +70,16 @@
                         </p>
                     </div>
                 <%  } else { %>
-                <div class="media-body">
-                    <h4 class="media-heading">New Event no. <%=curEventID%></h4>
+                <div class="media-body" data-toggle="modal"
+                     data-target="#eventModal<%=curEventID%>" style="cursor: pointer">
+                    <h4 class="media-heading"><i>New Event no. <%=curEventID%></i>
+                        <span class="glyphicon glyphicon-exclamation-sign" style="float: right"></span>
+                    </h4>
                     <p>
-                        <span style="text-decoration: underline">Click Me to define this event</span>
+                        <span style="text-decoration: underline">Click here to define this event</span>
+                        <br />
+                        <br />
+                        Note: This event is temporary and will not be saved after you log out
                     </p>
                 </div>
                 <%  } %>
@@ -84,17 +96,18 @@
         String alertColor = eventPanelColor == "primary" ? "info" : eventPanelColor;
         Place event = events.get(curEventID); %>
 
-    <div id="eventModal<%=curEventID%>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="eventAjaxModel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content" style="width: 700px">
+    <div id="eventModal<%=curEventID%>" class="modal fade" tabindex="-1" role="dialog"
+         data-backdrop="true" aria-labelledby="eventModal<%=curEventID%>" aria-hidden="true">
+        <div class="modal-dialog" style="width: 50%;">
+            <div class="modal-content" style="max-height: 800px; overflow: auto;">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h2 class="modal-title" style="font-family: 'Lobster', cursive">
-                        <%=event.getName() != null ? event.getName() : "New Event no. " + curEventID%>
+                        <%=!event.getName().isEmpty() ? event.getName() : "New Event no. " + curEventID%>
                     </h2>
                 </div>
-                <div class="panel panel-<%=eventPanelColor%>" id="event-no-<%=curEventID%>" style="width: 95%; margin-left: 2%; margin-right: 2%">
-                    <%  if (event.getName() == null) { %>
+                <div class="panel panel-<%=eventPanelColor%>" id="event-no-<%=curEventID%>" style="width: 98%; margin-left: 10px">
+                    <%  if (event.getName().isEmpty()) { %>
                     <div class="panel-body">
                         <form class="form-inline" role="form" action="/CS2340Servlet/itinerary?event_id=<%=curEventID%>" method="POST">
                             <div class="row">
@@ -137,7 +150,7 @@
                                     <p>Search Parameters: <%=session.getAttribute("eventQueryString" + curEventID)%><br />
                                         The results of your search are listed below.</p>
                                 </div>
-                                <div class="panel-body" style="overflow: scroll">
+                                <div class="panel-body">
                                     <table class="table table-striped">
                                         <thead>
                                         <tr>
