@@ -78,10 +78,25 @@
     </div>
 </div>
 
+<!-- Jquery Javascript -->
+<script src="/CS2340Servlet/js/jquery.js"></script>
+<script src="/CS2340Servlet/js/bootstrap.min.js"></script>
+
 <%@ include file="footer-centered.jsp" %>
 
 <% } else { %>
+<%  Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
+    List<City> cities = (List<City>) session.getAttribute("cities");
+    String cityAddress = "";
+    City indexPanelCity = (City) session.getAttribute("activeCity");
+    List<Place> userEvents = (indexPanelCity != null) ? indexPanelCity.getEvents() : null;
+    int numEvents = 0;
+    if (userEvents != null) {
+        numEvents = userEvents.size();
+    }
+%>
 
+<body style="overflow-x: hidden">
 <div id="itinerary-header">
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
@@ -133,23 +148,71 @@
                         </ul>
                     </li>
                 </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
+            </div>
+        </div>
     </nav>
-    <h1 style="z-index: 10; padding-top: 350px; font-size: 64px; font-family: 'Audiowide', cursive; color: white !important;" align="center">
-        DESTI<span style="position: relative; top: -8px">&#9679;</span>NATION</h1>
+    <div class="row" id="landing-title">
+        <h1 id="landing-title-h1">
+            DESTI<span style="position: relative; top: -8px">&#9679;</span>NATION
+        </h1>
+    </div>
+    <div class="container" id="landing-cards">
+        <div class="row">
+            <div class="col-md-3">
+                <span class="landing-card-subtitle" style="margin-left: 27%; margin-top: -1%">Map</span>
+                <div class="landing-card" style="height: 200px; background-color: rgb(243, 156, 18); color: rgb(243, 156, 18);">
+                        <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
+                        </span>
+                </div>
+            </div>
+            <div class="col-md-2" >
+                <span class="landing-card-subtitle">Lodging</span>
+                <div class="landing-card" style="height: 200px; background-color: rgb(139, 0, 0); color: rgb(139, 0, 0)">
+                        <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
+                            From the Lodging panel:<br /><br />
+                            <ul>
+                                <li>Find a lodging using Yelp or Google.</li>
+                                <li>Add what you find to your Itinerary.</li>
+                                <li>Set check-in and check-out times for your lodging.</li>
+                                <%  if (indexPanelCity.getLodging() == null) { %>
+                                <br />You currently have no lodging for your Itinerary. Click here to create one.
+                                <%  } %>
+                            </ul>
+                        </span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <span class="landing-card-subtitle">Itinerary</span>
+                <div class="landing-card" style="height: 200px; background-color: rgb(4, 75, 144); color: rgb(4, 75, 144)">
+                        <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
+                            From the Itinerary panel:<br /><br />
+                            <ul>
+                                <li><b>Discover</b><br /> Search for Places using Yelp or Google</li>
+                                <li><b>Stay informed</b><br /> Browse reviews, ratings and more</li>
+                                <li><b>Spread out</b><br /> Add another City to your Itinerary</li>
+                                <li><b>Interact</b><br /> Send messages to your friends via Facebook</li>
+                                <br />Your current City is:<br /><%=indexPanelCity.getName()%>.
+                            </ul>
+                        </span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <span class="landing-card-subtitle">Events & Places</span>
+                <div class="landing-card" style="height: 200px; background-color: rgb(26, 188, 156); color: rgb(26, 188, 156)">
+                        <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
+                        </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <span class="landing-card-subtitle" style="margin-top: -1%">About</span>
+                <div class="landing-card" style="height: 200px; background-color: rgb(47, 47, 47); color: rgb(47, 47, 47)">
+                        <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
+                        </span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<%  Itinerary activeItinerary = (Itinerary) session.getAttribute("activeItinerary");
-    List<City> cities = (List<City>) session.getAttribute("cities");
-    String cityAddress = "";
-    City indexPanelCity = (City) session.getAttribute("activeCity");
-    List<Place> userEvents = (indexPanelCity != null) ? indexPanelCity.getEvents() : null;
-    int numEvents = 0;
-    if (userEvents != null) {
-        numEvents = userEvents.size();
-    }
-%>
 
 <div id="itinerary-overview">
     <ul class="nav nav-pills" style="float: right">
@@ -160,10 +223,10 @@
         </li>
         <li>
             <a href="#">
-                <span class="badge pull-right"
-                      style="position: relative; top: 2px; background-color: rgb(66, 139, 202)">
-                    <%=numEvents%>
-                </span>
+                    <span class="badge pull-right"
+                          style="position: relative; top: 2px; background-color: rgb(66, 139, 202)">
+                        <%=numEvents%>
+                    </span>
                 Events
             </a>
         </li>
@@ -189,13 +252,13 @@
             <ul class="nav nav-tabs" id="cityList" role="tablist">
                 <li><a href="#">Your Cities</a></li>
                 <%  if (cities != null) {
-                        indexPanelCity = (City) session.getAttribute("activeCity");
-                        cityAddress = (indexPanelCity != null) ? indexPanelCity.getAddress() : "";
-                        if (cities != null) {
-                            for (City city : cities) { %>
+                    indexPanelCity = (City) session.getAttribute("activeCity");
+                    cityAddress = (indexPanelCity != null) ? indexPanelCity.getAddress() : "";
+                    if (cities != null) {
+                        for (City city : cities) { %>
                 <li><a href="/CS2340Servlet/itinerary?city_id=<%=city.getID()%>"><%=city.getName()%></a></li>
-                        <%  } %>
-                    <%  } %>
+                <%  } %>
+                <%  } %>
                 <%  } %>
             </ul>
             <div style="height: 40px">
@@ -227,11 +290,11 @@
         <div class="table" >
             <table style="table-layout: fixed; width: 100%">
                 <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
                 </thead>
                 <tbody>
                 <tr>
@@ -256,7 +319,7 @@
                             <p>Add a <strong>New Event</strong> to your City</p>
                         </div>
                     </td>
-                    </tr>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -277,15 +340,8 @@
             <h1><span class="glyphicon glyphicon-home"></span> LODGING</h1>
             <hr class="hr-title" />
         </div>
-        <p><span style="font-size: 20px"><b>Find a place to stay:</b></span><br />
-            Add a new Lodging below
-            <span style="font-size: 20px"><b>Find Events for your First City:</b></span><br />
-            To add events for this City, Create a New Event<br /><br />
-            <span style="font-size: 20px"><b>Or travel to a New City:</b></span><br />
-            To go sightseeing in another city, Add a New City to your Itinerary
-        </p><br /><br />
+        <%@ include file="lodging_panel.jsp" %>
     </div>
-    <%@ include file="lodging_panel.jsp" %>
 </div>
 
 <div id="event-places-page" class="itinerary-sections">
@@ -314,40 +370,40 @@
         <b>Start: </b>
         <%  Place lodgingSelect = (indexPanelCity != null) ? indexPanelCity.getLodging() : null; %>
         <select class="map-event-tooltips" id="start" onchange="calcRoute();" style="margin-bottom: 40px">
-          <option value= '<%=cityAddress%>'>Center </option>
-          <% if (lodgingSelect != null) { %>
-          <option value= '<%=lodgingSelect.getFormattedAddress()%>' title="<%=lodgingSelect.getName()%>">
-              Lodging
-          </option>
-          <% } %>
-          <% numEvents = 0;
-             if (userEvents != null) {
-               numEvents = userEvents.size();
-             }
-             for (int curEventID = 0; curEventID < numEvents; curEventID++) {
-               Place event = userEvents.get(curEventID); %>
-          <option value= '<%=event.getFormattedAddress()%>' title="<%=event.getName()%>">
-              Event <%=curEventID + 1%>
-          </option>
+            <option value= '<%=cityAddress%>'>Center </option>
+            <% if (lodgingSelect != null) { %>
+            <option value= '<%=lodgingSelect.getFormattedAddress()%>' title="<%=lodgingSelect.getName()%>">
+                Lodging
+            </option>
+            <% } %>
+            <% numEvents = 0;
+                if (userEvents != null) {
+                    numEvents = userEvents.size();
+                }
+                for (int curEventID = 0; curEventID < numEvents; curEventID++) {
+                    Place event = userEvents.get(curEventID); %>
+            <option value= '<%=event.getFormattedAddress()%>' title="<%=event.getName()%>">
+                Event <%=curEventID + 1%>
+            </option>
             <% } %>
         </select>
         <b>End: </b>
         <select id="end" onchange="calcRoute();">
-          <option value= '<%=cityAddress%>'>Center </option>
-          <% if (lodgingSelect != null) { %>
-          <option value= '<%=lodgingSelect.getFormattedAddress()%>'>Lodging </option>
-          <% } %>
-          <% for (int curEventID = 0; curEventID < numEvents; curEventID++) {
-               Place event = userEvents.get(curEventID); %>
-          <option value= '<%=event.getFormattedAddress()%>' title="<%=event.getName()%>">Event <%=curEventID + 1%></option>
-          <% } %>
+            <option value= '<%=cityAddress%>'>Center </option>
+            <% if (lodgingSelect != null) { %>
+            <option value= '<%=lodgingSelect.getFormattedAddress()%>'>Lodging </option>
+            <% } %>
+            <% for (int curEventID = 0; curEventID < numEvents; curEventID++) {
+                Place event = userEvents.get(curEventID); %>
+            <option value= '<%=event.getFormattedAddress()%>' title="<%=event.getName()%>">Event <%=curEventID + 1%></option>
+            <% } %>
         </select>
         <b>Mode of Transit: </b>
         <select id="transitMode" onchange="calcRoute()">
-          <option value= "DRIVING">Car </option>
-          <option value= "BICYCLING">Bicycle </option>
-          <option value= "TRANSIT">Public Transit </option>
-          <option value= "WALKING">Walking </option>
+            <option value= "DRIVING">Car </option>
+            <option value= "BICYCLING">Bicycle </option>
+            <option value= "TRANSIT">Public Transit </option>
+            <option value= "WALKING">Walking </option>
         </select>
         <div class="row popin" style="max-width: 90%; min-height: 500px">
             <div class="col-md-12" id="mainMapWrapper">
@@ -365,175 +421,207 @@
 </div>
 
 
-    <%@ include file="footer.jsp" %>
+<%@ include file="footer.jsp" %>
 
-    <!-- Error Message -->
-    <div class="modal fade" id="errorMessage" tabindex="-1" role="dialog" aria-labelledby="errorMessageTitle" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="errorMessageTitle">Error</h4>
-                </div>
-                <div class="modal-body">
+<!-- Error Message -->
+<div class="modal fade" id="errorMessage" tabindex="-1" role="dialog" aria-labelledby="errorMessageTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="errorMessageTitle">Error</h4>
+            </div>
+            <div class="modal-body">
                     <span class="text-danger">
                         ${error}
                     </span>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Facebook Login -->
-    <script src="/CS2340Servlet/js/facebookSDK.js"></script>
+<!-- Jquery Javascript -->
+<script src="/CS2340Servlet/js/jquery.js"></script>
+<script src="/CS2340Servlet/js/bootstrap.min.js"></script>
 
-    <!-- Includes Google Maps Javascript functionality needed by this page -->
-    <script src="/CS2340Servlet/js/itinerary_wizard_js.js"></script>
+<!-- Facebook Login -->
+<script src="/CS2340Servlet/js/facebookSDK.js"></script>
 
-    <!-- Event Search Bar Javascript -->
-    <script src="/CS2340Servlet/js/typeahead.bundle.js"></script>
-    <script src="/CS2340Servlet/js/event_autocomplete.js"></script>
+<!-- Includes Google Maps Javascript functionality needed by this page -->
+<script src="/CS2340Servlet/js/itinerary_wizard_js.js"></script>
 
-    <!-- Index Javascript -->
-    <script type="text/javascript">
-        // Sidebar Functionality
-        $('[data-toggle=collapse]').click(function(){
-            $(this).find("i").toggleClass("glyphicon-chevron-right glyphicon-chevron-down");
-        });
+<!-- Event Search Bar Javascript -->
+<script src="/CS2340Servlet/js/typeahead.bundle.js"></script>
+<script src="/CS2340Servlet/js/event_autocomplete.js"></script>
 
-        $('.collapse').on('show', function (e) {
-            $('.collapse').each(function(){
-                if ($(this).hasClass('in')) {
-                    $(this).collapse('toggle');
-                }
+<!-- Index Javascript -->
+<script type="text/javascript">
+    // Landing page title functionality
+    var landingTitle = document.getElementById("landing-title-h1");
+    var landingCard = document.getElementsByClassName("landing-card");
+    for (var i = 0; i < landingCard.length; i++) {
+        landingCard[i].addEventListener("mouseover", function () {
+            landingTitle.style.opacity = 1;
+            landingTitle.style.textShadow = "4px 4px #000000";
+            $(landingTitle).slideDown('slow');
+            this.style.opacity = 0.95;
+            this.style.backgroundColor = "black";
+            $(this).stop().animate({
+                height: '+500px'
+            }, 1000, function() {
+                var hiddenText = this.getElementsByTagName("span")[0];
+                hiddenText.style.display = "";
             });
+        }, true);
+        landingCard[i].addEventListener("mouseout", function () {
+            landingTitle.style.opacity = 0.8;
+            landingTitle.style.textShadow = "";
+            this.style.opacity = 0.9;
+            this.style.backgroundColor = this.style.color;
+            var hiddenText = this.getElementsByTagName("span")[0];
+            hiddenText.style.display = "none";
+            $(this).stop().animate({
+                height: '200px'
+            }, 1000);
+        }, true);
+    }
+
+    // Change city tabs
+    var citySelection = "<%=indexPanelCity.getName()%>";
+    console.log("City selected: " + citySelection);
+    var cityList = $("#cityList li");
+    cityList.each(function(i, li) {
+        if ($(li).text() === citySelection) {
+            $(li).addClass("active");
+        }
+    });
+
+    // Sidebar Functionality
+    $('[data-toggle=collapse]').click(function(){
+        $(this).find("i").toggleClass("glyphicon-chevron-right glyphicon-chevron-down");
+    });
+
+    $('.collapse').on('show', function (e) {
+        $('.collapse').each(function(){
+            if ($(this).hasClass('in')) {
+                $(this).collapse('toggle');
+            }
+        });
+    });
+
+    $(document).ready (function () {
+        $(window).scroll (function () {
+            var sT = $(this).scrollTop();
+            var $overview = $("#itinerary-overview");
+            var $overview_offset = $overview.offset().top - 50;
+            var $lodging = $("#lodging-page");
+            var $lodging_offset = $lodging.offset().top - 50;
+            if (sT < $overview_offset && sT < $lodging_offset) {
+                $('#fixed-nav').removeClass('navbar-default');
+                $('#fixed-nav').addClass('navbar-inverse');
+            } else if (sT >= $overview_offset && sT < $lodging_offset) {
+                $('#fixed-nav').removeClass('navbar-inverse');
+                $('#fixed-nav').addClass('navbar-default');
+            } else if (sT >= $lodging_offset) {
+                $('#fixed-nav').removeClass('navbar-default');
+                $('#fixed-nav').removeClass('navbar');
+                $('#fixed-nav').addClass('navbar-custom');
+            } else {
+
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        // Initial view
+        $("#div-overview").show();
+        $("#itinerary-side-bar").show();
+
+        // Navbar Navigation Color Change
+        $('.navbar-navigation li a').click(function(e) {
+            var $this = $(this);
+            if (!$this.hasClass('active')) {
+                $('.navbar-navigation li a').removeClass('active');
+                $this.addClass('active');
+                var hash = $(this).attr("href");
+                $('html, body').animate({
+                    scrollTop: $(hash).offset().top - 10
+                }, 0);
+            }
+            e.preventDefault();
         });
 
+        // Details button for new event location search
+        $('.popover-dismiss').popover({
+            trigger: 'focus'
+        });
+
+        // Error Message
         var error = '<%= request.getAttribute("error")%>';
-
-        $(document).ready(function() {
-            // Initial view
-            $("#div-overview").show();
-            $("#itinerary-side-bar").show();
-
-            // Navbar Navigation Color Change
-            $('.navbar-navigation li a').click(function(e) {
-                var $this = $(this);
-                if (!$this.hasClass('active')) {
-                    $('.navbar-navigation li a').removeClass('active');
-                    $this.addClass('active');
-                    var hash = $(this).attr("href");
-                    $('html, body').animate({
-                        scrollTop: $(hash).offset().top - 10
-                    }, 0);
-                }
-                e.preventDefault();
-            });
-
-            // Details button for new event location search
-            $('.popover-dismiss').popover({
-                trigger: 'focus'
-            });
-
-            // Error Message
-            if (error != 'null') {
-                $("#errorMessage").modal("show");
-            }
-
-            // Change city tabs
-            var citySelection = "<%=session.getAttribute("changeCityName")%>";
-            var cityList = $("#cityList li");
-            cityList.each(function(i, li) {
-                if ($(li).text() === citySelection) {
-                    $(li).addClass("active");
-                }
-            });
-        });
-
-        /* Scrolls to the event from which event search request was issued
-            following page reload */
-        $(getDefaultPageSection()).show();
-
-        $('html, body').animate({
-            scrollTop: $(getCurrentPageSection()).offset().top
-        }, 'fast');
-
-        function hideAllTabs() {
-            document.getElementById("budget-page").style.display="none";
-            document.getElementById("map-page").style.display="none";
-            document.getElementById("event-places-page").style.display="none";
-            document.getElementById("lodging-page").style.display="none";
+        if (error != 'null') {
+            $("#errorMessage").modal("show");
         }
+    });
 
-        function showBudget() {
-            hideAllTabs();
-            document.getElementById('budget-page').style.display='block';
+    /* Scrolls to the event from which event search request was issued
+     following page reload */
+    $(getDefaultPageSection()).show();
+
+    $('html, body').animate({
+        scrollTop: $(getCurrentPageSection()).offset().top
+    }, 'fast');
+
+    function hideAllTabs() {
+        document.getElementById("budget-page").style.display="none";
+        document.getElementById("map-page").style.display="none";
+        document.getElementById("event-places-page").style.display="none";
+        document.getElementById("lodging-page").style.display="none";
+    }
+
+    function showBudget() {
+        hideAllTabs();
+        document.getElementById('budget-page').style.display='block';
+    }
+
+    function showMap() {
+        hideAllTabs();
+        document.getElementById('map-page').style.display='block';
+        // Initialize map
+        initialize(<%=indexPanelCity.getLatitude()%>,
+                <%=indexPanelCity.getLongitude()%>);
+    }
+
+    function showEvents() {
+        hideAllTabs();
+        document.getElementById('event-places-page').style.display='block';
+    }
+
+    function showLodging() {
+        hideAllTabs();
+        document.getElementById('lodging-page').style.display='block';
+    }
+
+    function getDefaultPageSection() {
+        var element = '<%=request.getAttribute("defaultSection")%>';
+        if (element != null) {
+            var elementID = "#" + element;
+            return elementID;
+        } else {
+            return "#" + "itinerary-header";
         }
+    }
 
-        function showMap() {
-            hideAllTabs();
-            document.getElementById('map-page').style.display='block';
-            // Initialize map
-            initialize(<%=indexPanelCity.getLatitude()%>,
-                    <%=indexPanelCity.getLongitude()%>);
+    function getCurrentPageSection() {
+        var element = '<%=request.getAttribute("currentSection")%>';
+        if (element != null) {
+            var elementID = "#" + element;
+            return elementID;
+        } else {
+            return "#" + "itinerary-header";
         }
-
-        function showEvents() {
-            hideAllTabs();
-            document.getElementById('event-places-page').style.display='block';
-        }
-
-        function showLodging() {
-            hideAllTabs();
-            document.getElementById('lodging-page').style.display='block';
-        }
-
-        function getDefaultPageSection() {
-            var element = '<%=request.getAttribute("defaultSection")%>';
-            if (element != null) {
-                var elementID = "#" + element;
-                return elementID;
-            } else {
-                return "#" + "itinerary-header";
-            }
-        }
-
-        function getCurrentPageSection() {
-            var element = '<%=request.getAttribute("currentSection")%>';
-            if (element != null) {
-                var elementID = "#" + element;
-                return elementID;
-            } else {
-                return "#" + "itinerary-header";
-            }
-        }
-    </script>
-
-    <script>
-        $(document).ready (function () {
-            $(window).scroll (function () {
-                var sT = $(this).scrollTop();
-                var $overview = $("#itinerary-overview");
-                var $overview_offset = $overview.offset().top - 50;
-                var $lodging = $("#lodging-page");
-                var $lodging_offset = $lodging.offset().top - 50;
-                if (sT < $overview_offset && sT < $lodging_offset) {
-                    $('#fixed-nav').removeClass('navbar-default');
-                    $('#fixed-nav').addClass('navbar-inverse');
-                } else if (sT >= $overview_offset && sT < $lodging_offset) {
-                    $('#fixed-nav').removeClass('navbar-inverse');
-                    $('#fixed-nav').addClass('navbar-default');
-                } else if (sT >= $lodging_offset) {
-                    $('#fixed-nav').removeClass('navbar-default');
-                    $('#fixed-nav').removeClass('navbar');
-                    $('#fixed-nav').addClass('navbar-custom');
-                } else {
-
-                }
-            });
-        });
-    </script>
-<%}%>
+    }
+</script>
+    <%}%>
