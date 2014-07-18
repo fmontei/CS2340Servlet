@@ -463,6 +463,12 @@
         </div>
     </div>
 
+    <!--Jquery-->
+    <script src="/CS2340Servlet/js/jquery.js"></script>
+
+    <!-- Bootstrap Javascript -->
+    <script src="/CS2340Servlet/js/bootstrap.min.js"></script>
+
     <!-- Facebook Login -->
     <script src="/CS2340Servlet/js/facebookSDK.js"></script>
 

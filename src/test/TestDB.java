@@ -9,30 +9,12 @@ import java.util.List;
 public class TestDB {
     public static void main(String... args)  {
         try {
-            testBudgetSave();
+            SQLBudgetQuery budgetQuery = new SQLBudgetQuery();
+            Budget b = budgetQuery.getBudgetByID(1);
+            System.out.println(b.getID() + " " + b.getLastUpdated());
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        /*try {
-            TestDB testDB = new TestDB();
-            //testDB.testLodgingByItineraryID("16");
-            City city = new City("another city", "another", 2, 2, 19);
-            Place place = new Place();
-            place.setID(110);
-            place.setCheckIn("hi");
-            place.setCheckOut("hiagain");
-            List<City> cities = DataManager.getCitiesAndPlacesByItineraryID(21);
-            for (City c : cities) {
-                List<Place> events = c.getEvents();
-                for (Place e : events) {
-                    System.out.println(e.getName());
-                }
-            }
-
-        } catch (Exception ex) {
-            System.out.println("CAUGHT EXCEPTION");
-            ex.printStackTrace();
-        }*/
     }
 
     public static int testBudgetSave() throws SQLException {

@@ -5,6 +5,12 @@
               </p>
     </footer>
 
+    <!--Jquery-->
+    <script src="/CS2340Servlet/js/jquery.js"></script>
+
+    <!-- Bootstrap Javascript -->
+    <script src="/CS2340Servlet/js/bootstrap.min.js"></script>
+
     <!-- Itinerary Wizard -->
     <%@ include file="itinerary_wizard.jsp" %>
 
