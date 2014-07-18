@@ -264,12 +264,14 @@
     </div>
 </div>
 
-<button id="lodging-tab-btn" onclick='showLodging()'>Lodging</button>
-<button id="events-tab-btn" onclick='showEvents()'>Events and Places</button>
-<button id="map-tab-btn" onclick='showMap()'>Map and Directions</button>
-<button id="budget-tab-btn" onclick='showBudget()'>Manage Budget</button>
+<div id="itinerary-nav-tabs-div" style="background-color: rgb(4, 71, 137);border:none;font-weight:bold;">
+    <button id="lodging-tab-btn" class="itinerary-nav-tabs" onclick='showLodging()'>Lodging</button>
+    <button id="events-tab-btn" class="itinerary-nav-tabs" onclick='showEvents()'>Events and Places</button>
+    <button id="map-tab-btn" class="itinerary-nav-tabs" onclick='showMap()'>Map and Directions</button>
+    <button id="budget-tab-btn" class="itinerary-nav-tabs" onclick='showBudget()'>Manage Budget</button>
+</div>
 
-<div id="lodging-page" style="display:none">
+<div id="lodging-page" class="itinerary-sections">
     <div class="page-divider-header">
         <div style="display: inline-block">
             <h1><span class="glyphicon glyphicon-home"></span> LODGING</h1>
@@ -286,7 +288,7 @@
     <%@ include file="lodging_panel.jsp" %>
 </div>
 
-<div id="event-places-page">
+<div id="event-places-page" class="itinerary-sections">
     <div class="page-divider-header">
         <div style="display: inline-block">
             <h1><span class="glyphicon glyphicon-th"></span> EVENTS & PLACES</h1>
@@ -301,7 +303,7 @@
     <%@ include file="events_places_panels.jsp" %>
 </div>
 
-<div id="map-page" style="display:none;">
+<div id="map-page" class="itinerary-sections">
     <div class="page-divider-header">
         <div style="display: inline-block; margin-bottom: 20px">
             <h1><span class="glyphicon glyphicon-globe"></span> MAP</h1>
@@ -358,16 +360,7 @@
     </div>
 </div>
 
-<div id="budget-page" style="display:none;">
-    <div class="page-divider-header">
-        <div style="display: inline-block">
-            <h1><span class="glyphicon glyphicon-usd"></span> BUDGET</h1>
-            <hr class="hr-title" />
-        </div>
-        <p><span style="font-size: 20px"><b>Create and Manage a Budget for this Trip:</b></span><br />
-            Create a Budget below.
-        </p><br /><br />
-    </div>
+<div id="budget-page" class="itinerary-sections">
     <%@ include file="budget_panel.jsp" %>
 </div>
 
@@ -426,10 +419,6 @@
             $("#div-overview").show();
             $("#itinerary-side-bar").show();
 
-            // Initialize map
-            initialize(<%=indexPanelCity.getLatitude()%>,
-                <%=indexPanelCity.getLongitude()%>);
-
             // Navbar Navigation Color Change
             $('.navbar-navigation li a').click(function(e) {
                 var $this = $(this);
@@ -466,6 +455,8 @@
 
         /* Scrolls to the event from which event search request was issued
             following page reload */
+        $(getDefaultPageSection()).show();
+
         $('html, body').animate({
             scrollTop: $(getCurrentPageSection()).offset().top
         }, 'fast');
@@ -485,6 +476,9 @@
         function showMap() {
             hideAllTabs();
             document.getElementById('map-page').style.display='block';
+            // Initialize map
+            initialize(<%=indexPanelCity.getLatitude()%>,
+                    <%=indexPanelCity.getLongitude()%>);
         }
 
         function showEvents() {
@@ -496,13 +490,16 @@
             hideAllTabs();
             document.getElementById('lodging-page').style.display='block';
         }
-        /*
-        function hideAllTabs() {
-            $('#budget-page').hide();
-            $('#map-page').hide();
-            $('#event-places-page').hide();
-            $('#lodging-page').hide();
-        }*/
+
+        function getDefaultPageSection() {
+            var element = '<%=request.getAttribute("defaultSection")%>';
+            if (element != null) {
+                var elementID = "#" + element;
+                return elementID;
+            } else {
+                return "#" + "itinerary-header";
+            }
+        }
 
         function getCurrentPageSection() {
             var element = '<%=request.getAttribute("currentSection")%>';
