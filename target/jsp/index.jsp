@@ -187,7 +187,6 @@
                                 <li><b>Stay informed</b><br /> Browse reviews, ratings and more</li>
                                 <li><b>Spread out</b><br /> Add another City to your Itinerary</li>
                                 <li><b>Interact</b><br /> Send messages to your friends via Facebook</li>
-                                <br />Your current City is:<br /><%=indexPanelCity.getName()%>.
                             </ul>
                         </span>
                     </div>
