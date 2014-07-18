@@ -78,6 +78,10 @@
     </div>
 </div>
 
+<!-- Jquery Javascript -->
+<script src="/CS2340Servlet/js/jquery.js"></script>
+<script src="/CS2340Servlet/js/bootstrap.min.js"></script>
+
 <%@ include file="footer-centered.jsp" %>
 
 <% } else { %>
