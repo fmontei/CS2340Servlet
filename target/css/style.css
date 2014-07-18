@@ -507,19 +507,32 @@ th, td {
     padding-top: 40px;
 }
 
-#event-places-page {
+#event-places-page, #events-tab-btn {
     background-color: rgb(26, 188, 156) !important;
-    padding-bottom: 40px;
 }
 
-#map-page {
+#map-page, #map-tab-btn {
     background-color: rgb(243, 156, 18) !important;
-    padding-bottom: 40px;
 }
 
-#lodging-page {
+#lodging-page, #lodging-tab-btn {
     background-color: darkred !important;
+}
+
+#budget-page, #budget-tab-btn {
+    background-color: mediumpurple !important;
+}
+
+.itinerary-sections {
     padding-bottom: 40px;
+    display: none;
+}
+
+.itinerary-nav-tabs {
+    border:none;
+    outline:0;
+    background:none;
+    width:165px;
 }
 
 hr.hr-title {

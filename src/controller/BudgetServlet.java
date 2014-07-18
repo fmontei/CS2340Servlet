@@ -51,9 +51,7 @@ public class BudgetServlet extends HttpServlet {
             throws IOException, ServletException {
         HttpSession session = request.getSession();
         Itinerary itinerary = (Itinerary) session.getAttribute("activeItinerary");
-        String itineraryID = Integer.toString(itinerary.getID());
-        //String redirectLink = "/CS2340Servlet/index?itinerary_id=" + itineraryID;
-        //response.sendRedirect(redirectLink);
+        request.setAttribute("defaultSection", "budget-page");
         request.setAttribute("currentSection", "budget-page");
         request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
     }
