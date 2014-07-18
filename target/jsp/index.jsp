@@ -145,27 +145,27 @@
             <div class="row">
                 <div class="col-md-3">
                     <span class="landing-card-subtitle" style="margin-left: 27%; margin-top: -1%">Map</span>
-                    <div class="landing-card" style="background-color: rgb(243, 156, 18); height: 200px;">
+                    <div class="landing-card" style="height: 200px; background-color: rgb(243, 156, 18); color: rgb(243, 156, 18);">
                     </div>
                 </div>
                 <div class="col-md-2" >
                     <span class="landing-card-subtitle">Lodging</span>
-                    <div class="landing-card" style="height: 200px; background-color: rgb(139, 0, 0);">
+                    <div class="landing-card" style="height: 200px; background-color: rgb(139, 0, 0); color: rgb(139, 0, 0)">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <span class="landing-card-subtitle">Itinerary</span>
-                    <div class="landing-card" style="height: 200px; background-color: rgb(4, 75, 144)">
+                    <div class="landing-card" style="height: 200px; background-color: rgb(4, 75, 144); color: rgb(4, 75, 144)">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <span class="landing-card-subtitle">Events & Places</span>
-                    <div class="landing-card" style="height: 200px; background-color: rgb(26, 188, 156)">
+                    <div class="landing-card" style="height: 200px; background-color: rgb(26, 188, 156); color: rgb(26, 188, 156)">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <span class="landing-card-subtitle" style="margin-top: -1%">About</span>
-                    <div class="landing-card" style="height: 200px; background-color: rgb(47, 47, 47)">
+                    <div class="landing-card" style="height: 200px; background-color: rgb(47, 47, 47); color: rgb(47, 47, 47)">
                     </div>
                 </div>
             </div>
@@ -441,14 +441,18 @@
         // Landing page title functionality
         var landingTitle = document.getElementById("landing-title-h1");
         var landingCard = document.getElementsByClassName("landing-card");
-        for(var i = 0;i < landingCard.length; i++) {
+        for (var i = 0;i < landingCard.length; i++) {
             landingCard[i].addEventListener("mouseover", function () {
                 landingTitle.style.opacity = 1;
-                this.style.opacity = 0.5;
+                landingTitle.style.textShadow = "4px 4px #000000";
+                this.style.opacity = 0.95;
+                this.style.backgroundColor = "black";
             }, true);
             landingCard[i].addEventListener("mouseout", function () {
                 landingTitle.style.opacity = 0.8;
+                landingTitle.style.textShadow = "";
                 this.style.opacity = 0.9;
+                this.style.backgroundColor = this.style.color;
             }, true);
         }
 

@@ -40,11 +40,9 @@
     <div class="col-md-3" >
         <div class="well" style="height: 150px !important;">
             <div class="media">
-                <a class="pull-left" href="#">
+                <a class="pull-left" href="#" data-toggle="modal" data-target="#eventModal<%=curEventID%>">
                     <img class="image-responsive"
                          src="http://placehold.it/500/<%=imageBgColor%>/fff&amp;text=<%=curEventID+1%>"
-                         data-toggle="modal"
-                         data-target="#eventModal<%=curEventID%>"
                          width="50" height="30">
                 </a>
                 <%  if (event.getName() != null && !event.getName().isEmpty()) {
@@ -72,7 +70,7 @@
                 <%  } else { %>
                 <div class="media-body" data-toggle="modal"
                      data-target="#eventModal<%=curEventID%>" style="cursor: pointer">
-                    <h4 class="media-heading"><i>New Event no. <%=curEventID%></i>
+                    <h4 class="media-heading"><i>New Event no. <%=curEventID + 1%></i>
                         <span class="glyphicon glyphicon-exclamation-sign" style="float: right"></span>
                     </h4>
                     <p>
