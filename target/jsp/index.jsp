@@ -170,10 +170,10 @@
                     <div class="landing-card" style="height: 200px; background-color: rgb(139, 0, 0); color: rgb(139, 0, 0)">
                         <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
                             From the Lodging panel:<br /><br />
-                            <ul>
-                                <li>Find a lodging using Yelp or Google.</li>
-                                <li>Add what you find to your Itinerary.</li>
-                                <li>Set check-in and check-out times for your lodging.</li>
+                            <ul style="margin-right: 10%">
+                                <li>Find a Lodging using Yelp or Google</li>
+                                <li>Add what you find to your Itinerary</li>
+                                <li>Set check-in and check-out times for your Lodging</li>
                             <%  if (indexPanelCity.getLodging() == null) { %>
                             <br />You currently have no lodging for your Itinerary. Click here to create one.
                             <%  } %>
@@ -186,7 +186,7 @@
                     <div class="landing-card" style="height: 200px; background-color: rgb(4, 75, 144); color: rgb(4, 75, 144)">
                         <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
                             From the Itinerary panel:<br /><br />
-                            <ul>
+                            <ul style="margin-right: 10%">
                                 <li><b>Discover</b><br /> Search for Places using Yelp or Google</li>
                                 <li><b>Stay informed</b><br /> Browse reviews, ratings and more</li>
                                 <li><b>Spread out</b><br /> Add another City to your Itinerary</li>
@@ -199,6 +199,14 @@
                     <span class="landing-card-subtitle">Events & Places</span>
                     <div class="landing-card" style="height: 200px; background-color: rgb(26, 188, 156); color: rgb(26, 188, 156)">
                         <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
+                            From the Events & Places panel:
+                            <ul style="margin-right: 10%">
+                                <li>Quickly find restaurants, airports, and more</li>
+                                <li>Endless search possibilities with Google or Yelp</li>
+                                <li>Update event times on the fly</li>
+                                <li>Neatly organize your events using different views</li>
+                                <li>Sort events by name, creation date or time</li>
+                            </ul>
                         </span>
                     </div>
                 </div>
