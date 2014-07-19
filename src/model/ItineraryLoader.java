@@ -21,7 +21,6 @@ public class ItineraryLoader {
             loadActivePreferences(activeItinerary, request);
             request.setAttribute("defaultSection", "event-places-page");
             request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
-            //ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }

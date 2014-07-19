@@ -97,7 +97,7 @@
 %>
 
 <body style="overflow-x: hidden">
-    <div id="itinerary-header">
+    <div id="itinerary-header" class="active-page">
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -160,14 +160,16 @@
             <div class="row">
                 <div class="col-md-3">
                     <span class="landing-card-subtitle" style="margin-left: 27%; margin-top: -1%">Map</span>
-                    <div class="landing-card" style="height: 200px; background-color: rgb(243, 156, 18); color: rgb(243, 156, 18);">
+                    <div class="landing-card" id="map-landing-card"
+                         style="height: 200px; background-color: rgb(243, 156, 18); color: rgb(243, 156, 18);">
                         <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
                         </span>
                     </div>
                 </div>
                 <div class="col-md-2" >
                     <span class="landing-card-subtitle">Lodging</span>
-                    <div class="landing-card" style="height: 200px; background-color: rgb(139, 0, 0); color: rgb(139, 0, 0)">
+                    <div class="landing-card" id="lodging-landing-card"
+                         style="height: 200px; background-color: rgb(139, 0, 0); color: rgb(139, 0, 0)">
                         <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
                             From the Lodging panel:<br /><br />
                             <ul style="margin-right: 10%">
@@ -183,7 +185,8 @@
                 </div>
                 <div class="col-md-2">
                     <span class="landing-card-subtitle">Itinerary</span>
-                    <div class="landing-card" style="height: 200px; background-color: rgb(4, 75, 144); color: rgb(4, 75, 144)">
+                    <div class="landing-card" id="itinerary-landing-card"
+                         style="height: 200px; background-color: rgb(4, 75, 144); color: rgb(4, 75, 144)">
                         <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
                             From the Itinerary panel:<br /><br />
                             <ul style="margin-right: 10%">
@@ -197,7 +200,8 @@
                 </div>
                 <div class="col-md-2">
                     <span class="landing-card-subtitle">Events & Places</span>
-                    <div class="landing-card" style="height: 200px; background-color: rgb(26, 188, 156); color: rgb(26, 188, 156)">
+                    <div class="landing-card" id="event-landing-card"
+                         style="height: 200px; background-color: rgb(26, 188, 156); color: rgb(26, 188, 156)">
                         <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
                             From the Events & Places panel:
                             <ul style="margin-right: 10%">
@@ -206,13 +210,17 @@
                                 <li>Update event times on the fly</li>
                                 <li>Neatly organize your events using different views</li>
                                 <li>Sort events by name, creation date or time</li>
+                                <%  if (indexPanelCity.getEvents() == null) { %>
+                                <br />You currently have no events for your Itinerary. Click here to create some.
+                                <%  } %>
                             </ul>
                         </span>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <span class="landing-card-subtitle" style="margin-top: -1%">About</span>
-                    <div class="landing-card" style="height: 200px; background-color: rgb(47, 47, 47); color: rgb(47, 47, 47)">
+                    <span class="landing-card-subtitle" style="margin-top: -1%">Budget</span>
+                    <div class="landing-card" id="budget-landing-card"
+                         style="height: 200px; background-color: rgb(147, 112, 219); color: rgb(147, 112, 219)">
                         <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
                         </span>
                     </div>
@@ -221,7 +229,15 @@
         </div>
     </div>
 
-    <div id="itinerary-overview">
+    <!--<div class="nav nav-pills" id="itinerary-nav-tabs-div" style="background-color: rgb(4, 71, 137);border:none;font-weight:bold;display:none">
+        <button id="itinerary-tab-btn" class="itinerary-nav-tabs" onclick='showItinerary()'>Itinerary</button>
+        <button id="lodging-tab-btn" class="itinerary-nav-tabs" onclick='showLodging()'>Lodging</button>
+        <button id="events-tab-btn" class="itinerary-nav-tabs" onclick='showEvents()'>Events and Places</button>
+        <button id="map-tab-btn" class="itinerary-nav-tabs" onclick='showMap()'>Map and Directions</button>
+        <button id="budget-tab-btn" class="itinerary-nav-tabs" onclick='showBudget()'>Manage Budget</button>
+    </div>-->
+
+    <div id="itinerary-overview" class="itinerary-sections" style="padding-top: 50px">
         <ul class="nav nav-pills" style="float: right">
             <li>
                 <a href="#" style="color: rgb(66, 139, 202); font-weight: bold">
@@ -244,7 +260,7 @@
             </li>
         </ul>
         <div class="page-divider-header">
-            <div style="display: inline-block">
+            <div style="display: inline-block; margin-bottom: 50px">
                 <h1><span class="glyphicon glyphicon-tags"></span> YOUR ITINERARY</h1>
                 <hr class="hr-title" />
             </div>
@@ -334,28 +350,6 @@
         </div>
     </div>
 
-<!--<<<<<< HEAD
-    <div class="row" id="lodging-page">
-        <div class="page-divider-header">
-            <div style="display: inline-block">
-                <h1><span class="glyphicon glyphicon-home"></span> LODGING</h1>
-                <hr class="hr-title" />
-            </div>
-            <p><span style="font-size: 20px"><b>Find a place to stay:</b></span><br />
-                Add a new Lodging below, including a hotel, motel or apartment<br /><br />
-                <span style="font-size: 20px"><b>How it works:</b></span><br />
-                You specify a radius from your city's central location, and
-                results within that radius are returned<br />
-                Afterward, you can specify your check-in and check-out times for your Lodging
-            </p><br /><br />
--->
-    <div id="itinerary-nav-tabs-div" style="background-color: rgb(4, 71, 137);border:none;font-weight:bold;">
-        <button id="lodging-tab-btn" class="itinerary-nav-tabs" onclick='showLodging()'>Lodging</button>
-        <button id="events-tab-btn" class="itinerary-nav-tabs" onclick='showEvents()'>Events and Places</button>
-        <button id="map-tab-btn" class="itinerary-nav-tabs" onclick='showMap()'>Map and Directions</button>
-        <button id="budget-tab-btn" class="itinerary-nav-tabs" onclick='showBudget()'>Manage Budget</button>
-    </div>
-
     <div id="lodging-page" class="itinerary-sections">
         <div class="page-divider-header">
             <div style="display: inline-block">
@@ -366,19 +360,6 @@
         </div>
     </div>
 
-<!--<<<<<< HEAD
-    <div id="event-places-page">
-        <div class="page-divider-header">
-            <div style="display: inline-block">
-                <h1><span class="glyphicon glyphicon-th"></span> EVENTS & PLACES</h1>
-                <hr class="hr-title" />
-            </div>
-            <p><span style="font-size: 20px"><b>Find Events for your First City:</b></span><br />
-                To add events for this city, Create a New Event<br /><br />
-                <span style="font-size: 20px"><b>Or travel to a New City:</b></span><br />
-                To go sightseeing in another city, Add a New City to your Itinerary
-            </p><br /><br />
-=======-->
     <div id="event-places-page" class="itinerary-sections">
         <div class="page-divider-header">
             <div style="display: inline-block">
@@ -388,7 +369,6 @@
             <%@ include file="events_places_panels.jsp" %>
         </div>
     </div>
-
 
     <div id="map-page" class="itinerary-sections">
         <div class="page-divider-header">
@@ -487,38 +467,10 @@
     <script src="/CS2340Servlet/js/typeahead.bundle.js"></script>
     <script src="/CS2340Servlet/js/event_autocomplete.js"></script>
 
+    <script src="/CS2340Servlet/js/navigation.js" type="text/javascript"></script>
+
     <!-- Index Javascript -->
     <script type="text/javascript">
-        // Landing page title functionality
-        var landingTitle = document.getElementById("landing-title-h1");
-        var landingCard = document.getElementsByClassName("landing-card");
-        for (var i = 0; i < landingCard.length; i++) {
-            landingCard[i].addEventListener("mouseover", function () {
-                landingTitle.style.opacity = 1;
-                landingTitle.style.textShadow = "4px 4px #000000";
-                $(landingTitle).slideDown('slow');
-                this.style.opacity = 0.95;
-                this.style.backgroundColor = "black";
-                $(this).stop().animate({
-                    height: '+500px'
-                }, 1000, function() {
-                    var hiddenText = this.getElementsByTagName("span")[0];
-                    hiddenText.style.display = "";
-                });
-            }, true);
-            landingCard[i].addEventListener("mouseout", function () {
-                landingTitle.style.opacity = 0.8;
-                landingTitle.style.textShadow = "";
-                this.style.opacity = 0.9;
-                this.style.backgroundColor = this.style.color;
-                var hiddenText = this.getElementsByTagName("span")[0];
-                hiddenText.style.display = "none";
-                $(this).stop().animate({
-                    height: '200px'
-                }, 1000);
-            }, true);
-        }
-
         // Change city tabs
         var citySelection = "<%=indexPanelCity.getName()%>";
         console.log("City selected: " + citySelection);
@@ -632,10 +584,20 @@
         }, 'fast');
 
         function hideAllTabs() {
+            document.getElementById("itinerary-overview").style.display = "none";
             document.getElementById("budget-page").style.display="none";
             document.getElementById("map-page").style.display="none";
             document.getElementById("event-places-page").style.display="none";
             document.getElementById("lodging-page").style.display="none";
+        }
+
+        function showItineraryNavTabs() {
+            document.getElementById("itinerary-nav-tabs-div").style.display = 'block';
+        }
+
+        function showItinerary() {
+            hideAllTabs();
+            document.getElementById('itinerary-overview').style.display='block';
         }
 
         function showBudget() {

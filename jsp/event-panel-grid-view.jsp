@@ -24,7 +24,7 @@
 %>
 
 <div style="width: 20%; text-align: center; margin: 0 auto">
-    <h1 style="text-align: center; font-family: 'Audiowide'; border: solid">Grid View</h1>
+    <h2 style="text-align: center; font-family: 'Audiowide', cursive; border: solid">Grid View</h2>
 </div>
 <div class="container-fluid" style="padding-top: 50px">
     <%  boolean colorChange[] = {true, false, true, false};

@@ -1,6 +1,5 @@
 <%@ page import="database.User" %>
 <%@ page import="database.Itinerary" %>
-<%@ page import="database.DataManager" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 
@@ -8,8 +7,7 @@
 
 <%
     User user = (User) session.getAttribute("currentUser");
-    int userID = user.getID();
-    List<Itinerary> itineraries = DataManager.getItineraryByUserID(userID);
+    List<Itinerary> itineraries = user.getItineraries();
     if (itineraries == null) {
         itineraries = new ArrayList<Itinerary>();
     }

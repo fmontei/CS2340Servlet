@@ -113,6 +113,9 @@
     </div>
 </div>
 
+<!--Jquery-->
+<script src="/CS2340Servlet/js/jquery.js"></script>
+
 <script>
     $('#newCityModal').on('shown.bs.modal', function (e) {
         initializeNewCityMap();

@@ -1,11 +1,13 @@
 package model;
 
 import database.DataManager;
+import database.Itinerary;
 import database.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.util.List;
 
 public class LoginForm {
     private HttpServletRequest request;
@@ -38,9 +40,12 @@ public class LoginForm {
 
     private void storeLoginAttributes() throws SQLException {
         User currentAccount = DataManager.fetchUser(username);
-        String welcomeName = currentAccount.getWelcomeName();
-        String firstName = currentAccount.getFirstName();
-        String lastName = currentAccount.getLastName();
+        final int userID = currentAccount.getID();
+        final List<Itinerary> itineraries = DataManager.getItineraryByUserID(userID);
+        currentAccount.setItineraries(itineraries);
+        final String welcomeName = currentAccount.getWelcomeName();
+        final String firstName = currentAccount.getFirstName();
+        final String lastName = currentAccount.getLastName();
         HttpSession session = request.getSession();
         session.setAttribute("welcomeName", welcomeName);
         session.setAttribute("currentUser", currentAccount);

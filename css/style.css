@@ -21,7 +21,7 @@ th, td {
 }
 
 #landing-title h1 {
-   z-index: 10;
+    z-index: 10;
     position: relative;
     left: -45%;
     top: 410px;
@@ -321,6 +321,10 @@ th, td {
     opacity: 1;
 }
 
+.nav-active {
+
+}
+
 .popin {
      margin: 0 auto;
      background:#fff;
@@ -343,10 +347,15 @@ th, td {
     text-align: center;
     padding-top: 50px;
     color: white;
+    margin-bottom: 50px
 }
 
 .page-divider-header h1 {
     font-size: 60px;
+    font-family: 'Audiowide', sans-serif;
+}
+
+.page-divider-header h2 {
     font-family: 'Audiowide', sans-serif;
 }
 
@@ -394,13 +403,13 @@ th, td {
 
 .new-city-message h3 {
     color: black;
-    margin-left: 40px;
+    text-align: center;
     font-family: 'Audiowide', cursive;
 }
 
 .new-city-message p {
     color: black;
-    margin-left: 20px;
+    text-align: center;
     font-family: 'Audiowide', cursive;
 }
 
@@ -425,14 +434,14 @@ th, td {
 }
 
 .new-lodging-message h3 {
+    text-align: center;
     color: white;
-    margin-left: 40px;
     font-family: 'Audiowide', cursive;
 }
 
 .new-lodging-message p {
+    text-align: center;
     color: white;
-    margin-left: 20px;
     font-family: 'Audiowide', cursive;
 }
 
@@ -457,14 +466,15 @@ th, td {
 }
 
 .new-event-message h3 {
+    text-align: center;
     color: white;
     margin-left: 40px;
     font-family: 'Audiowide', cursive;
 }
 
 .new-event-message p {
+    text-align: center;
     color: white;
-    margin-left: 20px;
     font-family: 'Audiowide', cursive;
 }
 
@@ -524,6 +534,7 @@ th, td {
 }
 
 .itinerary-sections {
+    min-height: 100%;
     padding-bottom: 40px;
     display: none;
 }
@@ -539,6 +550,8 @@ hr.hr-title {
     border: none;
     height: 4px;
     background-color: rgb(49, 126, 172);
+    margin-top: 5px;
+    margin-bottom: 0;
 }
 
 .panel {
