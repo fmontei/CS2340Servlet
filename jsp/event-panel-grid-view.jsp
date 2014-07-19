@@ -38,7 +38,7 @@
             String imageBgColor = (colorChange[curEventID % colorChange.length]) ? "26a0e6" : "73a839";
     %>
     <div class="col-md-3" >
-        <div class="well" style="height: 150px !important;">
+        <div class="well" style="height: 150px !important; color: black; text-align: left">
             <div class="media">
                 <a class="pull-left" href="#" data-toggle="modal" data-target="#eventModal<%=curEventID%>">
                     <img class="image-responsive"
@@ -104,7 +104,8 @@
                         <%=!event.getName().isEmpty() ? event.getName() : "New Event no. " + (curEventID + 1)%>
                     </h2>
                 </div>
-                <div class="panel panel-<%=eventPanelColor%>" id="event-no-<%=curEventID%>" style="width: 98%; margin-left: 10px">
+                <div class="panel panel-<%=eventPanelColor%>" id="event-no-<%=curEventID%>"
+                     style="width: 98%; margin-left: 10px; color: black; text-align: left">
                     <%  if (event.getName().isEmpty()) { %>
                     <div class="panel-body">
                         <form class="form-inline" role="form" action="/CS2340Servlet/itinerary?event_id=<%=curEventID%>" method="POST">

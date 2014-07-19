@@ -334,6 +334,7 @@
         </div>
     </div>
 
+<!--<<<<<< HEAD
     <div class="row" id="lodging-page">
         <div class="page-divider-header">
             <div style="display: inline-block">
@@ -347,10 +348,25 @@
                 results within that radius are returned<br />
                 Afterward, you can specify your check-in and check-out times for your Lodging
             </p><br /><br />
-        </div>
-        <%@ include file="lodging_panel.jsp" %>
+-->
+    <div id="itinerary-nav-tabs-div" style="background-color: rgb(4, 71, 137);border:none;font-weight:bold;">
+        <button id="lodging-tab-btn" class="itinerary-nav-tabs" onclick='showLodging()'>Lodging</button>
+        <button id="events-tab-btn" class="itinerary-nav-tabs" onclick='showEvents()'>Events and Places</button>
+        <button id="map-tab-btn" class="itinerary-nav-tabs" onclick='showMap()'>Map and Directions</button>
+        <button id="budget-tab-btn" class="itinerary-nav-tabs" onclick='showBudget()'>Manage Budget</button>
     </div>
 
+    <div id="lodging-page" class="itinerary-sections">
+        <div class="page-divider-header">
+            <div style="display: inline-block">
+                <h1><span class="glyphicon glyphicon-home"></span> LODGING</h1>
+                <hr class="hr-title" />
+            </div>
+            <%@ include file="lodging_panel.jsp" %>
+        </div>
+    </div>
+
+<!--<<<<<< HEAD
     <div id="event-places-page">
         <div class="page-divider-header">
             <div style="display: inline-block">
@@ -362,11 +378,19 @@
                 <span style="font-size: 20px"><b>Or travel to a New City:</b></span><br />
                 To go sightseeing in another city, Add a New City to your Itinerary
             </p><br /><br />
+=======-->
+    <div id="event-places-page" class="itinerary-sections">
+        <div class="page-divider-header">
+            <div style="display: inline-block">
+                <h1><span class="glyphicon glyphicon-th"></span> EVENTS & PLACES</h1>
+                <hr class="hr-title" />
+            </div>
+            <%@ include file="events_places_panels.jsp" %>
         </div>
-        <%@ include file="events_places_panels.jsp" %>
     </div>
 
-    <div id="map-page">
+
+    <div id="map-page" class="itinerary-sections">
         <div class="page-divider-header">
             <div style="display: inline-block; margin-bottom: 20px">
                 <h1><span class="glyphicon glyphicon-globe"></span> MAP</h1>
@@ -422,23 +446,10 @@
             </div>
         </div>
     </div>
-</body>
 
-<div class="row" id="budget-page">
-    <div class="page-divider-header">
-        <div style="display: inline-block">
-            <h1><span class="glyphicon glyphicon-barcode"></span> BUDGET</h1>
-            <hr class="hr-title" />
-        </div>
-        <p><span style="font-size: 20px"><b>Create and Manage a Budget for this Trip:</b></span><br />
-            Create a Budget below.
-        </p><br /><br />
+    <div id="budget-page" class="itinerary-sections">
+        <%@ include file="budget_panel.jsp" %>
     </div>
-    <%@ include file="budget_panel.jsp" %>
-</div>
-
-
-    <%@ include file="footer.jsp" %>
 
     <!-- Error Message -->
     <div class="modal fade" id="errorMessage" tabindex="-1" role="dialog" aria-labelledby="errorMessageTitle" aria-hidden="true">
@@ -460,8 +471,10 @@
         </div>
     </div>
 
-    <!-- Jquery Javascript -->
+    <!--Jquery-->
     <script src="/CS2340Servlet/js/jquery.js"></script>
+
+    <!-- Bootstrap Javascript -->
     <script src="/CS2340Servlet/js/bootstrap.min.js"></script>
 
     <!-- Facebook Login -->
@@ -557,10 +570,6 @@
             $("#div-overview").show();
             $("#itinerary-side-bar").show();
 
-            // Initialize map
-            initialize(<%=indexPanelCity.getLatitude()%>,
-                <%=indexPanelCity.getLongitude()%>);
-
             // Navbar Navigation Color Change
             $('.navbar-navigation li a').click(function(e) {
                 var $this = $(this);
@@ -587,11 +596,80 @@
             }
         });
 
+        $('form.ajax').on('submit', function () {
+            var that = $(this),
+                    url = that.attr('action'),
+                    method = that.attr('method'),
+                    data = {};
+
+            that.find('[name]').each(function (index, value) {
+                var that = $(this),
+                        name = that.attr('name'),
+                        value = that.val();
+
+                data[name] = value;
+            });
+
+            $.ajax({
+                url: url,
+                type: method,
+                data: data,
+                success: function (json) {
+                    console.log(json);
+                    $("#ajax-event-table").append(json);
+                }
+            });
+
+            return false;
+        });
+
         /* Scrolls to the event from which event search request was issued
-            following page reload */
+         following page reload */
+        $(getDefaultPageSection()).show();
+
         $('html, body').animate({
             scrollTop: $(getCurrentPageSection()).offset().top
         }, 'fast');
+
+        function hideAllTabs() {
+            document.getElementById("budget-page").style.display="none";
+            document.getElementById("map-page").style.display="none";
+            document.getElementById("event-places-page").style.display="none";
+            document.getElementById("lodging-page").style.display="none";
+        }
+
+        function showBudget() {
+            hideAllTabs();
+            document.getElementById('budget-page').style.display='block';
+        }
+
+        function showMap() {
+            hideAllTabs();
+            document.getElementById('map-page').style.display='block';
+            // Initialize map
+            initialize(<%=indexPanelCity.getLatitude()%>,
+                    <%=indexPanelCity.getLongitude()%>);
+        }
+
+        function showEvents() {
+            hideAllTabs();
+            document.getElementById('event-places-page').style.display='block';
+        }
+
+        function showLodging() {
+            hideAllTabs();
+            document.getElementById('lodging-page').style.display='block';
+        }
+
+        function getDefaultPageSection() {
+            var element = '<%=request.getAttribute("defaultSection")%>';
+            if (element != null) {
+                var elementID = "#" + element;
+                return elementID;
+            } else {
+                return "#" + "itinerary-header";
+            }
+        }
 
         function getCurrentPageSection() {
             var element = '<%=request.getAttribute("currentSection")%>';
@@ -603,4 +681,8 @@
             }
         }
     </script>
+</body>
+
+<%@ include file="footer.jsp" %>
+
 <%}%>

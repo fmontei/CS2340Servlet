@@ -101,7 +101,6 @@
     <%@ include file="event-panel-summary-view.jsp" %>
 <%  } %>
 
-
 <script>
     $(document).ready(function() {
         $('[rel=popover]').popover({trigger: 'click', placement: 'left'});
