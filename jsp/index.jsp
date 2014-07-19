@@ -237,7 +237,7 @@
         <button id="budget-tab-btn" class="itinerary-nav-tabs" onclick='showBudget()'>Manage Budget</button>
     </div>-->
 
-    <div id="itinerary-overview" class="itinerary-sections" style="padding-top: 50px">
+    <div id="itinerary-overview" style="padding-top: 50px">
         <ul class="nav nav-pills" style="float: right">
             <li>
                 <a href="#" style="color: rgb(66, 139, 202); font-weight: bold">
@@ -350,7 +350,7 @@
         </div>
     </div>
 
-    <div id="lodging-page" class="itinerary-sections">
+    <div id="lodging-page">
         <div class="page-divider-header">
             <div style="display: inline-block">
                 <h1><span class="glyphicon glyphicon-home"></span> LODGING</h1>
@@ -360,7 +360,7 @@
         </div>
     </div>
 
-    <div id="event-places-page" class="itinerary-sections">
+    <div id="event-places-page">
         <div class="page-divider-header">
             <div style="display: inline-block">
                 <h1><span class="glyphicon glyphicon-th"></span> EVENTS & PLACES</h1>
@@ -370,7 +370,7 @@
         </div>
     </div>
 
-    <div id="map-page" class="itinerary-sections">
+    <div id="map-page">
         <div class="page-divider-header">
             <div style="display: inline-block; margin-bottom: 20px">
                 <h1><span class="glyphicon glyphicon-globe"></span> MAP</h1>
@@ -577,7 +577,7 @@
 
         /* Scrolls to the event from which event search request was issued
          following page reload */
-        $(getDefaultPageSection()).show();
+        //$(getDefaultPageSection()).show();
 
         $('html, body').animate({
             scrollTop: $(getCurrentPageSection()).offset().top
@@ -615,7 +615,7 @@
 
         function showEvents() {
             hideAllTabs();
-            document.getElementById('event-places-page').style.display='block';
+            //document.getElementById('event-places-page').style.display='block';
         }
 
         function showLodging() {

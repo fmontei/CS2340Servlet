@@ -347,7 +347,7 @@ th, td {
     text-align: center;
     padding-top: 50px;
     color: white;
-    margin-bottom: 50px
+    margin-bottom: 50px;
 }
 
 .page-divider-header h1 {
@@ -377,9 +377,11 @@ th, td {
 #itinerary-overview {
     background-color: rgb(4, 71, 137) !important;
     margin-top: -70px;
-    padding-bottom: 70px;
     width: 100%;
     overflow-x: hidden;
+    display: none;
+    min-height: 100%;
+    padding-bottom: 50px;
 }
 
 .new-city-message {
@@ -519,24 +521,30 @@ th, td {
 
 #event-places-page, #events-tab-btn {
     background-color: rgb(26, 188, 156) !important;
+    display: none;
+    min-height: 100%;
+    padding-bottom: 50px;
 }
 
 #map-page, #map-tab-btn {
     background-color: rgb(243, 156, 18) !important;
+    display: none;
+    min-height: 100%;
+    padding-bottom: 50px;
 }
 
 #lodging-page, #lodging-tab-btn {
     background-color: darkred !important;
+    display: none;
+    min-height: 100%;
+    padding-bottom: 50px;
 }
 
 #budget-page, #budget-tab-btn {
     background-color: mediumpurple !important;
-}
-
-.itinerary-sections {
-    min-height: 100%;
-    padding-bottom: 40px;
     display: none;
+    min-height: 100%;
+    padding-bottom: 50px;
 }
 
 .itinerary-nav-tabs {

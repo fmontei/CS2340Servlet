@@ -5,11 +5,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <section id="lodging"></section>
-<div class="custom-centered-pills" style="margin-bottom: 20px;">
-    <ul class="nav nav-pills" style="padding-bottom: 20px">
+<div class="custom-centered-pills">
+    <ul class="nav nav-pills">
         <li style="float: right">
             <a class="alert-danger" href="#main-lodging" id="create-lodging-pill"
-               data-toggle="collapse" data-parent="#accordion">
+               data-toggle="collapse" data-parent="#accordion" style="margin-top: 50px">
                 <span class="glyphicon glyphicon-plus-sign"
                       style="position: relative; top: 2px;">
                 </span>

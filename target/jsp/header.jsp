@@ -1,7 +1,9 @@
 <%@ page import="database.Preference" %>
 <%@ page import="database.Place" %>
+<%@ page import="database.City" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="database.User" %>
+
 <!DOCTYPE html>
 <html>
 <head>
