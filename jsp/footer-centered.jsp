@@ -1,9 +1,15 @@
-      <footer style="position: fixed; bottom: 0px; left: 0px; right: 0px">
-                  <div id="footerTopBorder"></div>
-                  <p style="text-align: center">
-                      &copy; 2014 Georgia Tech Summer 2014 CS2340 Team 3. All Rights Reserved.
-                  </p>
-      </footer>
+    <footer style="position: fixed; bottom: 0px; left: 0px; right: 0px">
+              <div id="footerTopBorder"></div>
+              <p style="text-align: center">
+                  &copy; 2014 Georgia Tech Summer 2014 CS2340 Team 3. All Rights Reserved.
+              </p>
+    </footer>
+
+    <!--Jquery-->
+    <script src="/CS2340Servlet/js/jquery.js"></script>
+
+    <!-- Bootstrap Javascript -->
+    <script src="/CS2340Servlet/js/bootstrap.min.js"></script>
 
     <!-- Itinerary Wizard -->
     <%@ include file="itinerary_wizard.jsp" %>

@@ -25,8 +25,5 @@
     <script src="/CS2340Servlet/js/password_check.js"></script>
 
     <!--DateTime picker jquery-->
-    <script src="/CS2340Servlet/js/jquery.js"></script>
     <script src="/CS2340Servlet/js/jquery.datetimepicker.js"></script>
-
-</body>
 </html>

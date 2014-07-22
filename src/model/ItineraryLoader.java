@@ -3,6 +3,7 @@ package model;
 import controller.BrowserErrorHandling;
 import database.*;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,11 +15,12 @@ public class ItineraryLoader {
 
     public void loadItineraryAndAllDependencies(HttpServletRequest request,
                                                 HttpServletResponse response)
-            throws IOException {
+            throws IOException, ServletException {
         try {
             Itinerary activeItinerary = loadActiveItinerary(request);
             loadActivePreferences(activeItinerary, request);
-            ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
+            request.setAttribute("defaultSection", "event-places-page");
+            request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }

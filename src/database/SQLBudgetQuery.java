@@ -17,7 +17,7 @@ public class SQLBudgetQuery extends SQLQuery {
             CallableStatement callableStatement = super.dbConnection.prepareCall("{call Budget_ReadByID(?)}");
             callableStatement.setInt(1, budgetID);
             ResultSet results = callableStatement.executeQuery();
-            if(results.next()){
+            if (results.next()) {
                 Integer ID = results.getInt("ID");
                 Double originalBudget = results.getDouble("originalBudget");
                 Double currentBudget = results.getDouble("currentBudget");

@@ -19,7 +19,7 @@ var associative_array = {'Accounting': 'accounting', 'Airport': 'airport',
     'Hardware Store': 'hardware_store', 'Health': 'health', 'Hindu Temple':
     'hindu_temple', 'Home Goods Store': 'home_goods_store', 'Hospital':
     'hospital', 'Insurance Agency': 'insurance_agency', 'Jewelry Store':
-    'jewelery_store', 'Laundry': 'laundry', 'Lawyer': 'lawyer',
+    'jewelry_store', 'Laundry': 'laundry', 'Lawyer': 'lawyer',
     'Library': 'library', 'Liquor Store': 'liquor_store',
     'Local Government Office': 'local_government_office', 'Locksmith':
     'locksmith', 'Lodging': 'lodging', 'Meal Delivery': 'meal_delivery',

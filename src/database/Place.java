@@ -5,7 +5,7 @@ import model.Coordinates;
 import java.util.Date;
 
 public class Place {
-    private String name, placeID, formattedAddress, phoneNumber, URL, API,
+    private String name = "", placeID, formattedAddress, phoneNumber, URL, API,
             ratingImage, snippetText, creationDate, checkIn, checkOut;
     private int ID, priceLevel;
     private double rating;

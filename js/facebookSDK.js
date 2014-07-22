@@ -39,3 +39,13 @@ function fb_login(){
     e.async = true;
     document.getElementById('fb-root').appendChild(e);
 }());
+
+function postItinerary(Itinerary itinerary) {
+  document.getElementById('publishBtn').onclick = function() {
+    FB.api('/me/feed', 'post', {message: 'Hello, world!'}, function(response) {
+      Log.info('API response', response);
+      document.getElementById('publishBtn').innerHTML = 'API response is ' + response.id;
+    });
+    return false;
+  }
+};

@@ -1,6 +1,9 @@
 <%@ page import="database.Preference" %>
 <%@ page import="database.Place" %>
+<%@ page import="database.City" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="database.User" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,24 +19,20 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/style.css">
     <link href="/CS2340Servlet/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/CS2340Servlet/css/bootstrap-theme.css" rel="stylesheet" type="text/css">
     <link href="/CS2340Servlet/css/dashboard.css" rel="stylesheet">
     <link href="/CS2340Servlet/css/jquery.raty.css" rel="stylesheet" type="text/css">
 
-    <!-- Jquery Javascript -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 
     <!-- DateTime picker CSS -->
     <link rel="stylesheet" type="text/css" href="/CS2340Servlet/css/jquery.datetimepicker.css">
-
 </head>
 <body>
 
 <%
 if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
 %>
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-white navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
@@ -164,31 +163,47 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
 
 <% } else { %>
 
-    <div class="navbar navbar-inverse navbar-fixed-top" id="fixed-nav" role="navigation">
-        <div class="container">
+    <div class="navbar-white navbar-fixed-top" id="fixed-nav" role="navigation">
+        <div class="container" style="width: 100%">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
                         <a class="navbar-brand" href="#">
-                            <%=session.getAttribute("welcomeName")%>&#39;s Trip Planner
+                            DESTI
                         </a>
                     </div>
-                    <div class="navbar-collapse collapse">
+                    <div class="navbar-collapse collapse" style="margin-left: 30%">
+                        <ul class="nav navbar-nav navbar-left">
+                            <%  City headerCity = (City) session.getAttribute("activeCity");
+                                double lat = headerCity != null ? headerCity.getLatitude() : 0;
+                                double lng = headerCity != null ? headerCity.getLongitude() : 0;
+                            %>
+                            <li><a onclick="fadeToElement('#itinerary-header', <%=lat%>, <%=lng%>)" href="javascript:void(0)">Home<hr class="hr-title"/></a></li>
+                            <li><a onclick="fadeToElement('#map-page', <%=lat%>, <%=lng%>)" href="javascript:void(0)">Map</a></li>
+                            <li><a onclick="fadeToElement('#lodging-page', <%=lat%>, <%=lng%>)" href="javascript:void(0)">Lodging</a></li>
+                            <li><a onclick="fadeToElement('#itinerary-overview', <%=lat%>, <%=lng%>)" href="javascript:void(0)">Itinerary</a></li>
+                            <li><a onclick="fadeToElement('#event-places-page', <%=lat%>, <%=lng%>)" href="javascript:void(0)">Events & Places</a></li>
+                            <li><a onclick="fadeToElement('#budget-page', <%=lat%>, <%=lng%>)" href="javascript:void(0)">Budget</a></li>
+                        </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="/CS2340Servlet/jsp/index.jsp">Home</a></li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                     Itineraries
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <!-- If there are no itineraries -->
+                                    <%  final User currentUser = (User) session.getAttribute("currentUser");
+                                        if (currentUser != null) {
+                                            List<Itinerary> itineraries = currentUser.getItineraries();
+                                            for (Itinerary itinerary : itineraries) { %>
+                                            <li class="dropdown-header" style="overflow-x: hidden">
+                                                <a href="/CS2340Servlet/index?itinerary_id=<%=itinerary.getID()%>">
+                                                    <%=itinerary.getName()%>
+                                                </a>
+                                            </li>
+                                    <%      }
+                                        }
+                                    %>
                                     <li class="dropdown-header">
                                         <a href="#"
                                            onclick="showPage1()"
@@ -203,107 +218,6 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
                         </ul>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- New Itinerary Form -->
-    <div class="modal fade" id="newItineraryForm" tabindex="-1" role="dialog" aria-labelledby="newItineraryLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="newItineraryLabel">Create New Itinerary</h4>
-                </div>
-                <form action="/CS2340Servlet/index" method="POST" class="form-inline" role="form">
-                    <div class="modal-body">
-                        <b>Name of Itinerary</b>
-
-                        <br />
-                        <br />
-
-                        <div class="form-group">
-                            <label class="sr-only" for="nameOfItinerary">Name</label>
-                            <input type="text" class="form-control" id="nameOfItinerary" name="nameOfItinerary"
-                            required="required"
-                            placeholder = "Enter Name of Itinerary" />
-                        </div>
-
-                        <br />
-                        <br />
-                        <br />
-
-                        <b>Select your preferred mode of transportation</b>
-
-                        <br />
-                        <br />
-
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <input type="radio" id="driving"
-                                        name="preferredTravelMode"
-                                        value="driving">
-                                    </span>
-                                    <input type="text" class="form-control" value="Driving" disabled>
-                                </div>
-                            </div>
-                        </div>
-
-                        <br />
-
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <input type="radio" id="walking"
-                                        name="preferredTravelMode"
-                                        value="walking" checked>
-                                    </span>
-                                    <input type="text" class="form-control" 
-                                    value="Walking" disabled>
-                                </div>
-                            </div>
-                        </div>
-
-                        <br />
-
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <input type="radio" id="bicycling"
-                                        name="preferredTravelMode"
-                                        value="bicycling" checked>
-                                    </span>
-                                    <input type="text" class="form-control" 
-                                    value="Bicycling" disabled>
-                                </div>
-                            </div>
-                        </div>
-
-                        <br />
-
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <input type="radio" id="transit"
-                                        name="preferredTravelMode"
-                                        value="transit" checked>
-                                    </span>
-                                    <input type="text" class="form-control" 
-                                    value="Transit" disabled>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" name="signUpButton" class="btn btn-primary">Create</button>
-                    </div> 
-                </form>
             </div>
         </div>
     </div>
