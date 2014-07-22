@@ -71,6 +71,7 @@ public class Place {
     public String getCheckIn() { return checkIn; }
     public String getCheckOut() { return  checkOut; }
     public int getID() { return this.ID; }
+    public String printEvent() { return getCheckIn() + " -- " + getCheckOut() + ": " + getName(); }
 
     public void setPlaceID(String placeID) {
         this.placeID = placeID;

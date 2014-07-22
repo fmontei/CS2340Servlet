@@ -308,6 +308,9 @@
                 <li id="li-create-city">
                     <a href="#" data-toggle="modal" data-target="#newCityModal">Add New City</a>
                 </li>
+                <li>
+                    <div class="fb-login-button" data-scope="publish_actions" data-max-rows="1" data-size="medium"></div>
+                </li>
             </ol><br /><br />
 
             <div class="table" >
