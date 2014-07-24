@@ -1,19 +1,37 @@
 package test;
 
 import database.*;
+import model.PasswordGenerator;
 
 import java.awt.geom.Point2D;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.ArrayList;
 
 public class TestDB {
     public static void main(String... args)  {
-        try {
+        List<Character> characters = new ArrayList<Character>();
+        characters.add('A');
+        characters.add('B');
+        characters.add('C');
+        characters.add('D');
+        characters.add('1');
+        characters.add('2');
+        characters.add('3');
+        characters.add('4');
+        characters.add('5');
+        characters.add('*');
+        characters.add('&');
+        characters.add('%');
+        characters.add('#');
+        String password = PasswordGenerator.generatePassword(12, characters);
+        System.out.println("password is " + password);
+        /*try {
             testBudgetSave();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        /*try {
+        try {
             TestDB testDB = new TestDB();
             //testDB.testLodgingByItineraryID("16");
             City city = new City("another city", "another", 2, 2, 19);
