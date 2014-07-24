@@ -384,12 +384,12 @@ th, td {
     padding-bottom: 50px;
 }
 
-.new-city-message {
+.new-city-media-element {
     height: 250px;
     margin-right: auto;
     margin-left: auto;
     display: block;
-    width: 100%;
+    width: 600px;
     background: url("../images/city.jpg");
     background-size: 100% 100%;
     padding: 15px;
@@ -397,30 +397,31 @@ th, td {
     cursor: pointer;
 }
 
-.new-city-message:hover {
+.new-city-media-element:hover {
     opacity: .6;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
 }
 
-.new-city-message h3 {
+.new-city-media-element h3 {
     color: black;
     text-align: center;
     font-family: 'Audiowide', cursive;
 }
 
-.new-city-message p {
+.new-city-media-element p {
     color: black;
     text-align: center;
     font-family: 'Audiowide', cursive;
 }
 
-.new-lodging-message {
+
+.new-lodging-media-element {
     height: 250px;
     margin-right: auto;
     margin-left: auto;
     display: block;
-    width: 100%;
+    width: 600px;
     background: url("../images/lodging.jpg");
     background-size: 100% 150%;
     padding: 15px;
@@ -429,30 +430,30 @@ th, td {
     font-family: 'Audiowide', cursive;
 }
 
-.new-lodging-message:hover {
+.new-lodging-media-element:hover {
     opacity: .6;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
 }
 
-.new-lodging-message h3 {
+.new-lodging-media-element h3 {
     text-align: center;
     color: white;
     font-family: 'Audiowide', cursive;
 }
 
-.new-lodging-message p {
+.new-lodging-media-element p {
     text-align: center;
     color: white;
     font-family: 'Audiowide', cursive;
 }
 
-.new-event-message {
+.new-event-media-element {
     height: 250px;
     margin-right: auto;
     margin-left: auto;
     display: block;
-    width: 100%;
+    width: 600px;
     background: url("../images/event.jpg");
     background-size: 100% 110%;
     padding: 15px;
@@ -461,20 +462,20 @@ th, td {
     font-family: 'Audiowide', cursive;
 }
 
-.new-event-message:hover {
+.new-event-media-element:hover {
     opacity: .6;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
 }
 
-.new-event-message h3 {
+.new-event-media-element h3 {
     text-align: center;
     color: white;
     margin-left: 40px;
     font-family: 'Audiowide', cursive;
 }
 
-.new-event-message p {
+.new-event-media-element p {
     text-align: center;
     color: white;
     font-family: 'Audiowide', cursive;

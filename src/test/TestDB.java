@@ -9,9 +9,7 @@ import java.util.List;
 public class TestDB {
     public static void main(String... args)  {
         try {
-            SQLBudgetQuery budgetQuery = new SQLBudgetQuery();
-            Budget b = budgetQuery.getBudgetByID(1);
-            System.out.println(b.getID() + " " + b.getLastUpdated());
+            DataManager.createUser(new User("b", "b", "b", 1));
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

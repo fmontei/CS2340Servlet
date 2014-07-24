@@ -116,6 +116,9 @@
 <!--Jquery-->
 <script src="/CS2340Servlet/js/jquery.js"></script>
 
+<!-- Bootstrap Javascript -->
+<script src="/CS2340Servlet/js/bootstrap.min.js"></script>
+
 <script>
     $('#newCityModal').on('shown.bs.modal', function (e) {
         initializeNewCityMap();

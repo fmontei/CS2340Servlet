@@ -310,42 +310,76 @@
                 </li>
             </ol><br /><br />
 
-            <div class="table" >
-                <table style="table-layout: fixed; width: 100%">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-                            <div class="new-city-message" data-toggle="modal"
-                                 data-target="#newCityModal" role="button">
-                                <h3>Add new <b>City</b></h3>
-                                <p>Add a <strong>New City</strong> to your Itinerary</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="new-lodging-message" data-toggle="modal"
-                                 data-target="#eventAjaxModal" role="button">
-                                <h3>Find a <b>Lodging</b></h3>
-                                <p>Add a <strong>New Lodging</strong> to your City</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="new-event-message" data-toggle="modal"
-                                 data-target="#eventAjaxModal" role="button">
-                                <h3>Add New <strong>Event</strong></h3>
-                                <p>Add a <strong>New Event</strong> to your City</p>
-                            </div>
-                        </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <ul class="media-list">
+                <li class="media" style="margin-left: 15%">
+                    <div class="pull-left">
+                        <div class="new-city-media-element" data-toggle="modal"
+                             data-target="#newCityModal" role="button">
+                            <h3>Add new <b>City</b></h3>
+                            <p>Add a <strong>New City</strong> to your Itinerary</p>
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"
+                            style="margin-left: 5%; color: white; font-family: 'Audiowide', cursive">
+                            Expand your Itinerary by adding another City to it.
+                        </h4><br /><br />
+                        <p style="margin-left: 5%; color:white; font-family: 'Ubuntu', cursive">
+                            With Desti, you can confine yourself to your Itinerary's default city<br />
+                            or, instead of creating another Itinerary with its own city, you can<br />
+                            add another city to your itinerary and easily swap between the two<br />
+                            whenever you want. Each city has its own lodging, its own events, <br />
+                            and its own budget, allowing for greater organization and flexibility<br />
+                            over your itinerary.
+                        </p>
+                    </div>
+                </li>
+
+                <li class="media" style="margin-top: 30px">
+                    <div class="pull-left"  style="margin-left: 15%">
+                        <div class="new-lodging-media-element" data-toggle="modal"
+                             data-target="#eventAjaxModal" role="button">
+                            <h3>Find a <b>Lodging</b></h3>
+                            <p>Add a <strong>New Lodging</strong> to your City</p>
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"
+                            style="margin-left: 5%; color: white; font-family: 'Audiowide', cursive">
+                            Find a place to stay by searching for a lodging.
+                        </h4><br /><br />
+                        <p style="margin-left: 5%; color:white; font-family: 'Ubuntu', cursive">
+                            With Desti, you can confine yourself to your Itinerary's default city<br />
+                            In planning a trip, it's always necessary to discover a great<br />
+                            place to stay. Due to Yelp integration, Desti makes it easy to<br />
+                            to find hotels, motels, apartments--you name it.
+                        </p>
+                    </div>
+                </li>
+
+                <li class="media" style="margin-top: 30px">
+                    <div class="pull-left"  style="margin-left: 15%">
+                        <div class="new-event-media-element" data-toggle="modal"
+                             data-target="#eventAjaxModal" role="button">
+                            <h3>Add New <strong>Event</strong></h3>
+                            <p>Add a <strong>New Event</strong> to your City</p>
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"
+                            style="margin-left: 5%; color: white; font-family: 'Audiowide', cursive">
+                            Add as many events to your itinerary as you like.
+                        </h4><br /><br />
+                        <p style="margin-left: 5%; color:white; font-family: 'Ubuntu', cursive">
+                            Equipped with Google and Yelp searches, Desti will help you find<br />
+                            whatever you need while on a trip. From banks to restaurnts or<br />
+                            from shopping malls to bowling alleys, Desti has got you covered.<br />
+                            Quickly find and add new events to your itinerary, then review them<br />
+                            using Desti's different views.
+                        </p>
+                    </div>
+                </li>
+            </ul>
             <%@ include file="eventAndLodgingModals.jsp" %>
         </div>
     </div>
