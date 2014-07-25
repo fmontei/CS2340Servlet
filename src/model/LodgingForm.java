@@ -22,6 +22,8 @@ public class LodgingForm {
         this.response = response;
         this.session = request.getSession();
         this.activeCity = (City) session.getAttribute("activeCity");
+        this.request.setAttribute("defaultSection", "lodging-page");
+        this.request.setAttribute("currentSection", "lodging-page");
     }
 
     public void getLodgingsAroundLocation() throws IOException{
@@ -40,8 +42,6 @@ public class LodgingForm {
             session.setAttribute("lastLodgingName", name);
             session.setAttribute("lastLodgingRadius", radius);
             session.setAttribute("lastLodgingLimit", limit);
-            request.setAttribute("defaultSection", "lodging-page");
-            request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
         } catch (Exception ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
@@ -108,8 +108,6 @@ public class LodgingForm {
             DataManager.createLodging(selection, activeCity.getID());
             activeCity.setLodging(selection);
             session.setAttribute("activeCity", activeCity);
-            request.setAttribute("defaultSection", "lodging-page");
-            request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
