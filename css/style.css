@@ -135,8 +135,9 @@ th, td {
     left: 40%;
 }
 
-.carouselLogin button {
-    position: relative; right: -50%;
+.carouselLogin a {
+    position: relative;
+    right: -40%;
     background: transparent;
     color: rgb(139, 0, 0);
     display:inline-block;
@@ -148,7 +149,7 @@ th, td {
     font-size: 18px;
 }
 
-.carouselLogin button:hover {
+.carouselLogin a:hover {
     background-color: white;
     color: rgb(139, 0, 0);
     border-color: rgb(139, 0, 0);
@@ -160,8 +161,9 @@ th, td {
     right: 40%;
 }
 
-.carouselRegister button {
-    position: relative; left: -50%;
+.carouselRegister a {
+    position: relative;
+    left: -40%;
     background: transparent;
     color: rgb(139, 0, 0);
     display:inline-block;
@@ -173,7 +175,7 @@ th, td {
     font-size: 18px;
 }
 
-.carouselRegister button:hover {
+.carouselRegister a:hover {
     background-color: white;
     color: rgb(139, 0, 0);
     border-color: rgb(139, 0, 0);

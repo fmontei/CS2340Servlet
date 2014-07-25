@@ -4,7 +4,7 @@
 <%if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {%>
 
 <body style="background-color: black">
-<div class="container" style="width: 90%; max-height: 75%">
+<div class="container" style="width: 100%; max-height: 75%">
     <div class="row">
         <div class="col-md-12">
             <br /><br /><br />
@@ -20,7 +20,7 @@
                 <div class="carousel-inner">
                     <div class="item active">
                         <div class="indexCarousel">
-                            <img src="http://images4.alphacoders.com/286/286224.jpg"
+                            <img src="../images/carousel2.jpg"
                                  alt="" />
                             <h2>
                                 <span>
@@ -30,17 +30,20 @@
                                 </span>
                             </h2>
                             <div class="carouselLogin">
-                                <button type="button" class="btn btn-default navbar-btn">Login</button>
+                                <a class="btn btn-default navbar-btn" role="button">Login</a>
                             </div>
                             <div class="carouselRegister">
-                                <button type="button" class="btn btn-default navbar-btn">Register</button>
+                                <a href="#" data-toggle="modal"
+                                   data-target="#signUpForm"
+                                   class="btn btn-default navbar-btn"
+                                   role="button">Sign Up</a>
                             </div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="indexCarousel">
-                            <img src="http://img1.wikia.nocookie.net/__cb20130127075417/creepypasta/images/e/ed/Lake-mountains-grayscale-black-and-white-nature.jpg" alt="" />
+                            <img src="../images/carousel1.jpg" alt="" />
                             <h2>
                                 <span>
                                     <a href="#carousel-example-generic" role="button" data-slide="prev">&lt</a>
@@ -49,17 +52,20 @@
                                 </span>
                             </h2>
                             <div class="carouselLogin">
-                                <button type="button" class="btn btn-default navbar-btn">Login</button>
+                                <a class="btn btn-default navbar-btn" role="button">Login</a>
                             </div>
                             <div class="carouselRegister">
-                                <button type="button" class="btn btn-default navbar-btn">Register</button>
+                                <a href="#" data-toggle="modal"
+                                   data-target="#signUpForm"
+                                   class="btn btn-default navbar-btn"
+                                   role="button">Sign Up</a>
                             </div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="indexCarousel">
-                            <img src="http://hdwallpaper.freehdw.com/0001/nature-landscapes_hdwallpaper_black-white-mountain_4742.jpg" alt="" />
+                            <img src="../images/carousel3.jpg" />
                             <h2>
                                 <span>
                                     <a href="#carousel-example-generic" role="button" data-slide="prev">&lt</a>
@@ -68,10 +74,13 @@
                                 </span>
                             </h2>
                             <div class="carouselLogin">
-                                <button type="button" class="btn btn-default navbar-btn">Login</button>
+                                <a class="btn btn-default navbar-btn" role="button">Login</a>
                             </div>
                             <div class="carouselRegister">
-                                <button type="button" class="btn btn-default navbar-btn">Register</button>
+                                <a href="#" data-toggle="modal"
+                                   data-target="#signUpForm"
+                                   class="btn btn-default navbar-btn"
+                                   role="button">Sign Up</a>
                             </div>
                         </div>
                     </div>
