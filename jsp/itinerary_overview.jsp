@@ -26,14 +26,13 @@
 </script>
 
 <div class="container">
-    <h1>Your Current Itineraries:</h1>
+    <h1 style="font-family: 'Audiowide', cursive">Your Current Itineraries:</h1>
     <ul class = "pager">
         <li><a href="#"
                onclick="showPage1()"
                data-toggle="modal"
                data-target="#itineraryModal">Create New Itinerary</a>
         </li>
-        <li><a href="index.jsp">Index</a></li>
     </ul>
     <ul class="nav nav-pills nav-stacked" style="height: 400px; overflow: scroll">
         <li>

@@ -75,43 +75,70 @@ th, td {
 /* Opening Carousel Styling */
 .indexCarousel {
     position: relative;
-    width: 100%; /* for IE 6 */
+    width: 100%;
 }
 
 .indexCarousel img {
-    width: 1000px;
+    width: 100%;
     max-height: 100%;
     vertical-align: middle;
 }
 
 .indexCarousel h2 {
-    left: 0;
-    position:absolute;
-    text-align:center;
-    top: 30px;
-    width: 100%
+    left: 50%;
+    position: absolute;
+    text-align: center;
+    top: 10%;
+    width: 100%;
+    font-family: 'Audiowide', cursive;
+    font-size: 120px;
 }
 
 .indexCarousel h2 span {
-    color: white;
-    font: bold 24px/45px Helvetica, Sans-Serif;
+    position: relative;
+    left: -50%;
     letter-spacing: -1px;
-    background: rgb(0, 0, 0); /* fallback color */
-    background: rgba(0, 0, 0, 0.7);
     padding: 10px;
+    font-family: 'Audiowide', cursive;
+    color: rgb(139, 0, 0);
+}
+
+.indexCarousel h2 span a {
+    color: white;
+}
+
+.indexCarousel h2 span a:hover {
+    color: rgb(139, 0, 0);
+    -webkit-animation: myfirst 5s; /* Chrome, Safari, Opera */
+    animation: myfirst 5s;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes myfirst {
+    0%   {color: rgb(4, 71, 137);}
+    25%  {color: rgb(26, 188, 156);}
+    50%  {color: rgb(147, 112, 219);}
+    100% {color: rgb(243, 156, 18);}
+}
+
+/* Standard syntax */
+@keyframes myfirst {
+    0%   {color: rgb(4, 71, 137);}
+    25%  {color: rgb(26, 188, 156);}
+    50%  {color: rgb(147, 112, 219);}
+    100% {color: rgb(243, 156, 18);}
 }
 
 .carouselLogin {
-    left: 390px;
-    position:absolute;
-    top: 200px;
-    margin-left:auto;
-    margin-right:auto;
+    top: 40%;
+    position: absolute;
+    left: 40%;
 }
 
 .carouselLogin button {
+    position: relative; right: -50%;
     background: transparent;
-    color: white;
+    color: rgb(139, 0, 0);
     display:inline-block;
     min-width: 50px;
     width: 100px;
@@ -119,19 +146,24 @@ th, td {
     border: solid 4px;
     font-weight: bold;
     font-size: 18px;
+}
+
+.carouselLogin button:hover {
+    background-color: white;
+    color: rgb(139, 0, 0);
+    border-color: rgb(139, 0, 0);
 }
 
 .carouselRegister {
-    left: 510px;
+    top: 40%;
     position: absolute;
-    top: 200px;
-    margin-left: auto;
-    margin-right: auto;
+    right: 40%;
 }
 
 .carouselRegister button {
+    position: relative; left: -50%;
     background: transparent;
-    color: white;
+    color: rgb(139, 0, 0);
     display:inline-block;
     min-width: 50px;
     width: 100px;
@@ -139,6 +171,12 @@ th, td {
     border: solid 4px;
     font-weight: bold;
     font-size: 18px;
+}
+
+.carouselRegister button:hover {
+    background-color: white;
+    color: rgb(139, 0, 0);
+    border-color: rgb(139, 0, 0);
 }
 
 .carousel-control { padding-top:10%; width: 5% !important; }

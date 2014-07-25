@@ -7,8 +7,8 @@ public class ConnectionManager {
     //static reference to itself
     private static ConnectionManager instance = new ConnectionManager();
     public static final String URL = "jdbc:mysql://localhost:3306/trip_planner_db_simple";
-    public static final String USER = "Joseph";
-    public static final String PASSWORD = "password";
+    public static final String USER = "root";
+    public static final String PASSWORD = "mysql";
     public static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
 
     //private constructor

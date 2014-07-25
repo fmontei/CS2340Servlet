@@ -9,7 +9,9 @@ import java.util.List;
 public class TestDB {
     public static void main(String... args)  {
         try {
-            DataManager.createUser(new User("b", "b", "b", 1));
+            SQLItineraryQuery query = new SQLItineraryQuery();
+            Itinerary it = query.getItineraryByID("24");
+            System.out.println("test: " + it.getTransportationMode());
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

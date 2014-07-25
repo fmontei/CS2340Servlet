@@ -81,4 +81,12 @@ public class User {
     public void setItineraries(List<Itinerary> itineraries) {
         this.itineraries = itineraries;
     }
+    public void deleteItineraryByID(final int itineraryID) {
+        for (int i = 0; i < itineraries.size(); i++) {
+            if (itineraries.get(i).getID() == itineraryID) {
+                itineraries.remove(i);
+                return;
+            }
+        }
+    }
 }
