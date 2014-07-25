@@ -3,6 +3,7 @@ package model;
 import controller.BrowserErrorHandling;
 import database.*;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -39,7 +40,8 @@ public class LodgingForm {
             session.setAttribute("lastLodgingName", name);
             session.setAttribute("lastLodgingRadius", radius);
             session.setAttribute("lastLodgingLimit", limit);
-            response.sendRedirect("jsp/index.jsp");
+            request.setAttribute("defaultSection", "lodging-page");
+            request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
         } catch (Exception ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
@@ -95,7 +97,7 @@ public class LodgingForm {
         return radiusInt;
     }
 
-    public void saveLodgingSelection() throws IOException {
+    public void saveLodgingSelection() throws IOException, ServletException {
         final String lodgingURI = request.getQueryString();
         final int begin = lodgingURI.indexOf("=") + 1;
         final String lodgingIDAsString = lodgingURI.substring(begin);
@@ -106,13 +108,14 @@ public class LodgingForm {
             DataManager.createLodging(selection, activeCity.getID());
             activeCity.setLodging(selection);
             session.setAttribute("activeCity", activeCity);
-            response.sendRedirect("jsp/index.jsp");
+            request.setAttribute("defaultSection", "lodging-page");
+            request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
     }
 
-    public void setLodgingTime() throws IOException {
+    public void setLodgingTime() throws IOException, ServletException {
         final String checkIn = request.getParameter("lodgingCheckIn");
         final String checkOut = request.getParameter("lodgingCheckOut");
         final String reformattedCheckIn = reformatHTMLDateTime(checkIn);
@@ -123,7 +126,8 @@ public class LodgingForm {
             lodging.setCheckOut(reformattedCheckOut);
             DataManager.updatePlaceTimeByID(lodging, "lodging");
             updateCurrentSession(lodging);
-            response.sendRedirect("jsp/index.jsp");
+            request.setAttribute("defaultSection", "lodging-page");
+            request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }

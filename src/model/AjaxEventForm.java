@@ -194,6 +194,7 @@ public class AjaxEventForm {
             request.getSession().setAttribute("eventPanelView", "Grid");
         else if (queryString.contains("summary"))
             request.getSession().setAttribute("eventPanelView", "Summary");
+        request.setAttribute("defaultSection", "event-places-page");
         request.setAttribute("currentSection", "event-places-page");
         request.getRequestDispatcher("jsp/index.jsp").forward(request, response);
     }

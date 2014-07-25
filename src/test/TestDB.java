@@ -10,47 +10,11 @@ import java.util.ArrayList;
 
 public class TestDB {
     public static void main(String... args)  {
-        List<Character> characters = new ArrayList<Character>();
-        characters.add('A');
-        characters.add('B');
-        characters.add('C');
-        characters.add('D');
-        characters.add('1');
-        characters.add('2');
-        characters.add('3');
-        characters.add('4');
-        characters.add('5');
-        characters.add('*');
-        characters.add('&');
-        characters.add('%');
-        characters.add('#');
-        String password = PasswordGenerator.generatePassword(12, characters);
-        System.out.println("password is " + password);
-        /*try {
-            testBudgetSave();
+        try {
+            DataManager.createUser(new User("b", "b", "b", 1));
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        try {
-            TestDB testDB = new TestDB();
-            //testDB.testLodgingByItineraryID("16");
-            City city = new City("another city", "another", 2, 2, 19);
-            Place place = new Place();
-            place.setID(110);
-            place.setCheckIn("hi");
-            place.setCheckOut("hiagain");
-            List<City> cities = DataManager.getCitiesAndPlacesByItineraryID(21);
-            for (City c : cities) {
-                List<Place> events = c.getEvents();
-                for (Place e : events) {
-                    System.out.println(e.getName());
-                }
-            }
-
-        } catch (Exception ex) {
-            System.out.println("CAUGHT EXCEPTION");
-            ex.printStackTrace();
-        }*/
     }
 
     public static int testBudgetSave() throws SQLException {

@@ -53,8 +53,10 @@ public class BudgetForm {
     private void saveNewBudget() {
         budget = new Budget(originalBudget);
         try {
-            int budgetID = DataManager.saveBudget(budget);
+            final int budgetID = DataManager.saveBudget(budget);
             DataManager.updateItineraryBudget(itineraryID, budgetID);
+            Itinerary current = (Itinerary) session.getAttribute("activeItinerary");
+            current.setBudgetID(budgetID);
         } catch (SQLException e) {
             e.printStackTrace();
         }

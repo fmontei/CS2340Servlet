@@ -21,7 +21,7 @@ th, td {
 }
 
 #landing-title h1 {
-   z-index: 10;
+    z-index: 10;
     position: relative;
     left: -45%;
     top: 410px;
@@ -321,6 +321,10 @@ th, td {
     opacity: 1;
 }
 
+.nav-active {
+
+}
+
 .popin {
      margin: 0 auto;
      background:#fff;
@@ -343,10 +347,15 @@ th, td {
     text-align: center;
     padding-top: 50px;
     color: white;
+    margin-bottom: 50px;
 }
 
 .page-divider-header h1 {
     font-size: 60px;
+    font-family: 'Audiowide', sans-serif;
+}
+
+.page-divider-header h2 {
     font-family: 'Audiowide', sans-serif;
 }
 
@@ -368,17 +377,19 @@ th, td {
 #itinerary-overview {
     background-color: rgb(4, 71, 137) !important;
     margin-top: -70px;
-    padding-bottom: 70px;
     width: 100%;
     overflow-x: hidden;
+    display: none;
+    min-height: 100%;
+    padding-bottom: 50px;
 }
 
-.new-city-message {
+.new-city-media-element {
     height: 250px;
     margin-right: auto;
     margin-left: auto;
     display: block;
-    width: 100%;
+    width: 600px;
     background: url("../images/city.jpg");
     background-size: 100% 100%;
     padding: 15px;
@@ -386,30 +397,31 @@ th, td {
     cursor: pointer;
 }
 
-.new-city-message:hover {
+.new-city-media-element:hover {
     opacity: .6;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
 }
 
-.new-city-message h3 {
+.new-city-media-element h3 {
     color: black;
-    margin-left: 40px;
+    text-align: center;
     font-family: 'Audiowide', cursive;
 }
 
-.new-city-message p {
+.new-city-media-element p {
     color: black;
-    margin-left: 20px;
+    text-align: center;
     font-family: 'Audiowide', cursive;
 }
 
-.new-lodging-message {
+
+.new-lodging-media-element {
     height: 250px;
     margin-right: auto;
     margin-left: auto;
     display: block;
-    width: 100%;
+    width: 600px;
     background: url("../images/lodging.jpg");
     background-size: 100% 150%;
     padding: 15px;
@@ -418,30 +430,30 @@ th, td {
     font-family: 'Audiowide', cursive;
 }
 
-.new-lodging-message:hover {
+.new-lodging-media-element:hover {
     opacity: .6;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
 }
 
-.new-lodging-message h3 {
+.new-lodging-media-element h3 {
+    text-align: center;
     color: white;
-    margin-left: 40px;
     font-family: 'Audiowide', cursive;
 }
 
-.new-lodging-message p {
+.new-lodging-media-element p {
+    text-align: center;
     color: white;
-    margin-left: 20px;
     font-family: 'Audiowide', cursive;
 }
 
-.new-event-message {
+.new-event-media-element {
     height: 250px;
     margin-right: auto;
     margin-left: auto;
     display: block;
-    width: 100%;
+    width: 600px;
     background: url("../images/event.jpg");
     background-size: 100% 110%;
     padding: 15px;
@@ -450,21 +462,22 @@ th, td {
     font-family: 'Audiowide', cursive;
 }
 
-.new-event-message:hover {
+.new-event-media-element:hover {
     opacity: .6;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
 }
 
-.new-event-message h3 {
+.new-event-media-element h3 {
+    text-align: center;
     color: white;
     margin-left: 40px;
     font-family: 'Audiowide', cursive;
 }
 
-.new-event-message p {
+.new-event-media-element p {
+    text-align: center;
     color: white;
-    margin-left: 20px;
     font-family: 'Audiowide', cursive;
 }
 
@@ -509,23 +522,30 @@ th, td {
 
 #event-places-page, #events-tab-btn {
     background-color: rgb(26, 188, 156) !important;
+    display: none;
+    min-height: 100%;
+    padding-bottom: 50px;
 }
 
 #map-page, #map-tab-btn {
     background-color: rgb(243, 156, 18) !important;
+    display: none;
+    min-height: 100%;
+    padding-bottom: 50px;
 }
 
 #lodging-page, #lodging-tab-btn {
     background-color: darkred !important;
+    display: none;
+    min-height: 100%;
+    padding-bottom: 50px;
 }
 
 #budget-page, #budget-tab-btn {
     background-color: mediumpurple !important;
-}
-
-.itinerary-sections {
-    padding-bottom: 40px;
     display: none;
+    min-height: 100%;
+    padding-bottom: 50px;
 }
 
 .itinerary-nav-tabs {
@@ -539,6 +559,8 @@ hr.hr-title {
     border: none;
     height: 4px;
     background-color: rgb(49, 126, 172);
+    margin-top: 5px;
+    margin-bottom: 0;
 }
 
 .panel {

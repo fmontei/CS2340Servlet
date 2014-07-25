@@ -97,7 +97,7 @@
 %>
 
 <body style="overflow-x: hidden">
-    <div id="itinerary-header">
+    <div id="itinerary-header" class="active-page">
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -160,20 +160,22 @@
             <div class="row">
                 <div class="col-md-3">
                     <span class="landing-card-subtitle" style="margin-left: 27%; margin-top: -1%">Map</span>
-                    <div class="landing-card" style="height: 200px; background-color: rgb(243, 156, 18); color: rgb(243, 156, 18);">
+                    <div class="landing-card" id="map-landing-card"
+                         style="height: 200px; background-color: rgb(243, 156, 18); color: rgb(243, 156, 18);">
                         <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
                         </span>
                     </div>
                 </div>
                 <div class="col-md-2" >
                     <span class="landing-card-subtitle">Lodging</span>
-                    <div class="landing-card" style="height: 200px; background-color: rgb(139, 0, 0); color: rgb(139, 0, 0)">
+                    <div class="landing-card" id="lodging-landing-card"
+                         style="height: 200px; background-color: rgb(139, 0, 0); color: rgb(139, 0, 0)">
                         <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
                             From the Lodging panel:<br /><br />
-                            <ul>
-                                <li>Find a lodging using Yelp or Google.</li>
-                                <li>Add what you find to your Itinerary.</li>
-                                <li>Set check-in and check-out times for your lodging.</li>
+                            <ul style="margin-right: 10%">
+                                <li>Find a Lodging using Yelp or Google</li>
+                                <li>Add what you find to your Itinerary</li>
+                                <li>Set check-in and check-out times for your Lodging</li>
                             <%  if (indexPanelCity.getLodging() == null) { %>
                             <br />You currently have no lodging for your Itinerary. Click here to create one.
                             <%  } %>
@@ -183,29 +185,42 @@
                 </div>
                 <div class="col-md-2">
                     <span class="landing-card-subtitle">Itinerary</span>
-                    <div class="landing-card" style="height: 200px; background-color: rgb(4, 75, 144); color: rgb(4, 75, 144)">
+                    <div class="landing-card" id="itinerary-landing-card"
+                         style="height: 200px; background-color: rgb(4, 75, 144); color: rgb(4, 75, 144)">
                         <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
                             From the Itinerary panel:<br /><br />
-                            <ul>
+                            <ul style="margin-right: 10%">
                                 <li><b>Discover</b><br /> Search for Places using Yelp or Google</li>
                                 <li><b>Stay informed</b><br /> Browse reviews, ratings and more</li>
                                 <li><b>Spread out</b><br /> Add another City to your Itinerary</li>
                                 <li><b>Interact</b><br /> Send messages to your friends via Facebook</li>
-                                <br />Your current City is:<br /><%=indexPanelCity.getName()%>.
                             </ul>
                         </span>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <span class="landing-card-subtitle">Events & Places</span>
-                    <div class="landing-card" style="height: 200px; background-color: rgb(26, 188, 156); color: rgb(26, 188, 156)">
+                    <div class="landing-card" id="event-landing-card"
+                         style="height: 200px; background-color: rgb(26, 188, 156); color: rgb(26, 188, 156)">
                         <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
+                            From the Events & Places panel:
+                            <ul style="margin-right: 10%">
+                                <li>Quickly find restaurants, airports, and more</li>
+                                <li>Endless search possibilities with Google or Yelp</li>
+                                <li>Update event times on the fly</li>
+                                <li>Neatly organize your events using different views</li>
+                                <li>Sort events by name, creation date or time</li>
+                                <%  if (indexPanelCity.getEvents() == null) { %>
+                                <br />You currently have no events for your Itinerary. Click here to create some.
+                                <%  } %>
+                            </ul>
                         </span>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <span class="landing-card-subtitle" style="margin-top: -1%">About</span>
-                    <div class="landing-card" style="height: 200px; background-color: rgb(47, 47, 47); color: rgb(47, 47, 47)">
+                    <span class="landing-card-subtitle" style="margin-top: -1%">Budget</span>
+                    <div class="landing-card" id="budget-landing-card"
+                         style="height: 200px; background-color: rgb(147, 112, 219); color: rgb(147, 112, 219)">
                         <span style="position: absolute; bottom: 0; left: 5%; color: white; display: none">
                         </span>
                     </div>
@@ -214,7 +229,15 @@
         </div>
     </div>
 
-    <div id="itinerary-overview">
+    <!--<div class="nav nav-pills" id="itinerary-nav-tabs-div" style="background-color: rgb(4, 71, 137);border:none;font-weight:bold;display:none">
+        <button id="itinerary-tab-btn" class="itinerary-nav-tabs" onclick='showItinerary()'>Itinerary</button>
+        <button id="lodging-tab-btn" class="itinerary-nav-tabs" onclick='showLodging()'>Lodging</button>
+        <button id="events-tab-btn" class="itinerary-nav-tabs" onclick='showEvents()'>Events and Places</button>
+        <button id="map-tab-btn" class="itinerary-nav-tabs" onclick='showMap()'>Map and Directions</button>
+        <button id="budget-tab-btn" class="itinerary-nav-tabs" onclick='showBudget()'>Manage Budget</button>
+    </div>-->
+
+    <div id="itinerary-overview" style="padding-top: 50px">
         <ul class="nav nav-pills" style="float: right">
             <li>
                 <a href="#" style="color: rgb(66, 139, 202); font-weight: bold">
@@ -237,7 +260,7 @@
             </li>
         </ul>
         <div class="page-divider-header">
-            <div style="display: inline-block">
+            <div style="display: inline-block; margin-bottom: 50px">
                 <h1><span class="glyphicon glyphicon-tags"></span> YOUR ITINERARY</h1>
                 <hr class="hr-title" />
             </div>
@@ -287,79 +310,99 @@
                 </li>
             </ol><br /><br />
 
-            <div class="table" >
-                <table style="table-layout: fixed; width: 100%">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-                            <div class="new-city-message" data-toggle="modal"
-                                 data-target="#newCityModal" role="button">
-                                <h3>Add new <b>City</b></h3>
-                                <p>Add a <strong>New City</strong> to your Itinerary</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="new-lodging-message" data-toggle="modal"
-                                 data-target="#eventAjaxModal" role="button">
-                                <h3>Find a <b>Lodging</b></h3>
-                                <p>Add a <strong>New Lodging</strong> to your City</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="new-event-message" data-toggle="modal"
-                                 data-target="#eventAjaxModal" role="button">
-                                <h3>Add New <strong>Event</strong></h3>
-                                <p>Add a <strong>New Event</strong> to your City</p>
-                            </div>
-                        </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <ul class="media-list">
+                <li class="media" style="margin-left: 15%">
+                    <div class="pull-left">
+                        <div class="new-city-media-element" data-toggle="modal"
+                             data-target="#newCityModal" role="button">
+                            <h3>Add new <b>City</b></h3>
+                            <p>Add a <strong>New City</strong> to your Itinerary</p>
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"
+                            style="margin-left: 5%; color: white; font-family: 'Audiowide', cursive">
+                            Expand your Itinerary by adding another City to it.
+                        </h4><br /><br />
+                        <p style="margin-left: 5%; color:white; font-family: 'Ubuntu', cursive">
+                            With Desti, you can confine yourself to your Itinerary's default city<br />
+                            or, instead of creating another Itinerary with its own city, you can<br />
+                            add another city to your itinerary and easily swap between the two<br />
+                            whenever you want. Each city has its own lodging, its own events, <br />
+                            and its own budget, allowing for greater organization and flexibility<br />
+                            over your itinerary.
+                        </p>
+                    </div>
+                </li>
+
+                <li class="media" style="margin-top: 30px">
+                    <div class="pull-left"  style="margin-left: 15%">
+                        <div class="new-lodging-media-element" data-toggle="modal"
+                             data-target="#eventAjaxModal" role="button">
+                            <h3>Find a <b>Lodging</b></h3>
+                            <p>Add a <strong>New Lodging</strong> to your City</p>
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"
+                            style="margin-left: 5%; color: white; font-family: 'Audiowide', cursive">
+                            Find a place to stay by searching for a lodging.
+                        </h4><br /><br />
+                        <p style="margin-left: 5%; color:white; font-family: 'Ubuntu', cursive">
+                            With Desti, you can confine yourself to your Itinerary's default city<br />
+                            In planning a trip, it's always necessary to discover a great<br />
+                            place to stay. Due to Yelp integration, Desti makes it easy to<br />
+                            to find hotels, motels, apartments--you name it.
+                        </p>
+                    </div>
+                </li>
+
+                <li class="media" style="margin-top: 30px">
+                    <div class="pull-left"  style="margin-left: 15%">
+                        <div class="new-event-media-element" data-toggle="modal"
+                             data-target="#eventAjaxModal" role="button">
+                            <h3>Add New <strong>Event</strong></h3>
+                            <p>Add a <strong>New Event</strong> to your City</p>
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"
+                            style="margin-left: 5%; color: white; font-family: 'Audiowide', cursive">
+                            Add as many events to your itinerary as you like.
+                        </h4><br /><br />
+                        <p style="margin-left: 5%; color:white; font-family: 'Ubuntu', cursive">
+                            Equipped with Google and Yelp searches, Desti will help you find<br />
+                            whatever you need while on a trip. From banks to restaurnts or<br />
+                            from shopping malls to bowling alleys, Desti has got you covered.<br />
+                            Quickly find and add new events to your itinerary, then review them<br />
+                            using Desti's different views.
+                        </p>
+                    </div>
+                </li>
+            </ul>
             <%@ include file="eventAndLodgingModals.jsp" %>
         </div>
     </div>
-
-<div id="itinerary-nav-tabs-div" style="background-color: rgb(4, 71, 137);border:none;font-weight:bold;">
-    <button id="lodging-tab-btn" class="itinerary-nav-tabs" onclick='showLodging()'>Lodging</button>
-    <button id="events-tab-btn" class="itinerary-nav-tabs" onclick='showEvents()'>Events and Places</button>
-    <button id="map-tab-btn" class="itinerary-nav-tabs" onclick='showMap()'>Map and Directions</button>
-    <button id="budget-tab-btn" class="itinerary-nav-tabs" onclick='showBudget()'>Manage Budget</button>
-</div>
-
-<div id="lodging-page" class="itinerary-sections">
-    <div class="page-divider-header">
-        <div style="display: inline-block">
-            <h1><span class="glyphicon glyphicon-home"></span> LODGING</h1>
-            <hr class="hr-title" />
+    <div id="lodging-page">
+        <div class="page-divider-header">
+            <div style="display: inline-block">
+                <h1><span class="glyphicon glyphicon-home"></span> LODGING</h1>
+                <hr class="hr-title" />
+            </div>
+            <%@ include file="lodging_panel.jsp" %>
         </div>
-        <%@ include file="lodging_panel.jsp" %>
     </div>
 </div>
-
-<div id="event-places-page" class="itinerary-sections">
+    <div id="event-places-page">
         <div class="page-divider-header">
             <div style="display: inline-block">
                 <h1><span class="glyphicon glyphicon-th"></span> EVENTS & PLACES</h1>
                 <hr class="hr-title" />
             </div>
-            <p><span style="font-size: 20px"><b>Find Events for your First City:</b></span><br />
-                To add events for this city, Create a New Event<br /><br />
-                <span style="font-size: 20px"><b>Or travel to a New City:</b></span><br />
-                To go sightseeing in another city, Add a New City to your Itinerary
-            </p><br /><br />
+            <%@ include file="events_places_panels.jsp" %>
         </div>
-        <%@ include file="events_places_panels.jsp" %>
     </div>
-
-<div id="map-page" class="itinerary-sections">
+    <div id="map-page">
         <div class="page-divider-header">
             <div style="display: inline-block; margin-bottom: 20px">
                 <h1><span class="glyphicon glyphicon-globe"></span> MAP</h1>
@@ -416,12 +459,9 @@
         </div>
     </div>
 
-<div id="budget-page" class="itinerary-sections">
-    <%@ include file="budget_panel.jsp" %>
-</div>
-
-
-    <%@ include file="footer.jsp" %>
+    <div id="budget-page" class="itinerary-sections">
+        <%@ include file="budget_panel.jsp" %>
+    </div>
 
     <!-- Error Message -->
     <div class="modal fade" id="errorMessage" tabindex="-1" role="dialog" aria-labelledby="errorMessageTitle" aria-hidden="true">
@@ -443,8 +483,10 @@
         </div>
     </div>
 
-    <!-- Jquery Javascript -->
+    <!--Jquery-->
     <script src="/CS2340Servlet/js/jquery.js"></script>
+
+    <!-- Bootstrap Javascript -->
     <script src="/CS2340Servlet/js/bootstrap.min.js"></script>
 
     <!-- Facebook Login -->
@@ -457,38 +499,10 @@
     <script src="/CS2340Servlet/js/typeahead.bundle.js"></script>
     <script src="/CS2340Servlet/js/event_autocomplete.js"></script>
 
+    <script src="/CS2340Servlet/js/navigation.js" type="text/javascript"></script>
+
     <!-- Index Javascript -->
     <script type="text/javascript">
-        // Landing page title functionality
-        var landingTitle = document.getElementById("landing-title-h1");
-        var landingCard = document.getElementsByClassName("landing-card");
-        for (var i = 0; i < landingCard.length; i++) {
-            landingCard[i].addEventListener("mouseover", function () {
-                landingTitle.style.opacity = 1;
-                landingTitle.style.textShadow = "4px 4px #000000";
-                $(landingTitle).slideDown('slow');
-                this.style.opacity = 0.95;
-                this.style.backgroundColor = "black";
-                $(this).stop().animate({
-                    height: '+500px'
-                }, 1000, function() {
-                    var hiddenText = this.getElementsByTagName("span")[0];
-                    hiddenText.style.display = "";
-                });
-            }, true);
-            landingCard[i].addEventListener("mouseout", function () {
-                landingTitle.style.opacity = 0.8;
-                landingTitle.style.textShadow = "";
-                this.style.opacity = 0.9;
-                this.style.backgroundColor = this.style.color;
-                var hiddenText = this.getElementsByTagName("span")[0];
-                hiddenText.style.display = "none";
-                $(this).stop().animate({
-                    height: '200px'
-                }, 1000);
-            }, true);
-        }
-
         // Change city tabs
         var citySelection = "<%=indexPanelCity.getName()%>";
         console.log("City selected: " + citySelection);
@@ -566,8 +580,35 @@
             }
         });
 
+        $('form.ajax').on('submit', function () {
+            var that = $(this),
+                    url = that.attr('action'),
+                    method = that.attr('method'),
+                    data = {};
+
+            that.find('[name]').each(function (index, value) {
+                var that = $(this),
+                        name = that.attr('name'),
+                        value = that.val();
+
+                data[name] = value;
+            });
+
+            $.ajax({
+                url: url,
+                type: method,
+                data: data,
+                success: function (json) {
+                    console.log(json);
+                    $("#ajax-event-table").append(json);
+                }
+            });
+
+            return false;
+        });
+
         /* Scrolls to the event from which event search request was issued
-            following page reload */
+         following page reload */
         $(getDefaultPageSection()).show();
 
         $('html, body').animate({
@@ -575,10 +616,20 @@
         }, 'fast');
 
         function hideAllTabs() {
+            document.getElementById("itinerary-overview").style.display = "none";
             document.getElementById("budget-page").style.display="none";
             document.getElementById("map-page").style.display="none";
             document.getElementById("event-places-page").style.display="none";
             document.getElementById("lodging-page").style.display="none";
+        }
+
+        function showItineraryNavTabs() {
+            document.getElementById("itinerary-nav-tabs-div").style.display = 'block';
+        }
+
+        function showItinerary() {
+            hideAllTabs();
+            document.getElementById('itinerary-overview').style.display='block';
         }
 
         function showBudget() {
@@ -596,7 +647,7 @@
 
         function showEvents() {
             hideAllTabs();
-            document.getElementById('event-places-page').style.display='block';
+            //document.getElementById('event-places-page').style.display='block';
         }
 
         function showLodging() {
@@ -624,4 +675,8 @@
             }
         }
     </script>
+</body>
+
+<%@ include file="footer.jsp" %>
+
 <%}%>

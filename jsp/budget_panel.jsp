@@ -56,7 +56,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div style="float: left; padding-left: 50px; padding-top: 20px">
+                            <div style="padding-left: 50px; padding-top: 20px;">
                                 <input type="submit" class="form-control btn-primary" value="Submit"
                                        name="createBudgetButton" style="width: 150px;" />
                             </div>
@@ -71,16 +71,16 @@
 </div>
 <% } else { %>
 <div class="page-divider-header">
-    <div style="display: inline-block">
+    <div style="display: inline-block;">
         <h1><span class="glyphicon glyphicon-usd"></span>BUDGET</h1>
         <hr class="hr-title" />
     </div>
 </div>
 <div class="custom-centered-pills" style="margin-bottom: 20px">
     <ul class="nav nav-pills" style="padding-bottom: 20px">
-        <li style="float: right">
+        <li>
             <a class="alert-danger" id="addExpenditureButton"
-               data-toggle="collapse" data-parent="#accordion">
+               data-parent="#accordion" style="cursor: pointer">
                 <span class="glyphicon glyphicon-plus-sign"
                       style="position: relative; top: 2px">
                 </span>
@@ -96,14 +96,20 @@
         </div>
         <div class="panel-body">
             <div class="row" style="margin:auto">
+                <%  if (budget.getCurrentBudget() < 0) { %>
+                <span class="alert alert-danger" style="float: right">
+                    Note: You have exceeded your budget.
+                </span>
+                <%  } %>
                 <p>Original Budget: $<%=budget.getOriginalBudget()%></p>
-                <p>Current Budget: $<%=budget.getCurrentBudget()%></p>
+                <p>Current Budget:&nbsp;&nbsp;$<%=budget.getCurrentBudget()%>
+                </p>
                 <p>Budget Last Updated On: <%=budget.getLastUpdated()%></p>
-                <form id="expenseForm" action="/CS2340Servlet/budget" method="POST">
+                <form id="expenseForm" action="/CS2340Servlet/budget" method="POST" style="width: 100%">
                     <input type="hidden" name="budgetID" value=<%=budget.getID()%> />
                     <input type="hidden" name="currentBudget" value=<%=budget.getCurrentBudget()%> />
                     <input type="submit" class="form-control btn-primary" value="Submit"
-                           name="saveExpenseBtn" style="width: 150px;display:none;" />
+                           name="saveExpenseBtn" style="width: 150px;display:none;float:right" />
                     <table class="table table-striped" style="width: 98%">
                         <div class="row">
                             <thead id="budget-table-head">
@@ -116,7 +122,7 @@
                             <tbody id="expense-tbody">
                                 <% for (Expenditure expense : expenditures) { %>
                                     <tr>
-                                        <td><%=expense.getDescription()%></td>
+                                        <td style="max-width: 500px; overflow: auto"><%=expense.getDescription()%></td>
                                         <td>$<%=expense.getAmountSpent()%></td>
                                         <td><%=expense.getExpenseDate()%></td>
                                     </tr>
@@ -131,11 +137,12 @@
 </div>
 <% } %>
 
+<script src="/CS2340Servlet/js/jquery.js"></script>
 <script>
     var expenseFormStr =
-            '<tr><td><textarea name="expenseDescription"></textarea></td>' +
-            '<td><input type="text" name="amountSpent" /></td>' +
-            '<td><input type="text" name="expenseDate" id="_datetimepicker" /></td></tr>'
+            '<tr><td><textarea name="expenseDescription" required="required"></textarea></td>' +
+            '<td><input type="text" name="amountSpent" required="required" /></td>' +
+            '<td><input type="text" name="expenseDate" id="_datetimepicker" required="required" /></td></tr>';
     $('#addExpenditureButton').on("click", function(){
         $('#expense-tbody').prepend(expenseFormStr);
         $('input[name=saveExpenseBtn]').show();
