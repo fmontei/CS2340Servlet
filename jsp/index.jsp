@@ -1,15 +1,14 @@
-<%@ page errorPage="errorHandler.jsp" %>
 <%@ page import="java.util.List" %>
 <%@ include file="header.jsp" %>
 
 <%if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {%>
 
-<div class="container">
+<body style="background-color: black">
+<div class="container" style="width: 100%; max-height: 75%">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
             <br /><br /><br />
-            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel"
-                 style="width: 1000px; height: 400px; margin: 0 auto">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
                     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -21,62 +20,76 @@
                 <div class="carousel-inner">
                     <div class="item active">
                         <div class="indexCarousel">
-                            <img src="http://www.listofimages.com/wp-content/uploads/2013/07/city-urban-photography-effects-landscape.jpg"
+                            <img src="../images/carousel2.jpg"
                                  alt="" />
                             <h2>
-                                <span>Welcome to Trip Planner!</span>
+                                <span>
+                                    <a href="#carousel-example-generic" role="button" data-slide="prev">&lt</a>
+                                    DESTI
+                                    <a href="#carousel-example-generic" role="button" data-slide="next">&gt</a>
+                                </span>
                             </h2>
                             <div class="carouselLogin">
-                                <button type="button" class="btn btn-default navbar-btn">Login</button>
+                                <a class="btn btn-default navbar-btn" role="button">Login</a>
                             </div>
                             <div class="carouselRegister">
-                                <button type="button" class="btn btn-default navbar-btn">Register</button>
+                                <a href="#" data-toggle="modal"
+                                   data-target="#signUpForm"
+                                   class="btn btn-default navbar-btn"
+                                   role="button">Sign Up</a>
                             </div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="indexCarousel">
-                            <img src="http://3.bp.blogspot.com/-bj_PsFI4lDA/UEOyL6Tab0I/AAAAAAAAALM/lNAotGu8b9U/s1600/Ariel-New-York-City.jpg" alt="" />
+                            <img src="../images/carousel1.jpg" alt="" />
                             <h2>
-                                <span>Welcome to Trip Planner!</span>
+                                <span>
+                                    <a href="#carousel-example-generic" role="button" data-slide="prev">&lt</a>
+                                    DESTI
+                                    <a href="#carousel-example-generic" role="button" data-slide="next">&gt</a>
+                                </span>
                             </h2>
                             <div class="carouselLogin">
-                                <button type="button" class="btn btn-default navbar-btn">Login</button>
+                                <a class="btn btn-default navbar-btn" role="button">Login</a>
                             </div>
                             <div class="carouselRegister">
-                                <button type="button" class="btn btn-default navbar-btn">Register</button>
+                                <a href="#" data-toggle="modal"
+                                   data-target="#signUpForm"
+                                   class="btn btn-default navbar-btn"
+                                   role="button">Sign Up</a>
                             </div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="indexCarousel">
-                            <img src="http://sumsphere.files.wordpress.com/2012/09/2652009650_2c14a9cf7d_b.jpg?w=848" alt="" />
+                            <img src="../images/carousel3.jpg" />
                             <h2>
-                                <span>Welcome to Trip Planner!</span>
+                                <span>
+                                    <a href="#carousel-example-generic" role="button" data-slide="prev">&lt</a>
+                                    DESTI
+                                    <a href="#carousel-example-generic" role="button" data-slide="next">&gt</a>
+                                </span>
                             </h2>
                             <div class="carouselLogin">
-                                <button type="button" class="btn btn-default navbar-btn">Login</button>
+                                <a class="btn btn-default navbar-btn" role="button">Login</a>
                             </div>
                             <div class="carouselRegister">
-                                <button type="button" class="btn btn-default navbar-btn">Register</button>
+                                <a href="#" data-toggle="modal"
+                                   data-target="#signUpForm"
+                                   class="btn btn-default navbar-btn"
+                                   role="button">Sign Up</a>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Controls -->
-                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                </a>
-                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                </a>
             </div>
         </div>
     </div>
 </div>
+</body>
 
 <!-- Jquery Javascript -->
 <script src="/CS2340Servlet/js/jquery.js"></script>

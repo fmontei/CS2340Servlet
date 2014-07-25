@@ -17,6 +17,7 @@ public class CreateItineraryForm {
     }
 
     private void gatherNewItineraryInfo() {
+        Itinerary newItinerary = new Itinerary();
         String name = request.getParameter("itineraryName");
         String address = request.getParameter("itineraryAddress");
         Coordinates coordinates = getCoordinates();
@@ -28,15 +29,17 @@ public class CreateItineraryForm {
         String attrType = request.getParameter("preferredAttrType");
         Preference preference = new Preference(minRating, priceCategory, maxDistance,
                 foodType, attrType);
-        int preferenceID = savePreference(preference);
+        final int preferenceID = savePreference(preference);
         User user = (User) session.getAttribute("currentUser");
         final int userID = user.getID();
-        final Itinerary newItinerary =
-                new Itinerary(name, transportation, userID, preferenceID);
+        newItinerary = new Itinerary(name, transportation, userID, preferenceID);
         final int newItineraryID = saveItinerary(newItinerary);
         final City newCity = new City(address, address, coordinates.getLat(),
                 coordinates.getLng(), newItineraryID);
         saveCity(newCity);
+        newItinerary.setID(newItineraryID);
+        user.getItineraries().add(newItinerary);
+        session.setAttribute("currentUser", user);
     }
 
     private Coordinates getCoordinates() {

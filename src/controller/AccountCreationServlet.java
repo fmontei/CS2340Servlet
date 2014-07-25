@@ -28,7 +28,6 @@ public class AccountCreationServlet extends HttpServlet {
         throws IOException, ServletException {
         if (isSubmitButtonClicked(request)) {
             doCreateRequest(request, response);
-            response.sendRedirect("jsp/index.jsp");
         }
     }
 
@@ -50,8 +49,9 @@ public class AccountCreationServlet extends HttpServlet {
     private void automaticallyLogin(HttpServletRequest request,
                                     HttpServletResponse response)
             throws IOException, ServletException {
-        request.setAttribute("accountCreateSuccess", "success");
-        forwardRequest(this, request, response, "/jsp/index.jsp");
+        request.getSession().setAttribute("accountCreateSuccess",
+                "Account successfuly created. Please log in.");
+        response.sendRedirect("jsp/index.jsp");
     }
 
     private void reloadBecauseAccountCreateFailed(HttpServletRequest request,
