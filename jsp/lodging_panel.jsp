@@ -36,7 +36,7 @@
     <% } else { %>
     <div id="main-lodging" class="panel-collapse collapse">
     <% } %>
-        <div class="panel panel-danger">
+        <div class="panel panel-danger" style="color: black">
             <div class="panel-heading">
                 <% if (selection == null) { %>
                 New Lodging
@@ -70,7 +70,7 @@
                         </form><br />
                         <% if (session.getAttribute("lodgingResults") != null) { %>
                             <div class="row">
-                                <div style="text-align: center; max-width: 90%">
+                                <div style="text-align: center; max-width: 90%;">
                                     Select a lodging below. This list has been created
                                     based on your Itinerary's address, which is:
                                     <b><%=lodgingPanelCity.getAddress()%></b>
