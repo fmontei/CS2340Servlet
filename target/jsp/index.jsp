@@ -110,7 +110,7 @@
 %>
 
 <body style="overflow-x: hidden">
-    <div id="itinerary-header" class="active-page">
+    <div id="itinerary-header">
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -242,15 +242,7 @@
         </div>
     </div>
 
-    <!--<div class="nav nav-pills" id="itinerary-nav-tabs-div" style="background-color: rgb(4, 71, 137);border:none;font-weight:bold;display:none">
-        <button id="itinerary-tab-btn" class="itinerary-nav-tabs" onclick='showItinerary()'>Itinerary</button>
-        <button id="lodging-tab-btn" class="itinerary-nav-tabs" onclick='showLodging()'>Lodging</button>
-        <button id="events-tab-btn" class="itinerary-nav-tabs" onclick='showEvents()'>Events and Places</button>
-        <button id="map-tab-btn" class="itinerary-nav-tabs" onclick='showMap()'>Map and Directions</button>
-        <button id="budget-tab-btn" class="itinerary-nav-tabs" onclick='showBudget()'>Manage Budget</button>
-    </div>-->
-
-    <div id="itinerary-overview" style="padding-top: 50px">
+    <div id="itinerary-overview" style="margin-top: 10px">
         <ul class="nav nav-pills" style="float: right">
             <li>
                 <a href="#" style="color: rgb(66, 139, 202); font-weight: bold">
@@ -518,6 +510,8 @@
 
     <!-- Index Javascript -->
     <script type="text/javascript">
+        getCurrentPageSection('<%=request.getAttribute("currentSection")%>');
+
         // Change city tabs
         var citySelection = "<%=indexPanelCity.getName()%>";
         console.log("City selected: " + citySelection);
@@ -621,74 +615,6 @@
 
             return false;
         });
-
-        /* Scrolls to the event from which event search request was issued
-         following page reload */
-        //$(getDefaultPageSection()).show();
-
-        $('html, body').animate({
-            scrollTop: $(getCurrentPageSection()).offset().top
-        }, 'fast');
-
-        function hideAllTabs() {
-            document.getElementById("itinerary-overview").style.display = "none";
-            document.getElementById("budget-page").style.display="none";
-            document.getElementById("map-page").style.display="none";
-            document.getElementById("event-places-page").style.display="none";
-            document.getElementById("lodging-page").style.display="none";
-        }
-
-        function showItineraryNavTabs() {
-            document.getElementById("itinerary-nav-tabs-div").style.display = 'block';
-        }
-
-        function showItinerary() {
-            hideAllTabs();
-            document.getElementById('itinerary-overview').style.display='block';
-        }
-
-        function showBudget() {
-            hideAllTabs();
-            document.getElementById('budget-page').style.display='block';
-        }
-
-        function showMap() {
-            hideAllTabs();
-            document.getElementById('map-page').style.display='block';
-            // Initialize map
-            initialize(<%=indexPanelCity.getLatitude()%>,
-                    <%=indexPanelCity.getLongitude()%>);
-        }
-
-        function showEvents() {
-            hideAllTabs();
-            //document.getElementById('event-places-page').style.display='block';
-        }
-
-        function showLodging() {
-            hideAllTabs();
-            document.getElementById('lodging-page').style.display='block';
-        }
-
-        function getDefaultPageSection() {
-            var element = '<%=request.getAttribute("defaultSection")%>';
-            if (element != null) {
-                var elementID = "#" + element;
-                return elementID;
-            } else {
-                return "#" + "itinerary-header";
-            }
-        }
-
-        function getCurrentPageSection() {
-            var element = '<%=request.getAttribute("currentSection")%>';
-            if (element != null) {
-                var elementID = "#" + element;
-                return elementID;
-            } else {
-                return "#" + "itinerary-header";
-            }
-        }
     </script>
 </body>
 

@@ -19,12 +19,12 @@
         <hr class="hr-title" />
     </div>
     <p><span style="font-size: 20px"><b>Create and Manage a Budget:</b></span><br />
-        Create a new Budget below
+        Create a new Budget below.<br />
         <span style="font-size: 20px"><b>Keep track of your expenses:</b></span><br />
         To manage a budget, add expenses to be subtracted from your budget.<br /><br />
     </p><br /><br />
 </div>
-<div class="custom-centered-pills" style="margin-bottom: 20px">
+<div class="custom-centered-pills">
     <ul class="nav nav-pills" style="padding-bottom: 20px">
         <li style="float: right">
             <a class="alert-danger" id="create-budget-pill"
@@ -52,7 +52,7 @@
                                 <input type="hidden" name="itineraryID" value=<%=currentItinerary.getID()%> />
                                 <input type="text" name="originalBudget" pattern="^\d*(\.\d{2}$)?" class="form-control"
                                        title="CDA Currency Format - no dollar sign and no comma(s) - cents (.##) are optional"
-                                       placeholder="Enter total budget amount"/>
+                                       placeholder="Enter total budget amount" style="min-width: 250px" />
                             </div>
                         </div>
                         <div class="row">
@@ -76,7 +76,7 @@
         <hr class="hr-title" />
     </div>
 </div>
-<div class="custom-centered-pills" style="margin-bottom: 20px">
+<div class="custom-centered-pills" style="margin-bottom: 20px; margin-top: 20px">
     <ul class="nav nav-pills" style="padding-bottom: 20px">
         <li>
             <a class="alert-danger" id="addExpenditureButton"

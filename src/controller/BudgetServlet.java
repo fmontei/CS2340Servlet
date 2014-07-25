@@ -49,9 +49,6 @@ public class BudgetServlet extends HttpServlet {
 
     private void returnToActiveItineraryIndex(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        HttpSession session = request.getSession();
-        Itinerary itinerary = (Itinerary) session.getAttribute("activeItinerary");
-        request.setAttribute("defaultSection", "budget-page");
         request.setAttribute("currentSection", "budget-page");
         request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
     }

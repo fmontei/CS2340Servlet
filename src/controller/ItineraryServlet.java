@@ -69,7 +69,9 @@ public class ItineraryServlet extends HttpServlet {
             throws IOException, ServletException {
         if (newItineraryCreationRequested(request)) {
             new CreateItineraryForm(request);
-            response.sendRedirect("jsp/itinerary_overview.jsp");
+            request.setAttribute("currentSection", "itinerary-overview");
+            ServletUtilities.forwardRequest(request, response,
+                    "/jsp/index.jsp");
         } else if (itineraryDeleteRequested(request)) {
             doDeleteItineraryRequest(request, response);
         } else if (userRequestedEventSearch(request)) {
@@ -111,7 +113,8 @@ public class ItineraryServlet extends HttpServlet {
                                          HttpServletResponse response)
             throws IOException {
         new LodgingForm(request, response).getMoreLodgingResults();
-        response.sendRedirect("jsp/index.jsp");
+        request.setAttribute("currentSection", "lodging-page");
+        ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
     }
 
     private boolean lodgingSelectionMade(HttpServletRequest request) {
@@ -165,7 +168,8 @@ public class ItineraryServlet extends HttpServlet {
         session.setAttribute("events", events);
         session.removeAttribute("businesses" + eventID);
         session.removeAttribute("apiSearchError" + eventID);
-        response.sendRedirect("jsp/index.jsp");
+        request.setAttribute("currentSection", "event-places-page");
+        ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
     }
 
     private boolean userRequestedEventSearch(HttpServletRequest request) {
@@ -249,7 +253,8 @@ public class ItineraryServlet extends HttpServlet {
             query = request.getParameter("google-textsearch-query");
             List<Place> results = tryGoogleTextSearch(request, response, query);
             request.getSession().setAttribute("textSearchResults", results);
-            response.sendRedirect("jsp/index.jsp");
+            request.setAttribute("currentSection", "event-places-page");
+            ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
         }
     }
 
