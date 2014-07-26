@@ -1,15 +1,14 @@
-<%@ page errorPage="errorHandler.jsp" %>
 <%@ page import="java.util.List" %>
 <%@ include file="header.jsp" %>
 
 <%if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {%>
 
-<div class="container">
+<body style="background-color: black">
+<div class="container" style="width: 100%; max-height: 75%">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
             <br /><br /><br />
-            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel"
-                 style="width: 1000px; height: 400px; margin: 0 auto">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
                     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -21,62 +20,76 @@
                 <div class="carousel-inner">
                     <div class="item active">
                         <div class="indexCarousel">
-                            <img src="http://www.listofimages.com/wp-content/uploads/2013/07/city-urban-photography-effects-landscape.jpg"
+                            <img src="../images/carousel2.jpg"
                                  alt="" />
                             <h2>
-                                <span>Welcome to Trip Planner!</span>
+                                <span>
+                                    <a href="#carousel-example-generic" role="button" data-slide="prev">&lt</a>
+                                    DESTI
+                                    <a href="#carousel-example-generic" role="button" data-slide="next">&gt</a>
+                                </span>
                             </h2>
                             <div class="carouselLogin">
-                                <button type="button" class="btn btn-default navbar-btn">Login</button>
+                                <a class="btn btn-default navbar-btn" role="button">Login</a>
                             </div>
                             <div class="carouselRegister">
-                                <button type="button" class="btn btn-default navbar-btn">Register</button>
+                                <a href="#" data-toggle="modal"
+                                   data-target="#signUpForm"
+                                   class="btn btn-default navbar-btn"
+                                   role="button">Sign Up</a>
                             </div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="indexCarousel">
-                            <img src="http://3.bp.blogspot.com/-bj_PsFI4lDA/UEOyL6Tab0I/AAAAAAAAALM/lNAotGu8b9U/s1600/Ariel-New-York-City.jpg" alt="" />
+                            <img src="../images/carousel1.jpg" alt="" />
                             <h2>
-                                <span>Welcome to Trip Planner!</span>
+                                <span>
+                                    <a href="#carousel-example-generic" role="button" data-slide="prev">&lt</a>
+                                    DESTI
+                                    <a href="#carousel-example-generic" role="button" data-slide="next">&gt</a>
+                                </span>
                             </h2>
                             <div class="carouselLogin">
-                                <button type="button" class="btn btn-default navbar-btn">Login</button>
+                                <a class="btn btn-default navbar-btn" role="button">Login</a>
                             </div>
                             <div class="carouselRegister">
-                                <button type="button" class="btn btn-default navbar-btn">Register</button>
+                                <a href="#" data-toggle="modal"
+                                   data-target="#signUpForm"
+                                   class="btn btn-default navbar-btn"
+                                   role="button">Sign Up</a>
                             </div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="indexCarousel">
-                            <img src="http://sumsphere.files.wordpress.com/2012/09/2652009650_2c14a9cf7d_b.jpg?w=848" alt="" />
+                            <img src="../images/carousel3.jpg" />
                             <h2>
-                                <span>Welcome to Trip Planner!</span>
+                                <span>
+                                    <a href="#carousel-example-generic" role="button" data-slide="prev">&lt</a>
+                                    DESTI
+                                    <a href="#carousel-example-generic" role="button" data-slide="next">&gt</a>
+                                </span>
                             </h2>
                             <div class="carouselLogin">
-                                <button type="button" class="btn btn-default navbar-btn">Login</button>
+                                <a class="btn btn-default navbar-btn" role="button">Login</a>
                             </div>
                             <div class="carouselRegister">
-                                <button type="button" class="btn btn-default navbar-btn">Register</button>
+                                <a href="#" data-toggle="modal"
+                                   data-target="#signUpForm"
+                                   class="btn btn-default navbar-btn"
+                                   role="button">Sign Up</a>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Controls -->
-                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                </a>
-                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                </a>
             </div>
         </div>
     </div>
 </div>
+</body>
 
 <!-- Jquery Javascript -->
 <script src="/CS2340Servlet/js/jquery.js"></script>
@@ -97,7 +110,7 @@
 %>
 
 <body style="overflow-x: hidden">
-    <div id="itinerary-header" class="active-page">
+    <div id="itinerary-header">
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -229,15 +242,7 @@
         </div>
     </div>
 
-    <!--<div class="nav nav-pills" id="itinerary-nav-tabs-div" style="background-color: rgb(4, 71, 137);border:none;font-weight:bold;display:none">
-        <button id="itinerary-tab-btn" class="itinerary-nav-tabs" onclick='showItinerary()'>Itinerary</button>
-        <button id="lodging-tab-btn" class="itinerary-nav-tabs" onclick='showLodging()'>Lodging</button>
-        <button id="events-tab-btn" class="itinerary-nav-tabs" onclick='showEvents()'>Events and Places</button>
-        <button id="map-tab-btn" class="itinerary-nav-tabs" onclick='showMap()'>Map and Directions</button>
-        <button id="budget-tab-btn" class="itinerary-nav-tabs" onclick='showBudget()'>Manage Budget</button>
-    </div>-->
-
-    <div id="itinerary-overview" style="padding-top: 50px">
+    <div id="itinerary-overview" style="margin-top: 10px">
         <ul class="nav nav-pills" style="float: right">
             <li>
                 <a href="#" style="color: rgb(66, 139, 202); font-weight: bold">
@@ -313,42 +318,76 @@
                 </li>
             </ol><br /><br />
 
-            <div class="table" >
-                <table style="table-layout: fixed; width: 100%">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-                            <div class="new-city-message" data-toggle="modal"
-                                 data-target="#newCityModal" role="button">
-                                <h3>Add new <b>City</b></h3>
-                                <p>Add a <strong>New City</strong> to your Itinerary</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="new-lodging-message" data-toggle="modal"
-                                 data-target="#eventAjaxModal" role="button">
-                                <h3>Find a <b>Lodging</b></h3>
-                                <p>Add a <strong>New Lodging</strong> to your City</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="new-event-message" data-toggle="modal"
-                                 data-target="#eventAjaxModal" role="button">
-                                <h3>Add New <strong>Event</strong></h3>
-                                <p>Add a <strong>New Event</strong> to your City</p>
-                            </div>
-                        </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <ul class="media-list">
+                <li class="media" style="margin-left: 15%">
+                    <div class="pull-left">
+                        <div class="new-city-media-element" data-toggle="modal"
+                             data-target="#newCityModal" role="button">
+                            <h3>Add new <b>City</b></h3>
+                            <p>Add a <strong>New City</strong> to your Itinerary</p>
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"
+                            style="margin-left: 5%; color: white; font-family: 'Audiowide', cursive">
+                            Expand your Itinerary by adding another City to it.
+                        </h4><br /><br />
+                        <p style="margin-left: 5%; color:white; font-family: 'Ubuntu', cursive">
+                            With Desti, you can confine yourself to your Itinerary's default city<br />
+                            or, instead of creating another Itinerary with its own city, you can<br />
+                            add another city to your itinerary and easily swap between the two<br />
+                            whenever you want. Each city has its own lodging, its own events, <br />
+                            and its own budget, allowing for greater organization and flexibility<br />
+                            over your itinerary.
+                        </p>
+                    </div>
+                </li>
+
+                <li class="media" style="margin-top: 30px">
+                    <div class="pull-left"  style="margin-left: 15%">
+                        <div class="new-lodging-media-element" data-toggle="modal"
+                             data-target="#eventAjaxModal" role="button">
+                            <h3>Find a <b>Lodging</b></h3>
+                            <p>Add a <strong>New Lodging</strong> to your City</p>
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"
+                            style="margin-left: 5%; color: white; font-family: 'Audiowide', cursive">
+                            Find a place to stay by searching for a lodging.
+                        </h4><br /><br />
+                        <p style="margin-left: 5%; color:white; font-family: 'Ubuntu', cursive">
+                            With Desti, you can confine yourself to your Itinerary's default city<br />
+                            In planning a trip, it's always necessary to discover a great<br />
+                            place to stay. Due to Yelp integration, Desti makes it easy to<br />
+                            to find hotels, motels, apartments--you name it.
+                        </p>
+                    </div>
+                </li>
+
+                <li class="media" style="margin-top: 30px">
+                    <div class="pull-left"  style="margin-left: 15%">
+                        <div class="new-event-media-element" data-toggle="modal"
+                             data-target="#eventAjaxModal" role="button">
+                            <h3>Add New <strong>Event</strong></h3>
+                            <p>Add a <strong>New Event</strong> to your City</p>
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"
+                            style="margin-left: 5%; color: white; font-family: 'Audiowide', cursive">
+                            Add as many events to your itinerary as you like.
+                        </h4><br /><br />
+                        <p style="margin-left: 5%; color:white; font-family: 'Ubuntu', cursive">
+                            Equipped with Google and Yelp searches, Desti will help you find<br />
+                            whatever you need while on a trip. From banks to restaurnts or<br />
+                            from shopping malls to bowling alleys, Desti has got you covered.<br />
+                            Quickly find and add new events to your itinerary, then review them<br />
+                            using Desti's different views.
+                        </p>
+                    </div>
+                </li>
+            </ul>
             <%@ include file="eventAndLodgingModals.jsp" %>
         </div>
     </div>
@@ -474,6 +513,8 @@
 
     <!-- Index Javascript -->
     <script type="text/javascript">
+        getCurrentPageSection('<%=request.getAttribute("currentSection")%>');
+
         // Change city tabs
         var citySelection = "<%=indexPanelCity.getName()%>";
         console.log("City selected: " + citySelection);
@@ -577,74 +618,6 @@
 
             return false;
         });
-
-        /* Scrolls to the event from which event search request was issued
-         following page reload */
-        //$(getDefaultPageSection()).show();
-
-        $('html, body').animate({
-            scrollTop: $(getCurrentPageSection()).offset().top
-        }, 'fast');
-
-        function hideAllTabs() {
-            document.getElementById("itinerary-overview").style.display = "none";
-            document.getElementById("budget-page").style.display="none";
-            document.getElementById("map-page").style.display="none";
-            document.getElementById("event-places-page").style.display="none";
-            document.getElementById("lodging-page").style.display="none";
-        }
-
-        function showItineraryNavTabs() {
-            document.getElementById("itinerary-nav-tabs-div").style.display = 'block';
-        }
-
-        function showItinerary() {
-            hideAllTabs();
-            document.getElementById('itinerary-overview').style.display='block';
-        }
-
-        function showBudget() {
-            hideAllTabs();
-            document.getElementById('budget-page').style.display='block';
-        }
-
-        function showMap() {
-            hideAllTabs();
-            document.getElementById('map-page').style.display='block';
-            // Initialize map
-            initialize(<%=indexPanelCity.getLatitude()%>,
-                    <%=indexPanelCity.getLongitude()%>);
-        }
-
-        function showEvents() {
-            hideAllTabs();
-            //document.getElementById('event-places-page').style.display='block';
-        }
-
-        function showLodging() {
-            hideAllTabs();
-            document.getElementById('lodging-page').style.display='block';
-        }
-
-        function getDefaultPageSection() {
-            var element = '<%=request.getAttribute("defaultSection")%>';
-            if (element != null) {
-                var elementID = "#" + element;
-                return elementID;
-            } else {
-                return "#" + "itinerary-header";
-            }
-        }
-
-        function getCurrentPageSection() {
-            var element = '<%=request.getAttribute("currentSection")%>';
-            if (element != null) {
-                var elementID = "#" + element;
-                return elementID;
-            } else {
-                return "#" + "itinerary-header";
-            }
-        }
     </script>
 </body>
 

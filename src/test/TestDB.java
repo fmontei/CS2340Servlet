@@ -9,9 +9,9 @@ import java.util.List;
 public class TestDB {
     public static void main(String... args)  {
         try {
-            SQLBudgetQuery budgetQuery = new SQLBudgetQuery();
-            Budget b = budgetQuery.getBudgetByID(1);
-            System.out.println(b.getID() + " " + b.getLastUpdated());
+            SQLItineraryQuery query = new SQLItineraryQuery();
+            Itinerary it = query.getItineraryByID("24");
+            System.out.println("test: " + it.getTransportationMode());
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

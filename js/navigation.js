@@ -96,4 +96,24 @@ function fadeToElement(element, lat, lng) {
     }
 }
 
+function getCurrentPageSection(element) {
+    var elementID = "#" + element;
+    if (element === "null") {
+        var defaultPage = $("#itinerary-header");
+        defaultPage.addClass("active-page");
+        defaultPage.show();
+    } else {
+        hideAllPages();
+        $(elementID).addClass("active-page");
+        $(elementID).show();
+    }
+}
+
+function hideAllPages() {
+    $("#itinerary-header, #map-page, #lodging-page, #event-places-page," +
+        "#budget-page, #itinerary-overview").each(function() {
+        $(this).hide();
+    });
+}
+
 

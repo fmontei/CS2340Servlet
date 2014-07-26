@@ -38,6 +38,7 @@ public class EventSorter {
         session.setAttribute("events", events);
         request.setAttribute("currentSection", "event-places-page");
         final String returnQueryString = "jsp/index.jsp?sort=" + sortType;
+        request.setAttribute("currentSection", "event-places-page");
         ServletUtilities.forwardRequest(request, response, returnQueryString);
     }
 

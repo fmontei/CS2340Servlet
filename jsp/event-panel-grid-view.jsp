@@ -97,7 +97,7 @@
     <div id="eventModal<%=curEventID%>" class="modal fade" tabindex="-1" role="dialog"
          data-backdrop="true" aria-labelledby="eventModal<%=curEventID%>" aria-hidden="true">
         <div class="modal-dialog" style="width: 50%;">
-            <div class="modal-content" style="max-height: 800px; overflow: auto;">
+            <div class="modal-content" style=" min-height: 400px; max-height: 800px; overflow: auto;">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h2 class="modal-title" style="font-family: 'Lobster', cursive">

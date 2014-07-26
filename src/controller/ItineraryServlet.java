@@ -1,8 +1,6 @@
 package controller;
 
-import database.City;
-import database.DataManager;
-import database.Place;
+import database.*;
 import model.*;
 
 import javax.servlet.ServletException;
@@ -71,10 +69,11 @@ public class ItineraryServlet extends HttpServlet {
             throws IOException, ServletException {
         if (newItineraryCreationRequested(request)) {
             new CreateItineraryForm(request);
-            response.sendRedirect("jsp/itinerary_overview.jsp");
+            request.setAttribute("currentSection", "itinerary-overview");
+            ServletUtilities.forwardRequest(request, response,
+                    "/jsp/index.jsp");
         } else if (itineraryDeleteRequested(request)) {
-            doDeleteItineraryRequest(request);
-            response.sendRedirect("jsp/itinerary_overview.jsp");
+            doDeleteItineraryRequest(request, response);
         } else if (userRequestedEventSearch(request)) {
             EventForm eventForm = new EventForm(request, response);
             eventForm.getEventsAroundCentralLocation();
@@ -114,7 +113,8 @@ public class ItineraryServlet extends HttpServlet {
                                          HttpServletResponse response)
             throws IOException {
         new LodgingForm(request, response).getMoreLodgingResults();
-        response.sendRedirect("jsp/index.jsp");
+        request.setAttribute("currentSection", "lodging-page");
+        ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
     }
 
     private boolean lodgingSelectionMade(HttpServletRequest request) {
@@ -135,13 +135,19 @@ public class ItineraryServlet extends HttpServlet {
         return request.getParameter("deleteItinerary") != null;
     }
 
-    private void doDeleteItineraryRequest(HttpServletRequest request) {
+    private void doDeleteItineraryRequest(HttpServletRequest request,
+                                          HttpServletResponse response)
+        throws IOException {
         try {
-            String itineraryID = request.getParameter("deleteItinerary");
+            final String itineraryID = request.getParameter("deleteItinerary");
+            User user = (User) request.getSession().getAttribute("currentUser");
+            user.deleteItineraryByID(Integer.parseInt(itineraryID));
+            request.getSession().setAttribute("currentUser", user);
             DataManager.deleteItinerary(itineraryID);
+            response.sendRedirect("jsp/itinerary_overview.jsp");
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }
+        } catch (NullPointerException ignore) {}
     }
 
     private boolean removeTemporaryPlaceRequested(HttpServletRequest request) {
@@ -162,7 +168,8 @@ public class ItineraryServlet extends HttpServlet {
         session.setAttribute("events", events);
         session.removeAttribute("businesses" + eventID);
         session.removeAttribute("apiSearchError" + eventID);
-        response.sendRedirect("jsp/index.jsp");
+        request.setAttribute("currentSection", "event-places-page");
+        ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
     }
 
     private boolean userRequestedEventSearch(HttpServletRequest request) {
@@ -246,7 +253,8 @@ public class ItineraryServlet extends HttpServlet {
             query = request.getParameter("google-textsearch-query");
             List<Place> results = tryGoogleTextSearch(request, response, query);
             request.getSession().setAttribute("textSearchResults", results);
-            response.sendRedirect("jsp/index.jsp");
+            request.setAttribute("currentSection", "event-places-page");
+            ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
         }
     }
 

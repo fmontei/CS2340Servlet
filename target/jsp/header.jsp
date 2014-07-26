@@ -32,7 +32,7 @@
 <%
 if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
 %>
-    <div class="navbar navbar-white navbar-fixed-top" role="navigation">
+    <div class="navbar-white navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
@@ -44,14 +44,13 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
                             <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand" href="/CS2340Servlet/jsp/index.jsp">
-                            Trip Planner
+                            DESTI
                         </a>
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <a href="#" data-toggle="modal" data-target="#signUpForm">Sign Up</a>
-                                <!-- href="/CS2340Servlet/jsp/create_account.jsp"  -->
                             </li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" href="#" data-toggle="dropdown">Login <strong class="caret"></strong></a>
@@ -160,6 +159,13 @@ if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") 
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        var accountCreateSuccess = '<%=session.getAttribute("accountCreateSuccess")%>';
+        if (accountCreateSuccess !== null) {
+            console.log("New account created successfully");
+        }
+    </script>
 
 <% } else { %>
 

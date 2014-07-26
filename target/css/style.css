@@ -75,43 +75,71 @@ th, td {
 /* Opening Carousel Styling */
 .indexCarousel {
     position: relative;
-    width: 100%; /* for IE 6 */
+    width: 100%;
 }
 
 .indexCarousel img {
-    width: 1000px;
+    width: 100%;
     max-height: 100%;
     vertical-align: middle;
 }
 
 .indexCarousel h2 {
-    left: 0;
-    position:absolute;
-    text-align:center;
-    top: 30px;
-    width: 100%
+    left: 50%;
+    position: absolute;
+    text-align: center;
+    top: 10%;
+    width: 100%;
+    font-family: 'Audiowide', cursive;
+    font-size: 120px;
 }
 
 .indexCarousel h2 span {
-    color: white;
-    font: bold 24px/45px Helvetica, Sans-Serif;
+    position: relative;
+    left: -50%;
     letter-spacing: -1px;
-    background: rgb(0, 0, 0); /* fallback color */
-    background: rgba(0, 0, 0, 0.7);
     padding: 10px;
+    font-family: 'Audiowide', cursive;
+    color: rgb(139, 0, 0);
+}
+
+.indexCarousel h2 span a {
+    color: white;
+}
+
+.indexCarousel h2 span a:hover {
+    color: rgb(139, 0, 0);
+    -webkit-animation: myfirst 5s; /* Chrome, Safari, Opera */
+    animation: myfirst 5s;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes myfirst {
+    0%   {color: rgb(4, 71, 137);}
+    25%  {color: rgb(26, 188, 156);}
+    50%  {color: rgb(147, 112, 219);}
+    100% {color: rgb(243, 156, 18);}
+}
+
+/* Standard syntax */
+@keyframes myfirst {
+    0%   {color: rgb(4, 71, 137);}
+    25%  {color: rgb(26, 188, 156);}
+    50%  {color: rgb(147, 112, 219);}
+    100% {color: rgb(243, 156, 18);}
 }
 
 .carouselLogin {
-    left: 390px;
-    position:absolute;
-    top: 200px;
-    margin-left:auto;
-    margin-right:auto;
+    top: 40%;
+    position: absolute;
+    left: 40%;
 }
 
-.carouselLogin button {
+.carouselLogin a {
+    position: relative;
+    right: -40%;
     background: transparent;
-    color: white;
+    color: rgb(139, 0, 0);
     display:inline-block;
     min-width: 50px;
     width: 100px;
@@ -119,19 +147,25 @@ th, td {
     border: solid 4px;
     font-weight: bold;
     font-size: 18px;
+}
+
+.carouselLogin a:hover {
+    background-color: white;
+    color: rgb(139, 0, 0);
+    border-color: rgb(139, 0, 0);
 }
 
 .carouselRegister {
-    left: 510px;
+    top: 40%;
     position: absolute;
-    top: 200px;
-    margin-left: auto;
-    margin-right: auto;
+    right: 40%;
 }
 
-.carouselRegister button {
+.carouselRegister a {
+    position: relative;
+    left: -40%;
     background: transparent;
-    color: white;
+    color: rgb(139, 0, 0);
     display:inline-block;
     min-width: 50px;
     width: 100px;
@@ -139,6 +173,12 @@ th, td {
     border: solid 4px;
     font-weight: bold;
     font-size: 18px;
+}
+
+.carouselRegister a:hover {
+    background-color: white;
+    color: rgb(139, 0, 0);
+    border-color: rgb(139, 0, 0);
 }
 
 .carousel-control { padding-top:10%; width: 5% !important; }
@@ -347,7 +387,6 @@ th, td {
     text-align: center;
     padding-top: 50px;
     color: white;
-    margin-bottom: 50px;
 }
 
 .page-divider-header h1 {
@@ -384,12 +423,12 @@ th, td {
     padding-bottom: 50px;
 }
 
-.new-city-message {
+.new-city-media-element {
     height: 250px;
     margin-right: auto;
     margin-left: auto;
     display: block;
-    width: 100%;
+    width: 600px;
     background: url("../images/city.jpg");
     background-size: 100% 100%;
     padding: 15px;
@@ -397,30 +436,31 @@ th, td {
     cursor: pointer;
 }
 
-.new-city-message:hover {
+.new-city-media-element:hover {
     opacity: .6;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
 }
 
-.new-city-message h3 {
+.new-city-media-element h3 {
     color: black;
     text-align: center;
     font-family: 'Audiowide', cursive;
 }
 
-.new-city-message p {
+.new-city-media-element p {
     color: black;
     text-align: center;
     font-family: 'Audiowide', cursive;
 }
 
-.new-lodging-message {
+
+.new-lodging-media-element {
     height: 250px;
     margin-right: auto;
     margin-left: auto;
     display: block;
-    width: 100%;
+    width: 600px;
     background: url("../images/lodging.jpg");
     background-size: 100% 150%;
     padding: 15px;
@@ -429,30 +469,30 @@ th, td {
     font-family: 'Audiowide', cursive;
 }
 
-.new-lodging-message:hover {
+.new-lodging-media-element:hover {
     opacity: .6;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
 }
 
-.new-lodging-message h3 {
+.new-lodging-media-element h3 {
     text-align: center;
     color: white;
     font-family: 'Audiowide', cursive;
 }
 
-.new-lodging-message p {
+.new-lodging-media-element p {
     text-align: center;
     color: white;
     font-family: 'Audiowide', cursive;
 }
 
-.new-event-message {
+.new-event-media-element {
     height: 250px;
     margin-right: auto;
     margin-left: auto;
     display: block;
-    width: 100%;
+    width: 600px;
     background: url("../images/event.jpg");
     background-size: 100% 110%;
     padding: 15px;
@@ -461,20 +501,20 @@ th, td {
     font-family: 'Audiowide', cursive;
 }
 
-.new-event-message:hover {
+.new-event-media-element:hover {
     opacity: .6;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
 }
 
-.new-event-message h3 {
+.new-event-media-element h3 {
     text-align: center;
     color: white;
     margin-left: 40px;
     font-family: 'Audiowide', cursive;
 }
 
-.new-event-message p {
+.new-event-media-element p {
     text-align: center;
     color: white;
     font-family: 'Audiowide', cursive;

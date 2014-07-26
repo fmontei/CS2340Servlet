@@ -5,9 +5,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div style="width: 20%; text-align: center; margin: 0 auto">
-    <h1 style="text-align: center; font-family: 'Audiowide', cursive; border: solid">
+    <h2 style="text-align: center; font-family: 'Audiowide', cursive; border: solid">
         Summary View
-    </h1>
+    </h2>
 </div>
 <div class="container" style="padding-top: 50px">
     <div class="col-md-12">

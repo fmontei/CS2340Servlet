@@ -58,7 +58,7 @@ public class Itinerary {
     }
     public int getPreferenceID() { return preferenceID; }
     public int getBudgetID() { return budgetID; }
-
+    public void setID(final int ID) { this.ID = ID; }
     public void setBudgetID(int budgetID) { this.budgetID = budgetID; }
 }
 
