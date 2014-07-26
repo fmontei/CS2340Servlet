@@ -89,3 +89,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#event-carousel').carousel({
+            //options here
+        });
+    });
+</script>

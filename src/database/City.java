@@ -81,4 +81,5 @@ public class City {
     public void setLodging(Place lodging) {
         this.lodging = lodging;
     }
+
 }

@@ -13,6 +13,7 @@ import java.util.List;
 public class EventSorter {
     private static int nameSortCount = 0;
     private static int creationDateSortCount = 0;
+    private static int checkInSortCount = 0;
     private HttpServletRequest request;
     private HttpServletResponse response;
     private HttpSession session;
@@ -31,6 +32,8 @@ public class EventSorter {
             sortByName(events);
         } else if (creationDateSortRequested(sortType)) {
             sortByCreationDate(events);
+        } else if (checkInSortRequested(sortType)) {
+            sortByCheckIn(events);
         }
         session.setAttribute("events", events);
         request.setAttribute("currentSection", "event-places-page");
@@ -59,6 +62,7 @@ public class EventSorter {
         }
         nameSortCount++;
         creationDateSortCount = 0;
+        checkInSortCount = 0;
     }
 
     private boolean nameSortRequestedOnce() {
@@ -78,9 +82,26 @@ public class EventSorter {
         }
         creationDateSortCount++;
         nameSortCount = 0;
+        checkInSortCount = 0;
     }
 
     private boolean creationDateSortRequestedOnce() {
         return creationDateSortCount % 2 == 0;
     }
+
+    private boolean checkInSortRequested(final String type) { return type.equalsIgnoreCase("start_time"); }
+
+    private void sortByCheckIn(List<Place> events) {
+        if (checkInSortRequestedOnce()) {
+            Collections.sort(events, new EventCheckInComparator());
+        } else {
+            Collections.sort(events, Collections.reverseOrder(
+                    new EventCheckInComparator()));
+        }
+        checkInSortCount++;
+        nameSortCount = 0;
+        creationDateSortCount = 0;
+    }
+
+    private boolean checkInSortRequestedOnce() { return checkInSortCount % 2 == 0; }
 }

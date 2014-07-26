@@ -304,3 +304,11 @@
     </div>
     <% } %>
 </div>
+
+<script type="text/javascript">
+
+        $(".draggable-modal").draggable({
+            handle: ".modal-header"
+        });
+
+</script>
