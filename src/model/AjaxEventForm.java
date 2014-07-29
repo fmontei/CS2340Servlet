@@ -28,6 +28,8 @@ public class AjaxEventForm {
         this.response = response;
         this.session = request.getSession();
         this.activeCity = (City) session.getAttribute("activeCity");
+        this.request.setAttribute("defaultSection", "event-places-page");
+        this.request.setAttribute("currentSection", "event-places-page");
     }
 
     public void getEventsAndRedirectToAjax() throws IOException {

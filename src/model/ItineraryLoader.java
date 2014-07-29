@@ -19,7 +19,7 @@ public class ItineraryLoader {
         try {
             Itinerary activeItinerary = loadActiveItinerary(request);
             loadActivePreferences(activeItinerary, request);
-            request.setAttribute("defaultSection", "event-places-page");
+            //request.setAttribute("defaultSection", "event-places-page");
             request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
@@ -74,7 +74,7 @@ public class ItineraryLoader {
             throws SQLException {
         HttpSession session = request.getSession();
         final int preferenceID = activeItinerary.getPreferenceID();
-        SQLPreferenceQuery query = new SQLPreferenceQuery();
+        SqlPreferenceQuery query = new SqlPreferenceQuery();
         Preference activePreferences = query.getPreferencesByID(preferenceID);
         session.setAttribute("activePreferences", activePreferences);
     }

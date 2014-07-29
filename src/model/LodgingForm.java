@@ -3,6 +3,7 @@ package model;
 import controller.BrowserErrorHandling;
 import database.*;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,6 +22,8 @@ public class LodgingForm {
         this.response = response;
         this.session = request.getSession();
         this.activeCity = (City) session.getAttribute("activeCity");
+        this.request.setAttribute("defaultSection", "lodging-page");
+        this.request.setAttribute("currentSection", "lodging-page");
     }
 
     public void getLodgingsAroundLocation() throws IOException{
@@ -96,7 +99,7 @@ public class LodgingForm {
         return radiusInt;
     }
 
-    public void saveLodgingSelection() throws IOException {
+    public void saveLodgingSelection() throws IOException, ServletException {
         final String lodgingURI = request.getQueryString();
         final int begin = lodgingURI.indexOf("=") + 1;
         final String lodgingIDAsString = lodgingURI.substring(begin);
@@ -114,7 +117,7 @@ public class LodgingForm {
         }
     }
 
-    public void setLodgingTime() throws IOException {
+    public void setLodgingTime() throws IOException, ServletException {
         final String checkIn = request.getParameter("lodgingCheckIn");
         final String checkOut = request.getParameter("lodgingCheckOut");
         final String reformattedCheckIn = reformatHTMLDateTime(checkIn);

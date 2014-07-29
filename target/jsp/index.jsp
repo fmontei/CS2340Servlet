@@ -388,7 +388,6 @@
             <%@ include file="eventAndLodgingModals.jsp" %>
         </div>
     </div>
-
     <div id="lodging-page">
         <div class="page-divider-header">
             <div style="display: inline-block">
@@ -398,7 +397,7 @@
             <%@ include file="lodging_panel.jsp" %>
         </div>
     </div>
-
+</div>
     <div id="event-places-page">
         <div class="page-divider-header">
             <div style="display: inline-block">
@@ -408,7 +407,6 @@
             <%@ include file="events_places_panels.jsp" %>
         </div>
     </div>
-
     <div id="map-page">
         <div class="page-divider-header">
             <div style="display: inline-block; margin-bottom: 20px">
@@ -615,6 +613,73 @@
 
             return false;
         });
+        /* Scrolls to the event from which event search request was issued
+         following page reload */
+        $(getDefaultPageSection()).show();
+
+        $('html, body').animate({
+            scrollTop: $(getCurrentPageSection()).offset().top
+        }, 'fast');
+
+        function hideAllTabs() {
+            document.getElementById("itinerary-overview").style.display = "none";
+            document.getElementById("budget-page").style.display="none";
+            document.getElementById("map-page").style.display="none";
+            document.getElementById("event-places-page").style.display="none";
+            document.getElementById("lodging-page").style.display="none";
+        }
+
+        function showItineraryNavTabs() {
+            document.getElementById("itinerary-nav-tabs-div").style.display = 'block';
+        }
+
+        function showItinerary() {
+            hideAllTabs();
+            document.getElementById('itinerary-overview').style.display='block';
+        }
+
+        function showBudget() {
+            hideAllTabs();
+            document.getElementById('budget-page').style.display='block';
+        }
+
+        function showMap() {
+            hideAllTabs();
+            document.getElementById('map-page').style.display='block';
+            // Initialize map
+            initialize(<%=indexPanelCity.getLatitude()%>,
+                    <%=indexPanelCity.getLongitude()%>);
+        }
+
+        function showEvents() {
+            hideAllTabs();
+            //document.getElementById('event-places-page').style.display='block';
+        }
+
+        function showLodging() {
+            hideAllTabs();
+            document.getElementById('lodging-page').style.display='block';
+        }
+
+        function getDefaultPageSection() {
+            var element = '<%=request.getAttribute("defaultSection")%>';
+            if (element != null) {
+                var elementID = "#" + element;
+                return elementID;
+            } else {
+                return "#" + "itinerary-header";
+            }
+        }
+
+        function getCurrentPageSection() {
+            var element = '<%=request.getAttribute("currentSection")%>';
+            if (element != null) {
+                var elementID = "#" + element;
+                return elementID;
+            } else {
+                return "#" + "itinerary-header";
+            }
+        }
     </script>
 </body>
 

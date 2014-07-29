@@ -35,7 +35,9 @@
 
         <!-- Compile Java classes as necessary -->
         <mkdir    dir="${build.home}/WEB-INF/classes"/>
-        <javac srcdir="${src}"
+        <javac  debug="true"
+                debuglevel="lines,vars,source"
+                srcdir="${src}"
                destdir="${build.home}/WEB-INF/classes">
             <classpath refid="compile.classpath"/>
         </javac>
@@ -46,8 +48,10 @@
 
         <!-- Compile Java classes as necessary -->
         <mkdir    dir="${build.home}/WEB-INF/classes"/>
-        <javac srcdir="${src}"
-               destdir="${build.home}/WEB-INF/classes">
+        <javac  debug="true"
+                debuglevel="lines,vars,source"
+                srcdir="${src}"
+                destdir="${build.home}/WEB-INF/classes">
             <classpath refid="compile.classpath"/>
         </javac>
 

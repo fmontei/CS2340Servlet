@@ -4,6 +4,7 @@ import controller.BrowserErrorHandling;
 import database.*;
 import org.json.JSONException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,8 @@ public class EventForm {
         this.response = response;
         this.session = request.getSession();
         this.activeCity = (City) session.getAttribute("activeCity");
+        this.request.setAttribute("defaultSection", "event-places-page");
+        this.request.setAttribute("currentSection", "event-places-page");
     }
 
     public void createNewEvents() throws IOException {
@@ -59,7 +62,6 @@ public class EventForm {
             DataManager.createEvent(placeToBeSaved, activeCity.getID());
             activeCity.setEvents(events);
             session.setAttribute("activeCity", activeCity);
-            reloadPage();
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
@@ -113,7 +115,7 @@ public class EventForm {
         ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
     }
 
-    public void getEventsAroundCentralLocation() throws IOException {
+    public void getEventsAroundCentralLocation() throws IOException, ServletException {
         List<Place> eventResults;
         final String eventID = parseEventIDFromQueryString();
         final String API = getSearchAPIFromRequest();
@@ -190,7 +192,6 @@ public class EventForm {
         session.setAttribute("businesses" + eventID, eventResults);
     }
 
-
     private void returnQueryResults(final String eventID, final String API)
             throws IOException {
         updateImageIcon(eventID, API);
@@ -224,7 +225,6 @@ public class EventForm {
             session.setAttribute("activeCity", activeCity);
             session.removeAttribute("businesses" + eventID);
             session.removeAttribute("eventQueryString" + eventID);
-            reloadPage();
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }

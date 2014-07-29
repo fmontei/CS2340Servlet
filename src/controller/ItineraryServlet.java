@@ -22,18 +22,24 @@ public class ItineraryServlet extends HttpServlet {
         if (createEventRequested(request)) {
             EventForm eventForm = new EventForm(request, response);
             eventForm.createNewEvents();
+            returnToActiveItineraryIndex(request, response);
         } else if (lodgingSearchRequested(request)) {
             doLodgingSearchRequest(request, response);
+            returnToActiveItineraryIndex(request, response);
         } else if (moreLodgingResultsRequested(request)) {
             doGetMoreLodgingResults(request, response);
+            returnToActiveItineraryIndex(request, response);
         } else if (lodgingSelectionMade(request)) {
             new LodgingForm(request, response).saveLodgingSelection();
+            returnToActiveItineraryIndex(request, response);
         } else if (detailedGoogleSearchRequested(request)) {
             EventForm eventForm = new EventForm(request, response);
             eventForm.getDetailedInformationForPlace(true);
+            returnToActiveItineraryIndex(request, response);
         } else if (eventSelectionMade(request)) {
             EventForm eventForm = new EventForm(request, response);
             eventForm.saveSelection();
+            returnToActiveItineraryIndex(request, response);
         } else if (deleteEventRequested(request)) {
             doEventDeleteRequest(request, response);
         } else if (sortEventsRequested(request)) {
@@ -47,6 +53,7 @@ public class ItineraryServlet extends HttpServlet {
                 request.getParameter("ajaxYelpButton") != null) {
             AjaxEventForm ajaxEventForm = new AjaxEventForm(request, response);
             ajaxEventForm.getEventsAndRedirectToAjax();
+            returnToActiveItineraryIndex(request, response);
         } else if (request.getQueryString() != null
                 && request.getQueryString().contains("ajax_get_url")) {
             AjaxEventForm ajaxEventForm = new AjaxEventForm(request, response);
@@ -55,6 +62,7 @@ public class ItineraryServlet extends HttpServlet {
                 && request.getQueryString().contains("ajax_event_selected")) {
             AjaxEventForm ajaxEventForm = new AjaxEventForm(request, response);
             ajaxEventForm.makeSelection();
+            returnToActiveItineraryIndex(request, response);
         } else if (request.getQueryString() != null
                 && request.getQueryString().contains("change_event_view")) {
             AjaxEventForm ajaxEventForm = new AjaxEventForm(request, response);
@@ -77,6 +85,7 @@ public class ItineraryServlet extends HttpServlet {
         } else if (userRequestedEventSearch(request)) {
             EventForm eventForm = new EventForm(request, response);
             eventForm.getEventsAroundCentralLocation();
+            returnToActiveItineraryIndex(request, response);
         } else if (textSearchRequested(request)) {
             doSearchRequest(request, response);
         } else if (removeTemporaryPlaceRequested(request)) {
@@ -84,9 +93,11 @@ public class ItineraryServlet extends HttpServlet {
         } else if (setLodgingTimeRequested(request)) {
             LodgingForm lodgingForm = new LodgingForm(request, response);
             lodgingForm.setLodgingTime();
+            returnToActiveItineraryIndex(request, response);
         } else if (setEventTimeRequested(request)) {
             EventForm eventForm = new EventForm(request, response);
             eventForm.setEventTime();
+            returnToActiveItineraryIndex(request, response);
         }
     }
 
@@ -275,5 +286,10 @@ public class ItineraryServlet extends HttpServlet {
         } finally {
             return results;
         }
+    }
+
+    private void returnToActiveItineraryIndex(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
     }
 }

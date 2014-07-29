@@ -1,17 +1,17 @@
 package test;
 
 import database.*;
+import model.PasswordGenerator;
 
 import java.awt.geom.Point2D;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.ArrayList;
 
 public class TestDB {
     public static void main(String... args)  {
         try {
-            SQLItineraryQuery query = new SQLItineraryQuery();
-            Itinerary it = query.getItineraryByID("24");
-            System.out.println("test: " + it.getTransportationMode());
+           testGetUserByUsername("juwu", "password");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -73,5 +73,11 @@ public class TestDB {
         final SQLPlaceQuery placeQuery = new SQLPlaceQuery();
         Place lodging = placeQuery.getLodgingByCityID(itineraryID);
         System.out.println(lodging.getName());
+    }
+
+    public static void testGetUserByUsername(String username, String password) throws SQLException {
+        final SQLUserQuery userQuery = new SQLUserQuery();
+        User user = userQuery.readUserQuery(username);
+        System.out.println(user.getUsername());
     }
 }

@@ -33,6 +33,8 @@ public class BudgetForm {
         this.budget = new Budget();
         this.totalSpent = 0.0;
         this.expenditures = new ArrayList<Expenditure>();
+        request.setAttribute("defaultSection", "budget-page");
+        request.setAttribute("currentSection", "budget-page");
     }
 
     public void createBudget() {
