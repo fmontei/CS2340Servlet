@@ -5,7 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <section id="lodging"></section>
-<div class="custom-centered-pills">
+<div class="custom-centered-pills" style="margin-bottom: 30px">
     <ul class="nav nav-pills">
         <li style="float: right">
             <a class="alert-danger" href="#main-lodging" id="create-lodging-pill"
@@ -36,7 +36,7 @@
     <% } else { %>
     <div id="main-lodging" class="panel-collapse collapse">
     <% } %>
-        <div class="panel panel-danger">
+        <div class="panel panel-danger" style="color: black">
             <div class="panel-heading">
                 <% if (selection == null) { %>
                 New Lodging
@@ -49,9 +49,9 @@
                     <table class="table table-striped" style="width: 98%">
                     <% if (selection == null) { %>
                         <form action="/CS2340Servlet/itinerary" method="GET">
-                            <div class="row">
+                            <div class="row" style="color: black">
                                 <div class="form-inline" style="float: left; padding-left: 50px">
-                                    <input name="lodgingName" type="text"
+                                    <input name="lodgingName" style="min-width: 200px"
                                            class="form-control" placeholder="Lodging Name (optional)" />
                                     &nbsp;&nbsp;&nbsp;Radius (miles):&nbsp;&nbsp;&nbsp;
                                     <input name="lodgingRadius" type="number" min="1" max="25"
@@ -70,7 +70,7 @@
                         </form><br />
                         <% if (session.getAttribute("lodgingResults") != null) { %>
                             <div class="row">
-                                <div style="text-align: center; max-width: 90%">
+                                <div style="text-align: center; max-width: 90%;">
                                     Select a lodging below. This list has been created
                                     based on your Itinerary's address, which is:
                                     <b><%=lodgingPanelCity.getAddress()%></b>

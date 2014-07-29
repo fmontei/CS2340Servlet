@@ -42,6 +42,8 @@ public class LodgingForm {
             session.setAttribute("lastLodgingName", name);
             session.setAttribute("lastLodgingRadius", radius);
             session.setAttribute("lastLodgingLimit", limit);
+            request.setAttribute("currentSection", "lodging-page");
+            ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
         } catch (Exception ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
@@ -108,6 +110,8 @@ public class LodgingForm {
             DataManager.createLodging(selection, activeCity.getID());
             activeCity.setLodging(selection);
             session.setAttribute("activeCity", activeCity);
+            request.setAttribute("currentSection", "lodging-page");
+            ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
@@ -124,8 +128,8 @@ public class LodgingForm {
             lodging.setCheckOut(reformattedCheckOut);
             DataManager.updatePlaceTimeByID(lodging, "lodging");
             updateCurrentSession(lodging);
-            request.setAttribute("defaultSection", "lodging-page");
-            request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
+            request.setAttribute("currentSection", "lodging-page");
+            ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }

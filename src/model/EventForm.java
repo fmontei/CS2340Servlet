@@ -41,6 +41,8 @@ public class EventForm {
         }
         activeCity.setEvents(events);
         session.setAttribute("activeCity", activeCity);
+        request.setAttribute("currentSection", "event-places-page");
+        ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
     }
 
     public void saveSelection() throws IOException {
@@ -109,7 +111,8 @@ public class EventForm {
     }
 
     private void reloadPage() throws  IOException {
-        response.sendRedirect("jsp/index.jsp");
+        request.setAttribute("currentSection", "event-places-page");
+        ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
     }
 
     public void getEventsAroundCentralLocation() throws IOException, ServletException {
@@ -189,12 +192,13 @@ public class EventForm {
         session.setAttribute("businesses" + eventID, eventResults);
     }
 
-
-    private void returnQueryResults(String eventID, String API)
-            throws IOException, ServletException {
+    private void returnQueryResults(final String eventID, final String API)
+            throws IOException {
         updateImageIcon(eventID, API);
-        request.getRequestDispatcher("jsp/index.jsp?search=" + API +
-                "&event-no=" + eventID).forward(request, response);
+        final String returnQueryString = "jsp/index.jsp?search=" + API +
+                "&event-no=" + eventID;
+        request.setAttribute("currentSection", "event-places-page");
+        ServletUtilities.forwardRequest(request, response, returnQueryString);
     }
 
     private void updateImageIcon(final String eventID, final String API) {
@@ -240,6 +244,8 @@ public class EventForm {
             event.setCheckOut(reformattedEnd);
             DataManager.updatePlaceTimeByID(event, "event");
             updateCurrentSession(events, event, eventNum);
+            request.setAttribute("currentSection", "event-places-page");
+            ServletUtilities.forwardRequest(request, response, "/jsp/index.jsp");
         } catch (SQLException ex) {
             BrowserErrorHandling.printErrorToBrowser(request, response, ex);
         }
